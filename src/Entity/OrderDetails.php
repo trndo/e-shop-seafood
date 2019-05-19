@@ -31,6 +31,11 @@ class OrderDetails
      */
     private $orderNumber;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", mappedBy="orderDetails", cascade={"persist", "remove"})
+     */
+    private $receipt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,24 @@ class OrderDetails
     public function setOrderNumber(?Order $orderNumber): self
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+    public function getReceipt(): ?Receipt
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?Receipt $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newOrderDetails = $receipt === null ? null : $this;
+        if ($newOrderDetails !== $receipt->getOrderDetails()) {
+            $receipt->setOrderDetails($newOrderDetails);
+        }
 
         return $this;
     }

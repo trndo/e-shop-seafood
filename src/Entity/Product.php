@@ -93,10 +93,21 @@ class Product
      */
     private $orderDetails;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", mappedBy="products")
+     */
+    private $receipts;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Supply", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $supply;
+
 
     public function __construct()
     {
         $this->photos = new ArrayCollection();
+        $this->receipts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -292,6 +303,52 @@ class Product
         $newProduct = $orderDetails === null ? null : $this;
         if ($newProduct !== $orderDetails->getProduct()) {
             $orderDetails->setProduct($newProduct);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Receipt[]
+     */
+    public function getReceipts(): Collection
+    {
+        return $this->receipts;
+    }
+
+    public function addReceipt(Receipt $receipt): self
+    {
+        if (!$this->receipts->contains($receipt)) {
+            $this->receipts[] = $receipt;
+            $receipt->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceipt(Receipt $receipt): self
+    {
+        if ($this->receipts->contains($receipt)) {
+            $this->receipts->removeElement($receipt);
+            $receipt->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function getSupply(): ?Supply
+    {
+        return $this->supply;
+    }
+
+    public function setSupply(?Supply $supply): self
+    {
+        $this->supply = $supply;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProduct = $supply === null ? null : $this;
+        if ($newProduct !== $supply->getProduct()) {
+            $supply->setProduct($newProduct);
         }
 
         return $this;

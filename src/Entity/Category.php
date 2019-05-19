@@ -53,9 +53,15 @@ class Category
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="category")
+     */
+    private $receipts;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->receipts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +154,37 @@ class Category
             // set the owning side to null (unless already changed)
             if ($product->getCategory() === $this) {
                 $product->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Receipt[]
+     */
+    public function getReceipts(): Collection
+    {
+        return $this->receipts;
+    }
+
+    public function addReceipt(Receipt $receipt): self
+    {
+        if (!$this->receipts->contains($receipt)) {
+            $this->receipts[] = $receipt;
+            $receipt->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceipt(Receipt $receipt): self
+    {
+        if ($this->receipts->contains($receipt)) {
+            $this->receipts->removeElement($receipt);
+            // set the owning side to null (unless already changed)
+            if ($receipt->getCategory() === $this) {
+                $receipt->setCategory(null);
             }
         }
 

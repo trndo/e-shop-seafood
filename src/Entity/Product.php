@@ -103,6 +103,11 @@ class Product
      */
     private $supply;
 
+    /**
+     * @ORM\Column(type="string", length=70, nullable=true)
+     */
+    private $productSize;
+
 
     public function __construct()
     {
@@ -350,6 +355,18 @@ class Product
         if ($newProduct !== $supply->getProduct()) {
             $supply->setProduct($newProduct);
         }
+
+        return $this;
+    }
+
+    public function getProductSize(): ?string
+    {
+        return $this->productSize;
+    }
+
+    public function setProductSize(?string $productSize): self
+    {
+        $this->productSize = $productSize;
 
         return $this;
     }

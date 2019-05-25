@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AdminController
  * @package App\Controller\admin
  *
- * @IsGranted("ROLE_DEVELOPER")
  */
 class AdminController extends AbstractController
 {
@@ -20,8 +19,9 @@ class AdminController extends AbstractController
      *
      * @return Response
      */
-    public function index(): Response
+    public function homeAdmin(): Response
     {
         return $this->render('admin/admin.html.twig');
     }
+
 }

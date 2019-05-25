@@ -5,6 +5,7 @@ namespace App\Service\Registration;
 
 use App\Entity\User;
 use App\Model\UserRegistrationModel;
+use App\Service\Token\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -27,7 +28,6 @@ class RegisterUser implements RegisterUserInterface
     }
 
     public function registerUser(UserRegistrationModel $model): User
-
     {
         $user = new User();
 

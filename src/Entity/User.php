@@ -80,6 +80,16 @@ class User implements UserInterface
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $registrationStatus;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -265,4 +275,30 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getRegistrationStatus(): ?bool
+    {
+        return $this->registrationStatus;
+    }
+
+    public function setRegistrationStatus(?bool $registrationStatus): self
+    {
+        $this->registrationStatus = $registrationStatus;
+
+        return $this;
+    }
+
+
 }

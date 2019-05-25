@@ -11,7 +11,7 @@ class MailSender implements MailSenderInterface
 {
     public const TRANSPORT = 'Lipinskie Raki';
 
-    public const SELF_EMAIL = 'trndogv@gmail.com';
+    public const SELF_EMAIL = 'vetal1199@gmail.com';
 
     public const CONTENT_TYPE = 'text/html';
     /**
@@ -34,10 +34,12 @@ class MailSender implements MailSenderInterface
     {
         $message = (new \Swift_Message(self::TRANSPORT))
             ->setFrom(self::SELF_EMAIL)
-            ->setTo(self::SELF_EMAIL)
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->environment->render(
-                    'mail/registration_mail.html.twig'
+                    'mail/registration_mail.html.twig',[
+                        'user' => $user
+                    ]
                 ),
                 self::CONTENT_TYPE
             );

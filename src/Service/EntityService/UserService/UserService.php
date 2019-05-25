@@ -3,6 +3,7 @@
 namespace App\Service\EntityService\UserService;
 
 use App\Collection\UserCollection;
+use App\Entity\User;
 use App\Repository\UserRepository;
 
 class UserService
@@ -10,7 +11,7 @@ class UserService
     /**
      * @var UserRepository
      */
-    private  $repository;
+    private $repository;
 
     /**
      * UserService constructor.
@@ -24,8 +25,18 @@ class UserService
     /**
      * @return UserCollection
      */
-    public function getAdmins()
+    public function getAdmins(): UserCollection
     {
         return new UserCollection($this->repository->findAdmins());
     }
+
+    /**
+     * @param string $token
+     * @return User|null
+     */
+    public function getUserByToken(string $token): ?User
+    {
+        return $this->repository->findOneBy(['token' => $token]);
+    }
+
 }

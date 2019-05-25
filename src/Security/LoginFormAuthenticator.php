@@ -67,8 +67,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        }
+
+        if ($user->getRegistrationStatus() === false) {
+            throw new CustomUserMessageAuthenticationException('Prover svoju pochtu!!! a potom zahodi');
         }
 
         return $user;

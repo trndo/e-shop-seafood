@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\UserRegistrationType;
 use App\Model\UserRegistrationModel;
 use App\Security\LoginFormAuthenticator;
+use App\Service\EntityService\UserService\UserService;
+use App\Service\Registration\RegisterUser;
 use App\Service\Registration\RegisterUserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +45,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request,RegisterUserInterface $registerService, GuardAuthenticatorHandler $handler, LoginFormAuthenticator $loginFormAuthenticator): Response
+    public function register(Request $request,RegisterUserInterface $registerService): Response
     {
         $registrationModel = new UserRegistrationModel();
 
@@ -56,18 +59,39 @@ class SecurityController extends AbstractController
             $user = $registerService->registerUser($form->getData());
 
 
-            return $handler->authenticateUserAndHandleSuccess(
-              $user,
-              $request,
-              $loginFormAuthenticator,
-              'main'
-            );
+            return $this->redirectToRoute('attention');
         }
 
         return $this->render('security/registration.html.twig',[
             'form' => $form->createView()
         ]);
 
+    }
 
+    /**
+     * @Route("/confirmation/{token}", name="confirmation")
+     * @param string $token
+     * @param UserService $userService
+     * @return Response
+     */
+    public function confirmRegistration(string $token,UserService $userService,Request $request,
+                                        GuardAuthenticatorHandler $handler,
+                                        LoginFormAuthenticator $loginFormAuthenticator,
+                                        RegisterUserInterface $registerUser): Response
+    {
+        $user = $userService->getUserByToken($token);
+
+        if ($user instanceof User) {
+
+            $registerUser->confirmUser($user);
+
+            return $handler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $loginFormAuthenticator,
+                'main'
+            );
+        }
+        return new Response('Ooops 404',404);
     }
 }

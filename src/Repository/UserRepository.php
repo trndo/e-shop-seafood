@@ -19,11 +19,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findAdmins()
+    /**
+     * @return User[]
+     */
+    public function findAdmins(): array
     {
         return $this->createQueryBuilder('u')
-            ->where('u.roles LIKE :roles')
+            ->andWhere('u.roles LIKE :roles')
             ->setParameter('roles','%ROLE_DE%')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return array
+     */
+    public function findTokens(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.token')
             ->getQuery()
             ->execute();
     }

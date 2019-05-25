@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    <h1>Pereydi po ssylohcke {{ url('confirmation',{'token': user.token}) }}</h1>
+{% endblock %}

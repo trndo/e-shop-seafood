@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Service\Registration;
+namespace App\Service\RegistrationService;
 
 use App\Entity\User;
 use App\Model\UserRegistrationModel;
-use App\Service\Mail\MailSenderInterface;
-use App\Service\Token\TokenGenerator;
+use App\Service\MailService\MailSenderInterface;
+use App\Service\TokenService\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service\Registration;
+namespace App\Service\RegistrationService;
 
 use App\Entity\User;
 use App\Model\UserRegistrationModel;

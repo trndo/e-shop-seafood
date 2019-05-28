@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service\Mail;
+namespace App\Service\MailService;
 
 
 use App\Entity\User;

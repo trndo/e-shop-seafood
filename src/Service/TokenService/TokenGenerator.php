@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service\Token;
+namespace App\Service\TokenService;
 
 
 class TokenGenerator implements TokenGeneratorInterface

@@ -6,7 +6,7 @@ use App\Collection\UserCollection;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
-class UserService
+class UserService implements UserServiceInterface
 {
     /**
      * @var UserRepository

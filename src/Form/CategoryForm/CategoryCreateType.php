@@ -5,7 +5,7 @@ namespace App\Form\CategoryForm;
 
 
 use App\Entity\Category;
-use App\Form\CategoryInfoType;
+use App\Form\CategoryForm\CategoryInfoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

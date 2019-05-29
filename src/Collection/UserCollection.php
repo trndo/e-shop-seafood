@@ -2,6 +2,8 @@
 
 namespace App\Collection;
 
+use App\Entity\User;
+
 /**
  * Class UserCollection
  * @package App\Collection
@@ -9,7 +11,7 @@ namespace App\Collection;
 class UserCollection implements \IteratorAggregate
 {
     /**
-     * @var array
+     * @var User[]
      */
     private $users;
 
@@ -25,7 +27,7 @@ class UserCollection implements \IteratorAggregate
     /**
      * @return \ArrayIterator|\Traversable
      */
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new \ArrayIterator($this->users);
     }

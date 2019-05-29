@@ -7,6 +7,7 @@ use App\Form\AdminCreateType;
 use App\Model\AdminModel;
 use App\Model\UserRegistrationModel;
 use App\Service\EntityService\UserService\UserService;
+use App\Service\EntityService\UserService\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,16 @@ class UserController extends AbstractController
     /**
      * @Route(path="/lipadmin/admins", name="admins")
      *
-     * @param UserService $userService
+     * @param UserServiceInterface $userService
      * @return Response
      */
-    public function adminUsers(UserService $userService): Response
+    public function adminUsers(UserServiceInterface $userService): Response
     {
         $admins = $userService->getAdmins();
-        return $this->render('admin/users/admins.html.twig', ['admins' => $admins]);
+
+        return $this->render('admin/users/admins.html.twig', [
+            'admins' => $admins
+        ]);
     }
 
     /**
@@ -47,6 +51,8 @@ class UserController extends AbstractController
             dd($form->getData());
         }
 
-        return $this->render('admin/users/createAdmin.html.twig', ['form' => $form->createView()]);
+        return $this->render('admin/users/createAdmin.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Service\EntityService\UserService;
 
 use App\Collection\UserCollection;
 use App\Entity\User;
+use App\Model\AdminModel;
 
 interface UserServiceInterface
 {
@@ -23,5 +24,14 @@ interface UserServiceInterface
      * Get one user by user token
      */
     public function getUserByToken(string $token): ?User ;
+
+    /**
+     * @param User $user
+     *
+     * Delete User
+     */
+    public function deleteUser(User $user): void ;
+
+
 
 }

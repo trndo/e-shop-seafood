@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\ORMException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -26,7 +27,7 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :roles')
-            ->setParameter('roles','%ROLE_DE%')
+            ->setParameter('roles','%ROLE_AD%')
             ->getQuery()
             ->execute();
     }
@@ -40,5 +41,12 @@ class UserRepository extends ServiceEntityRepository
             ->select('u.token')
             ->getQuery()
             ->execute();
+    }
+
+    public function delete(User $user): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($user);
+        $em->flush();
     }
 }

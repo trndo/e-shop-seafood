@@ -340,7 +340,7 @@
                                          {{ admin.createdAt|date('d/m/y H:i:s') }}
                                      </td>
                                      <td>
-                                         <button class="btn btn-danger btn-circle btn-sm">
+                                         <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы хотите удалить этого админа ?')) window.location.href='{{ path('deleteUser',{'slug': admin.slug}) }}'">
                                              <i class="fas fa-times"></i>
                                          </button>
                                          <button class="btn btn-primary btn-circle btn-sm">

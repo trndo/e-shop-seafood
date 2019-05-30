@@ -25,12 +25,11 @@ class MailSender implements MailSenderInterface
 
     public function __construct(\Swift_Mailer $mailer, Environment $environment)
     {
-
         $this->mailer = $mailer;
         $this->environment = $environment;
     }
 
-    public function sendMessage(User $user)
+    public function sendMessage(User $user): void
     {
         $message = (new \Swift_Message(self::TRANSPORT))
             ->setFrom(self::SELF_EMAIL)
@@ -44,6 +43,22 @@ class MailSender implements MailSenderInterface
                 self::CONTENT_TYPE
             );
 
+        $this->mailer->send($message);
+    }
+
+    public function sendAdminMessage(User $admin): void
+    {
+        $message = (new \Swift_Message(self::TRANSPORT))
+            ->setFrom(self::SELF_EMAIL)
+            ->setTo($admin->getEmail())
+            ->setBody(
+                $this->environment->render(
+                    'mail/registration_admin_mail.html.twig',[
+                        'user' => $admin
+                    ]
+                ),
+                self::CONTENT_TYPE
+            );
         $this->mailer->send($message);
     }
 

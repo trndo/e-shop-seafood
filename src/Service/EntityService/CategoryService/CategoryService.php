@@ -42,20 +42,17 @@ class CategoryService implements CategoryServiceInterface
     /**
      * @param $data
      */
-    public function addCategory(Category $data)
+    public function addCategory(Category $data): void
     {
-        if ($data != null) {
-
-            $this->em->persist($data);
-            $this->em->flush();
+        if ($data instanceof Category) {
+           $this->repository->save($data);
         }
     }
 
-    public function deleteCategory(Category $category)
+    public function deleteCategory(Category $category): void
     {
-        if ($category != null) {
-            $this->em->remove($category);
-            $this->em->flush();
+        if ($category instanceof Category) {
+            $this->repository->delete($category);
         }
     }
 

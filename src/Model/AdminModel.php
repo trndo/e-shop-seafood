@@ -25,10 +25,34 @@ class AdminModel
     private $phone;
 
     /**
-     * @var string $role
+     * @var mixed
      */
     private $role;
 
+    /**
+     * @var string $password
+     */
+    private $password;
+
+    /**
+     * @return string
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+
+    /**
+     * @param $password
+     * @return AdminModel
+     */
+    public function setPassword($password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -112,7 +136,6 @@ class AdminModel
     {
         return $this->role;
     }
-
 
     /**
      * @param $role

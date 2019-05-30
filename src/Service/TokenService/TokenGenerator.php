@@ -6,10 +6,10 @@ namespace App\Service\TokenService;
 
 class TokenGenerator implements TokenGeneratorInterface
 {
-    public static function generateToken(array $tokens): string
+    public static function generateToken(array $tokens,int $length): string
     {
         do {
-            $token = bin2hex(\random_bytes(60));
+            $token = bin2hex(\random_bytes($length));
         } while (isset($tokens[$token]));
 
         return $token;

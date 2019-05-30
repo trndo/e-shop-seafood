@@ -20,6 +20,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -44,6 +46,9 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="register")
+     * @param Request $request
+     * @param RegisterUserInterface $registerService
+     * @return Response
      */
     public function register(Request $request,RegisterUserInterface $registerService): Response
     {
@@ -53,11 +58,9 @@ class SecurityController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $registerService->registerUser($form->getData());
-
 
             return $this->redirectToRoute('attention');
         }

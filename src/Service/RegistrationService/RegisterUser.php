@@ -4,6 +4,7 @@
 namespace App\Service\RegistrationService;
 
 use App\Entity\User;
+use App\Model\AdminModel;
 use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\TokenService\TokenGenerator;
@@ -28,8 +29,7 @@ class RegisterUser implements RegisterUserInterface
      * @param EntityManagerInterface $entityManager
      * @param MailSenderInterface $mailSender
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder,
-                                EntityManagerInterface $entityManager, MailSenderInterface $mailSender)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager, MailSenderInterface $mailSender)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
@@ -53,7 +53,9 @@ class RegisterUser implements RegisterUserInterface
             ->setSurname($model->getSurname())
             ->setAddress($model->getAddress())
             ->setPhone($model->getPhone())
-            ->setToken(TokenGenerator::generateToken($this->entityManager->getRepository(User::class)->findTokens()))
+            ->setToken(TokenGenerator::generateToken(
+                $this->entityManager->getRepository(User::class)->findTokens(),20
+            ))
             ->setRegistrationStatus(false);
 
         $this->entityManager->persist($user);
@@ -63,6 +65,34 @@ class RegisterUser implements RegisterUserInterface
 
         return $user;
 
+    }
+
+    public function registerAdmin(AdminModel $model): User
+    {
+        $admin = new User();
+
+        $admin->setName($model->getName())
+            ->setEmail($model->getEmail())
+            ->setPhone($model->getPhone())
+            ->setSurname($model->getSurname())
+            ->setPassword(($this->passwordEncoder->encodePassword(
+                $admin,
+                $model->getPassword())
+            ))
+            ->setRoles([
+                $model->getRole()
+            ])
+            ->setToken(TokenGenerator::generateToken(
+                $this->entityManager->getRepository(User::class)->findTokens(),60
+            ))
+            ->setRegistrationStatus(false);
+
+            $this->entityManager->persist($admin);
+            $this->entityManager->flush();
+
+            $this->mailSender->sendAdminMessage($admin);
+
+            return $admin;
     }
 
     /**
@@ -75,4 +105,19 @@ class RegisterUser implements RegisterUserInterface
 
         $this->entityManager->flush();
     }
+
+    public function getRegisterAdminData(AdminModel $model, User $admin): User
+    {
+        $admin->setEmail($model->getEmail())
+             ->setName($model->getName())
+             ->setSurname($model->getSurname())
+             ->setPhone($model->getPhone())
+             ->setPassword($this->passwordEncoder->encodePassword(
+                 $admin,
+                 $model->getPassword()
+             ));
+
+            return $admin;
+    }
+
 }

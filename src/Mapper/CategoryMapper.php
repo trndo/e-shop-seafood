@@ -22,7 +22,6 @@ final class CategoryMapper
 
     public static function modelToEntity(CategoryModel $model, Category $category): Category
     {
-
          $category->setName($model->getName())
                   ->setSeoTitle($model->getSeoTitle())
                   ->setSeoDescription($model->getSeoDescription());

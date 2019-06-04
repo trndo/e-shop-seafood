@@ -5,43 +5,46 @@ namespace App\Controller;
 
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient;
-use League\OAuth2\Client\Provider\GoogleUser;
+use KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient;
+use League\OAuth2\Client\Provider\FacebookUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GoogleController extends AbstractController
+class FacebookController extends AbstractController
 {
     /**
-     * Link to this controller to start the "connect" process
-     *
-     * @Route("/connect/google", name="connect_google")
+     * @Route("/connect/facebook", name="connect_facebook_start")
      *
      * @param ClientRegistry $clientRegistry
      * @return Response
      */
     public function connectAction(ClientRegistry $clientRegistry): Response
     {
-        return $clientRegistry->
-            getClient('google')
-            ->redirect();
+
+        return $clientRegistry
+            ->getClient('facebook')
+            ->redirect([
+                'public_profile', 'email' // the scopes you want to access
+            ])
+            ;
     }
 
     /**
-     * @Route("/connect/google/check", name="connect_google_check")
+     * @Route("/connect/facebook/check", name="connect_facebook_check")
+     *
      * @param Request $request
      * @param ClientRegistry $clientRegistry
      * @return Response
      */
     public function connectCheckAction(Request $request, ClientRegistry $clientRegistry): Response
     {
-        /** @var GoogleClient $client **/
-        $client = $clientRegistry->getClient('google');
+        /** @var FacebookClient $client */
+        $client = $clientRegistry->getClient('facebook');
 
-        /** @var GoogleUser $user */
+        /** @var FacebookUser $user */
         $user = $client->fetchUser();
 
 
@@ -50,8 +53,5 @@ class GoogleController extends AbstractController
         } else {
             return $this->redirectToRoute('home');
         }
-
     }
-
-
 }

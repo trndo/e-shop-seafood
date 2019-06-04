@@ -25,6 +25,7 @@ security:
                     - App\Security\LoginFormAuthenticator
                     - App\Security\GoogleAuthenticator
                     - App\Security\FacebookAuthenticator
+                    - App\Security\InstagramAuthenticator
                 entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: logout

@@ -13,3 +13,9 @@ knpu_oauth2_client:
             redirect_route: connect_facebook_check
             redirect_params: {}
             graph_api_version: v3.3
+        instagram:
+          type: instagram
+          client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
+          client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
+          redirect_route: connect_instagram_check
+          redirect_params: {}

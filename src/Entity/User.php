@@ -12,10 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(
- *     fields={"email"},
- *     message="Такой пользователь уже зарегистрирован, пожалуйста попробуйте заново"
- * )
  */
 class User implements UserInterface
 {
@@ -29,7 +25,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
      */
     private $email;
 
@@ -76,7 +72,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
-     * @Gedmo\Slug(fields={"email"})
+     * @Gedmo\Slug(fields={"id"})
      */
     private $slug;
 

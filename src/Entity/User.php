@@ -12,6 +12,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"email","phone"},
+ *     message="Такой пользователь уже зарегистрирован, пожалуйста попробуйте заново"
+ * )
  */
 class User implements UserInterface
 {
@@ -85,6 +89,21 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $registrationStatus;
+
+    /**
+     * @ORM\Column(type="bigint", nullable=true)
+     */
+    private $googleId;
+
+    /**
+     * @ORM\Column(type="bigint", nullable=true)
+     */
+    private $facebookId;
+
+    /**
+     * @ORM\Column(type="bigint", nullable=true)
+     */
+    private $instagramId;
 
     public function __construct()
     {
@@ -292,6 +311,42 @@ class User implements UserInterface
     public function setRegistrationStatus(?bool $registrationStatus): self
     {
         $this->registrationStatus = $registrationStatus;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?int
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?int $googleId): self
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getFacebookId(): ?int
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?int $facebookId): self
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    public function getInstagramId(): ?int
+    {
+        return $this->instagramId;
+    }
+
+    public function setInstagramId(?int $instagramId): self
+    {
+        $this->instagramId = $instagramId;
 
         return $this;
     }

@@ -6,13 +6,20 @@ knpu_oauth2_client:
             client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
             redirect_route: connect_google_check
             redirect_params: {}
-        facebook:
+        facebook_register:
             type: facebook
             client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
-            redirect_route: connect_facebook_check
+            redirect_route: facebookRegister
             redirect_params: {}
             graph_api_version: v3.3
+        facebook:
+          type: facebook
+          client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
+          client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
+          redirect_route: connect_facebook_check
+          redirect_params: {}
+          graph_api_version: v3.3
         instagram:
           type: instagram
           client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'

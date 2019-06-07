@@ -51,7 +51,7 @@ class FacebookController extends AbstractController
     }
 
     /**
-     * @Route("/connect/register/facebook", name="connect_facebook_register")
+     * @Route("/connect/facebook/register", name="connect_facebook_register")
      *
      * @param ClientRegistry $clientRegistry
      * @return Response
@@ -73,7 +73,7 @@ class FacebookController extends AbstractController
      * @param ClientRegistry $clientRegistry
      * @return Response
      */
-    public function registerUserWithGoogle(FacebookRegistrationInterface $facebookRegistration ,ClientRegistry $clientRegistry): Response
+    public function registerUserWithFacebook(FacebookRegistrationInterface $facebookRegistration ,ClientRegistry $clientRegistry): Response
     {
         /** @var FacebookClient $client */
         $client = $clientRegistry->getClient('facebook_register');

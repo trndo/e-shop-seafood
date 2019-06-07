@@ -91,7 +91,7 @@ class User implements UserInterface
     private $registrationStatus;
 
     /**
-     * @ORM\Column(type="bigint", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $googleId;
 
@@ -315,12 +315,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getGoogleId(): ?int
+    public function getGoogleId(): ?string
     {
         return $this->googleId;
     }
 
-    public function setGoogleId(?int $googleId): self
+    public function setGoogleId(?string $googleId): self
     {
         $this->googleId = $googleId;
 

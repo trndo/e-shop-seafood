@@ -80,7 +80,7 @@ class GoogleController extends AbstractController
             $googleRegistration->registerUser($user);
         }
 
-        return $this->redirectToRoute('connect_google',['user' => $user]);
+        return $this->redirectToRoute('connect_google');
 
     }
 

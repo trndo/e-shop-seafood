@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 
+use App\Service\RegistrationService\Instagram\InstagramRegistrationInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\Provider\InstagramClient;
+use League\OAuth2\Client\Provider\GoogleUser;
 use League\OAuth2\Client\Provider\InstagramResourceOwner;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,16 +43,49 @@ class InstagramController extends AbstractController
      */
     public function connectCheckAction(Request $request, ClientRegistry $clientRegistry): Response
     {
-        /** @var InstagramClient $client */
-        $client = $clientRegistry->getClient('instagram');
-
-        /** @var InstagramResourceOwner $user */
-        $user = $client->fetchUser();
-
         if (!$this->getUser()) {
             return new JsonResponse(array('status' => false, 'message' => "User not found!"));
         } else {
             return $this->redirectToRoute('home');
         }
     }
+
+    /**
+     * @Route("/connect/instagram/register", name="connect_instagram_register")
+     *
+     * @param ClientRegistry $clientRegistry
+     * @return Response
+     */
+    public function connectRegister(ClientRegistry $clientRegistry): Response
+    {
+        return $clientRegistry
+            ->getClient('instagram_register')
+            ->redirect([
+                'basic'
+            ])
+            ;
+    }
+
+    /**
+     * @Route("register/instagram", name="registerInstagram")
+     *
+     * @param InstagramRegistrationInterface $instagramRegistration
+     * @param ClientRegistry $clientRegistry
+     * @return Response
+     */
+    public function registerUserWithInstagram(InstagramRegistrationInterface $instagramRegistration, ClientRegistry $clientRegistry): Response
+    {
+        /** @var InstagramClient $client */
+        $client = $clientRegistry->getClient('instagram_register');
+
+        /** @var InstagramResourceOwner $user */
+        $user = $client->fetchUser();
+
+        if ($user instanceof InstagramResourceOwner) {
+            $instagramRegistration->registerUser($user);
+        }
+
+        return $this->redirectToRoute('connect_instagram_start');
+    }
+
 }

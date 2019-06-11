@@ -16,7 +16,7 @@ knpu_oauth2_client:
             type: facebook
             client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
-            redirect_route: facebookRegister
+            redirect_route: socialRegister
             redirect_params: { social : 'facebook' }
             graph_api_version: v3.3
         facebook:
@@ -30,7 +30,7 @@ knpu_oauth2_client:
             type: instagram
             client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
             client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
-            redirect_route: registerInstagram
+            redirect_route: socialRegister
             redirect_params: { social : 'instagram' }
         instagram:
             type: instagram

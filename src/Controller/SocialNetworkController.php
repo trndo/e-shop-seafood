@@ -84,11 +84,9 @@ class SocialNetworkController extends AbstractController
         $socialRegister = $social.'_register';
 
         $client = $clientRegistry->getClient($socialRegister);
-
         $user = $client->fetchUser();
 
         $socialUser = SocialRegisterStaticFactory::factory($social)->registerUser($user);
-
         $userService->saveUser($socialUser);
 
         return $this->redirectToRoute('connectAction',[

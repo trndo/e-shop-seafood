@@ -1,0 +1,72 @@
+<ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('admin') }}">
+        <div class="sidebar-brand-icon">
+            <img src="{{ asset('assets/img/RakiLogo.svg') }}" class="">
+        </div>
+        <div class="sidebar-brand-text mx-3">Lipinskie Raki</div>
+    </a>
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href={{ path("admin") }}>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Главная</span></a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Общие
+    </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item {% if active == 'users' %}active{% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-users"></i>
+            <span>Пользователи</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ path('admins') }}">Админы</a>
+                <a class="collapse-item" href="cards.html">Пользователи</a>
+            </div>
+        </div>
+    </li>
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Категории и Товары
+    </div>
+    <li class="nav-item {% if active == 'categories' %} active{% endif %}">
+        <a class="nav-link" href="{{ path('category') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Категории</span></a>
+    </li>
+    <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Товары</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="login.html">Продукты</a>
+                <a class="collapse-item" href="register.html">Рецепты</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Charts</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Tables</span></a>
+    </li>
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>

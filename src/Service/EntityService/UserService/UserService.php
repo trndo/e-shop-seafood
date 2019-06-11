@@ -48,6 +48,9 @@ class UserService implements UserServiceInterface
         return $this->repository->findOneBy(['token' => $token]);
     }
 
+    /**
+     * @param User $user
+     */
     public function deleteUser(User $user): void
     {
         if ($user instanceof User) {

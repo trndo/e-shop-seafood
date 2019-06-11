@@ -32,4 +32,5 @@ class InstagramRegistration implements InstagramRegistrationInterface
 
         return $user;
     }
+
 }

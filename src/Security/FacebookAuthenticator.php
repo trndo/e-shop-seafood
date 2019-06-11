@@ -40,7 +40,7 @@ class FacebookAuthenticator extends AbstractSocialNetworkAuthenticator
      */
     public function supports(Request $request): bool
     {
-        return 'connect_facebook_check' === $request->attributes->get('_route')
+        return '/connect/facebook/check' === $request->getPathInfo()
             && $request->isMethod('GET');
     }
 

@@ -32,6 +32,12 @@ interface UserServiceInterface
      */
     public function deleteUser(User $user): void ;
 
+    /**
+     * @param User $user
+     *
+     * Save User
+     */
+    public function saveUser(User $user): void ;
 
 
 }

@@ -34,7 +34,7 @@ class InstagramAuthenticator extends AbstractSocialNetworkAuthenticator
      */
     public function supports(Request $request): bool
     {
-        return 'connect_instagram_check' === $request->attributes->get('_route')
+        return '/connect/instagram/check' === $request->getPathInfo()
             && $request->isMethod('GET');
     }
 

@@ -72,9 +72,14 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/confirmation/{token}", name="confirmation")
+     *@Route("/confirmation/{token}", name="confirmation")
+     *
      * @param string $token
      * @param UserService $userService
+     * @param Request $request
+     * @param GuardAuthenticatorHandler $handler
+     * @param LoginFormAuthenticator $loginFormAuthenticator
+     * @param RegisterUserInterface $registerUser
      * @return Response
      */
     public function confirmRegistration(string $token,UserService $userService,Request $request,

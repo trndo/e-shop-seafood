@@ -50,6 +50,9 @@ class UserService implements UserServiceInterface
         ]);
     }
 
+    /**
+     * @param User $user
+     */
     public function deleteUser(User $user): void
     {
         if ($user instanceof User) {

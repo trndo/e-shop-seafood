@@ -1,5 +1,6 @@
 {% extends 'admin_base.html.twig' %}
 {% block body %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -19,7 +20,12 @@
                 <div class="row justify-content-center">
                     <div class="col-6">
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.surname) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.phone) }}
+                        {{ form_row(form.role) }}
+                        {{ form_row(form.password) }}
                         {{ form_end(form) }}
                     </div>
                 </div>

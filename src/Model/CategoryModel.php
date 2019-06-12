@@ -1,28 +1,39 @@
 <?php
 
 namespace App\Model;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class CategoryModel
 {
+    /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
+     * @var string $name
+     */
     private $name;
 
+    /**
+     * @var string $seoTitle
+     */
     private $seoTitle;
 
+    /**
+     * @var string $seoDescription
+     */
     private $seoDescription;
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return CategoryModel
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -30,19 +41,18 @@ class CategoryModel
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSeoTitle(): string
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
-
     /**
-     * @param string $seoTitle
+     * @param string|null $seoTitle
      * @return CategoryModel
      */
-    public function setSeoTitle(string $seoTitle): self
+    public function setSeoTitle(?string $seoTitle): self
     {
         $this->seoTitle = $seoTitle;
 
@@ -50,19 +60,18 @@ class CategoryModel
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSeoDescription(): string
+    public function getSeoDescription(): ?string
     {
         return $this->seoDescription;
     }
 
-
     /**
-     * @param string $seoDescription
+     * @param string|null $seoDescription
      * @return CategoryModel
      */
-    public function setSeoDescription(string $seoDescription): self
+    public function setSeoDescription(?string $seoDescription): self
     {
         $this->seoDescription = $seoDescription;
 

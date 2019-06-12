@@ -37,7 +37,7 @@ class CategoryController extends AbstractController
 
                 $categoryService->addCategory($data);
 
-                return $this->redirectToRoute('admin');
+                return $this->redirectToRoute('category');
             }
 
         return $this->render('admin/category/create_category.html.twig',[

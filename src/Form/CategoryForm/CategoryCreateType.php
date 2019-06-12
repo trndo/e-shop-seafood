@@ -14,7 +14,8 @@ class CategoryCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('create',CategoryInfoType::class,[
-            'data_class' => Category::class
+            'data_class' => Category::class,
+            'label' =>  false
         ]);
     }
 

@@ -102,7 +102,7 @@ class UserController extends AbstractController
             ]);
         }
 
-        return $this->render('admin/users/createAdmin.html.twig',[
+        return $this->render('security/admin_registration.html.twig',[
            'form' => $form->createView()
         ]);
     }

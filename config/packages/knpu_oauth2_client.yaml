@@ -4,37 +4,37 @@ knpu_oauth2_client:
             type: google
             client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
-            redirect_route: googleRegister
-            redirect_params: {}
+            redirect_route: socialRegister
+            redirect_params: { social : 'google' }
         google:
             type: google
             client_id: '%env(OAUTH_GOOGLE_CLIENT_ID)%'
             client_secret: '%env(OAUTH_GOOGLE_CLIENT_SECRET)%'
-            redirect_route: connect_google_check
-            redirect_params: {}
+            redirect_route: connectCheck
+            redirect_params: { social : 'google'}
         facebook_register:
             type: facebook
             client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
-            redirect_route: facebookRegister
-            redirect_params: {}
+            redirect_route: socialRegister
+            redirect_params: { social : 'facebook' }
             graph_api_version: v3.3
         facebook:
             type: facebook
             client_id: '%env(OAUTH_FACEBOOK_CLIENT_ID)%'
             client_secret: '%env(OAUTH_FACEBOOK_CLIENT_SECRET)%'
-            redirect_route: connect_facebook_check
-            redirect_params: {}
+            redirect_route: connectCheck
+            redirect_params: { social : 'facebook' }
             graph_api_version: v3.3
         instagram_register:
             type: instagram
             client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
             client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
-            redirect_route: registerInstagram
-            redirect_params: {}
+            redirect_route: socialRegister
+            redirect_params: { social : 'instagram' }
         instagram:
             type: instagram
             client_id: '%env(OAUTH_INSTAGRAM_CLIENT_ID)%'
             client_secret: '%env(OAUTH_INSTAGRAM_CLIENT_SECRET)%'
-            redirect_route: connect_instagram_check
-            redirect_params: {}
+            redirect_route: connectCheck
+            redirect_params: { social : 'instagram' }

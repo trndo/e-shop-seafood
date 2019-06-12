@@ -49,4 +49,11 @@ class UserRepository extends ServiceEntityRepository
         $em->remove($user);
         $em->flush();
     }
+
+    public function save(User $user): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
 }

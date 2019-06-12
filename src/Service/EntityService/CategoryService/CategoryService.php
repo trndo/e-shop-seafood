@@ -55,6 +55,4 @@ class CategoryService implements CategoryServiceInterface
             $this->repository->delete($category);
         }
     }
-
-
 }

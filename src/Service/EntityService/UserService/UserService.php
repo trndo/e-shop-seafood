@@ -45,7 +45,9 @@ class UserService implements UserServiceInterface
      */
     public function getUserByToken(string $token): ?User
     {
-        return $this->repository->findOneBy(['token' => $token]);
+        return $this->repository->findOneBy([
+            'token' => $token
+        ]);
     }
 
     /**
@@ -58,7 +60,12 @@ class UserService implements UserServiceInterface
         }
     }
 
-
+    public function saveUser(User $user): void
+    {
+        if ($user instanceof User) {
+            $this->repository->save($user);
+        }
+    }
 
 
 }

@@ -6,13 +6,9 @@ namespace App\Mapper;
 use App\Entity\User;
 use App\Model\AdminModel;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-class UserMapper
-{
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
 
+final class UserMapper
+{
     public static function entityToAdminModel (User $user): AdminModel
     {
         $model = new AdminModel();

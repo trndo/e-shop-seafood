@@ -32,7 +32,7 @@ class Category
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $status;
+    private $status = true;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

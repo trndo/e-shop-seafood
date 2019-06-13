@@ -55,10 +55,10 @@
             </div>
         </div>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <li class="nav-item {% if active == 'supply' %} active{% endif %}">
+        <a class="nav-link" href="{{ path('supply') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+            <span>Поставки</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="tables.html">

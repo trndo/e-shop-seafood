@@ -1,25 +1,31 @@
 <?php
 
 namespace App\Model;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AdminModel
 {
     /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
      * @var string $name
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
      * @var string $surname
      */
     private $surname;
 
     /**
+     * @Assert\Email(message = "Проверьте правильность написание почты '{{ value }}'")
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
      * @var string $email
      */
     private $email;
 
     /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
      * @var string $phone
      */
     private $phone;
@@ -30,6 +36,8 @@ class AdminModel
     private $role;
 
     /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
+     * @Assert\Length(min="5", minMessage="Минимальная длина пароля 5 символов")
      * @var string $password
      */
     private $password;

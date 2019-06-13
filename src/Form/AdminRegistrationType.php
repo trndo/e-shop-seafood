@@ -17,48 +17,53 @@ class AdminRegistrationType extends AbstractType
         $builder->add('name',TextType::class,[
             'label' => 'Ваше имя',
             'attr' => [
-                'class' => 'form-control'
+                'class' => 'form-control form-control-user'
             ]
         ])
             ->add('surname',TextType::class,[
                 'label' => 'Ваша Фамилия',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form-control-user'
                 ]
             ])
             ->add('email',EmailType::class, [
                 'label' => 'Ваш Email',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form-control-user'
                 ]
             ])
             ->add('phone',TextType::class,[
                 'label' => 'Ваш телефон',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form-control-user'
                 ],
                 'required' => false
             ])
             ->add('password',PasswordType::class,[
                 'label' => 'Password',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form-control-user'
                 ]
             ])
             ->add('password',RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => 'IDI VON!',
                 'first_options'  => [
-                    'label' => 'Password'
+                    'label' => 'Password',
+                    'attr' => [
+                        'class' => 'form-control form-control-user'
+                    ]
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password'
+                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'class' => 'form-control form-control-user'
+                    ]
                 ],
             ])
             ->add('save',SubmitType::class,[
-                'label' => 'Добавить и отправить приглашение на почту!',
+                'label' => 'Зарегестрироваться!',
                 'attr' => [
-                    'class' => 'btn btn-primary btn-in-form'
+                    'class' => 'btn btn-primary btn-user btn-block'
                 ]
             ]);
     }

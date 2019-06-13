@@ -35,11 +35,10 @@ class AdminCreateType extends AbstractType
             ]
         ])
         ->add('phone',TextType::class,[
-            'label' => 'Телефон(не обязтально)',
+            'label' => 'Телефон',
             'attr' => [
                 'class' => 'form-control'
-            ],
-            'required' => false
+            ]
         ])
         ->add('role',ChoiceType::class, [
             'choices' => [

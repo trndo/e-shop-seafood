@@ -76,7 +76,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
-     * @Gedmo\Slug(fields={"id"})
+     * @Gedmo\Slug(fields={"name","surname","id"})
      */
     private $slug;
 

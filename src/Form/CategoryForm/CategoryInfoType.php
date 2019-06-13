@@ -25,13 +25,15 @@ class CategoryInfoType extends AbstractType
             'label' => 'Сео тайтл',
             'attr' => [
                 'class' => 'form-control'
-            ]
+            ],
+            'required' => false
         ])
         ->add('seoDescription',TextareaType::class,[
             'label' => 'Сео дескрипшн',
             'attr' => [
                 'class' => 'form-control'
-            ]
+            ],
+            'required' => false
         ])
         ->add('save',SubmitType::class,[
             'label' => 'Добавить категорию!',

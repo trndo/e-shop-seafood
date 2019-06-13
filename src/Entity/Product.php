@@ -108,6 +108,21 @@ class Product
      */
     private $productSize;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $originalProduct;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $amountPerUnit;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $weightPerUnit;
+
 
     public function __construct()
     {
@@ -367,6 +382,42 @@ class Product
     public function setProductSize(?string $productSize): self
     {
         $this->productSize = $productSize;
+
+        return $this;
+    }
+
+    public function getOriginalProduct(): ?bool
+    {
+        return $this->originalProduct;
+    }
+
+    public function setOriginalProduct(?bool $originalProduct): self
+    {
+        $this->originalProduct = $originalProduct;
+
+        return $this;
+    }
+
+    public function getAmountPerUnit(): ?string
+    {
+        return $this->amountPerUnit;
+    }
+
+    public function setAmountPerUnit(?string $amountPerUnit): self
+    {
+        $this->amountPerUnit = $amountPerUnit;
+
+        return $this;
+    }
+
+    public function getWeightPerUnit(): ?string
+    {
+        return $this->weightPerUnit;
+    }
+
+    public function setWeightPerUnit(?string $weightPerUnit): self
+    {
+        $this->weightPerUnit = $weightPerUnit;
 
         return $this;
     }

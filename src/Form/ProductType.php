@@ -22,31 +22,76 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class)
+            ->add('name',TextType::class,[
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Названия продукта'
+            ])
+            ->add('price',MoneyType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Цена'
+            ])
             ->add('unit',ChoiceType::class,[
                 'choices' => [
                     'кг' => 'kg',
                     'грамм' => 'gr',
                     'литр' => 'liter',
                     'шт' => 'thing'
-                ]
+                ],
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Еденица измирения'
             ])
-            ->add('price',MoneyType::class)
             ->add('category',EntityType::class,[
                 'class' => Category::class,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Категория'
             ])
-            ->add('description',TextareaType::class)
-            ->add('titlePhoto',FileType::class)
+            ->add('description',TextareaType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => ''
+            ])
+            ->add('titlePhoto',FileType::class,[
+                'attr' => ['class' => 'form-control-file'],
+                'label' => 'Тайтл фото'
+            ])
             ->add('photo',FileType::class,[
-                'multiple' => true
+                'multiple' => true,
+                'attr' => ['class' => 'form-control-file'],
+                'label' => 'Доп. фотографии',
+                'required' => false
             ])
-            ->add('productSize',TextType::class)
-            ->add('amountPerUnit',TextType::class)
-            ->add('weightPerUnit',TextType::class)
-            ->add('seoTitle',TextType::class)
-            ->add('seoDescription',TextType::class)
-            ->add('create',SubmitType::class)
+            ->add('productSize',ChoiceType::class, [
+                'attr' => ['class' => 'form-control',],
+                'label' => 'Размер продукта(если есть)',
+                'choices' => [
+                    'S' => 'S',
+                    'M' => 'L',
+                    'L' => 'L',
+                    'XL' => 'XL',
+                    'XXL' => 'XXL'
+                ],
+                'required' => false
+            ])
+            ->add('amountPerUnit',TextType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Количесвто шт в кг(если есть)'
+            ])
+            ->add('weightPerUnit',TextType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Вес 1 шт. (если есть)'
+            ])
+            ->add('seoTitle',TextType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Сео тайтл'
+            ])
+            ->add('seoDescription',TextareaType::class, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Seo Description '
+            ])
+            ->add('create',SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary'],
+                'label' => 'Сохранить!'
+            ])
         ;
     }
 

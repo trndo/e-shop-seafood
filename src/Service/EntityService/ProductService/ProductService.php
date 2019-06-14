@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductService implements ProductServiceInterface
 {
-    private const PRODUCT_IMAGE_FOLDER = 'products';
+    private const PRODUCT_IMAGE_FOLDER = 'products/';
     /**
      * @var EntityManagerInterface
      */
@@ -28,19 +28,18 @@ class ProductService implements ProductServiceInterface
     public function __construct(EntityManagerInterface $entityManager, UploadFileInterface $fileUploader)
     {
         $this->entityManager = $entityManager;
-
         $this->fileUploader = $fileUploader;
     }
 
     public function saveProduct(ProductModel $model)
     {
         $product = $this->setNewProduct($model);
+        $this->entityManager->persist($product);
 
         $modelPhotos = $model->getPhoto();
         $this->uploadProductPhotos($modelPhotos, $product);
-        $supply = $this->setSupply($product);
 
-        $this->entityManager->persist($product);
+        $supply = $this->setSupply($product);
         $this->entityManager->persist($supply);
 
         $this->entityManager->flush();

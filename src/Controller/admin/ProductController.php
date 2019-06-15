@@ -3,15 +3,16 @@
 
 namespace App\Controller\admin;
 
-
+use App\Entity\Product;
 use App\Form\ProductType;
+use App\Mapper\ProductMapper;
 use App\Model\ProductModel;
+use App\Service\EntityService\ProductService\ProductService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
-use App\Service\FileSystemService\UploadFileInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
@@ -36,6 +37,59 @@ class ProductController extends AbstractController
 
         return $this->render('admin/product/create_product.html.twig',[
            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/products", name="products")
+     *
+     * @param ProductService $productService
+     * @return Response
+     */
+    public function products(ProductService $productService): Response
+    {
+        $products = $productService->getProducts();
+
+        return $this->render('admin/product/products.html.twig', [
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/products/{id}/update", name="updateProduct")
+     *
+     * @param Product $product
+     * @param Request $request
+     * @param ProductService $productService
+     * @return Response
+     */
+    public function updateProduct(Product $product,Request $request, ProductService $productService): Response
+    {
+        $options['update'] = true;
+        $form = $this->createForm(ProductType::class, ProductMapper::entityToModel($product),$options);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $productService->updateProduct($product,$form->getData());
+            return $this->redirectToRoute('products');
+        }
+
+        return $this->render('admin/product/update_product.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product
+        ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/products/{id}/show", name="showProduct")
+     *
+     * @param Product $product
+     * @return Response
+     */
+    public function showProduct(Product $product): Response
+    {
+        return $this->render('admin/product/show_product.html.twig',[
+            'product' => $product
         ]);
     }
 }

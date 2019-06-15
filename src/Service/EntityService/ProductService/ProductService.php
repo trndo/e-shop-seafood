@@ -4,10 +4,12 @@
 namespace App\Service\EntityService\ProductService;
 
 
+use App\Collection\ProductCollection;
 use App\Entity\Photo;
 use App\Entity\Product;
 use App\Entity\Supply;
 use App\Model\ProductModel;
+use App\Repository\ProductRepository;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\FileSystemService\UploadFileInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,10 +27,18 @@ class ProductService implements ProductServiceInterface
      */
     private $fileUploader;
 
-    public function __construct(EntityManagerInterface $entityManager, UploadFileInterface $fileUploader)
+    /**
+     * @var ProductRepository $productRepository
+     */
+    private $productRepository;
+
+    public function __construct(EntityManagerInterface $entityManager,
+                                UploadFileInterface $fileUploader,
+                                ProductRepository $productRepository)
     {
         $this->entityManager = $entityManager;
         $this->fileUploader = $fileUploader;
+        $this->productRepository = $productRepository;
     }
 
     public function saveProduct(ProductModel $model)
@@ -73,15 +83,6 @@ class ProductService implements ProductServiceInterface
         }
     }
 
-    private function uploadProductTitlePhoto(UploadedFile $titlePhoto, Product $product ): void
-    {
-        if ($titlePhoto instanceof UploadedFile) {
-            $newTitlePhoto = $this->upload($titlePhoto,self::PRODUCT_IMAGE_FOLDER);
-            $product->setTitlePhoto($newTitlePhoto);
-
-        }
-    }
-
     private function setNewProduct(ProductModel $model): Product
     {
         $product = new Product();
@@ -95,12 +96,12 @@ class ProductService implements ProductServiceInterface
             ->setProductSize($model->getProductSize())
             ->setAmountPerUnit($model->getAmountPerUnit())
             ->setWeightPerUnit($model->getWeightPerUnit())
-            ->setTitlePhoto($model->getTitlePhoto())
-            ->setCategory($model->getCategory())
-            ->setStatus(false);
+            ->setCategory($model->getCategory());
 
-        $modelTitlePhoto = $model->getTitlePhoto();
-        $this->uploadProductTitlePhoto($modelTitlePhoto, $product);
+        if ($model->getTitlePhoto() instanceof UploadedFile) {
+            $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::PRODUCT_IMAGE_FOLDER);
+            $product->setTitlePhoto($newTitlePhoto);
+        }
 
         return $product;
     }
@@ -113,6 +114,35 @@ class ProductService implements ProductServiceInterface
             ->setProduct($product);
 
         return $supply;
+    }
+
+    /**
+     * @return ProductCollection
+     */
+    public function getProducts(): ProductCollection
+    {
+        return new ProductCollection($this->productRepository->findAll());
+    }
+
+    public function updateProduct(Product $product, ProductModel $model): void
+    {
+        $product->setName($model->getName())
+            ->setUnit($model->getUnit())
+            ->setPrice($model->getPrice())
+            ->setDescription($model->getDescription())
+            ->setSeoDescription($model->getSeoDescription())
+            ->setSeoTitle($model->getSeoTitle())
+            ->setProductSize($model->getProductSize())
+            ->setAmountPerUnit($model->getAmountPerUnit())
+            ->setWeightPerUnit($model->getWeightPerUnit())
+            ->setCategory($model->getCategory());
+
+        if ($model->getTitlePhoto() instanceof UploadedFile) {
+            $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::PRODUCT_IMAGE_FOLDER, $product->getTitlePhoto());
+            $product->setTitlePhoto($newTitlePhoto);
+        }
+
+        $this->entityManager->flush();
     }
 
 

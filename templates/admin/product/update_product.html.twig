@@ -20,7 +20,7 @@
                     <div class="col-8">
                         {{ form_start(form) }}
                         <div class="form-group">
-                        {{ form_row(form.name) }}
+                            {{ form_row(form.name) }}
                         </div>
                         <div class="form-row">
                             <div class="col-8">
@@ -43,11 +43,9 @@
                         <div class="form-group">
                             {{ form_row(form.category) }}
                         </div>
+                        <img src="/uploads/products/{{ product.titlePhoto }}" width="50%" height="50%" alt="">
                         <div class="form-group">
-                            {{ form_row(form.titlePhoto) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(form.photo) }}
+                            {{ form_row(form.titlePhoto, {'required': false}) }}
                         </div>
                         <hr>
                         <div class="form-group">
@@ -64,6 +62,15 @@
                                     {{ form_row(form.weightPerUnit) }}
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.seoTitle) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.seoDescription) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.save) }}
                         </div>
                         {{ form_end(form) }}
                     </div>

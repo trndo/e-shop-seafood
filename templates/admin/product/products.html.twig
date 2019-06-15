@@ -1,0 +1,165 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    {{ include('elements/admin_nav.html.twig', {'active': 'products'}) }}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            {{ include('elements/admin_header.html.twig') }}
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="h3 mb-2 text-gray-800">Продукты</h1>
+                <p class="mb-4">Добвить новый продукт <button onclick="window.location.href = '{{ path('createProduct') }}'" class="btn btn-primary">Добавить!</button></p>
+                <hr class="sidebar-divider">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Таблица Продуктов</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills ">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Все</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">По категориям</a>
+                                <div class="dropdown-menu ">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Обложка</th>
+                                    <th>Название</th>
+                                    <th>Категория</th>
+                                    <th>Цена/к-во</th>
+                                    <th>Размерность</th>
+                                    <th>Рэйтинг</th>
+                                    <th>Статус</th>
+                                    <th>Дата создания</th>
+                                    <th>Дата обновления</th>
+                                    <th>Удалить/редактировать</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+                                    <tr>
+                                        <td>
+                                            {{ product.id }}
+                                        </td>
+                                        <td>
+                                            <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ product.name }}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if product.category is not null %}
+                                                {{ product.category.name }}
+                                            {% else %}
+                                                <span style="color: red;">Внимание , категория не назначена!!Продукт не будет отображаться на сайте!</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ product.price }}/{{ product.unit }}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if product.productSize is not null %}
+                                                {{ product.productSize }}
+                                            {% else %}
+                                                У этого продукта нет размерности
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ product.rating }}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if product.status %}
+                                                Активен
+                                            {% else %}
+                                                Не активен
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ product.createdAt|date('d/m/y H:i:s') }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ product.updatedAt|date('d/m/y H:i:s') }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-circle btn-sm" onclick="">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateProduct', {'id': product.id}) }}'">
+                                                <i class="fas fa-pen-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        {{ include('elements/admin_footer.html.twig') }}
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

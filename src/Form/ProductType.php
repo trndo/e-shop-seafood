@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,9 +27,9 @@ class ProductType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Названия продукта'
             ])
-            ->add('price',MoneyType::class, [
-                'attr' => ['class' => 'form-control'],
-                'label' => 'Цена'
+            ->add('price',IntegerType::class, [
+                'attr' => ['class' => 'form-control', 'min' => 0],
+                'label' => 'Цена',
             ])
             ->add('unit',ChoiceType::class,[
                 'choices' => [
@@ -38,7 +39,7 @@ class ProductType extends AbstractType
                     'шт' => 'thing'
                 ],
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Еденица измирения'
+                'label' => 'Еденица измирения',
             ])
             ->add('category',EntityType::class,[
                 'class' => Category::class,
@@ -48,47 +49,52 @@ class ProductType extends AbstractType
             ])
             ->add('description',TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => ''
+                'label' => 'Описание продукта'
             ])
             ->add('titlePhoto',FileType::class,[
                 'attr' => ['class' => 'form-control-file'],
-                'label' => 'Тайтл фото'
-            ])
-            ->add('photo',FileType::class,[
+                'label' => 'Фото Обложки'
+            ]);
+            if(!$options['update'])
+            $builder->add('photo',FileType::class,[
                 'multiple' => true,
                 'attr' => ['class' => 'form-control-file'],
                 'label' => 'Доп. фотографии',
-                'required' => false
-            ])
-            ->add('productSize',ChoiceType::class, [
-                'attr' => ['class' => 'form-control',],
+                'required' => false,
+            ]);
+            $builder->add('productSize',ChoiceType::class, [
+                'attr' => ['class' => 'form-control'],
                 'label' => 'Размер продукта(если есть)',
                 'choices' => [
                     'S' => 'S',
-                    'M' => 'L',
+                    'M' => 'M',
                     'L' => 'L',
                     'XL' => 'XL',
                     'XXL' => 'XXL'
                 ],
-                'required' => false
+                'required' => false,
+                'placeholder' => 'Выбирете размер'
             ])
             ->add('amountPerUnit',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Количесвто шт в кг(если есть)'
+                'label' => 'Количесвто шт в кг(если есть)',
+                'required' => false
             ])
             ->add('weightPerUnit',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Вес 1 шт. (если есть)'
+                'label' => 'Вес 1 шт. (если есть)',
+                'required' => false
             ])
             ->add('seoTitle',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Сео тайтл'
+                'required' => false
             ])
             ->add('seoDescription',TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Seo Description '
+                'label' => 'Seo Description ',
+                'required' => false
             ])
-            ->add('create',SubmitType::class, [
+            ->add('save',SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Сохранить!'
             ])
@@ -99,6 +105,7 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductModel::class,
+            'update' => false
         ]);
     }
 }

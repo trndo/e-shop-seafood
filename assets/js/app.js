@@ -1,9 +1,15 @@
 require('../css/sb-admin-2.css');
-const jQuery= require('jquery');
+const jQuery = require('jquery');
 require('bootstrap');
+import bsCustomFileInput from 'bs-custom-file-input';
+
 
 (function($) {
     "use strict"; // Start of use strict
+
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
 
     // Toggle the side navigation
     $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

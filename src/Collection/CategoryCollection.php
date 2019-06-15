@@ -23,6 +23,9 @@ class CategoryCollection implements \IteratorAggregate
         $this->categories = $categories;
     }
 
+    /**
+     * @return iterable
+     */
     public function getIterator(): iterable
     {
         return new \ArrayIterator($this->categories);

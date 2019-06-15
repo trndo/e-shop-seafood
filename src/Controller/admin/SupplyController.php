@@ -2,19 +2,45 @@
 
 namespace App\Controller\admin;
 
+use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SupplyController extends AbstractController
 {
     /**
-     * @Route(path="/lipadmin/supply", name="supply")
+     * @Route("/lipadmin/supply/edit", name="supplyEdit", methods={"POST"})
      *
+     * @param Request $request
+     * @param SupplyServiceInterface $supplyService
+     * @return JsonResponse
+     */
+    public function editProductSupply(Request $request, SupplyServiceInterface $supplyService): JsonResponse
+    {
+       $data = $request->getContent();
+       $supplyService->editSupply(json_decode($data,true));
+
+       return new JsonResponse([
+           'status' => true
+            ], 200
+       );
+    }
+
+    /**
+     * @Route("/lipadmin/supply", name="supply")
+     *
+     * @param SupplyServiceInterface $supplyService
      * @return Response
      */
-    public function show(): Response
+    public function showSupplies(SupplyServiceInterface $supplyService): Response
     {
-        return $this->render('admin/supply/show.html.twig');
+        $supplies = $supplyService->getAllSupply();
+
+        return $this->render('admin/supply/show.html.twig',[
+            'supplies' => $supplies
+        ]);
     }
 }

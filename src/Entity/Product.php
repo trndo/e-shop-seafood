@@ -421,4 +421,9 @@ class Product
 
         return $this;
     }
+
+    public function getTitlePhotoPath(): ?string
+    {
+        return '/uploads/products/'.$this->getTitlePhoto();
+    }
 }

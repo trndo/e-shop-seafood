@@ -13,7 +13,6 @@ class CategoryCollection implements \IteratorAggregate
      */
     private $categories;
 
-
     /**
      * CategoryCollection constructor.
      * @param array $categories

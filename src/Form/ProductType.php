@@ -33,10 +33,10 @@ class ProductType extends AbstractType
             ])
             ->add('unit',ChoiceType::class,[
                 'choices' => [
-                    'кг' => 'kg',
-                    'грамм' => 'gr',
-                    'литр' => 'liter',
-                    'шт' => 'thing'
+                    'кг' => 'кг',
+                    'грамм' => 'грамм',
+                    'литр' => 'литр',
+                    'шт' => 'шт'
                 ],
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Еденица измирения',

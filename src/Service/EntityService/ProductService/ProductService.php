@@ -46,8 +46,7 @@ class ProductService implements ProductServiceInterface
         $product = $this->setNewProduct($model);
         $this->entityManager->persist($product);
 
-        $modelPhotos = $model->getPhoto();
-        $this->uploadProductPhotos($modelPhotos, $product);
+        $this->uploadProductPhotos($model->getPhoto(), $product);
 
         $supply = $this->setSupply($product);
         $this->entityManager->persist($supply);
@@ -145,5 +144,24 @@ class ProductService implements ProductServiceInterface
         $this->entityManager->flush();
     }
 
+    /**
+     * @param Product $product
+     */
+    public function deleteProduct(Product $product): void
+    {
+        $titlePhoto = $this->fileUploader->getUploadDir().self::PRODUCT_IMAGE_FOLDER.$product->getTitlePhoto();
+        if(file_exists($titlePhoto) && is_file($titlePhoto))
+            unlink($titlePhoto);
+
+        foreach ($product->getPhotos() as $photo){
+            $photoHash = $this->fileUploader->getUploadDir().self::PRODUCT_IMAGE_FOLDER.$photo->getHash();
+            if(file_exists($photoHash) && is_file($photoHash))
+                unlink($photoHash);
+            $this->entityManager->remove($photo);
+        }
+
+        $this->entityManager->remove($product);
+        $this->entityManager->flush();
+    }
 
 }

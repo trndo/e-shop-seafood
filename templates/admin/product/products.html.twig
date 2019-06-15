@@ -114,11 +114,14 @@
                                             {{ product.updatedAt|date('d/m/y H:i:s') }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm" onclick="">
+                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Точно удалить продукт?Он удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deleteProduct', {'slug': product.slug}) }}'">
                                                 <i class="fas fa-times"></i>
                                             </button>
-                                            <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateProduct', {'id': product.id}) }}'">
+                                            <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateProduct', {'slug': product.slug}) }}'">
                                                 <i class="fas fa-pen-alt"></i>
+                                            </button>
+                                            <button class="btn btn-success btn-circle btn-sm" onclick="window.location.href = '{{ path('showProduct', {'slug': product.slug}) }}'">
+                                                <i class="fas fa-info"></i>
                                             </button>
                                         </td>
                                     </tr>

@@ -10,6 +10,7 @@ use App\Model\ProductModel;
 use App\Service\EntityService\ProductService\ProductService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +57,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{id}/update", name="updateProduct")
+     * @Route(path="/lipadmin/products/{slug}/update", name="updateProduct")
      *
      * @param Product $product
      * @param Request $request
@@ -81,7 +82,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{id}/show", name="showProduct")
+     * @Route(path="/lipadmin/products/{slug}/show", name="showProduct")
      *
      * @param Product $product
      * @return Response
@@ -91,5 +92,18 @@ class ProductController extends AbstractController
         return $this->render('admin/product/show_product.html.twig',[
             'product' => $product
         ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/products/{slug}/delete", name="deleteProduct")
+     *
+     * @param Product $product
+     * @param ProductService $productService
+     * @return RedirectResponse
+     */
+    public function deleteProduct(Product $product, ProductService $productService): RedirectResponse
+    {
+        $productService->deleteProduct($product);
+        return $this->redirectToRoute('products');
     }
 }

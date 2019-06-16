@@ -18,14 +18,24 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ path('products') }}">Продукты</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                            </ol>
+                        </nav>
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}{% if product.status %} &nbsp;<span class="badge badge-success">Активно</span>{% else %} &nbsp;<span class="badge badge-danger">Не активно</span>{% endif %}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Категория: {% if product.category is not null %}{{ product.category.name }}{% else %}<span style="color: red">Не назначена!</span>{% endif %}</h6>
-                                <figure class="figure">
-                                    <img src="{{ product.getTitlePhotoPath() }}" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption">Обложка</figcaption>
-                                </figure>
+                                <div class="row justify-content-center">
+                                    <div class="col-6">
+                                        <figure class="figure">
+                                            <img src="{{ product.getTitlePhotoPath() }}" class="figure-img img-fluid rounded" alt="...">
+                                        </figure>
+                                    </div>
+                                </div>
+                                <h3>Оснвные значения</h3>
                                 <p class="card-text">Цена: {{ product.price }}/{{ product.unit }}</p>
                                 <p class="card-text">Поставка: {{ product.supply.quantity }} {{ product.unit }}</p>
                                 <hr>
@@ -40,8 +50,11 @@
                                     <h5>Description</h5>
                                     <p class="card-text">{{ product.seoDescription }}</p>
                                 <hr>
+                                <h3>Действия</h3>
+                                <button class="btn btn-primary">Обновить фото на слайдере</button>
+                                <hr>
                                 <div class="row justify-content-center">
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
                                                 {% for photo in product.photos %}

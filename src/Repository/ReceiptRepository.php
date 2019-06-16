@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Receipt;
+use App\Repository\RepositoryInterface\FinderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,11 +13,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Receipt[]    findAll()
  * @method Receipt[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReceiptRepository extends ServiceEntityRepository
+class ReceiptRepository extends ServiceEntityRepository implements FinderInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Receipt::class);
+    }
+
+    public function findByName(string $receiptName): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.name = :productName')
+            ->setParameter('productName', $receiptName)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**

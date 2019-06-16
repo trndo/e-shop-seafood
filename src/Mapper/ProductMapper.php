@@ -5,9 +5,9 @@ namespace App\Mapper;
 use App\Entity\Product;
 use App\Model\ProductModel;
 
-class ProductMapper
+final class ProductMapper
 {
-    static public function entityToModel(Product $product): ProductModel
+    public static function entityToModel(Product $product): ProductModel
     {
         $productDto = new ProductModel();
         $productDto->setDescription($product->getDescription())

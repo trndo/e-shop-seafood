@@ -41,7 +41,7 @@ class ProductService implements ProductServiceInterface
         $this->productRepository = $productRepository;
     }
 
-    public function saveProduct(ProductModel $model)
+    public function saveProduct(ProductModel $model): void
     {
         $product = $this->setNewProduct($model);
         $this->entityManager->persist($product);
@@ -180,4 +180,5 @@ class ProductService implements ProductServiceInterface
            $this->entityManager->flush();
        }
     }
+
 }

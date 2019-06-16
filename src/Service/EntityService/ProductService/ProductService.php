@@ -164,4 +164,20 @@ class ProductService implements ProductServiceInterface
         $this->entityManager->flush();
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function activateProduct(?int $id): void
+    {
+       $product = $this->productRepository->find($id);
+
+       if($product){
+           if($product->getStatus())
+               $product->setStatus(false);
+           else
+               $product->setStatus(true);
+
+           $this->entityManager->flush();
+       }
+    }
 }

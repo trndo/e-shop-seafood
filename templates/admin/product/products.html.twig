@@ -101,11 +101,10 @@
                                             {{ product.rating }}
                                         </td>
                                         <td class="text-center">
-                                            {% if product.status %}
-                                                Активен
-                                            {% else %}
-                                                Не активен
-                                            {% endif %}
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" onchange="activate({{ product.id }})" class="custom-control-input" id="customSwitch{{ product.id }}" {% if product.status %}checked{% endif %}>
+                                                <label class="custom-control-label" for="customSwitch{{ product.id }}">Активировать\Деактивировать</label>
+                                            </div>
                                         </td>
                                         <td class="text-center">
                                             {{ product.createdAt|date('d/m/y H:i:s') }}
@@ -165,4 +164,20 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+    function activate(id) {
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('activateProduct') }}',
+            data: { id: id}
+        })
+    }
+</script>
 {% endblock %}

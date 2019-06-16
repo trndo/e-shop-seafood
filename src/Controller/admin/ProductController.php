@@ -10,6 +10,7 @@ use App\Model\ProductModel;
 use App\Service\EntityService\ProductService\ProductService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,5 +106,18 @@ class ProductController extends AbstractController
     {
         $productService->deleteProduct($product);
         return $this->redirectToRoute('products');
+    }
+
+    /**
+     * @Route(path="/lipadmin/products/activate", name="activateProduct")
+     *
+     * @param Request $request
+     * @param ProductService $productService
+     * @return JsonResponse
+     */
+    public function activeProduct(Request $request, ProductService $productService): JsonResponse
+    {
+        $productService->activateProduct($request->request->get('id'));
+        return new JsonResponse(['status' => true],200);
     }
 }

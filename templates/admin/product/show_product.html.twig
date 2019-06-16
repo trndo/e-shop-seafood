@@ -24,7 +24,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Категория: {% if product.category is not null %}{{ product.category.name }}{% else %}<span style="color: red">Не назначена!</span>{% endif %}</h6>
                                 <figure class="figure">
                                     <img src="{{ product.getTitlePhotoPath() }}" class="figure-img img-fluid rounded" alt="...">
-                                    <figcaption class="figure-caption">A caption for the above image.</figcaption>
+                                    <figcaption class="figure-caption">Обложка</figcaption>
                                 </figure>
                                 <p class="card-text">Цена: {{ product.price }}/{{ product.unit }}</p>
                                 <p class="card-text">Поставка: {{ product.supply.quantity }} {{ product.unit }}</p>

@@ -51,7 +51,7 @@
                                     <p class="card-text">{{ product.seoDescription }}</p>
                                 <hr>
                                 <h3>Действия</h3>
-                                <button class="btn btn-primary">Обновить фото на слайдере</button>
+                                <button class="btn btn-primary" onclick="window.location.href ='{{ path('showProductPhotos',{'slug': product.slug }) }}'">Обновить фото на слайдере</button>
                                 <hr>
                                 <div class="row justify-content-center">
                                     <div class="col-6">

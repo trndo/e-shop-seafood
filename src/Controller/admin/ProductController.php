@@ -62,10 +62,11 @@ class ProductController extends AbstractController
      *
      * @param Product $product
      * @param Request $request
-     * @param ProductService $productService
+     *
+     * @param ProductServiceInterface $productService
      * @return Response
      */
-    public function updateProduct(Product $product,Request $request, ProductService $productService): Response
+    public function updateProduct(Product $product,Request $request, ProductServiceInterface $productService): Response
     {
         $options['update'] = true;
         $form = $this->createForm(ProductType::class, ProductMapper::entityToModel($product),$options);
@@ -99,10 +100,11 @@ class ProductController extends AbstractController
      * @Route(path="/lipadmin/products/{slug}/delete", name="deleteProduct")
      *
      * @param Product $product
-     * @param ProductService $productService
+     *
+     * @param ProductServiceInterface $productService
      * @return RedirectResponse
      */
-    public function deleteProduct(Product $product, ProductService $productService): RedirectResponse
+    public function deleteProduct(Product $product, ProductServiceInterface $productService): RedirectResponse
     {
         $productService->deleteProduct($product);
         return $this->redirectToRoute('products');
@@ -112,10 +114,10 @@ class ProductController extends AbstractController
      * @Route(path="/lipadmin/products/activate", name="activateProduct")
      *
      * @param Request $request
-     * @param ProductService $productService
+     * @param ProductServiceInterface $productService
      * @return JsonResponse
      */
-    public function activeProduct(Request $request, ProductService $productService): JsonResponse
+    public function activeProduct(Request $request, ProductServiceInterface $productService): JsonResponse
     {
         $productService->activateProduct($request->request->get('id'));
         return new JsonResponse(['status' => true],200);

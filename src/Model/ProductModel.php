@@ -305,7 +305,6 @@ class ProductModel
         return $this;
     }
 
-
     /**
      * @return array|null
      */
@@ -313,7 +312,6 @@ class ProductModel
     {
         return $this->photo;
     }
-
 
     /**
      * @param UploadedFile|null $photo
@@ -329,6 +327,5 @@ class ProductModel
         }
         return $this;
     }
-
 
 }

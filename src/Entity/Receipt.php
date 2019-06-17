@@ -97,9 +97,15 @@ class Receipt
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="receipt")
+     */
+    private $photo;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->photo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -297,6 +303,37 @@ class Receipt
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Photo[]
+     */
+    public function getPhoto(): Collection
+    {
+        return $this->photo;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photo->contains($photo)) {
+            $this->photo[] = $photo;
+            $photo->setReceipt($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photo->contains($photo)) {
+            $this->photo->removeElement($photo);
+            // set the owning side to null (unless already changed)
+            if ($photo->getReceipt() === $this) {
+                $photo->setReceipt(null);
+            }
+        }
 
         return $this;
     }

@@ -126,5 +126,16 @@ class ProductController extends AbstractController
         return new JsonResponse(['status' => true],200);
     }
 
-
+    /**
+     * @Route(path="/lipadmin/products/{slug}/showPhotos", name="showProductPhotos")
+     *
+     * @param Product $product
+     * @return Response
+     */
+    public function showProductPhotos(Product $product): Response
+    {
+        return $this->render('admin/product/show_product_photos.html.twig', [
+            'product' => $product
+        ]);
+    }
 }

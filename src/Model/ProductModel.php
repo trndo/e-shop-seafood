@@ -86,6 +86,10 @@ class ProductModel
      *     maxSizeMessage= "Масмальный размер файла 10мб"
      * )
      * })
+     * @Assert\Count(
+     *      max = 3,
+     *      maxMessage = "Вы можете загрузить максимум {{ limit }} фото"
+     * )
      * @var array|UploadedFile|null $photo
      */
     private $photo;
@@ -301,7 +305,6 @@ class ProductModel
         return $this;
     }
 
-
     /**
      * @return array|null
      */
@@ -309,7 +312,6 @@ class ProductModel
     {
         return $this->photo;
     }
-
 
     /**
      * @param UploadedFile|null $photo
@@ -325,6 +327,5 @@ class ProductModel
         }
         return $this;
     }
-
 
 }

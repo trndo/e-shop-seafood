@@ -26,6 +26,11 @@ class Photo
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Receipt", inversedBy="photo")
+     */
+    private $receipt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Photo
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getReceipt(): ?Receipt
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?Receipt $receipt): self
+    {
+        $this->receipt = $receipt;
 
         return $this;
     }

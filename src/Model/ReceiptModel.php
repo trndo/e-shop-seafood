@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Model;
 
-
 use App\Entity\Category;
-use App\Entity\Product;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ReceiptModel
 {
@@ -32,7 +30,7 @@ class ReceiptModel
 
     /**
      * @Assert\NotBlank(message="Это поле не должно быть пустым")
-     * @Assert\Length(max="400", maxMessage="Длина описания не должна быть больше 400 символов")
+     * @Assert\Length(max="400", maxMessage="Длина описания не должна быть ольше 400 символов")
      * @var string|null $description
      */
     private $description;
@@ -59,21 +57,6 @@ class ReceiptModel
     private $titlePhoto;
 
     /**
-     * @var  string|null $productSize
-     */
-    private $productSize;
-
-    /**
-     * @var string|null $amountPerUnit
-     */
-    private $amountPerUnit;
-
-    /**
-     * @var string|null $weightPerUnit
-     */
-    private $weightPerUnit;
-
-    /**
      * @Assert\NotBlank(message="Это поле не должно быть пустым")
      * @var Category|null $category
      */
@@ -88,28 +71,196 @@ class ReceiptModel
      *     maxSizeMessage= "Масмальный размер файла 10мб"
      * )
      * })
+     * @Assert\Count(
+     *      max = 3,
+     *      maxMessage = "Вы можете загрузить максимум {{ limit }} фото"
+     * )
      * @var array|UploadedFile|null $photo
      */
     private $photo;
 
-    /**
-     * @var Product
-     */
-    private $product;
 
     /**
-     * @return Product
+     * @return Category
      */
-    public function getProduct(): Product
+    public function getCategory(): ?Category
     {
-        return $this->product;
+        return $this->category;
+    }
+
+
+    /**
+     * @param Category|null $category
+     * @return ReceiptModel
+     */
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 
     /**
-     * @param Product $product
+     * @return string
      */
-    public function setProduct(Product $product): void
+    public function getName(): ?string
     {
-        $this->product = $product;
+        return $this->name;
+    }
+
+
+    /**
+     * @param string|null $name
+     * @return ReceiptModel
+     */
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+
+    /**
+     * @param string|null $unit
+     * @return ReceiptModel
+     */
+    public function setUnit(?string $unit): self
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+
+    /**
+     * @param float|null $price
+     * @return ReceiptModel
+     */
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+
+    /**
+     * @param string|null $description
+     * @return ReceiptModel
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle(): ?string
+    {
+        return $this->seoTitle;
+    }
+
+
+    /**
+     * @param string|null $seoTitle
+     * @return ReceiptModel
+     */
+    public function setSeoTitle(?string $seoTitle): self
+    {
+        $this->seoTitle = $seoTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoDescription(): ?string
+    {
+        return $this->seoDescription;
+    }
+
+
+    /**
+     * @param string|null $seoDescription
+     * @return ReceiptModel
+     */
+    public function setSeoDescription(?string $seoDescription): self
+    {
+        $this->seoDescription = $seoDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getTitlePhoto(): ?UploadedFile
+    {
+        return $this->titlePhoto;
+    }
+
+
+    /**
+     * @param UploadedFile|null $titlePhoto
+     * @return ReceiptModel
+     */
+    public function setTitlePhoto(?UploadedFile $titlePhoto): self
+    {
+        $this->titlePhoto = $titlePhoto;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getPhoto(): ?array
+    {
+        return $this->photo;
+    }
+
+
+    /**
+     * @param $photo
+     * @return ReceiptModel
+     */
+    public function setPhoto($photo): self
+    {
+        if($photo instanceof UploadedFile) {
+            $this->photo[] = $photo;
+        }
+        else {
+            $this->photo = $photo;
+        }
+        return $this;
     }
 }

@@ -13,4 +13,12 @@ interface FinderInterface
      * @return array|null
      */
     public function findByName(string $name): ?array ;
+
+    /**
+     * @param string $productName
+     * @return array|null
+     */
+    public function findForRender(string $productName): ?array ;
+
+
 }

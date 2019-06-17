@@ -23,8 +23,8 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
     public function findByName(string $receiptName): ?array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.name = :productName')
-            ->setParameter('productName', $receiptName)
+            ->andWhere('p.name LIKE :receiptName')
+            ->setParameter('receiptName', '%'.$receiptName.'%')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -59,4 +59,12 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         ;
     }
     */
+    /**
+     * @param string $productName
+     * @return array|null
+     */
+    public function findForRender(string $productName): ?array
+    {
+        // TODO: Implement findForRender() method.
+    }
 }

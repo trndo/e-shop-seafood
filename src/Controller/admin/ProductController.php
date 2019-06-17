@@ -7,8 +7,11 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Mapper\ProductMapper;
 use App\Model\ProductModel;
+use App\Repository\ProductRepository;
+use App\Repository\RepositoryInterface\FinderInterface;
 use App\Service\EntityService\ProductService\ProductService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
+use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -122,4 +125,6 @@ class ProductController extends AbstractController
         $productService->activateProduct($request->request->get('id'));
         return new JsonResponse(['status' => true],200);
     }
+
+
 }

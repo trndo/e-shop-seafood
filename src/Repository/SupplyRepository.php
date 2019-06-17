@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Supply;
+use App\Repository\RepositoryInterface\FinderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,13 +13,29 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Supply[]    findAll()
  * @method Supply[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SupplyRepository extends ServiceEntityRepository
+class SupplyRepository extends ServiceEntityRepository implements FinderInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Supply::class);
     }
 
+    /**
+     * @param string $productName
+     * @return Supply[]|null
+     */
+    public function findForRender(string $productName): ?array
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.product','p')
+            ->addSelect('p')
+            ->andWhere('p.name LIKE :productName ')
+            ->setParameter('productName', '%'.$productName.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Supply[] Returns an array of Supply objects
     //  */
@@ -47,4 +64,14 @@ class SupplyRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * Find name of products and return array of names
+     *
+     * @param string $name
+     * @return array|null
+     */
+    public function findByName(string $name): ?array
+    {
+        // TODO: Implement findByName() method.
+    }
 }

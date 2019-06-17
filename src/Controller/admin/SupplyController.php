@@ -2,7 +2,9 @@
 
 namespace App\Controller\admin;
 
+use App\Repository\SupplyRepository;
 use App\Service\EntityService\SupplyService\SupplyServiceInterface;
+use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +42,26 @@ class SupplyController extends AbstractController
         $supplies = $supplyService->getAllSupply();
 
         return $this->render('admin/supply/show.html.twig',[
+            'supplies' => $supplies
+        ]);
+    }
+
+    /**
+     * @Route("/lipadmin/supply/search", methods={"GET"}, name="searchByName")
+     *
+     * @param Request $request
+     * @
+     * @param SearcherInterface $searcher
+     * @param SupplyRepository $repository
+     * @return JsonResponse
+     */
+    public function searchByName(Request $request, SearcherInterface $searcher, SupplyRepository $repository): Response
+    {
+        $name = $request->query->get('q');
+
+        $supplies = $searcher->searchByNameForRender($name, $repository);
+
+        return $this->render('elements/supply_card.html.twig',[
             'supplies' => $supplies
         ]);
     }

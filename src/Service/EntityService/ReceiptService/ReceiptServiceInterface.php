@@ -27,7 +27,7 @@ interface ReceiptServiceInterface
     /**
      * @return ReceiptCollection
      */
-    public function getRecipes(): ReceiptCollection;
+    public function getReceipts(): ReceiptCollection;
 
     /**
      * @param int|null $id

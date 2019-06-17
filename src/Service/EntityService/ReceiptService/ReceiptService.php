@@ -2,6 +2,7 @@
 
 namespace App\Service\EntityService\ReceiptService;
 
+use App\Collection\ReceiptCollection;
 use App\Entity\Photo;
 use App\Entity\Receipt;
 use App\Model\ReceiptModel;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ReceiptService implements ReceiptServiceInterface
 {
-    private const RECEIPT_IMAGE_FOLDER = 'recipes/';
+    private const RECEIPT_IMAGE_FOLDER = 'receipts/';
     /**
      * @var EntityManagerInterface
      */
@@ -134,4 +135,11 @@ class ReceiptService implements ReceiptServiceInterface
         }
     }
 
+    /**
+     * @return ReceiptCollection
+     */
+    public function getReceipts(): ReceiptCollection
+    {
+        // TODO: Implement getRecipes() method.
+    }
 }

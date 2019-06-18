@@ -2,6 +2,13 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('autocomplete') }}
+    <style>
+        .ui-menu-item div.ui-state-active{
+            color: #96f226;
+            border-radius: 0;
+            border: 1px solid #454545;
+        }
+    </style>
 {% endblock %}
 {% block body %}
 <body id="page-top">
@@ -43,9 +50,11 @@
                             </li>
                             <li class="nav-item">
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group ui-widget">
-                                        <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="q" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
+                                    <div class="input-group">
+                                        <div class="ui-widget">
+                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="term" aria-describedby="basic-addon2">
+                                        </div>
+                                            <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>

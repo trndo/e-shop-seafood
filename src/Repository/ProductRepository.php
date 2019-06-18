@@ -20,6 +20,10 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         parent::__construct($registry, Product::class);
     }
 
+    /**
+     * @param string $productName
+     * @return Product[]|null
+     */
     public function findByName(string $productName): ?array
     {
         return $this->createQueryBuilder('p')

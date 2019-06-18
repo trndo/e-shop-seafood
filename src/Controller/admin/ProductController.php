@@ -136,9 +136,8 @@ class ProductController extends AbstractController
      */
     public function searchProduct(Request $request, SearcherInterface $searcher, ProductRepository $repository): JsonResponse
     {
-        $name = $request->query->get('q');
+        $name = $request->query->get('term');
         $products = $searcher->searchByName($name, $repository);
-
 
         return new JsonResponse(
             $products

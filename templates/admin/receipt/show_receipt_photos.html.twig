@@ -20,24 +20,24 @@
                     <div class="col-12">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ path('showProduct',{'slug': product.slug}) }}">{{ product.name }}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Фотографии продукта {{ product.name }}</li>
+                                <li class="breadcrumb-item"><a href="{{ path('showReceipt',{'slug': receipt.slug}) }}">{{ receipt.name }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Фотографии продукта {{ receipt.name }}</li>
                             </ol>
                         </nav>
                         <div class="row">
                             {% for i in 0..2 %}
-                                {% if product.photos[i] is defined %}
+                                {% if receipt.photo[i] is defined %}
                                     <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
                                         <div class="card" style="width: 18rem;">
-                                            <img src="/uploads/products/{{ product.photos[i].hash }}" class="card-img-top" id="photo-{{ product.photos[i].id }}" alt="...">
+                                            <img src="/uploads/receipts/{{ receipt.photo[i].hash }}" class="card-img-top" id="photo-{{ receipt.photo[i].id }}" alt="...">
                                             <div class="card-body">
-                                                <form method="post" data-id="{{ product.photos[i].id }}" data-product="{{ product.id }}" data-url="products">
+                                                <form method="post" data-id="{{ receipt.photo[i].id }}" data-product="{{ receipt.id }}" data-url="receipts">
                                                     <p>
                                                         <input type="file" class="form-control-file" required>
                                                     </p>
                                                     <button type="submit" class="btn btn-primary">Загрузить новое фото</button>
                                                 </form>
-                                                <button data-id="{{ product.photos[i].id }}" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>
+                                                <button data-id="{{ receipt.photo[i].id }}" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -46,11 +46,11 @@
                                         <div class="card" style="width: 18rem;">
                                             <img src="{{ asset('assets/img/noImg.jpg') }}" class="card-img-top" alt="...">
                                             <div class="card-body">
-                                                <form method="post" data-product="{{ product.id }}">
+                                                <form method="post" data-product="{{ receipt.id }}" data-url="receipts">
                                                     <p>
                                                         <input type="file" class="form-control-file" required>
                                                     </p>
-                                                    <button type="submit" class="btn btn-primary">Загрузить новое фото</button>
+                                                    <button type="submit" data-url="receipts" class="btn btn-primary">Загрузить новое фото</button>
                                                 </form>
                                             </div>
                                         </div>

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ReceiptPhotoService implements PhotoServiceInterface
 {
-    private const RECEIPT_FOLDER =  'recipes/';
+    private const RECEIPT_FOLDER =  'receipts/';
 
     private $em;
 

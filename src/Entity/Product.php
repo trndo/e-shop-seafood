@@ -129,7 +129,7 @@ class Product
         $this->photos = new ArrayCollection();
         $this->receipts = new ArrayCollection();
         $this->rating = 0;
-        $this->status = 1;
+        $this->status = 0;
     }
 
     public function getId(): ?int

@@ -53,7 +53,7 @@ class ProductController extends AbstractController
      */
     public function products(ProductService $productService): Response
     {
-        $products = $productService->getProducts();
+        $products = $productService->getProductsByCriteria([],['status' => 'ASC']);
 
         return $this->render('admin/product/products.html.twig', [
             'products' => $products

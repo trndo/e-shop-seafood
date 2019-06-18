@@ -2,7 +2,7 @@ const $ = require('jquery');
 
 
 $(document).ready(function () {
-   $('.editSupply').click(function () {
+   $(document).on('click','.editSupply',function () {
        let data = {
            id: $(this).data('id'),
            quantity: $('#quantity-'+$(this).data('id')).val()

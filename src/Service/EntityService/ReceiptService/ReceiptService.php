@@ -140,6 +140,16 @@ class ReceiptService implements ReceiptServiceInterface
      */
     public function getReceipts(): ReceiptCollection
     {
-        // TODO: Implement getRecipes() method.
+        return new ReceiptCollection($this->receiptRepository->findAll());
+    }
+
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return ReceiptCollection
+     */
+    public function getReceiptsByCriteria(array $criteria, array $orderBy = []): ReceiptCollection
+    {
+        return new ReceiptCollection($this->receiptRepository->findBy($criteria,$orderBy));
     }
 }

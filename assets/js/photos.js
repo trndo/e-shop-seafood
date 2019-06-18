@@ -12,11 +12,12 @@ $('form').submit(function (event) {
     data.append('id', id);
     if(product)
     data.append('product',product);
-
+    let url = $(this).data('url');
+    console.log(url);
     let img = $(this).parent().siblings('img');
     let input = $(this).find('input');
     $.ajax({
-        url: '/lipadmin/products/changePhoto',
+        url: '/lipadmin/'+url+'/changePhoto',
         type: 'POST',
         data: data,
         cache: false,
@@ -25,7 +26,7 @@ $('form').submit(function (event) {
         success: function (res) {
             console.log(res);
             if(res.hash) {
-               img.attr('src', '/uploads/products/' + res.hash + '?' + new Date().getTime());
+               img.attr('src', '/uploads/'+url+'/' + res.hash + '?' + new Date().getTime());
                input.val('');
             }
         }
@@ -39,7 +40,7 @@ $('.delete_photo').click(function() {
     let id = $(this).data('id');
 
     $.ajax({
-        url: '/lipadmin/products/deletePhoto',
+        url: '/lipadmin/'+url+'/deletePhoto',
         type: 'DELETE',
         data: {
             id: id

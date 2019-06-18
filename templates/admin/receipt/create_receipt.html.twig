@@ -5,7 +5,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    {{ include('elements/admin_nav.html.twig', {'active' : 'categories'}) }}
+    {{ include('elements/admin_nav.html.twig', {'active' : 'products'}) }}
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -20,7 +20,7 @@
                     <div class="col-8">
                         {{ form_start(form) }}
                         <div class="form-group">
-                        {{ form_row(form.name) }}
+                            {{ form_row(form.name) }}
                         </div>
                         <div class="form-row">
                             <div class="col-8">
@@ -47,21 +47,6 @@
                             {{ form_row(form.photo) }}
                         </div>
                         <hr>
-                        <div class="form-group">
-                            {{ form_row(form.productSize) }}
-                        </div>
-                        <div class="form-row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    {{ form_row(form.amountPerUnit) }}
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    {{ form_row(form.weightPerUnit) }}
-                                </div>
-                            </div>
-                        </div>
                         {{ form_end(form) }}
                     </div>
                 </div>

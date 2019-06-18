@@ -123,6 +123,16 @@ class ProductService implements ProductServiceInterface
         return new ProductCollection($this->productRepository->findAll());
     }
 
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return ProductCollection
+     */
+    public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection
+    {
+        return new ProductCollection($this->productRepository->findBy($criteria,$orderBy));
+    }
+
     public function updateProduct(Product $product, ProductModel $model): void
     {
         $product->setName($model->getName())

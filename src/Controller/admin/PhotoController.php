@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Service\EntityService\PhotoService\PhotoService;
+use App\Service\EntityService\PhotoService\ReceiptPhotoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ class PhotoController extends AbstractController
      * @param PhotoService $service
      * @return JsonResponse
      */
-    public function updatePhoto(Request $request, PhotoService $service): JsonResponse
+    public function updateProductPhoto(Request $request, PhotoService $service): JsonResponse
     {
         $post = $request->request;
         $file = $request->files->get('file');
@@ -33,7 +34,36 @@ class PhotoController extends AbstractController
      * @param PhotoService $service
      * @return JsonResponse
      */
-    public function deletePhoto(Request $request, PhotoService $service): JsonResponse
+    public function deleteProductPhoto(Request $request, PhotoService $service): JsonResponse
+    {
+        $service->deletePhoto((int)$request->request->get('id'));
+        return new JsonResponse([],200);
+    }
+
+    /**
+     * @Route("lipadmin/receipts/changePhoto", methods={"POST"})
+     *
+     * @param Request $request
+     * @param ReceiptPhotoService $service
+     * @return JsonResponse
+     */
+    public function updateReceiptsPhoto(Request $request,ReceiptPhotoService $service): JsonResponse
+    {
+        $post = $request->request;
+        $file = $request->files->get('file');
+        $hash = $service->updatePhoto($file,$post->get('id'),(int)$post->get('product'));
+
+        return new JsonResponse(['hash' => $hash],200);
+    }
+
+    /**
+     * @Route("lipadmin/receipts/deletePhoto", methods={"POST"})
+     *
+     * @param Request $request
+     * @param ReceiptPhotoService $service
+     * @return JsonResponse
+     */
+    public function deleteReceiptPhoto(Request $request, ReceiptPhotoService $service): JsonResponse
     {
         $service->deletePhoto((int)$request->request->get('id'));
         return new JsonResponse([],200);

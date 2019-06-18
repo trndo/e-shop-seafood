@@ -106,6 +106,8 @@ class Receipt
     {
         $this->products = new ArrayCollection();
         $this->photo = new ArrayCollection();
+        $this->rating = 0;
+        $this->status = 0;
     }
 
     public function getId(): ?int

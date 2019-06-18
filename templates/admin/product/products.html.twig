@@ -1,4 +1,8 @@
 {% extends 'admin_base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('autocomplete') }}
+{% endblock %}
 {% block body %}
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -39,8 +43,8 @@
                             </li>
                             <li class="nav-item">
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group ui-widget">
+                                        <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="q" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -170,7 +174,9 @@
 <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+
+</script>
 <script>
     function activate(id) {
         $.ajax({
@@ -180,4 +186,5 @@
         })
     }
 </script>
+    {{ encore_entry_script_tags('autocomplete') }}
 {% endblock %}

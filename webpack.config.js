@@ -21,6 +21,7 @@ Encore
     .addEntry('editSupply', './assets/js/supply.js')
     .addEntry('search', './assets/js/search.js')
     .addEntry('photos', './assets/js/photos.js')
+    .addEntry('autocomplete','./assets/js/autocomplete.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

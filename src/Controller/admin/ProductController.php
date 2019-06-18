@@ -46,7 +46,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products", name="products")
+     * @Route("/lipadmin/products", name="products")
      *
      * @param ProductService $productService
      * @return Response
@@ -61,7 +61,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{slug}/update", name="updateProduct")
+     * @Route("/lipadmin/products/{slug}/update", name="updateProduct")
      *
      * @param Product $product
      * @param Request $request
@@ -87,7 +87,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{slug}/show", name="showProduct")
+     * @Route("/lipadmin/products/{slug}/show", name="showProduct")
      *
      * @param Product $product
      * @return Response
@@ -100,7 +100,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{slug}/delete", name="deleteProduct")
+     * @Route("/lipadmin/products/{slug}/delete", name="deleteProduct")
      *
      * @param Product $product
      *
@@ -114,7 +114,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/activate", name="activateProduct")
+     * @Route("/lipadmin/products/activate", name="activateProduct")
      *
      * @param Request $request
      * @param ProductServiceInterface $productService
@@ -127,7 +127,26 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/products/{slug}/showPhotos", name="showProductPhotos")
+     * @Route("/lipadmin/products/search", name="searchProducts", methods={"GET"})
+     *
+     * @param Request $request
+     * @param SearcherInterface $searcher
+     * @param ProductRepository $repository
+     * @return JsonResponse
+     */
+    public function searchProduct(Request $request, SearcherInterface $searcher, ProductRepository $repository): JsonResponse
+    {
+        $name = $request->query->get('q');
+        $products = $searcher->searchByName($name, $repository);
+
+
+        return new JsonResponse(
+            $products
+        );
+    }
+
+    /**
+     * @Route("/lipadmin/products/{slug}/showPhotos", name="showProductPhotos")
      *
      * @param Product $product
      * @return Response

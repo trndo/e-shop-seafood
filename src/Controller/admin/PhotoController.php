@@ -57,7 +57,7 @@ class PhotoController extends AbstractController
     }
 
     /**
-     * @Route("lipadmin/receipts/deletePhoto", methods={"POST"})
+     * @Route("lipadmin/receipts/deletePhoto", methods={"DELETE"})
      *
      * @param Request $request
      * @param ReceiptPhotoService $service

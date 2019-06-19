@@ -37,7 +37,7 @@
                                                     </p>
                                                     <button type="submit" class="btn btn-primary">Загрузить новое фото</button>
                                                 </form>
-                                                <button data-id="{{ product.photos[i].id }}" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>
+                                                <button data-id="{{ product.photos[i].id }}" data-url="products" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>
                                             </div>
                                         </div>
                                     </div>
@@ -46,11 +46,11 @@
                                         <div class="card" style="width: 18rem;">
                                             <img src="{{ asset('assets/img/noImg.jpg') }}" class="card-img-top" alt="...">
                                             <div class="card-body">
-                                                <form method="post" data-product="{{ product.id }}">
+                                                <form method="post" data-url="prodcuts" data-product="{{ product.id }}">
                                                     <p>
                                                         <input type="file" class="form-control-file" required>
                                                     </p>
-                                                    <button type="submit" class="btn btn-primary">Загрузить новое фото</button>
+                                                    <button type="submit" data-url="products" class="btn btn-primary">Загрузить новое фото</button>
                                                 </form>
                                             </div>
                                         </div>

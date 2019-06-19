@@ -7,8 +7,10 @@ use App\Form\ReceiptType;
 use App\Mapper\ReceiptMapper;
 use App\Model\ReceiptModel;
 use App\Service\EntityService\ReceiptService\ReceiptService;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -117,4 +119,18 @@ class ReceiptController extends AbstractController
             'receipt' => $receipt
         ]);
     }
+
+    /**
+     * @Route("/lipadmin/receipts/{slug}/delete", name="deleteReceipt")
+     *
+     * @param Receipt $receipt
+     * @param ReceiptServiceInterface $service
+     * @return RedirectResponse
+     */
+    public function deleteReceipt(Receipt $receipt, ReceiptServiceInterface $service): RedirectResponse
+    {
+        $service->deleteReceipt($receipt);
+        return $this->redirectToRoute('receipts');
+    }
+
 }

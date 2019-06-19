@@ -7,13 +7,12 @@ $('form').submit(function (event) {
     let product = $(this).data('product');
     let data = new FormData();
     if(file)
-    data.append('file',file);
+        data.append('file',file);
     if(id)
-    data.append('id', id);
+        data.append('id', id);
     if(product)
-    data.append('product',product);
+        data.append('product',product);
     let url = $(this).data('url');
-    console.log(url);
     let img = $(this).parent().siblings('img');
     let input = $(this).find('input');
     $.ajax({
@@ -32,13 +31,13 @@ $('form').submit(function (event) {
         }
     });
     if(!$(this).siblings('.delete_photo').length)
-        $(this).after('<button data-id="'+id+'" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>');
+        $(this).after('<button data-id="'+id+'" data-url="'+url+'" style="margin-top: 10px" class="btn btn-danger delete_photo">Удалить</button>');
 
 });
 
 $('.delete_photo').click(function() {
     let id = $(this).data('id');
-
+    let url = $(this).data('url');
     $.ajax({
         url: '/lipadmin/'+url+'/deletePhoto',
         type: 'DELETE',

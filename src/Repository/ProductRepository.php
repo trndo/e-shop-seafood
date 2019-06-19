@@ -22,9 +22,9 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
 
     /**
      * @param string $productName
-     * @return Product[]|null
+     * @return array
      */
-    public function findByName(string $productName): ?array
+    public function findByName(string $productName)
     {
         return $this->createQueryBuilder('p')
             ->select('p.name')

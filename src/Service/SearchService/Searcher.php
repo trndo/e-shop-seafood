@@ -11,7 +11,7 @@ class Searcher implements SearcherInterface
     public function searchByName(string $name, FinderInterface $finder): ?array
     {
         if ($name) {
-          return  $finder->findByName($name);
+          return array_map('current',$finder->findByName($name));
         }
         return [];
     }

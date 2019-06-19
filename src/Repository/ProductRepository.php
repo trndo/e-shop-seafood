@@ -27,11 +27,12 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
     public function findByName(string $productName): ?array
     {
         return $this->createQueryBuilder('p')
+            ->select('p.name')
             ->andWhere('p.name LIKE :productName')
             ->setParameter('productName', '%'.$productName.'%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
             ;
     }
 

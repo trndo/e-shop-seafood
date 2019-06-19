@@ -28,6 +28,11 @@ class ProductService implements ProductServiceInterface
     private $fileUploader;
 
     /**
+     * @var array $allowedGetParameters
+     */
+    private $allowedGetParameters = ['name', 'category'];
+
+    /**
      * @var ProductRepository $productRepository
      */
     private $productRepository;
@@ -130,7 +135,7 @@ class ProductService implements ProductServiceInterface
      */
     public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection
     {
-        return new ProductCollection($this->productRepository->findBy($criteria,$orderBy));
+        return new ProductCollection($this->productRepository->findBy($this->hydrateQuery($criteria),$orderBy));
     }
 
     public function updateProduct(Product $product, ProductModel $model): void
@@ -189,6 +194,16 @@ class ProductService implements ProductServiceInterface
 
            $this->entityManager->flush();
        }
+    }
+
+    private function hydrateQuery(array $query): array
+    {
+        foreach ($query as $key => $param){
+            if(!in_array($key,$this->allowedGetParameters))
+                unset($query[$key]);
+        }
+
+        return $query;
     }
 
 

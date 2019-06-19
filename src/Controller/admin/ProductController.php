@@ -49,11 +49,12 @@ class ProductController extends AbstractController
      * @Route("/lipadmin/products", name="products")
      *
      * @param ProductService $productService
+     * @param Request $request
      * @return Response
      */
-    public function products(ProductService $productService): Response
+    public function products(ProductService $productService, Request $request): Response
     {
-        $products = $productService->getProductsByCriteria([],['status' => 'ASC']);
+        $products = $productService->getProductsByCriteria($request->query->all(),['status' => 'ASC']);
 
         return $this->render('admin/product/products.html.twig', [
             'products' => $products

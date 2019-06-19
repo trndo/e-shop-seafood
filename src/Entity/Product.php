@@ -48,11 +48,6 @@ class Product
     private $status;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $specialPrice;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $rating;
@@ -122,6 +117,11 @@ class Product
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $weightPerUnit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SpecialProposition", inversedBy="gift")
+     */
+    private $specialProposition;
 
 
     public function __construct()
@@ -193,18 +193,6 @@ class Product
     public function setStatus(?bool $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getSpecialPrice(): ?float
-    {
-        return $this->specialPrice;
-    }
-
-    public function setSpecialPrice(?float $specialPrice): self
-    {
-        $this->specialPrice = $specialPrice;
 
         return $this;
     }
@@ -427,5 +415,17 @@ class Product
     public function getTitlePhotoPath(): ?string
     {
         return '/uploads/products/'.$this->getTitlePhoto();
+    }
+
+    public function getSpecialProposition(): ?SpecialProposition
+    {
+        return $this->specialProposition;
+    }
+
+    public function setSpecialProposition(?SpecialProposition $specialProposition): self
+    {
+        $this->specialProposition = $specialProposition;
+
+        return $this;
     }
 }

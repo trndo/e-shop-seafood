@@ -111,6 +111,7 @@ class ProductController extends AbstractController
     public function deleteProduct(Product $product, ProductServiceInterface $productService): RedirectResponse
     {
         $productService->deleteProduct($product);
+
         return $this->redirectToRoute('products');
     }
 

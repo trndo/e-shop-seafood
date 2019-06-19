@@ -138,7 +138,7 @@ class ProductController extends AbstractController
     {
         $name = $request->query->get('term');
         $products = $searcher->searchByName($name, $repository);
-
+        array_column($products,'name');
         return new JsonResponse(
             $products
         );

@@ -78,16 +78,6 @@ class Receipt
     private $status;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $specialProposition;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $specialPrice;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\OrderDetails", inversedBy="receipt", cascade={"persist", "remove"})
      */
     private $orderDetails;
@@ -101,6 +91,11 @@ class Receipt
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="receipt")
      */
     private $photo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SpecialProposition", inversedBy="receipt")
+     */
+    private $specialReceipt;
 
     public function __construct()
     {
@@ -261,30 +256,6 @@ class Receipt
         return $this;
     }
 
-    public function getSpecialProposition(): ?bool
-    {
-        return $this->specialProposition;
-    }
-
-    public function setSpecialProposition(?bool $specialProposition): self
-    {
-        $this->specialProposition = $specialProposition;
-
-        return $this;
-    }
-
-    public function getSpecialPrice(): ?float
-    {
-        return $this->specialPrice;
-    }
-
-    public function setSpecialPrice(?float $specialPrice): self
-    {
-        $this->specialPrice = $specialPrice;
-
-        return $this;
-    }
-
     public function getOrderDetails(): ?OrderDetails
     {
         return $this->orderDetails;
@@ -336,6 +307,18 @@ class Receipt
                 $photo->setReceipt(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSpecialReceipt(): ?SpecialProposition
+    {
+        return $this->specialReceipt;
+    }
+
+    public function setSpecialReceipt(?SpecialProposition $specialReceipt): self
+    {
+        $this->specialReceipt = $specialReceipt;
 
         return $this;
     }

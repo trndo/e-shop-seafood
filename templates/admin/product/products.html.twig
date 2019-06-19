@@ -2,57 +2,6 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('autocomplete') }}
-    <style>
-        .ui-autocomplete {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1000;
-            float: left;
-            display: none;
-            min-width: 160px;
-            padding: 4px 0;
-            margin: 0 0 10px 25px;
-            list-style: none;
-            background-color: #ffffff;
-            border-color: #ccc;
-            border-color: rgba(0, 0, 0, 0.2);
-            border-style: solid;
-            border-width: 1px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            -webkit-background-clip: padding-box;
-            -moz-background-clip: padding;
-            background-clip: padding-box;
-            *border-right-width: 2px;
-            *border-bottom-width: 2px;
-        }
-
-        .ui-menu-item > a.ui-corner-all {
-            display: block;
-            padding: 3px 15px;
-            clear: both;
-            font-weight: normal;
-            line-height: 18px;
-            color: #555555;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .ui-state-hover, .ui-state-active {
-            color: #ffffff;
-            text-decoration: none;
-            background-color: #0088cc;
-            border-radius: 0px;
-            -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            background-image: none;
-        }
-    </style>
 {% endblock %}
 {% block body %}
 <body id="page-top">
@@ -96,10 +45,10 @@
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                     <div class="input-group">
                                         <div class="ui-widget">
-                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="term" aria-describedby="basic-addon2">
+                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                         </div>
                                             <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <button class="btn btn-primary search-name" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>

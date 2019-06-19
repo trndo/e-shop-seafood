@@ -9,7 +9,11 @@ import bsCustomFileInput from 'bs-custom-file-input';
 
     $(document).ready(function () {
         bsCustomFileInput.init()
-    })
+    });
+
+    $('.search-name').click(function () {
+       $(this).parents('form').submit();
+    });
 
     // Toggle the side navigation
     $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

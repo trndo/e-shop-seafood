@@ -22,12 +22,13 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
 
     public function findByName(string $receiptName): ?array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.name LIKE :receiptName')
+        return $this->createQueryBuilder('r')
+            ->select('r.name')
+            ->andWhere('r.name LIKE :receiptName')
             ->setParameter('receiptName', '%'.$receiptName.'%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
             ;
     }
 

@@ -6,8 +6,10 @@ use App\Entity\Receipt;
 use App\Form\ReceiptType;
 use App\Mapper\ReceiptMapper;
 use App\Model\ReceiptModel;
+use App\Repository\ReceiptRepository;
 use App\Service\EntityService\ReceiptService\ReceiptService;
 use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
+use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,11 +46,12 @@ class ReceiptController extends AbstractController
      * @Route("/lipadmin/receipts/", name="receipts")
      *
      * @param ReceiptService $service
+     * @param Request $request
      * @return Response
      */
-    public function receipts(ReceiptService $service): Response
+    public function receipts(ReceiptService $service, Request $request): Response
     {
-        $receipts = $service->getReceiptsByCriteria([],['status' => 'ASC']);
+        $receipts = $service->getReceiptsByCriteria($request->query->all(),['status' => 'ASC']);
 
         return $this->render('admin/receipt/receipts.html.twig',[
             'receipts' => $receipts
@@ -131,6 +134,24 @@ class ReceiptController extends AbstractController
     {
         $service->deleteReceipt($receipt);
         return $this->redirectToRoute('receipts');
+    }
+
+    /**
+     * @Route("/lipadmin/receipts/search", name="searchReceipts", methods={"GET"})
+     *
+     * @param Request $request
+     * @param SearcherInterface $searcher
+     * @param ReceiptRepository $repository
+     * @return JsonResponse
+     */
+    public function searchReceipt(Request $request, SearcherInterface $searcher, ReceiptRepository $repository): JsonResponse
+    {
+        $name = $request->query->get('term');
+        $receipts = $searcher->searchByName($name, $repository);
+
+        return new JsonResponse(
+            $receipts
+        );
     }
 
 }

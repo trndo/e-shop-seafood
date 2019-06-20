@@ -8,8 +8,10 @@ import  autocomplete  from 'jquery-ui/ui/widgets/autocomplete';
 
 $(document).ready(function () {
 
+    let url = $('.autocomplete-form').data('url');
+
     $('#search').autocomplete({
-        source: '/lipadmin/products/search'
+        source: '/lipadmin/'+url+'/search'
     });
 
 });

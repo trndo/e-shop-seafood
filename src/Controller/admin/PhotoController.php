@@ -22,9 +22,9 @@ class PhotoController extends AbstractController
     {
         $post = $request->request;
         $file = $request->files->get('file');
-        $hash = $service->updatePhoto($file,$post->get('id'),(int)$post->get('product'));
+        $data = $service->updatePhoto($file,$post->get('id'),(int)$post->get('product'));
 
-        return new JsonResponse(['hash' => $hash],200);
+        return new JsonResponse($data,200);
     }
 
     /**
@@ -51,9 +51,9 @@ class PhotoController extends AbstractController
     {
         $post = $request->request;
         $file = $request->files->get('file');
-        $hash = $service->updatePhoto($file,$post->get('id'),(int)$post->get('product'));
+        $data = $service->updatePhoto($file,$post->get('id'),(int)$post->get('product'));
 
-        return new JsonResponse(['hash' => $hash],200);
+        return new JsonResponse($data,200);
     }
 
     /**

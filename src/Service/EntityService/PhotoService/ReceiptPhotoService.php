@@ -22,13 +22,13 @@ class ReceiptPhotoService implements PhotoServiceInterface
        $this->fileUploader = $fileUploader;
     }
 
-    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?string
+    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?array
     {
         if(isset($id)){
             $photo = $this->em->getRepository(Photo::class)->find($id);
             if($photo && $file instanceof UploadedFile){
                 $this->fileUploader->uploadFile($file,self::RECEIPT_FOLDER,$photo->getHash());
-                return $photo->getHash();
+                return ['hash' => $photo->getHash()];
             }
             else return null;
         }
@@ -39,7 +39,7 @@ class ReceiptPhotoService implements PhotoServiceInterface
                 $photo->setReceipt($this->em->getRepository(Receipt::class)->find($product));
                 $this->em->persist($photo);
                 $this->em->flush();
-                return $photo->getHash();
+                return ['hash' => $photo->getHash(), 'id' => $photo->getId()];
             } else return null;
         }
     }

@@ -28,15 +28,16 @@ class PhotoService implements PhotoServiceInterface
      * @param UploadedFile|null $file
      * @param int|null $id
      * @param int|null $product
-     * @return string|null
+     * @return array|null
      */
-    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?string
+    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?array
     {
+        //dd($id,$product);
         if(isset($id)){
            $photo = $this->em->getRepository(Photo::class)->find($id);
            if($photo && $file instanceof UploadedFile){
                $this->fileUploader->uploadFile($file,self::PRODUCT_FOLDER,$photo->getHash());
-               return $photo->getHash();
+               return ['hash' => $photo->getHash()];
            }
            else return null;
         }
@@ -47,7 +48,7 @@ class PhotoService implements PhotoServiceInterface
                 $photo->setProduct($this->em->getRepository(Product::class)->find($product));
                 $this->em->persist($photo);
                 $this->em->flush();
-                return $photo->getHash();
+                return ['hash' => $photo->getHash(), 'id' => $photo->getId()];
             } else return null;
         }
     }

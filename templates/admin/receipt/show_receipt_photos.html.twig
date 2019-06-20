@@ -28,7 +28,7 @@
                             {% for i in 0..2 %}
                                 {% if receipt.photo[i] is defined %}
                                     <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
-                                        <div class="card" style="width: 18rem;">
+                                        <div class="card" style="width: 100%;">
                                             <img src="/uploads/receipts/{{ receipt.photo[i].hash }}" class="card-img-top" id="photo-{{ receipt.photo[i].id }}" alt="...">
                                             <div class="card-body">
                                                 <form method="post" data-id="{{ receipt.photo[i].id }}" data-product="{{ receipt.id }}" data-url="receipts">
@@ -43,14 +43,14 @@
                                     </div>
                                 {% else %}
                                     <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
-                                        <div class="card" style="width: 18rem;">
+                                        <div class="card" style="width: 100%;">
                                             <img src="{{ asset('assets/img/noImg.jpg') }}" class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <form method="post" data-product="{{ receipt.id }}" data-url="receipts">
                                                     <p>
                                                         <input type="file" class="form-control-file" required>
                                                     </p>
-                                                    <button type="submit" data-url="receipts" class="btn btn-primary">Загрузить новое фото</button>
+                                                    <button type="submit"  class="btn btn-primary">Загрузить новое фото</button>
                                                 </form>
                                             </div>
                                         </div>

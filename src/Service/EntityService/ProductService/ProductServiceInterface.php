@@ -35,4 +35,11 @@ interface ProductServiceInterface
      * @param int|null $id
      */
     public function activateProduct(?int $id): void;
+
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return ProductCollection
+     */
+    public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection;
 }

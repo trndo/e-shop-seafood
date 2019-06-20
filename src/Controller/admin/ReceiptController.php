@@ -6,9 +6,14 @@ use App\Entity\Receipt;
 use App\Form\ReceiptType;
 use App\Mapper\ReceiptMapper;
 use App\Model\ReceiptModel;
+use App\Repository\ReceiptRepository;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\EntityService\ReceiptService\ReceiptService;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
+use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,11 +47,12 @@ class ReceiptController extends AbstractController
      * @Route("/lipadmin/receipts/", name="receipts")
      *
      * @param ReceiptService $service
+     * @param Request $request
      * @return Response
      */
-    public function receipts(ReceiptService $service): Response
+    public function receipts(ReceiptService $service, Request $request): Response
     {
-        $receipts = $service->getReceiptsByCriteria([],['status' => 'ASC']);
+        $receipts = $service->getReceiptsByCriteria($request->query->all(),['status' => 'ASC']);
 
         return $this->render('admin/receipt/receipts.html.twig',[
             'receipts' => $receipts
@@ -117,4 +123,55 @@ class ReceiptController extends AbstractController
             'receipt' => $receipt
         ]);
     }
+
+    /**
+     * @Route("/lipadmin/receipts/{slug}/delete", name="deleteReceipt")
+     *
+     * @param Receipt $receipt
+     * @param ReceiptServiceInterface $service
+     * @return RedirectResponse
+     */
+    public function deleteReceipt(Receipt $receipt, ReceiptServiceInterface $service): RedirectResponse
+    {
+        $service->deleteReceipt($receipt);
+        return $this->redirectToRoute('receipts');
+    }
+
+    /**
+     * @Route("/lipadmin/receipts/search", name="searchReceipts", methods={"GET"})
+     *
+     * @param Request $request
+     * @param SearcherInterface $searcher
+     * @param ReceiptRepository $repository
+     * @return JsonResponse
+     */
+    public function searchReceipt(Request $request, SearcherInterface $searcher, ReceiptRepository $repository): JsonResponse
+    {
+        $name = $request->query->get('term');
+        $receipts = $searcher->searchByName($name, $repository);
+
+        return new JsonResponse(
+            $receipts
+        );
+    }
+
+    /**
+     * @Route("lipadmin/receipts/{slug}/addProducts", name="addProducts")
+     *
+     * @param Receipt $receipt
+     * @param ProductServiceInterface $service
+     * @param Request $request
+     * @return Response
+     */
+    public function addProductsForReceipt(Receipt $receipt, ProductServiceInterface $service, Request $request): Response
+    {
+        $products = $service->getProductsByCriteria($request->query->all());
+        $relatedProducts = $receipt->getProducts();
+
+        return $this->render('admin/receipt/addProductsToReceipt.html.twig',[
+            'products' => $products,
+            'relatedProducts' => $relatedProducts
+        ]);
+    }
+
 }

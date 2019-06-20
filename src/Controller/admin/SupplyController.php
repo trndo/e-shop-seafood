@@ -47,7 +47,7 @@ class SupplyController extends AbstractController
     }
 
     /**
-     * @Route("/lipadmin/supply/search", methods={"GET"}, name="searchByName")
+     * @Route("/lipadmin/supply/live_search", methods={"GET"}, name="searchByName")
      *
      * @param Request $request
      * @

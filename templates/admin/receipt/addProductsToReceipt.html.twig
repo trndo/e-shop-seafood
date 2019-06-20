@@ -19,8 +19,7 @@
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Продукты</h1>
-                <p class="mb-4">Добвить новый продукт <button onclick="window.location.href = '{{ path('createProduct') }}'" class="btn btn-primary">Добавить!</button></p>
+                <h1 class="h3 mb-2 text-gray-800">Добавление продуктов к рецепту</h1>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -42,14 +41,14 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="products">
+                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="products">
                                     <div class="input-group">
                                         <div class="ui-widget">
-                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                            <input id="searchItem" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                         </div>
-                                            <div class="input-group-append">
-                                            <button class="btn btn-primary search-name" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-plus fa-sm"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -67,11 +66,7 @@
                                     <th>Категория</th>
                                     <th>Цена/к-во</th>
                                     <th>Размерность</th>
-                                    <th>Рэйтинг</th>
-                                    <th>Статус</th>
-                                    <th>Дата создания</th>
-                                    <th>Дата обновления</th>
-                                    <th>Удалить/редактировать</th>
+                                    <th>Действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -103,30 +98,9 @@
                                                 У этого продукта нет размерности
                                             {% endif %}
                                         </td>
-                                        <td class="text-center">
-                                            {{ product.rating }}
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" onchange="activate({{ product.id }})" class="custom-control-input" id="customSwitch{{ product.id }}" {% if product.status %}checked{% endif %}>
-                                                <label class="custom-control-label" for="customSwitch{{ product.id }}">Активировать\Деактивировать</label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            {{ product.createdAt|date('d/m/y H:i:s') }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ product.updatedAt|date('d/m/y H:i:s') }}
-                                        </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Точно удалить продукт?Он удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deleteProduct', {'slug': product.slug}) }}'">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateProduct', {'slug': product.slug}) }}'">
-                                                <i class="fas fa-pen-alt"></i>
-                                            </button>
-                                            <button class="btn btn-success btn-circle btn-sm" onclick="window.location.href = '{{ path('showProduct', {'slug': product.slug}) }}'">
-                                                <i class="fas fa-info"></i>
+                                            <button class="btn btn-primary">
+                                               Добавить
                                             </button>
                                         </td>
                                     </tr>
@@ -173,20 +147,20 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-<script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
 
-</script>
-<script>
-    function activate(id) {
-        $.ajax({
-            type: 'POST',
-            url: '{{ path('activateProduct') }}',
-            data: { id: id}
-        })
-    }
-</script>
+    </script>
+    <script>
+        function activate(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('activateProduct') }}',
+                data: { id: id}
+            })
+        }
+    </script>
     {{ encore_entry_script_tags('autocomplete') }}
 {% endblock %}

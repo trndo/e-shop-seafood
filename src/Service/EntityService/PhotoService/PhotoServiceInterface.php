@@ -11,7 +11,7 @@ interface PhotoServiceInterface
 {
     public function __construct(EntityManagerInterface $entityManager, FileUploader $fileUploader);
 
-    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?string;
+    public function updatePhoto(?UploadedFile $file, ?int $id, ?int $product): ?array;
 
     public function deletePhoto(int $id): void;
 }

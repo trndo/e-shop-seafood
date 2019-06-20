@@ -1,4 +1,8 @@
 {% extends 'admin_base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('autocomplete') }}
+{% endblock %}
 {% block body %}
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -38,11 +42,11 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="receipts">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <input id="search" type="text" class="form-control bg-light border-0 small" name="name" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <button class="btn btn-primary search-name" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
@@ -105,7 +109,7 @@
                                             {{ receipt.updatedAt|date('d/m/y H:i:s') }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Точно удалить продукт?Он удалиться из всех поставок и заказов пользователей.'))window.location.href =''">
+                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Точно удалить рецепт?Он удалиться из всех продуктов и заказов пользователей.'))window.location.href ='{{ path('deleteReceipt', {'slug': receipt.slug}) }}'">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                             <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateReceipt',{'slug': receipt.slug}) }}'">
@@ -172,4 +176,5 @@
         })
     }
 </script>
+    {{ encore_entry_script_tags('autocomplete') }}
 {% endblock %}

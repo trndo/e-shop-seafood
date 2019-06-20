@@ -25,6 +25,11 @@ class ReceiptService implements ReceiptServiceInterface
     private $fileUploader;
 
     /**
+     * @var array $allowedQueryParams
+     */
+    private $allowedQueryParams = ['name','category'];
+
+    /**
      * @var ReceiptRepository
      */
     private $receiptRepository;
@@ -150,6 +155,16 @@ class ReceiptService implements ReceiptServiceInterface
      */
     public function getReceiptsByCriteria(array $criteria, array $orderBy = []): ReceiptCollection
     {
-        return new ReceiptCollection($this->receiptRepository->findBy($criteria,$orderBy));
+        return new ReceiptCollection($this->receiptRepository->findBy($this->hydrateQuery($criteria),$orderBy));
+    }
+
+    private function hydrateQuery(array $query): array
+    {
+        foreach ($query as $key => $param){
+            if(!in_array($key,$this->allowedQueryParams))
+                unset($query[$key]);
+        }
+
+        return $query;
     }
 }

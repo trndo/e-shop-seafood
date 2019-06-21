@@ -22,6 +22,32 @@ class CategoryModel
     private $seoDescription;
 
     /**
+     * @Assert\NotBlank(message="Это поле должно быть заполнено")
+     * @var string|null $type
+     */
+    private $type;
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     * @return CategoryModel
+     */
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+
+    /**
      * @return string
      */
     public function getName(): ?string

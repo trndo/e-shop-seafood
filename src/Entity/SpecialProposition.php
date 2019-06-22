@@ -68,6 +68,11 @@ class SpecialProposition
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $productSize;
+
     public function __construct()
     {
         $this->gift = new ArrayCollection();
@@ -253,6 +258,18 @@ class SpecialProposition
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProductSize(): ?string
+    {
+        return $this->productSize;
+    }
+
+    public function setProductSize(?string $productSize): self
+    {
+        $this->productSize = $productSize;
 
         return $this;
     }

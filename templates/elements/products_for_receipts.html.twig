@@ -1,0 +1,77 @@
+{% if type == 'one' %}
+{% for product in products %}
+    {% if product.productSize is null %}
+    <tr data-search="{{ product.name }}" class="forSearch">
+        <td>
+            {{ product.id }}
+        </td>
+        <td>
+            <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
+        </td>
+        <td class="text-center">
+            {{ product.name }}
+        </td>
+        <td class="text-center">
+            {% if product.category is not null %}
+                {{ product.category.name }}
+            {% else %}
+                <span style="color: red;">Внимание , категория не назначена!!Продукт не будет отображаться на сайте!</span>
+            {% endif %}
+        </td>
+        <td class="text-center">
+            {{ product.price }}/{{ product.unit }}
+        </td>
+        <td class="text-center">
+            {% if product.productSize is not null %}
+                {{ product.productSize }}
+            {% else %}
+                У этого продукта нет размерности
+            {% endif %}
+        </td>
+        <td>
+            <button class="btn btn-primary addTag" data-id="{{ product.id }}" data-name="{{ product.name }}">
+                Добавить
+            </button>
+        </td>
+    </tr>
+    {% endif %}
+{% endfor %}
+{% elseif type == 'sizes' %}
+    {% for product in products %}
+        {% if product.productSize is not null %}
+            <tr data-search="{{ product.name }}" class="forSearch">
+                <td>
+                    {{ product.id }}
+                </td>
+                <td>
+                    <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
+                </td>
+                <td class="text-center">
+                    {{ product.name }}
+                </td>
+                <td class="text-center">
+                    {% if product.category is not null %}
+                        {{ product.category.name }}
+                    {% else %}
+                        <span style="color: red;">Внимание , категория не назначена!!Продукт не будет отображаться на сайте!</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {{ product.price }}/{{ product.unit }}
+                </td>
+                <td class="text-center">
+                    {% if product.productSize is not null %}
+                        {{ product.productSize }}
+                    {% else %}
+                        У этого продукта нет размерности
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="btn btn-primary addTag" data-id="{{ product.id }}" data-name="{{ product.name }}" data-size="{{ product.productSize }}">
+                        Добавить
+                    </button>
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+{% endif %}

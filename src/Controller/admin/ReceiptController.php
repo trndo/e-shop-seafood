@@ -181,9 +181,4 @@ class ReceiptController extends AbstractController
         ]);
     }
 
-    public function getProductsForReceipt(Request $request): Response
-    {
-
-    }
-
 }

@@ -6,10 +6,28 @@
         #tag-container{
             display: none;
             margin: 10px 2px 2px 2px;
-            border-radius: 2px;
+            border-radius: 3px;
             border: solid 2px gainsboro;
             width: 100%;
             height: 100px;
+            padding: 3px 3px 3px 3px;
+        }
+        .product-list{
+            display: none;
+        }
+        .tag{
+            display: inline-block;
+            padding: 3px 3px 3px 3px;
+            border-radius: 4px;
+            background-color: #224abe;
+            color: white;
+            border: solid 1px white;
+            width: max-content;
+         }
+        .deltag {
+            margin-left: 4px;
+            margin-right: 2px;
+            cursor: pointer;
         }
     </style>
 {% endblock %}
@@ -60,8 +78,8 @@
                                         Выбрать метод добавления
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <div class="dropdown-item addProd" data-type="">Добавить 1 продукт</div>
-                                        <div class="dropdown-item addProd" data-type="">Добавить продукты с размерностями</div>
+                                        <div class="dropdown-item addProd" data-type="one">Добавить продукт(без размернсти)</div>
+                                        <div class="dropdown-item addProd" data-type="sizes">Добавить продукты с размерностями</div>
                                     </div>
                                 </div>
                             </div>
@@ -73,15 +91,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card shadow mb-4" style="margin-top: 20px">
+                <div class="card shadow mb-4 product-list" style="margin-top: 20px">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Таблица Продуктов</h6>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-pills ">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Все</a>
-                            </li>
                             <li class="nav-item">
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="products">
                                     <div class="input-group">
@@ -90,7 +105,7 @@
                                         </div>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-plus fa-sm"></i>
+                                                <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -112,41 +127,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for product in products %}
-                                    <tr>
-                                        <td>
-                                            {{ product.id }}
-                                        </td>
-                                        <td>
-                                            <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
-                                        </td>
-                                        <td class="text-center">
-                                            {{ product.name }}
-                                        </td>
-                                        <td class="text-center">
-                                            {% if product.category is not null %}
-                                                {{ product.category.name }}
-                                            {% else %}
-                                                <span style="color: red;">Внимание , категория не назначена!!Продукт не будет отображаться на сайте!</span>
-                                            {% endif %}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ product.price }}/{{ product.unit }}
-                                        </td>
-                                        <td class="text-center">
-                                            {% if product.productSize is not null %}
-                                                {{ product.productSize }}
-                                            {% else %}
-                                                У этого продукта нет размерности
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary">
-                                               Добавить
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

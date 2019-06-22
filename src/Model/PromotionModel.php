@@ -55,6 +55,30 @@ class PromotionModel
     private $description;
 
     /**
+     * @var string|null
+     */
+    private $productSize;
+
+    /**
+     * @return string|null
+     */
+    public function getProductSize(): ?string
+    {
+        return $this->productSize;
+    }
+
+    /**
+     * @param string|null $productSize
+     * @return PromotionModel
+     */
+    public function setProductSize(?string $productSize): self
+    {
+        $this->productSize = $productSize;
+
+        return $this;
+    }
+
+    /**
      * @return float|null
      */
     public function getSpecialPrice(): ?float

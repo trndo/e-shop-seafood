@@ -5,30 +5,55 @@ namespace App\Service\PromotionService;
 
 
 use App\Entity\SpecialProposition;
+use App\Mapper\PromotionMapper;
 use App\Model\PromotionModel;
+use Doctrine\ORM\EntityManagerInterface;
 
 class GlobalSpecialPricePromotion implements PromotionInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var PromotionModel
+     */
+    private $model;
+
+    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model)
+    {
+        $this->entityManager = $entityManager;
+        $this->model = $model;
+    }
 
     /**
      * Add product promotion
      *
-     * @param PromotionModel $model
      * @return SpecialProposition
      */
-    public function addProductPromotion(PromotionModel $model): SpecialProposition
+    public function addProductPromotion(): SpecialProposition
     {
-        $specialProposition = new SpecialProposition();
+        $sProposition = PromotionMapper::globalPriceProductModelToEntity($this->model);
+
+        $this->entityManager->persist($sProposition);
+        $this->entityManager->flush();
+
+        return $sProposition;
     }
+
 
     /**
      * Add receipt promotion
      *
-     * @param PromotionModel $model
      * @return SpecialProposition
      */
-    public function addReceiptPromotion(PromotionModel $model): SpecialProposition
+    public function addReceiptPromotion(): SpecialProposition
     {
-        $specialProposition = new SpecialProposition();
+        $sProposition = PromotionMapper::globalReceiptProductModelToEntity($this->model);
+
+        $this->entityManager->persist($sProposition);
+        $this->entityManager->flush();
+
+        return $sProposition;
     }
 }

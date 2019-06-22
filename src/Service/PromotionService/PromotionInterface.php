@@ -14,16 +14,14 @@ interface PromotionInterface
     /**
      * Add product promotion
      *
-     * @param PromotionModel $model
      * @return SpecialProposition
      */
-    public function addProductPromotion(PromotionModel $model): SpecialProposition;
+    public function addProductPromotion(): SpecialProposition;
 
     /**
      * Add receipt promotion
      *
-     * @param PromotionModel $model
      * @return SpecialProposition
      */
-    public function addReceiptPromotion(PromotionModel $model): SpecialProposition;
+    public function addReceiptPromotion(): SpecialProposition;
 }

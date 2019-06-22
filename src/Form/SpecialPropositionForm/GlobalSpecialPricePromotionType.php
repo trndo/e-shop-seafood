@@ -17,28 +17,36 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GiftPromotionType extends AbstractType
+class GlobalSpecialPricePromotionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('gift', EntityType::class,[
-            'class' => Product::class,
-            'choice_label' => 'name'
-        ])
-        ->add('quantity', IntegerType::class)
-        ->add('product',EntityType::class,[
+        $builder->add('globalPrice',IntegerType::class)
+            ->add('availableAt',DateType::class)
+            ->add('quantity', IntegerType::class);
+        if($options['receipt'])
+            $builder
+                ->add('receipt',EntityType::class,[
+                    'class' => Receipt::class,
+                    'choice_label' => 'name',
+                ]);
+        else
+            $builder
+                ->add('product',EntityType::class,[
                     'class' => Product::class,
                     'choice_label' => 'name',
-                ])
-        ->add('productSize',TextType::class)
-        ->add('description',TextareaType::class)
-        ->add('save',SubmitType::class);
+                ]);
+        $builder->add('productSize',TextType::class)
+            ->add('description',TextareaType::class)
+            ->add('save',SubmitType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         return $resolver->setDefaults([
             'data_class' => PromotionModel::class,
+            'receipt' => false
         ]);
     }
 }

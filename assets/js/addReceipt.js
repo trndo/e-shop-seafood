@@ -105,6 +105,10 @@ function validateTags(data){
             alert('Внимание! Такой размер продукта уже добавлен в рецепт');
             return false;
         }
+        if(tags.length === 5) {
+            alert('Внимание! Нельзя добавить больше 5 размеров');
+            return false;
+        }
         return  true;
     }
 

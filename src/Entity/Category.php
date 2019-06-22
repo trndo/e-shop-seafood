@@ -60,6 +60,11 @@ class Category
      */
     private $receipts;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -189,6 +194,18 @@ class Category
                 $receipt->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

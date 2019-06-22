@@ -30,4 +30,10 @@ interface CategoryServiceInterface
      */
     public function deleteCategory(Category $category);
 
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return CategoryCollection|null
+     */
+    public function getCategoryByCriteria(array $criteria, array $orderBy = []): ?CategoryCollection;
 }

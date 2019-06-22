@@ -5,6 +5,7 @@ namespace App\Form\CategoryForm;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,6 +21,14 @@ class CategoryInfoType extends AbstractType
             'attr' => [
                 'class' => 'form-control'
             ]
+        ])
+        ->add('type',ChoiceType::class,[
+            'choices' => [
+                'Категория для продуктов' => 'products',
+                'Категория для рецептов' => 'receipts'
+            ],
+            'expanded' => true,
+            'label' => 'Тип категории'
         ])
         ->add('seoTitle',TextType::class,[
             'label' => 'Сео тайтл',

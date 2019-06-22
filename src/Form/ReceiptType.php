@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Model\ReceiptModel;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -43,6 +44,11 @@ class ReceiptType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control'],
+                'query_builder' => function(EntityRepository $er){
+                    return $er->createQueryBuilder('c')
+                        ->where('c.type = :type')
+                        ->setParameter('type','receipts');
+                },
                 'label' => 'Категория'
             ])
             ->add('description',TextareaType::class, [

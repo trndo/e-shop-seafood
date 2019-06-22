@@ -22,6 +22,7 @@ Encore
     .addEntry('search', './assets/js/search.js')
     .addEntry('photos', './assets/js/photos.js')
     .addEntry('autocomplete','./assets/js/autocomplete.js')
+    .addEntry('addReceipt','./assets/js/addReceipt.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

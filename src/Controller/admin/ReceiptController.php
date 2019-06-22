@@ -7,6 +7,7 @@ use App\Form\ReceiptType;
 use App\Mapper\ReceiptMapper;
 use App\Model\ReceiptModel;
 use App\Repository\ReceiptRepository;
+use App\Service\EntityService\CategoryService\CategoryService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\EntityService\ReceiptService\ReceiptService;
 use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
@@ -160,18 +161,29 @@ class ReceiptController extends AbstractController
      *
      * @param Receipt $receipt
      * @param ProductServiceInterface $service
+     * @param CategoryService $categoryService
      * @param Request $request
      * @return Response
      */
-    public function addProductsForReceipt(Receipt $receipt, ProductServiceInterface $service, Request $request): Response
+    public function addProductsForReceipt(Receipt $receipt,
+                                          ProductServiceInterface $service,
+                                          CategoryService $categoryService,
+                                          Request $request): Response
     {
         $products = $service->getProductsByCriteria($request->query->all());
         $relatedProducts = $receipt->getProducts();
+        $categories = $categoryService->getCategoryByCriteria(['type' => 'products']);
 
         return $this->render('admin/receipt/addProductsToReceipt.html.twig',[
             'products' => $products,
-            'relatedProducts' => $relatedProducts
+            'relatedProducts' => $relatedProducts,
+            'categories' => $categories
         ]);
+    }
+
+    public function getProductsForReceipt(Request $request): Response
+    {
+
     }
 
 }

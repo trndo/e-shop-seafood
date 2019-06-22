@@ -55,4 +55,9 @@ class CategoryService implements CategoryServiceInterface
             $this->repository->delete($category);
         }
     }
+
+    public function getCategoryByCriteria(array $criteria, array $orderBy = []): ?CategoryCollection
+    {
+        return new CategoryCollection($this->repository->findBy($criteria,$orderBy));
+    }
 }

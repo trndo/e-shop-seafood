@@ -6,6 +6,7 @@ let tags = [];
 let sizes = [];
 $('.category').click(function () {
     $('.second-step').show();
+    $('.product-list').hide();
     category = $(this).data('id');
     clearData();
 });
@@ -85,6 +86,7 @@ function addTag(product) {
 
 function clearData() {
     $('#tag-container').empty().hide();
+    $('.product-list').find('tbody').empty();
     tags = [];
     sizes = [];
 }

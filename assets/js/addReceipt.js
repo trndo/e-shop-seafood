@@ -4,6 +4,40 @@ let category = null;
 let type = null;
 let tags = [];
 let sizes = [];
+$(document).ready(function () {
+   let slug = $('.saveProducts').data('slug');
+
+   $.ajax({
+       url: '/lipadmin/receipts/'+slug+'/checkProducts',
+       type: 'GET',
+       success: function(res) {
+           if(!res.empty){
+               console.log(res);
+               category = res.category;
+               type = res.type;
+               res.ids.forEach(function (elem) {
+                   tags.push(elem);
+               });
+               $.ajax({
+                   type: "GET",
+                   url: '/lipadmin/products/getForReceipts',
+                   data: {
+                       category: category,
+                       type: type
+                   },
+                   success: function (res) {
+                       $('.product-list').find('tbody').html(res);
+                       $('.second-step').show();
+                       $('#tag-container').show();
+                       $('.saveProducts').show();
+                       $('.product-list').show();
+                   }
+               })
+           }
+       }
+   })
+});
+
 $('.category').click(function () {
     $('.second-step').show();
     $('.product-list').hide();
@@ -24,6 +58,7 @@ $('.addProd').click(function () {
         success: function (res) {
             $('.product-list').find('tbody').html(res);
             $('#tag-container').show();
+            $('.saveProducts').show();
             $('.product-list').show();
         }
     })
@@ -86,6 +121,7 @@ function addTag(product) {
 
 function clearData() {
     $('#tag-container').empty().hide();
+    $('.saveProducts').hide();
     $('.product-list').find('tbody').empty();
     tags = [];
     sizes = [];
@@ -113,7 +149,21 @@ function validateTags(data){
         }
         return  true;
     }
-
 }
 
+$('.saveProducts').click(function () {
+    let receipt = $(this).data('receipt-id');
+    let slug = $(this).data('slug');
+    $.ajax({
+      url: '/lipadmin/receipts/'+slug+'/saveProducts',
+      type: 'POST',
+      data: {
+          products: tags,
+          id: receipt
+      },
+      success: function (res) {
+          window.location.href = '/lipadmin/receipts/'+slug+'/show';
+      }
+    })
+});
 

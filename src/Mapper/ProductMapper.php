@@ -4,6 +4,7 @@ namespace App\Mapper;
 
 use App\Entity\Product;
 use App\Model\ProductModel;
+use Doctrine\Common\Collections\Collection;
 
 final class ProductMapper
 {
@@ -22,5 +23,23 @@ final class ProductMapper
                 ->setAmountPerUnit($product->getAmountPerUnit());
 
         return $productDto;
+    }
+
+    public static function fromCollectionToArray(Collection $collection): array
+    {
+        if(isset($collection[0])) {
+            $data['empty'] = false;
+            $data['type'] = $collection[0]->getProductSize() ? 'sizes' : 'one';
+            $data['category'] = $collection[0]->getCategory()->getId();
+
+            foreach ($collection as $product) {
+                $data['ids'][] = $product->getId();
+            }
+
+            return $data;
+        }
+        else
+            return ['empty' => true ];
+
     }
 }

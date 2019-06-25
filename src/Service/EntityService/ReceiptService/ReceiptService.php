@@ -189,4 +189,9 @@ class ReceiptService implements ReceiptServiceInterface
 
         $this->entityManager->flush();
     }
+
+    public function getReceiptsForRating(): ?array
+    {
+        return $this->receiptRepository->findForRating();
+    }
 }

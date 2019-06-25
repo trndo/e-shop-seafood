@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Receipt;
 use App\Repository\RepositoryInterface\FinderInterface;
+use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Receipt[]    findAll()
  * @method Receipt[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReceiptRepository extends ServiceEntityRepository implements FinderInterface
+class ReceiptRepository extends ServiceEntityRepository implements FinderInterface, RatingInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -30,6 +31,16 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->getQuery()
             ->getArrayResult()
             ;
+    }
+
+    public function findForRating(): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r')
+            ->andWhere('r.rating != 0')
+            ->setMaxResults(9)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

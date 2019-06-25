@@ -42,4 +42,9 @@ interface ProductServiceInterface
      * @return ProductCollection
      */
     public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection;
+
+    /**
+     * @return array|null
+     */
+    public function getProductsForRating(): ?array;
 }

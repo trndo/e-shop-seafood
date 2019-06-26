@@ -4,5 +4,9 @@ body, html{
 }
 
 body{
-    background: url("../../img/main-background.jpg") center no-repeat;
+    background-image: url("../../img/try.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+

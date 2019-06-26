@@ -4,6 +4,7 @@ namespace App\Service\EntityService\ReceiptService;
 
 use App\Collection\ReceiptCollection;
 use App\Entity\Photo;
+use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Model\ReceiptModel;
 use App\Repository\ReceiptRepository;
@@ -166,5 +167,31 @@ class ReceiptService implements ReceiptServiceInterface
         }
 
         return $query;
+    }
+
+    /**
+     * @param array $products
+     * @param Receipt|null $receipt
+     */
+    public function addProductsInReceipt(array $products, ?Receipt $receipt): void
+    {
+        $productRepo = $this->entityManager->getRepository(Product::class);
+
+        foreach ($receipt->getProducts() as $existingProduct){
+            if(!in_array($existingProduct->getId(),$products))
+                $receipt->removeProduct($existingProduct);
+        }
+
+        foreach ($products as $product) {
+           $product =  $productRepo->find($product);
+           $receipt->addProduct($product);
+        }
+
+        $this->entityManager->flush();
+    }
+
+    public function getReceiptsForRating(): ?array
+    {
+        return $this->receiptRepository->findForRating();
     }
 }

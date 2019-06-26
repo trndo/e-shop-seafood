@@ -206,5 +206,11 @@ class ProductService implements ProductServiceInterface
         return $query;
     }
 
-
+    /**
+     * @return array|null
+     */
+    public function getProductsForRating(): ?array
+    {
+       return $this->productRepository->findForRating();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Entity\Receipt;
 use App\Form\ReceiptType;
+use App\Mapper\ProductMapper;
 use App\Mapper\ReceiptMapper;
 use App\Model\ReceiptModel;
 use App\Repository\ReceiptRepository;
@@ -160,25 +161,49 @@ class ReceiptController extends AbstractController
      * @Route("lipadmin/receipts/{slug}/addProducts", name="addProducts")
      *
      * @param Receipt $receipt
-     * @param ProductServiceInterface $service
      * @param CategoryService $categoryService
      * @param Request $request
      * @return Response
      */
     public function addProductsForReceipt(Receipt $receipt,
-                                          ProductServiceInterface $service,
                                           CategoryService $categoryService,
                                           Request $request): Response
     {
-        $products = $service->getProductsByCriteria($request->query->all());
         $relatedProducts = $receipt->getProducts();
         $categories = $categoryService->getCategoryByCriteria(['type' => 'products']);
 
         return $this->render('admin/receipt/addProductsToReceipt.html.twig',[
-            'products' => $products,
             'relatedProducts' => $relatedProducts,
-            'categories' => $categories
+            'categories' => $categories,
+            'receipt' => $receipt
         ]);
+    }
+
+    /**
+     * @Route("lipadmin/receipts/{slug}/saveProducts", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Receipt $receipt
+     * @param ReceiptService $receiptService
+     * @return JsonResponse
+     */
+    public function saveProductsForReceipt(Receipt $receipt,Request $request, ReceiptService $receiptService): JsonResponse
+    {
+        $receiptService->addProductsInReceipt((array)$request->request->get('products'), $receipt);
+        return  new JsonResponse([],200);
+    }
+
+    /**
+     * @Route("lipadmin/receipts/{slug}/checkProducts", methods={"GET"})
+     * @param Receipt $receipt
+     * @return JsonResponse
+     */
+    public function checkIfReceiptHasProducts(Receipt $receipt): JsonResponse
+    {
+        $products = $receipt->getProducts();
+        $data = ProductMapper::fromCollectionToArray($products);
+
+        return new JsonResponse($data,200);
     }
 
 }

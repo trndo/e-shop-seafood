@@ -12061,3 +12061,34 @@ body.sidebar-toggled footer.sticky-footer {
   -moz-border-radius: 0px;
   background-image: none;
 }
+
+#tag-container{
+  display: none;
+  margin: 10px 2px 2px 2px;
+  border-radius: 3px;
+  border: solid 1px gainsboro;
+  width: 100%;
+  height: 100px;
+  padding: 3px 3px 3px 3px;
+}
+.product-list{
+  display: none;
+}
+.tag{
+  display: inline-block;
+  padding: 3px 3px 3px 3px;
+  border-radius: 4px;
+  background-color: #224abe;
+  color: white;
+  border: solid 1px white;
+  width: max-content;
+}
+.deltag {
+  margin-left: 4px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+.saveProducts{
+  display: none;
+  margin-top: 4px;
+}

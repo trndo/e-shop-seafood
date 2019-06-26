@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use App\Repository\RepositoryInterface\FinderInterface;
+use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Product[]    findAll()
  * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository implements FinderInterface
+class ProductRepository extends ServiceEntityRepository implements FinderInterface, RatingInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -34,6 +35,16 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->getQuery()
             ->getArrayResult()
             ;
+    }
+
+    public function findForRating(): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->andWhere('p.rating != 0')
+            ->setMaxResults(9)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

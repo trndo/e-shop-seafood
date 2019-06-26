@@ -1,0 +1,37 @@
+{% for good in goods %}
+        <tr>
+            <td>
+                {{ good.id }}
+            </td>
+            <td>
+                <img src="{{ good.getTitlePhotoPath }}" style="width: 200px; height: 150px">
+            </td>
+            <td class="text-center">
+                {{ good.name }}
+            </td>
+            <td class="text-center">
+                {% if good.category is not null %}
+                    {{ good.category.name }}
+                {% else %}
+                    <span style="color: red;">Внимание , категория не назначена!!Продукт не будет отображаться на сайте!</span>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {{ good.price }}/{{ good.unit }}
+            </td>
+            {% if good.productSize is defined %}
+            <td class="text-center">
+                {% if good.productSize is not null %}
+                    {{ good.productSize }}
+                {% else %}
+                    У этого продукта нет размерности
+                {% endif %}
+            </td>
+            {% endif %}
+            <td>
+                <button class="btn btn-primary addToRating" data-id="{{ good.id }}" data-name="{{ good.name }}" data-type="{{ type }}">
+                    Добавить
+                </button>
+            </td>
+        </tr>
+{% endfor %}

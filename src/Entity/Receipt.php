@@ -322,4 +322,14 @@ class Receipt
 
         return $this;
     }
+
+    public function getTitlePhotoPath(): ?string
+    {
+        return '/uploads/receipts/'.$this->getTitlePhoto();
+    }
+
+    public function getDataForRating(): string
+    {
+        return 'receipt'.$this->getId();
+    }
 }

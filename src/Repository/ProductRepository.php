@@ -81,6 +81,13 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function findForRender(string $productName): ?array
     {
-        // TODO: Implement findForRender() method.
+        return $this->createQueryBuilder('p')
+            ->addSelect('p')
+            ->andWhere('p.name LIKE :productName ')
+            ->setParameter('productName', '%'.$productName.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

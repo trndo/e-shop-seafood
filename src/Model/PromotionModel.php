@@ -4,6 +4,7 @@
 namespace App\Model;
 
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Receipt;
 
@@ -60,12 +61,37 @@ class PromotionModel
     private $productSize;
 
     /**
+     * @var Category|null
+     */
+    private $category;
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category|null $category
+     * @return PromotionModel
+     */
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getProductSize(): ?string
     {
         return $this->productSize;
     }
+
 
     /**
      * @param string|null $productSize

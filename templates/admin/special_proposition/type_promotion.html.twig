@@ -1,0 +1,96 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    {{ include('elements/admin_nav.html.twig', {'active' : 'specialProposition'}) }}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            {{ include('elements/admin_header.html.twig') }}
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-7">
+                        <div class="card bg-dark text-white">
+                            <img src="{{ asset('/uploads/images/MdmkgNmU1Ho.jpg') }}" class="card-img bg-dark" alt="..." style="opacity:0.4;-moz-opacity:0.8; background-color:#000;">
+                            <div class="card-img-overlay text-center" style="margin-top: 20%">
+                                <h3 class="card-title">Продукты</h3>
+                                <p class="card-text">Здесь вы можете выбрать продукты для ваших акций</p>
+                                {% if promotionType == 'percent' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createPercentPromotion',{'type' : 'product'}) }}'">Использовать продукт</button>
+                                {% endif %}
+                                {% if promotionType == 'gift' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createGiftPromotion',{'type' : 'product'}) }}'">Использовать продукт</button>
+                                {% endif %}
+                                {% if promotionType == 'specialPrice' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createSpecialPricePromotion',{'type' : 'product'}) }}'">Использовать продукт</button>
+                                {% endif %}
+                                {% if promotionType == 'globalSpecialPrice' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createGlobalSpecialPricePromotion',{'type' : 'product'}) }}'">Использовать продукт</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if promotionType != 'gift' %}
+                        <div class="card bg-dark text-white">
+                            <img src="{{ asset('uploads/images/crayfish.jpg') }}" class="card-img" alt="..." style="opacity:0.4;-moz-opacity:0.8; background-color:#000;">
+                            <div class="card-img-overlay text-center" style="margin-top: 15%">
+                                <h3 class="card-title">Рецепты</h3>
+                                <p class="card-text">Здесь вы можете выбрать рецепты для ваших акций.</p>
+                                {% if promotionType == 'percent' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createPercentPromotion',{'type' : 'receipt'}) }}'">Использовать рецепт</button>
+                                {% endif %}
+                                {% if promotionType == 'specialPrice' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createSpecialPricePromotion',{'type' : 'receipt'}) }}'">Использовать рецепт</button>
+                                {% endif %}
+                                {% if promotionType == 'globalSpecialPrice' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createGlobalSpecialPricePromotion',{'type' : 'receipt'}) }}'">Использовать рецепт</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        {{ include('elements/admin_footer.html.twig') }}
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

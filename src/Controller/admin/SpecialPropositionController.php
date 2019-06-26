@@ -18,6 +18,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpecialPropositionController extends AbstractController
 {
     /**
+     * @Route("/lipadmin/promotion/createPromotion", name="createPromotion")
+     *
+     * @return Response
+     */
+    public function createPromotion(): Response
+    {
+        return $this->render('admin/special_proposition/create_promotion.html.twig');
+    }
+
+    /**
+     * @Route("/lipadmin/promotion/createPromotion/{promotionType}", name="createPromotionType")
+     *
+     * @param string $promotionType
+     * @return Response
+     */
+    public function createPromotionType(string $promotionType): Response
+    {
+        return $this->render('admin/special_proposition/type_promotion.html.twig',[
+            'promotionType' => $promotionType
+        ]);
+    }
+
+    /**
      * @Route("/lipadmin/promotion/createPromotion/percent/{type}", name="createPercentPromotion")
      * @param Request $request
      * @param SpecialPropositionAbstractFactory $factory
@@ -98,7 +121,7 @@ class SpecialPropositionController extends AbstractController
             return $this->redirectToRoute('admins');
         }
 
-        return $this->render('admin/special_proposition/special_price.html.twig',[
+        return $this->render('admin/special_proposition/gift.html.twig',[
             'form' => $form->createView()
         ]);
     }
@@ -119,12 +142,13 @@ class SpecialPropositionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $percentFactory = $factory->createGlobalSpecialPricePromotion($promotion);
+            dd($form->getData());
             if ($type === 'receipt') {
                 $percentFactory->addReceiptPromotion();
+
             } else {
                 $percentFactory->addProductPromotion();
             }
-
             return $this->redirectToRoute('admins');
         }
 
@@ -133,6 +157,25 @@ class SpecialPropositionController extends AbstractController
         ]);
     }
 
+//    /**
+//     * @Route("/lipadmin/product/product-select", name="admin_select_product")
+//     * @param Request $request
+//     * @return Response
+//     */
+//    public function getCategoryItemsSelect(Request $request)
+//    {
+//        $product = new PromotionModel();
+//        $product->setCategory($request->query->get('category'));
+//        $form = $this->createForm(GiftPromotionType::class, $product);
+//
+//        if (!$form->has('product')) {
+//            return new Response(null, 204);
+//        }
+//
+//        return $this->render('admin/special_proposition/_product.html.twig',[
+//            'form' => $form->createView()
+//        ]);
+//    }
 
 
 }

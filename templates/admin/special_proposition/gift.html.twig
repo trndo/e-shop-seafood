@@ -19,8 +19,24 @@
                 <div class="row justify-content-center">
                     <div class="col-8">
                         {{ form_start(form) }}
-                            {{ form_row(form) }}
+                            {{ form_widget(form) }}
                         {{ form_end(form) }}
+{#                        {{ form_start(form) }}#}
+{#                        {{ form_row(form.gift) }}#}
+{#                        {{ form_row(form.category, ,{#}
+{#                            attr: {#}
+{#                                'data-specific-location-url': path('admin_select_product'),#}
+{#                                'class': 'js-article-form-location'#}
+{#                            }#}
+{#                        })) }}#}
+{#                        <div class="js-specific-location-target">#}
+{#                            {% if form.product is defined %}#}
+{#                                {{ form_row(form.product) }}#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                        {{ form_row(form.description) }}#}
+{#                        {{ form_row(form.productSize) }}#}
+{#                        {{ form_end(form) }}#}
                     </div>
                 </div>
             </div>
@@ -59,3 +75,6 @@
     </div>
 </div>
 {% endblock %}
+
+
+

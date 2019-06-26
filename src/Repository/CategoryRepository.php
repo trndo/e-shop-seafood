@@ -42,5 +42,16 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function getProductsByCategory($categoryId): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.products','p')
+            ->addSelect('p')
+            ->andWhere('p.category = :categoryId')
+            ->setParameter('categoryId',$categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

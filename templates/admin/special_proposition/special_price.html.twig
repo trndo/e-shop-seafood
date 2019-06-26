@@ -19,7 +19,7 @@
                 <div class="row justify-content-center">
                     <div class="col-8">
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                           {{ form_widget(form) }}
                         {{ form_end(form) }}
                     </div>
                 </div>
@@ -58,6 +58,40 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            let $locationSelect = $('.js-article-form-location');
+            let $specificLocationTarget = $('.js-specific-location-target');
+            $locationSelect.on('change', function(e) {
+                $.ajax({
+                    url: $locationSelect.data('specific-location-url'),
+                    data: {
+                        category: $locationSelect.val()
+                    },
+                    success: function (html) {
+                        if (!html) {
+                            $specificLocationTarget.find('select').remove();
+                            $specificLocationTarget.addClass('d-none');
+                            return;
+                        }
+                        // Replace the current field and show
+                        $specificLocationTarget
+                            .html(html)
+                            .removeClass('d-none')
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 

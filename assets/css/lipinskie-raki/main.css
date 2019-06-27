@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway:200&display=swap');
+
 body, html{
     margin: 0;
     padding: 0;
@@ -8,5 +12,257 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+.container{
+    width: 992px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+    display: block
+}
+
+.container-inside{
+    top: 39px;
+    position: relative;
+    margin: 0 auto;
+    width: 83%;
+}
+
+header{
+    position: relative;
+    width: 100%;
+}
+
+#fast-order{
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 160px;
+    height: 29px;
+    background: #F13A3A;
+    box-shadow: 0 4px 10px rgba(179, 43, 43, 0.2);
+    border-radius: 50px;
+    font-family: Raleway, sans-serif;
+    font-weight: 900;
+    font-size: 0.9em;
+    line-height: 27px;
+    color: white;
+}
+#fast-order span{
+    position: relative;
+    left: 37px;
+    user-select: none;
+    z-index: 2;
+}
+#fish-bone{
+    position: absolute;
+    z-index: 1;
+    top: -15px;
+}
+.user_basket{
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+
+#user{
+    position: absolute;
+    right: 0;
+    top: -3px;
+}
+#basket-container{
+    position: absolute;
+    width: 110px;
+    height: 29px;
+    border: 2px solid #F13A3A;
+    box-sizing: border-box;
+    border-radius: 50px;
+    top: 0;
+    right: 45px;
+}
+#basket-container span{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    color: white;
+    display: inline;
+    position: absolute;
+    right: 7px;
+    top: 2px;
+}
+
+#basket{
+    position: absolute;
+    top: 3px;
+    left: 11px;
+}
+.logo-container{
+    width: 303px;
+    height: 178px;
+    margin: 0 auto;
+}
+
+.button-row{
+    height: 35px;
+}
+
+#logo{
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    z-index: 1;
+}
+
+#logo-text{
+    position: absolute;
+    width: 340px;
+    height: 110px;
+    z-index: 2;
+    top: 108px;
+}
+#lipinskie{
+    font-family: Raleway;
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 53px;
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+    color: white;
+}
+
+#raki{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 82.18%;
+    letter-spacing: 0.19em;
+    color: white;
+}
+
+.crayfish{
+    width: 127px;
+    height: 43px;
+    position: absolute;
+    right: 35px;
+    bottom: 1px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 100%;
+    color: #F13A3A;
+}
+.nav-row {
+    margin-top: 20px;
+}
+nav{
+    height: 34px;
+    width: 80%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0 auto;
+}
+
+nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-left: 0;
+}
+
+nav ul li{
+    list-style-type: none;
+    display: block;
+    font-family: Raleway, sans-serif;
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 100%;
+    color: #9e9999;
+    user-select: none;
+    cursor: pointer;
+}
+
+.active-nav{
+    font-weight: normal;
+    border-bottom: 3px solid #F13A3A;
+    color: white;
+}
 
 
+main{
+    position: relative;
+    width: 100%;
+}
+
+#plate{
+    position: relative;
+    display: block;
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+#promotion{
+    position: relative;
+    top: -66px;
+    width: 94%;
+    height: 178px;
+    z-index: 2;
+    margin: 0 auto;
+    background: #F13A3A;
+}
+
+#promotion-text{
+    position: absolute;
+    width: 446px;
+    height: 178px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 100%;
+    color: #520B0B;
+    padding-top: 60px;
+    right: 50px;
+}
+
+#promotion-percent{
+    position: absolute;
+    float: right;
+    width: 180px;
+    height: 178px;
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 96px;
+    line-height: 170%;
+    color: white;
+    left: 70px;
+}
+
+#slider-points{
+    position: absolute;
+    width: 7px;
+    height: 95px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    right: 38px;
+    top: 40px;
+}
+
+.ellipse{
+    width: 7px;
+    height: 7px;
+    background-color: #981A1A;
+    border-radius: 40px;
+}
+
+.ellipse-active{
+    background-color: white;
+}

@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Raleway:200&display=swap');
 
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,600,900&display=swap');
 body, html{
     margin: 0;
     padding: 0;
@@ -265,4 +263,18 @@ main{
 
 .ellipse-active{
     background-color: white;
+}
+
+.rating h2{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0 auto;
+    width: 513px;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    border-bottom: 3px solid #F13A3A;
+    text-align: center;
 }

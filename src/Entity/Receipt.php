@@ -322,4 +322,6 @@ class Receipt
 
         return $this;
     }
+
+
 }

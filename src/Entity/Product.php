@@ -428,4 +428,9 @@ class Product
 
         return $this;
     }
+
+    public function getType()
+    {
+        return 'product';
+    }
 }

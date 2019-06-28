@@ -73,7 +73,6 @@ class ProductService implements ProductServiceInterface
 
     private function uploadProductPhotos(array $photos,Product $product): void
     {
-
         foreach ($photos as $photo) {
             if ($photo instanceof UploadedFile) {
                 $productPhoto = new Photo();

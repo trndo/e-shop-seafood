@@ -330,7 +330,12 @@ class Receipt
 
     public function getDataForRating(): string
     {
-        return 'receipt'.$this->getId();
+        return 'receipt_'.$this->getId();
+    }
+
+    public function getType(): string
+    {
+        return 'receipt';
     }
 
 }

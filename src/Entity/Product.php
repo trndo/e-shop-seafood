@@ -429,14 +429,13 @@ class Product
         return $this;
     }
 
-    public function getType()
-    {
-        return 'product';
-    }
-
     public function getDataForRating(): string
     {
         return 'product_'.$this->getId();
+    }
 
+    public function getType(): string
+    {
+        return 'product';
     }
 }

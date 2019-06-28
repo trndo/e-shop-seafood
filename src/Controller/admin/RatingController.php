@@ -24,10 +24,10 @@ class RatingController extends AbstractController
                            ReceiptServiceInterface $receiptService): Response
     {
         $result = array_merge($productService->getProductsForRating(),$receiptService->getReceiptsForRating());
-        usort($result, function ($p,$r){
-            if($p->getRating() == $r->getRating())
+        usort($result, function ($product,$receipt){
+            if($product->getRating() == $receipt->getRating())
                 return null;
-            return ($p->getRating() < $r->getRating()) ? -1 : 1;
+            return ($product->getRating() < $receipt->getRating()) ? -1 : 1;
         });
 
         return $this->render('admin/rating/rating.html.twig',[

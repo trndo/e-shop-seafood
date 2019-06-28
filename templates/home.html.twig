@@ -62,129 +62,27 @@
                 </div>
                 <div class="rating">
                     <h2>На этой недели покупают:</h2>
+                    {% for item in items %}
+                    {% if loop.index0 is divisible by(3) %}
                     <div class="row">
+                    {% endif %}
                         <div class="col-4">
                             <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                                <img src="{{ item.TitlePhotoPath }}" alt="">
                                 <div class="card-content">
-                                    <h4>Раки Эль</h4>
+                                    <h4>{{ item.name }}</h4>
                                     <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
+                                        {{ item.description }}
                                     </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
+                                    <span class="price">{{ item.price }}</span>
+                                    <div class="in_basket" data-type="{{ item. }}"onclick="window.location.href=''">В коризну</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
+                    {% if loop.index is divisible by(3) or loop.last %}
                     </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="product-card">
-                                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                <div class="card-content">
-                                    <h4>Раки Эль</h4>
-                                    <p>
-                                        sfajsdfhasudfhasi uyasdASD SD ADASd
-                                    </p>
-                                    <span class="price">₴ 500</span>
-                                    <div class="in_basket">В коризну</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
             </main>
         </div>

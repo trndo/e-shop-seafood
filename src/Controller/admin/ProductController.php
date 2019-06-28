@@ -175,4 +175,23 @@ class ProductController extends AbstractController
        ]);
     }
 
+    /**
+     * @Route("/lipadmin/products/live_search", methods={"GET"})
+     *
+     * @param Request $request
+     * @param SearcherInterface $searcher
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function liveSearchReceipt(Request $request, SearcherInterface $searcher, ProductRepository $productRepository): Response
+    {
+        $name = $request->query->get('q');
+        $receipts = $searcher->searchByNameForRender($name,$productRepository);
+
+        return $this->render('elements/productsForRating.html.twig',[
+            'goods' => $receipts,
+            'type' => 'product'
+        ]);
+    }
+
 }

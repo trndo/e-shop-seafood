@@ -206,4 +206,24 @@ class ReceiptController extends AbstractController
         return new JsonResponse($data,200);
     }
 
+    /**
+     * @Route("/lipadmin/receipts/live_search", methods={"GET"})
+     *
+     * @param Request $request
+     * @param SearcherInterface $searcher
+     * @param ReceiptRepository $receiptRepository
+     * @return Response
+     */
+    public function liveSearchReceipt(Request $request, SearcherInterface $searcher, ReceiptRepository $receiptRepository): Response
+    {
+        $name = $request->query->get('q');
+        $receipts = $searcher->searchByNameForRender($name,$receiptRepository);
+
+        return $this->render('elements/productsForRating.html.twig',[
+            'goods' => $receipts,
+            'type' => 'receipt'
+        ]);
+    }
+
+
 }

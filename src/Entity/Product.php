@@ -433,4 +433,10 @@ class Product
     {
         return 'product';
     }
+
+    public function getDataForRating(): string
+    {
+        return 'product_'.$this->getId();
+
+    }
 }

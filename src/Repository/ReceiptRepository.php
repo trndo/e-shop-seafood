@@ -77,6 +77,13 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function findForRender(string $productName): ?array
     {
-        // TODO: Implement findForRender() method.
+        return $this->createQueryBuilder('r')
+            ->addSelect('r')
+            ->andWhere('r.name LIKE :productName ')
+            ->setParameter('productName', '%'.$productName.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

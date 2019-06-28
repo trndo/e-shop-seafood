@@ -1,7 +1,22 @@
 {% extends 'admin_base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('autocomplete') }}
+    {{ encore_entry_link_tags('rating') }}
+    <style>
+        .badge-pill{
+            position: absolute;
+            left: 7px;
+            top: 15px;
+
+        }
+        .delFromRate{
+            position: absolute;
+            right: 10px;
+            top: 15px;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 {% block body %}
 <body id="page-top">
@@ -32,13 +47,12 @@
                             <div class="col-8">
                                 <div class="card">
                                     <div class="card-body border border-danger rounded">
-                                        <ul class="list-group text-center">
+                                        <ul class="list-group text-center" id="sortable">
                                             {% if results is not empty %}
-                                            {% for result in results %}
-                                            <li class="list-group-item">{{ result.name }}</li>
-                                            {% endfor %}
+                                                {% for result in results %}
+                                                <li class="list-group-item ui-state-default" data-id="{{ result.getDataForRating() }}"><span class="badge badge-pill badge-primary">{{ result.rating }}</span>{{ result.name }}<i class="fas fa-times delFromRate"></i></li>
+                                                {% endfor %}
                                             {% else%}
-                                                Не заполено
                                             {% endif %}
                                         </ul>
                                     </div>
@@ -59,10 +73,10 @@
                                 <div class="card-body">
                                     <ul class="nav nav-pills ">
                                         <li class="nav-item">
-                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="products">
+                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search  live-search-form" data-url="products">
                                                 <div class="input-group">
                                                     <div class="ui-widget">
-                                                        <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                                        <input type="text" class="form-control bg-light border-0 small searchItem" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary search-name" type="button">
@@ -74,15 +88,32 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Обложка</th>
+                                            <th>Название</th>
+                                            <th>Категория</th>
+                                            <th>Цена/к-во</th>
+                                            <th>Размерность</th>
+                                            <th>Действие</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="card-body">
                                     <ul class="nav nav-pills ">
                                         <li class="nav-item">
-                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="products">
+                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="receipts">
                                                 <div class="input-group">
                                                     <div class="ui-widget">
-                                                        <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                                        <input type="text" class="form-control bg-light border-0 small searchItem" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary search-name" type="button">
@@ -93,6 +124,22 @@
                                             </form>
                                         </li>
                                     </ul>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Обложка</th>
+                                            <th>Название</th>
+                                            <th>Категория</th>
+                                            <th>Цена/к-во</th>
+                                            <th>Действие</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -136,4 +183,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('autocomplete') }}
+    {{ encore_entry_script_tags('rating') }}
 {% endblock %}

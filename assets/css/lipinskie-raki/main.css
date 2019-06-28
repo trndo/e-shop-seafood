@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css?family=Raleway:200,600,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway:200,300,600,900&display=swap');
 body, html{
     margin: 0;
     padding: 0;
@@ -277,4 +276,156 @@ main{
     color: white;
     border-bottom: 3px solid #F13A3A;
     text-align: center;
+}
+.rating{
+    width: 690px;
+    position: relative;
+    margin: 0 auto;
+}
+.rating .row{
+    margin-top: 20px;
+}
+
+.product-card{
+    width: 210px;
+    height: 299px;
+    background: #3C3C3C;
+}
+
+.product-card img{
+    width: 100%;
+    height: 186px;
+}
+
+.card-content{
+    position: relative;
+    height: 113px;
+    width: 210px;
+    padding: 10px 16px 0 16px;
+}
+
+.product-card h4{
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+.product-card p{
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 100%;
+    text-align: justify;
+    margin-top: 1px;
+    margin-bottom: 20px;
+    position: relative;
+    color: #FFFFFF;
+}
+
+.in_basket{
+    position: absolute;
+    width: 94.54px;
+    height: 22.29px;
+    background: #F13A3A;
+    border-radius: 50px;
+    bottom: 13px;
+    right: 15px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 100%;
+    align-items: center;
+    padding: 4px 10px 0 10px;
+    color: #FFFFFF;
+}
+
+.price{
+    position: absolute;
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    bottom: 15px;
+    left: 16px;
+    color: #FFFFFF;
+}
+
+.inbasket-continer{
+    position: relative;
+    width: 100%;
+}
+
+.page-text{
+    position: relative;
+    width: 100%;
+    margin-top: 82px;
+}
+
+#main-photo{
+    background-image: url("../../img/main-page-img.jpg");
+    background-size: cover;
+    width: 495px;
+    height: 506px;
+    display: inline-block;
+    float: left;
+}
+
+#main-text{
+    width: 497px;
+    height: 506px;
+    background: #F13A3A;
+    display: inline-block;
+    padding: 109px 45px 25px 45px;
+}
+#main-text-container{
+    width: 407px;
+    height: 200px;
+}
+
+#main-text-container h1{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 100%;
+    text-align: justify;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+#main-text-container p{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: justify;
+
+    color: #FFFFFF;
+}
+
+.fast-order-big{
+    position: absolute;
+    width: 182px;
+    height: 35px;
+    box-shadow: 0 4px 4px rgba(50, 9, 9, 0.25);
+    background: #FFFFFF;
+    border-radius: 50px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 100%;
+    text-align: center;
+    bottom: 100px;
+    right: 155px;
+    padding-top: 10px;
+    color: #F13A3A;
 }

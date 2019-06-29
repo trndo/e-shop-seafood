@@ -72,6 +72,6 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
 
     public function findProductBySlug(string $slug):Product
     {
-        return $this->find(['slug' => $slug]);
+        return $this->findOneBy(['slug' => $slug]);
     }
 }

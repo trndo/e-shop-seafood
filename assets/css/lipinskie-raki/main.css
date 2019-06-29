@@ -95,6 +95,10 @@ header{
     top: 3px;
     left: 11px;
 }
+#basket::after{
+    content: url("../../img/circle-solid.svg");
+    color: red;
+}
 .logo-container{
     width: 303px;
     height: 178px;

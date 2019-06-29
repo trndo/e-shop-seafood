@@ -187,12 +187,6 @@ nav ul li{
     cursor: pointer;
 }
 
-.active-nav{
-    font-weight: normal;
-    border-bottom: 3px solid #F13A3A;
-    color: white;
-}
-
 
 main{
     position: relative;
@@ -432,4 +426,117 @@ main{
     right: 155px;
     padding-top: 10px;
     color: #F13A3A;
+}
+
+footer{
+    position: relative;
+    width: 100%;
+    background: #212121;
+    height: 218px;
+}
+
+#red-line{
+    border: 7px solid #F13A3A;
+    position: absolute;
+    width: 100%;
+    bottom: 14px;
+}
+
+.footer-row{
+    margin-top: 42px;
+}
+
+.logos{
+    position: relative;
+    left: 14px;
+    float: left;
+    width: 226px;
+    height: 120px;
+}
+
+.footer-raki-logo embed{
+    width: 150px;
+    height: 70px;
+    margin-top: -10px;
+}
+
+
+.contact{
+    width: 161px;
+    height: 104px;
+    margin-left: 95px;
+}
+
+#contact-num{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    align-items: center;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+#contact-email{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 100%;
+    text-align: center;
+    display: block;
+    color: #CECECE;
+}
+
+.contact-social{
+    position: relative;
+    margin-top: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.footer-nav{
+    width: 128px;
+    height: 124px;
+    margin-left: 179px;
+}
+
+.footer-nav ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: -2px;
+}
+
+.footer-nav ul li{
+    list-style-type: none;
+    display: block;
+    font-family: Raleway, sans-serif;
+    font-weight: 200;
+    font-size: 18px;
+    line-height: 100%;
+    color: #9e9999;
+    user-select: none;
+    cursor: pointer;
+    width: max-content;
+    margin-top: 6px;
+}
+
+.active-nav{
+    font-weight: normal !important;
+    border-bottom: 3px solid #F13A3A;
+    color: white !important;
+}
+
+.footer-octo-logo{
+    margin-top: 8px;
+}
+
+.footer-octo-logo embed{
+    width: 150px;
+    height: 70px;
 }

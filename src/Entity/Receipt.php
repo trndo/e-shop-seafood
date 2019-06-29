@@ -97,12 +97,18 @@ class Receipt
      */
     private $specialReceipt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="receiptSales")
+     */
+    private $productSales;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->photo = new ArrayCollection();
         $this->rating = 0;
         $this->status = 0;
+        $this->productSales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -338,4 +344,39 @@ class Receipt
         return 'receipt';
     }
 
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProductSales(): Collection
+    {
+        return $this->productSales;
+    }
+
+    /**
+     * @param Receipt $productSale
+     *
+     * @return Receipt
+     */
+    public function addProductSale(Product $productSale): self
+    {
+        if (!$this->productSales->contains($productSale)) {
+            $this->productSales[] = $productSale;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Product $productSale
+     *
+     * @return Receipt
+     */
+    public function removeProductSale(Product $productSale): self
+    {
+        if ($this->productSales->contains($productSale)) {
+            $this->productSales->removeElement($productSale);
+        }
+
+        return $this;
+    }
 }

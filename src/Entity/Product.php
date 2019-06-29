@@ -123,6 +123,25 @@ class Product
      */
     private $specialProposition;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="products")
+     */
+    private $additionalProduct;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="additionalProduct")
+     */
+    private $products;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", inversedBy="productSales")
+     * @ORM\JoinTable(name="product_receipt_sales",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="receipt_id", referencedColumnName="id")}
+     * )
+     */
+    private $receiptSales;
+
 
     public function __construct()
     {
@@ -130,6 +149,9 @@ class Product
         $this->receipts = new ArrayCollection();
         $this->rating = 0;
         $this->status = 0;
+        $this->additionalProduct = new ArrayCollection();
+        $this->products = new ArrayCollection();
+        $this->receiptSales = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -437,5 +459,95 @@ class Product
     public function getType(): string
     {
         return 'product';
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getAdditionalProduct(): Collection
+    {
+        return $this->additionalProduct;
+    }
+
+    public function addAdditionalProduct(self $additionalProduct): self
+    {
+        if (!$this->additionalProduct->contains($additionalProduct)) {
+            $this->additionalProduct[] = $additionalProduct;
+        }
+
+        return $this;
+    }
+
+    public function removeAdditionalProduct(self $additionalProduct): self
+    {
+        if ($this->additionalProduct->contains($additionalProduct)) {
+            $this->additionalProduct->removeElement($additionalProduct);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(self $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addAdditionalProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(self $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            $product->removeAdditionalProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Receipt[]
+     */
+    public function getReceiptSales(): Collection
+    {
+        return $this->receiptSales;
+    }
+
+    /**
+     * @param Receipt $receiptSale
+     *
+     * @return Product
+     */
+    public function addReceiptSale(Receipt $receiptSale): self
+    {
+        if (!$this->receiptSales->contains($receiptSale)) {
+            $this->receiptSales[] = $receiptSale;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Receipt $receiptSale
+     *
+     * @return Product
+     */
+    public function removeLikedPractice(Receipt $receiptSale): self
+    {
+        if ($this->receiptSales->contains($receiptSale)) {
+            $this->receiptSales->removeElement($receiptSale);
+        }
+
+        return $this;
     }
 }

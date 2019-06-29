@@ -1,0 +1,127 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    {{ include('elements/admin_nav.html.twig', {'active': 'products'}) }}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            {{ include('elements/admin_header.html.twig') }}
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="h3 mb-2 text-gray-800">Добавление продуктов к рецепту</h1>
+                <hr class="sidebar-divider">
+                <!-- DataTales Example -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <h3>Выбрать категорию</h3>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Выбрать категорию
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {% for category in categories %}
+                                        <div class="dropdown-item category" data-id="{{ category.id }}">{{ category.name }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="tag-container">
+                                {% for additionalProd in additionalProds %}
+                                    <div class="tag" data-id="{{ additionalProd.id }}">{{ additionalProd.name }}{% if relatedProducts.productSize is defined %} {{ additionalProd.productSize }}{% endif %} <i class="fas fa-times deltag"></i></div>
+                                {% endfor %}
+                            </div>
+                            <button class="btn btn-primary saveProducts" data-slug="{{ receipt.slug }}" data-receipt-id="{{ receipt.id }}">Cохранить!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow mb-4 product-list" style="margin-top: 20px">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Таблица Продуктов</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills ">
+                            <li class="nav-item">
+                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="products">
+                                    <div class="input-group">
+                                        <div class="ui-widget">
+                                            <input id="searchItem" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Обложка</th>
+                                    <th>Название</th>
+                                    <th>Категория</th>
+                                    <th>Цена/к-во</th>
+                                    <th>Размерность</th>
+                                    <th>Действие</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        {{ include('elements/admin_footer.html.twig') }}
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('addSales') }}
+{% endblock %}

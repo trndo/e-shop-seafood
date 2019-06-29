@@ -50,6 +50,7 @@
                                 <h3>Действия</h3>
                                 <button class="btn btn-primary" onclick="window.location.href ='{{ path('showReceiptPhotos',{'slug': receipt.slug}) }}'">Обновить фото на слайдере</button>
                                 <button class="btn btn-danger" onclick="window.location.href ='{{ path('addProducts',{'slug': receipt.slug}) }}'">Добавить продуктов к рецепту</button>
+                                <button class="btn btn-warning" onclick="window.location.href ='{{ path('addReceiptSales', {'slug': receipt.slug}) }}'">Добавить доп. продажи</button>
                                 <hr>
                                 <div class="row justify-content-center">
                                     <div class="col-6">

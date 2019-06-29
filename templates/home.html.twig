@@ -15,7 +15,7 @@
                    </div>
                    <div class="user_basket">
                        <div id="basket-container">
-                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/> <span>550 грн</span>
+                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
                        </div>
                        <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
                    </div>
@@ -71,11 +71,10 @@
                                 <img src="{{ item.TitlePhotoPath }}" alt="">
                                 <div class="card-content">
                                     <h4>{{ item.name }}</h4>
-                                    <p>
-                                        {{ item.description }}
-                                    </p>
+                                    <p>{{ item.description }}</p>
                                     <span class="price">{{ item.price }}</span>
-                                    <div class="in_basket" data-type="{{ item.Type }}" onclick="window.location.href=''">В коризну</div>
+
+                                    <div class="in_basket" data-type="{{ item.getType }}" data-name="{{ item.slug }}">В коризну</div>
                                 </div>
                             </div>
                         </div>

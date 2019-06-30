@@ -26,6 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GiftPromotionType extends AbstractType
 {
+    use PromotionTrait;
     /**
      * @var EntityManagerInterface
      */
@@ -39,100 +40,60 @@ class GiftPromotionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('gift', EntityType::class,[
-            'class' => Product::class,
-            'choice_label' => 'name'
-        ])
-        ->add('quantity', IntegerType::class)
-        ->add('category',EntityType::class,[
+        $builder->add('giftCategory',EntityType::class,[
+                'class' => Category::class,
+                'placeholder' => 'Выберете категорию подарка',
+                'choice_label' => 'name',
+                'query_builder' => function(EntityRepository $er){
+                     return $er->createQueryBuilder('c')
+                         ->where('c.type = :type')
+                      ->setParameter('type','products');
+                }
+            ]);
+        $formModifierGift = $this->modifyGift('gift');
+        $this->changeOption($formModifierGift,'giftCategory',$builder);
+
+        $builder->add('category',EntityType::class,[
             'class' => Category::class,
-            'placeholder' => 'Выберите категорию',
-            'choice_label' => 'name'
-//            'query_builder' => function(EntityRepository $er){
-//                return $er->createQueryBuilder('c')
-//                    ->where('c.type = :type')
-//                    ->setParameter('type','products');
-//            }
-        ])
-            ->add('product',EntityType::class,[
-                'class' => Product::class,
-                'placeholder' => 'Выберите категорию',
-                'choice_label' => 'name'
-            ])
-//        ->add('product',ChoiceType::class, [
-//            'placeholder' => 'Выберите продукт',
-//            'choices' => $this->getCategoryItems($category->getCategory()->getId()),
-//            'required' => false,
-//        ])
-        ->add('productSize',TextType::class)
+            'placeholder' => '',
+            'choice_label' => 'name',
+            'query_builder' => function(EntityRepository $er) use ($options){
+                $builder = $er->createQueryBuilder('c')->where('c.type = :type');
+                return $options['receipt'] == true ? $builder->setParameter('type','receipts') : $builder->setParameter('type','products');
+            }
+        ]);
+
+    $formModifierProduct = $options['receipt'] == true ? $this->modifyInput('receipt') : $this->modifyInput('product');
+    $this->changeOption($formModifierProduct,'category',$builder);
+
+        $builder->add('productSize',TextType::class)
+        ->add('availableAt',DateType::class)
+        ->add('quantity', IntegerType::class)
         ->add('description',TextareaType::class)
         ->add('save',SubmitType::class);
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                /** @var PromotionModel|null $data */
-                $data = $event->getData();
-                if (!$data) {
-                    return;
-                }
-
-                $this->setupProductField(
-                    $event->getForm(),
-                    $data->getCategory()->getId()
-                );
-            }
-        );
-
-        $builder->get('category')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $e)
-            {
-                $form = $e->getForm();
-                $this->setupProductField(
-                    $form->getParent(),
-                    $form->getData()
-                );
-            }
-        );
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         return $resolver->setDefaults([
             'data_class' => PromotionModel::class,
+            'receipt' => false
         ]);
     }
 
-    private function getCategoryItems(?int $categoryId): ?array
+    private function modifyGift(string $inputName): callable
     {
-        $repository = $this->entityManager->getRepository(Category::class);
+        $modifier = function (FormInterface $form, Category $category = null) use ($inputName) {
+            $products = null === $category ? [] : $category->getProducts();
+            $form->add($inputName,EntityType::class,[
+                'class' => Product::class,
+                'placeholder' => 'Выберите продукт',
+                'choice_label' => 'name',
+                'choices' => $products,
+            ]);
+        };
 
-        return $repository->getProductsByCategory($categoryId);
-
+        return $modifier;
     }
 
-    private function setupProductField(FormInterface $form,?int $categoryId)
-    {
-        if ($categoryId === null) {
-            $form->remove('product');
-
-            return;
-        }
-
-        $choices = $this->getCategoryItems($categoryId);
-
-        if ($choices === null) {
-            $form->remove('product');
-
-            return;
-        }
-
-        $form->add('product',ChoiceType::class, [
-            'placeholder' => 'Выберите продукт',
-            'choices' => $choices,
-            'required' => false,
-        ]);
-    }
 }

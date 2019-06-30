@@ -66,6 +66,30 @@ class PromotionModel
     private $category;
 
     /**
+     * @var Category|null
+     */
+    private $giftCategory;
+
+    /**
+     * @return Category|null
+     */
+    public function getGiftCategory(): ?Category
+    {
+        return $this->giftCategory;
+    }
+
+    /**
+     * @param Category|null $giftCategory
+     * @return PromotionModel
+     */
+    public function setGiftCategory(?Category $giftCategory): self
+    {
+        $this->giftCategory = $giftCategory;
+
+        return $this;
+    }
+
+    /**
      * @return Category|null
      */
     public function getCategory(): ?Category

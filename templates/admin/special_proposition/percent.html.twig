@@ -19,7 +19,18 @@
                 <div class="row justify-content-center">
                     <div class="col-8">
                         {{ form_start(form) }}
-                            {{ form_row(form) }}
+                            {{ form_row(form.percent) }}
+                            {{ form_row(form.category) }}
+                            {% if form.receipt is defined %}
+                                {{ form_row(form.receipt) }}
+                            {% endif %}
+                            {% if form.product is defined %}
+                                {{ form_row(form.product) }}
+                            {% endif %}
+                            {{ form_row(form.availableAt) }}
+                            {{ form_row(form.quantity) }}
+                            {{ form_row(form.productSize) }}
+                            {{ form_row(form.description) }}
                         {{ form_end(form) }}
                     </div>
                 </div>
@@ -58,4 +69,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('promotion') }}
 {% endblock %}

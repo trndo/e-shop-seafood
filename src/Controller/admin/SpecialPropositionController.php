@@ -110,14 +110,17 @@ class SpecialPropositionController extends AbstractController
     public function addGiftPromotion(Request $request, SpecialPropositionAbstractFactory $factory, string $type): Response
     {
         $promotion = new PromotionModel();
-        $form = $this->createForm(GiftPromotionType::class, $promotion);
+        $options['receipt'] = $type == 'receipt' ? true : false;
+        $form = $this->createForm(GiftPromotionType::class, $promotion, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $percentFactory = $factory->createGiftPromotion($promotion);
-            $rak = $percentFactory->addProductPromotion();
-
-
+            if ($type === 'receipt') {
+                $percentFactory->addReceiptPromotion();
+            } else {
+                $percentFactory->addProductPromotion();
+            }
             return $this->redirectToRoute('admins');
         }
 
@@ -142,7 +145,6 @@ class SpecialPropositionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $percentFactory = $factory->createGlobalSpecialPricePromotion($promotion);
-            dd($form->getData());
             if ($type === 'receipt') {
                 $percentFactory->addReceiptPromotion();
 
@@ -152,30 +154,12 @@ class SpecialPropositionController extends AbstractController
             return $this->redirectToRoute('admins');
         }
 
-        return $this->render('admin/special_proposition/special_price.html.twig',[
+        return $this->render('admin/special_proposition/global_special_price.html.twig',[
             'form' => $form->createView()
         ]);
     }
 
-//    /**
-//     * @Route("/lipadmin/product/product-select", name="admin_select_product")
-//     * @param Request $request
-//     * @return Response
-//     */
-//    public function getCategoryItemsSelect(Request $request)
-//    {
-//        $product = new PromotionModel();
-//        $product->setCategory($request->query->get('category'));
-//        $form = $this->createForm(GiftPromotionType::class, $product);
-//
-//        if (!$form->has('product')) {
-//            return new Response(null, 204);
-//        }
-//
-//        return $this->render('admin/special_proposition/_product.html.twig',[
-//            'form' => $form->createView()
-//        ]);
-//    }
+
 
 
 }

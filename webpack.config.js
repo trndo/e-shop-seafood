@@ -25,6 +25,7 @@ Encore
     .addEntry('addReceipt','./assets/js/addReceipt.js')
     .addEntry('rating','./assets/js/rating.js')
     .addEntry('main','./assets/js/front/raki-front.js')
+    .addEntry('promotion','./assets/js/promotion.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

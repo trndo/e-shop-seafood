@@ -54,6 +54,21 @@ final class PromotionMapper
         return $proposition;
     }
 
+    public static function giftReceiptModelToEntity(PromotionModel $model): SpecialProposition
+    {
+        $proposition = new SpecialProposition();
+
+        $proposition->addGift($model->getGift())
+            ->addReceipt($model->getReceipt())
+            ->setQuantity($model->getQuantity())
+            ->setAvailableAt($model->getAvailableAt())
+            ->setProductSize($model->getProductSize())
+            ->setDescription($model->getDescription())
+            ->setStatus(false);
+
+        return $proposition;
+    }
+
     public static function specialPriceProductModelToEntity(PromotionModel $model): SpecialProposition
     {
         $proposition = new SpecialProposition();

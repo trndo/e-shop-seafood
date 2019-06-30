@@ -49,6 +49,11 @@ class GiftPromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        // TODO: "LATER" - Implement addReceiptPromotion() method.
+        $sProposition = PromotionMapper::giftReceiptModelToEntity($this->model);
+
+        $this->entityManager->persist($sProposition);
+        $this->entityManager->flush();
+
+        return $sProposition;
     }
 }

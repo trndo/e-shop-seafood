@@ -19,6 +19,7 @@
                 <div class="row justify-content-center">
                     <div class="col-8">
                         {{ form_start(form) }}
+                            {{ form_row(form.globalPrice) }}
                             {{ form_row(form.category) }}
                             {% if form.receipt is defined %}
                                 {{ form_row(form.receipt) }}
@@ -26,7 +27,6 @@
                             {% if form.product is defined %}
                                 {{ form_row(form.product) }}
                             {% endif %}
-                            {{ form_row(form.specialPrice) }}
                             {{ form_row(form.availableAt) }}
                             {{ form_row(form.quantity) }}
                             {{ form_row(form.productSize) }}
@@ -74,6 +74,3 @@
     {{ parent() }}
     {{ encore_entry_script_tags('promotion') }}
 {% endblock %}
-
-
-

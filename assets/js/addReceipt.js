@@ -100,7 +100,7 @@ $(document).on('click', '.addTag',function () {
 });
 
 $(document).on('click', '.deltag',function () {
-    let id = $(this).data('id');
+    let id = $(this).parent().data('id');
     tags.splice(tags.indexOf(id),1);
     $(this).parent().remove();
 });

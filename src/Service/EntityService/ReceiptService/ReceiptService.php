@@ -202,9 +202,10 @@ class ReceiptService implements ReceiptServiceInterface
         foreach ($products as $product) {
             $product =  $productRepo->find($product);
             $receipt->addProductSale($product);
+            $this->entityManager->flush();
         }
 
-        $this->entityManager->flush();
+
     }
 
     public function getReceiptsForRating(): ?array

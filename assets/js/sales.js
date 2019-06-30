@@ -3,6 +3,16 @@ import $ from "jquery";
 let category = null;
 let type = null;
 let tags = [];
+$(document).ready(function () {
+   let existTags = $('#tag-container').children();
+   if(existTags.length){
+       $('#tag-container').show();
+       $('.saveProducts').show();
+        existTags.each(function () {
+            tags.push($(this).data('id'));
+        })
+   }
+});
 
 $('.category').click(function () {
     $('.second-step').show();
@@ -54,25 +64,34 @@ $(document).on('click', '.addTag',function () {
     let name = $(this).data('name');
     let size = $(this).data('size');
 
-    if(type === 'one') {
-        if(validateTags({id: id, name: name}))
-            addTag({id: id, name: name})
-    } else if(type === 'sizes') {
-        if(validateTags({id: id, name: name, size: size}))
-            addTag({id: id, name: name, size: size})
-    }
+    if(validateTags({id: id, name: name, size: size}))
+        addTag({id: id, name: name, size: size})
 });
+
+function addTag(product) {
+    tags.push(product.id);
+    console.log(tags);
+    if(product.size === undefined)
+        $('#tag-container').append(
+            '<div class="tag" data-id="'+product.id+'">'+product.name+'<i class="fas fa-times deltag"></i></div>'
+        );
+    else {
+        $('#tag-container').append(
+            '<div class="tag" data-id="' + product.id + '">' + product.name + ' ' + product.size + '<i class="fas fa-times deltag"></i></div>'
+        );
+    }
+}
 
 
 $(document).on('click', '.deltag',function () {
-    let id = $(this).data('id');
+    let id = $(this).parent().data('id');
     tags.splice(tags.indexOf(id),1);
     $(this).parent().remove();
 });
 
 function validateTags(data){
         if (tags.indexOf(data.id) !== -1) {
-            alert('Внимание! Такой продукт уже добавлен в рецепт');
+            alert('Внимание! Такой продукт уже добавлен в доп. продажи');
             return false;
         }
         if(tags.length === 3) {
@@ -83,14 +102,13 @@ function validateTags(data){
 }
 
 $('.saveProducts').click(function () {
-    let receipt = $(this).data('receipt-id');
     let slug = $(this).data('slug');
+    let route = $(this).data('route');
     $.ajax({
-        url: '/lipadmin/receipts/'+slug+'/saveSales',
+        url: '/lipadmin/'+route+'/'+slug+'/saveSales',
         type: 'POST',
         data: {
             products: tags,
-            id: receipt
         },
         success: function (res) {
             window.location.href = '/lipadmin/receipts/'+slug+'/show';

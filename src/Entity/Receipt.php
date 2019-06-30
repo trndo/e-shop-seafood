@@ -353,13 +353,14 @@ class Receipt
     }
 
     /**
-     * @param Receipt $productSale
+     * @param Product $productSale
      *
      * @return Receipt
      */
     public function addProductSale(Product $productSale): self
     {
         if (!$this->productSales->contains($productSale)) {
+            $productSale->addReceiptSale($this);
             $this->productSales[] = $productSale;
         }
 
@@ -374,6 +375,7 @@ class Receipt
     public function removeProductSale(Product $productSale): self
     {
         if ($this->productSales->contains($productSale)) {
+            $productSale->removeReceiptSales($this);
             $this->productSales->removeElement($productSale);
         }
 

@@ -540,3 +540,109 @@ footer{
     width: 150px;
     height: 70px;
 }
+
+#overlay{
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 20;
+    cursor: pointer
+}
+.modal{
+    width: 770px;
+    height: 452px;
+    position: relative;
+    margin: 0 auto;
+    top: 13%;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: block
+}
+#shopping-cart{
+    position: absolute;
+    width: 277px;
+    height: 332px;
+    top:0;
+    left: 0;
+    z-index: 4;
+}
+
+#shopping-cart embed{
+    width: 100%;
+    height: 100%;
+}
+.check-shopping{
+    position: relative;
+    display: block;
+    left: 156px;
+    width: 526px;
+    height: 130px;
+    top: 0;
+    padding-top: 42px;
+    padding-bottom: 20px;
+    z-index: 5;
+}
+
+.check-shopping p{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 100%;
+    color: #FFFFFF;
+    display: inline;
+}
+
+.check-shopping h4{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+#close-modal{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 23px;
+    right: 23px;
+}
+.cart-container{
+    width: 659px;
+    height: 461px;
+    position: relative;
+    display: block;
+    left: 91px;
+    padding-left: 15px;
+    z-index: 5
+}
+
+.order{
+    width: 559px;
+    height: 70px;
+    position: relative;
+    display: block;
+    background: #F85B5B;
+    box-shadow: 0 4px 4px #BF2C2C;
+    border-radius: 2px;
+    margin-bottom: 7px;
+}
+.order img{
+    width: 139px;
+    height: 70px;
+    display: inline-block;
+    position: relative;
+}
+.order-product-name {
+    width: 155px;
+    height: 70px;
+    padding-left: 13px;
+}

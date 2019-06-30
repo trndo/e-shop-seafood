@@ -190,6 +190,23 @@ class ReceiptService implements ReceiptServiceInterface
         $this->entityManager->flush();
     }
 
+    public function addSalesInReceipt(array $products,?Receipt $receipt): void
+    {
+        $productRepo = $this->entityManager->getRepository(Product::class);
+
+        foreach ($receipt->getProductSales() as $existingProductSale){
+            if(!in_array($existingProductSale->getId(),$products))
+                $receipt->removeProductSale($existingProductSale);
+        }
+
+        foreach ($products as $product) {
+            $product =  $productRepo->find($product);
+            $receipt->addProductSale($product);
+        }
+
+        $this->entityManager->flush();
+    }
+
     public function getReceiptsForRating(): ?array
     {
         return $this->receiptRepository->findForRating();

@@ -225,5 +225,35 @@ class ReceiptController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("lipadmin/receipts/{slug}/addSales", name="addReceiptSales")
+     *
+     * @param CategoryService $categoryService
+     * @param Receipt $receipt
+     * @return Response
+     */
+    public function addAdditionalSales(Receipt $receipt, CategoryService $categoryService): Response
+    {
+        $categories = $categoryService->getCategoryByCriteria(['type' => 'products']);
+        return $this->render('admin/receipt/additionalSales.html.twig',[
+            'additionalProds' => $receipt->getProductSales(),
+            'categories' => $categories,
+            'receipt' => $receipt
+        ]);
+    }
+
+    /**
+     * @Route("lipadmin/receipts/{slug}/saveSales", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Receipt $receipt
+     * @param ReceiptService $receiptService
+     * @return JsonResponse
+     */
+    public function saveSalesForReceipt(Receipt $receipt,Request $request, ReceiptService $receiptService): JsonResponse
+    {
+        $receiptService->addSalesInReceipt((array)$request->request->get('products'), $receipt);
+        return  new JsonResponse([],200);
+    }
 
 }

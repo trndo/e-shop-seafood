@@ -53,7 +53,7 @@ class SupplyController extends AbstractController
      * @
      * @param SearcherInterface $searcher
      * @param SupplyRepository $repository
-     * @return JsonResponse
+     * @return Response
      */
     public function searchByName(Request $request, SearcherInterface $searcher, SupplyRepository $repository): Response
     {

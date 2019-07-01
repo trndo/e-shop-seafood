@@ -38,10 +38,10 @@
                         <div class="row">
                             <div id="tag-container">
                                 {% for additionalProd in additionalProds %}
-                                    <div class="tag" data-id="{{ additionalProd.id }}">{{ additionalProd.name }}{% if relatedProducts.productSize is defined %} {{ additionalProd.productSize }}{% endif %} <i class="fas fa-times deltag"></i></div>
+                                    <div class="tag" data-id="{{ additionalProd.id }}">{{ additionalProd.name }}{% if additionalProd.productSize is defined %} {{ additionalProd.productSize }}{% endif %} <i class="fas fa-times deltag"></i></div>
                                 {% endfor %}
                             </div>
-                            <button class="btn btn-primary saveProducts" data-slug="{{ receipt.slug }}" data-receipt-id="{{ receipt.id }}">Cохранить!</button>
+                            <button class="btn btn-primary saveProducts" data-route="receipts" data-slug="{{ receipt.slug }}">Cохранить!</button>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="products">
                                     <div class="input-group">
                                         <div class="ui-widget">
-                                            <input id="searchItem" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                            <input id="searchItem" type="text" class"form-control bg-light border-0 small"="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                         </div>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">

@@ -542,7 +542,7 @@ class Product
      *
      * @return Product
      */
-    public function removeLikedPractice(Receipt $receiptSale): self
+    public function removeReceiptSales(Receipt $receiptSale): self
     {
         if ($this->receiptSales->contains($receiptSale)) {
             $this->receiptSales->removeElement($receiptSale);

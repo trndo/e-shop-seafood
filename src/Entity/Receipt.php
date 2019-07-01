@@ -92,15 +92,16 @@ class Receipt
      */
     private $photo;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SpecialProposition", inversedBy="receipt")
-     */
-    private $specialReceipt;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="receiptSales")
      */
     private $productSales;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SpecialProposition", mappedBy="receipt")
+     */
+    private $specialPropositions;
 
     public function __construct()
     {
@@ -109,6 +110,7 @@ class Receipt
         $this->rating = 0;
         $this->status = 0;
         $this->productSales = new ArrayCollection();
+        $this->specialPropositions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,6 +379,37 @@ class Receipt
         if ($this->productSales->contains($productSale)) {
             $productSale->removeReceiptSales($this);
             $this->productSales->removeElement($productSale);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SpecialProposition[]
+     */
+    public function getSpecialPropositions(): Collection
+    {
+        return $this->specialPropositions;
+    }
+
+    public function addSpecialProposition(SpecialProposition $specialProposition): self
+    {
+        if (!$this->specialPropositions->contains($specialProposition)) {
+            $this->specialPropositions[] = $specialProposition;
+            $specialProposition->setReceipt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialProposition(SpecialProposition $specialProposition): self
+    {
+        if ($this->specialPropositions->contains($specialProposition)) {
+            $this->specialPropositions->removeElement($specialProposition);
+            // set the owning side to null (unless already changed)
+            if ($specialProposition->getReceipt() === $this) {
+                $specialProposition->setReceipt(null);
+            }
         }
 
         return $this;

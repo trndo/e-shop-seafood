@@ -49,7 +49,7 @@ class GlobalSpecialPricePromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::globalReceiptProductModelToEntity($this->model);
+        $sProposition = PromotionMapper::globalPriceReceiptModelToEntity($this->model);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();

@@ -113,7 +113,7 @@ final class PromotionMapper
         return $proposition;
     }
 
-    public static function globalReceiptProductModelToEntity(PromotionModel $model): SpecialProposition
+    public static function globalPriceReceiptModelToEntity(PromotionModel $model): SpecialProposition
     {
         $proposition = new SpecialProposition();
 

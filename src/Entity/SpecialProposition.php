@@ -28,10 +28,6 @@ class SpecialProposition
      */
     private $percent;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="specialProposition")
-     */
-    private $gift;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -73,10 +69,11 @@ class SpecialProposition
      */
     private $product;
 
-    public function __construct()
-    {
-        $this->gift = new ArrayCollection();
-    }
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="gift", cascade={"persist", "remove"})
+     */
+    private $gift;
+
 
     public function getId(): ?int
     {
@@ -107,36 +104,6 @@ class SpecialProposition
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getGift(): Collection
-    {
-        return $this->gift;
-    }
-
-    public function addGift(Product $gift): self
-    {
-        if (!$this->gift->contains($gift)) {
-            $this->gift[] = $gift;
-            $gift->setSpecialProposition($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGift(Product $gift): self
-    {
-        if ($this->gift->contains($gift)) {
-            $this->gift->removeElement($gift);
-            // set the owning side to null (unless already changed)
-            if ($gift->getSpecialProposition() === $this) {
-                $gift->setSpecialProposition(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getGlobalPrice(): ?int
     {
@@ -230,6 +197,18 @@ class SpecialProposition
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getGift(): ?Product
+    {
+        return $this->gift;
+    }
+
+    public function setGift(?Product $gift): self
+    {
+        $this->gift = $gift;
 
         return $this;
     }

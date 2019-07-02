@@ -92,7 +92,6 @@ class Receipt
      */
     private $photo;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="receiptSales")
      */
@@ -319,17 +318,6 @@ class Receipt
         return $this;
     }
 
-    public function getSpecialReceipt(): ?SpecialProposition
-    {
-        return $this->specialReceipt;
-    }
-
-    public function setSpecialReceipt(?SpecialProposition $specialReceipt): self
-    {
-        $this->specialReceipt = $specialReceipt;
-
-        return $this;
-    }
 
     public function getTitlePhotoPath(): ?string
     {
@@ -387,6 +375,7 @@ class Receipt
     public function expose()
     {
         return get_object_vars($this);
+    }
 
     /**
      * @return Collection|SpecialProposition[]

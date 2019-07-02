@@ -118,10 +118,6 @@ class Product
      */
     private $weightPerUnit;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SpecialProposition", inversedBy="gift")
-     */
-    private $specialProposition;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="products")
@@ -142,6 +138,11 @@ class Product
      */
     private $receiptSales;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SpecialProposition", mappedBy="product")
+     */
+    private $specialPropositions;
+
 
     public function __construct()
     {
@@ -152,6 +153,7 @@ class Product
         $this->additionalProduct = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->receiptSales = new ArrayCollection();
+        $this->specialPropositions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -554,5 +556,36 @@ class Product
     public function expose()
     {
         return get_object_vars($this);
+
+    /**
+     * @return Collection|SpecialProposition[]
+     */
+    public function getSpecialPropositions(): Collection
+    {
+        return $this->specialPropositions;
+    }
+
+    public function addSpecialProposition(SpecialProposition $specialProposition): self
+    {
+        if (!$this->specialPropositions->contains($specialProposition)) {
+            $this->specialPropositions[] = $specialProposition;
+            $specialProposition->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialProposition(SpecialProposition $specialProposition): self
+    {
+        if ($this->specialPropositions->contains($specialProposition)) {
+            $this->specialPropositions->removeElement($specialProposition);
+            // set the owning side to null (unless already changed)
+            if ($specialProposition->getProduct() === $this) {
+                $specialProposition->setProduct(null);
+            }
+        }
+
+        return $this;
+
     }
 }

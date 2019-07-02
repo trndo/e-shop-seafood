@@ -39,16 +39,6 @@ class SpecialProposition
     private $globalPrice;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="specialProposition")
-     */
-    private $product;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="specialReceipt")
-     */
-    private $receipt;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $quantity;
@@ -73,11 +63,19 @@ class SpecialProposition
      */
     private $productSize;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Receipt", inversedBy="specialPropositions")
+     */
+    private $receipt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="specialPropositions")
+     */
+    private $product;
+
     public function __construct()
     {
         $this->gift = new ArrayCollection();
-        $this->product = new ArrayCollection();
-        $this->receipt = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,68 +150,6 @@ class SpecialProposition
         return $this;
     }
 
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product[] = $product;
-            $product->setSpecialProposition($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->product->contains($product)) {
-            $this->product->removeElement($product);
-            // set the owning side to null (unless already changed)
-            if ($product->getSpecialProposition() === $this) {
-                $product->setSpecialProposition(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Receipt[]
-     */
-    public function getReceipt(): Collection
-    {
-        return $this->receipt;
-    }
-
-    public function addReceipt(Receipt $receipt): self
-    {
-        if (!$this->receipt->contains($receipt)) {
-            $this->receipt[] = $receipt;
-            $receipt->setSpecialReceipt($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReceipt(Receipt $receipt): self
-    {
-        if ($this->receipt->contains($receipt)) {
-            $this->receipt->removeElement($receipt);
-            // set the owning side to null (unless already changed)
-            if ($receipt->getSpecialReceipt() === $this) {
-                $receipt->setSpecialReceipt(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getQuantity(): ?float
     {
         return $this->quantity;
@@ -270,6 +206,30 @@ class SpecialProposition
     public function setProductSize(?string $productSize): self
     {
         $this->productSize = $productSize;
+
+        return $this;
+    }
+
+    public function getReceipt(): ?Receipt
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?Receipt $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

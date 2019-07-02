@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Mapper;
-
 
 use App\Entity\SpecialProposition;
 use App\Model\PromotionModel;
@@ -16,7 +14,7 @@ final class PromotionMapper
         $proposition->setPercent($model->getPercent())
                     ->setAvailableAt($model->getAvailableAt())
                     ->setQuantity($model->getQuantity())
-                    ->addProduct($model->getProduct())
+                    ->setProduct($model->getProduct())
                     ->setProductSize($model->getProductSize())
                     ->setDescription($model->getDescription())
                     ->setStatus(false);
@@ -31,7 +29,7 @@ final class PromotionMapper
         $proposition->setPercent($model->getPercent())
             ->setAvailableAt($model->getAvailableAt())
             ->setQuantity($model->getQuantity())
-            ->addReceipt($model->getReceipt())
+            ->setReceipt($model->getReceipt())
             ->setProductSize($model->getProductSize())
             ->setDescription($model->getDescription())
             ->setStatus(false);
@@ -44,7 +42,7 @@ final class PromotionMapper
         $proposition = new SpecialProposition();
 
         $proposition->addGift($model->getGift())
-            ->addProduct($model->getProduct())
+            ->setProduct($model->getProduct())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())
             ->setProductSize($model->getProductSize())
@@ -59,7 +57,7 @@ final class PromotionMapper
         $proposition = new SpecialProposition();
 
         $proposition->addGift($model->getGift())
-            ->addReceipt($model->getReceipt())
+            ->setReceipt($model->getReceipt())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())
             ->setProductSize($model->getProductSize())
@@ -74,7 +72,7 @@ final class PromotionMapper
         $proposition = new SpecialProposition();
 
         $proposition->setSpecialPrice($model->getSpecialPrice())
-            ->addProduct($model->getProduct())
+            ->setProduct($model->getProduct())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())
             ->setProductSize($model->getProductSize())
@@ -89,7 +87,7 @@ final class PromotionMapper
         $proposition = new SpecialProposition();
 
         $proposition->setSpecialPrice($model->getSpecialPrice())
-            ->addReceipt($model->getReceipt())
+            ->setReceipt($model->getReceipt())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())
             ->setProductSize($model->getProductSize())
@@ -103,7 +101,7 @@ final class PromotionMapper
     {
         $proposition = new SpecialProposition();
 
-        $proposition->addProduct($model->getProduct())
+        $proposition->setProduct($model->getProduct())
             ->setGlobalPrice($model->getGlobalPrice())
             ->setQuantity($model->getQuantity())
             ->setProductSize($model->getProductSize())
@@ -117,7 +115,7 @@ final class PromotionMapper
     {
         $proposition = new SpecialProposition();
 
-        $proposition->addReceipt($model->getReceipt())
+        $proposition->setReceipt($model->getReceipt())
             ->setGlobalPrice($model->getGlobalPrice())
             ->setQuantity($model->getQuantity())
             ->setProductSize($model->getProductSize())

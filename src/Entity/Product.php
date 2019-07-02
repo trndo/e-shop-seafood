@@ -143,6 +143,11 @@ class Product
      */
     private $specialPropositions;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\SpecialProposition", mappedBy="gift", cascade={"persist", "remove"})
+     */
+    private $gift;
+
 
     public function __construct()
     {
@@ -441,18 +446,6 @@ class Product
         return '/uploads/products/'.$this->getTitlePhoto();
     }
 
-    public function getSpecialProposition(): ?SpecialProposition
-    {
-        return $this->specialProposition;
-    }
-
-    public function setSpecialProposition(?SpecialProposition $specialProposition): self
-    {
-        $this->specialProposition = $specialProposition;
-
-        return $this;
-    }
-
     public function getDataForRating(): string
     {
         return 'product_'.$this->getId();
@@ -556,6 +549,7 @@ class Product
     public function expose()
     {
         return get_object_vars($this);
+    }
 
     /**
      * @return Collection|SpecialProposition[]
@@ -587,5 +581,23 @@ class Product
 
         return $this;
 
+    }
+
+    public function getGift(): ?SpecialProposition
+    {
+        return $this->gift;
+    }
+
+    public function setGift(?SpecialProposition $specialProposition): self
+    {
+        $this->gift = $specialProposition;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newGift = $specialProposition === null ? null : $this;
+        if ($newGift !== $specialProposition->getGift()) {
+            $specialProposition->setGift($newGift);
+        }
+
+        return $this;
     }
 }

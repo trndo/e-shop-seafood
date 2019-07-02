@@ -13,7 +13,7 @@
                        <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
                        <span>Быстрый заказ</span>
                    </div>
-                   <div class="user_basket" onclick="document.getElementById('overlay').style.display='block'">
+                   <div class="user_basket">
                        <div id="basket-container">
                            <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
                        </div>
@@ -122,7 +122,7 @@
                         </div>
                          <div class="contact-social">
                              <embed type="image/svg+xml" src="/assets/img/instagram.svg"/>
-                             <embed type="image/svg+xml" src="/assetonclick="document.getElementById('overlay').style.display='block's/img/telegram-logo.svg"/>
+                             <embed type="image/svg+xml" src="/assets/img/telegram-logo.svg"/>
                              <embed type="image/svg+xml" src="/assets/img/viber-logo.svg"/>
                          </div>
                      </div>
@@ -132,7 +132,7 @@
                                     Главная
                                 </li>
                                 <li>
-                                    Живые рoverlayаки
+                                    Живые раки
                                 </li>
                                 <li>
                                     Жареные раки
@@ -152,7 +152,7 @@
         </div>
     </footer>
 <div id="overlay" style="display: none">
-    <div class="modal">
+    <div class="red-content">
         <div id="shopping-cart">
             <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
         </div>
@@ -164,9 +164,15 @@
                 Проверяй и оформляй
             </h4>
         </div>
-    {% include 'elements/cart.html.twig' %}
+        <div class="cart-container cartItems">
+            <div class="order">
+                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                <div class="order-product-name">
+                </div>
+            </div>
         </div>
-        <embed onclick="document.getElementById('overlay').style.display='none'" id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+        <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+     </div>
 </div>
 {% endblock %}
 

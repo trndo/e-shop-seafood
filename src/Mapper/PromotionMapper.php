@@ -41,7 +41,7 @@ final class PromotionMapper
     {
         $proposition = new SpecialProposition();
 
-        $proposition->addGift($model->getGift())
+        $proposition->setGift($model->getGift())
             ->setProduct($model->getProduct())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())
@@ -56,7 +56,7 @@ final class PromotionMapper
     {
         $proposition = new SpecialProposition();
 
-        $proposition->addGift($model->getGift())
+        $proposition->setGift($model->getGift())
             ->setReceipt($model->getReceipt())
             ->setQuantity($model->getQuantity())
             ->setAvailableAt($model->getAvailableAt())

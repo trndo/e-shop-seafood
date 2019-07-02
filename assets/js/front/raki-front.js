@@ -14,8 +14,8 @@ $(document).ready(function () {
                slug: slug
            },
            success: function (res) {
-                console.log(res.name,res.size,res.unit,res.titlePhoto,res.price);
+                $('.cartItems').html(res);
            }
         });
     })
-})
+});

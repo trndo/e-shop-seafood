@@ -4,12 +4,16 @@
 namespace App\Controller;
 
 
+use App\Entity\Product;
+use App\Repository\ProductRepository;
 use App\Service\CartHandler\CartHandlerInterface;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CartController extends AbstractController
 {
@@ -20,20 +24,33 @@ class CartController extends AbstractController
      * @param CartHandlerInterface $cartHandler
      * @return JsonResponse
      */
-    public function addToCart(Request $request,CartHandlerInterface $cartHandler): JsonResponse
+    public function addToCart(Request $request,CartHandlerInterface $cartHandler): Response
     {
         $slug = $request->request->get('slug');
         $type = $request->request->get('type');
         $item = $cartHandler->getItem($type,$slug);
 
-        $session = $request->getSession()->set($item->getSlug(),$item);
+        $request->getSession()->set('cartItems',$item);
 
-        return new JsonResponse([
-            'name' => $item->getName(),
-            'size' => $type == 'product' ? $item->getProductSize() : null,
-            'unit' => $item->getUnit(),
-            'titlePhoto' => $item->getTitlePhotoPath(),
-            'price' => $item->getPrice()
-        ],200);
+        return $this->render('elements/cart.html.twig');
     }
+
+//    /**
+//     * @Route("/add/{slug}",name="addToCart")
+//     * @param string $slug
+//     * @param ProductRepository $productRepository
+//     * @param SerializerInterface $serializer
+//     * @return JsonResponse
+//     */
+//    public function addTest(string $slug,ProductRepository $productRepository, SerializerInterface $serializer):JsonResponse
+//    {
+//        $product = $productRepository->findOneBy(['slug' => $slug]);
+//
+//       $f = $product->expose();
+//
+//        dd($f);
+//        return new JsonResponse($product,200);
+//    }
+
+
 }

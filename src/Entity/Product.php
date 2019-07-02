@@ -550,4 +550,9 @@ class Product
 
         return $this;
     }
+
+    public function expose()
+    {
+        return get_object_vars($this);
+    }
 }

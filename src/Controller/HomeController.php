@@ -34,6 +34,8 @@ class HomeController extends AbstractController
         return $this->render('home.html.twig',[
             'items' => $items
         ]);
+
+
     }
 
     /**

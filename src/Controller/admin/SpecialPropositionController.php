@@ -10,6 +10,7 @@ use App\Form\SpecialPropositionForm\PercentPromotionType;
 use App\Form\SpecialPropositionForm\SpecialPricePromotionType;
 use App\Model\PromotionModel;
 use App\Service\EntityService\SpecialPropositionService\Factory\SpecialPropositionAbstractFactory;
+use App\Service\EntityService\SpecialPropositionService\SpecialPropositionHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SpecialPropositionController extends AbstractController
 {
+    /**
+     * @Route("/lipadmin/promotion", name="promotion")
+     * @param SpecialPropositionHandlerInterface $handler
+     * @return Response
+     */
+    public function showPromotions(SpecialPropositionHandlerInterface $handler): Response
+    {
+        $specialPropositions = $handler->getAllSpecialProposition();
+
+        return $this->render('admin/special_proposition/promotion.html.twig',[
+            'specialPropositions' => $specialPropositions
+        ]);
+    }
+
     /**
      * @Route("/lipadmin/promotion/createPromotion", name="createPromotion")
      *

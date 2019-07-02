@@ -104,7 +104,6 @@ class SpecialProposition
         return $this;
     }
 
-
     public function getGlobalPrice(): ?int
     {
         return $this->globalPrice;

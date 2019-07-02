@@ -1,4 +1,5 @@
 import '../../css/lipinskie-raki/main.css';
+import '../../css/lipinskie-raki/small-page.css'
 import $ from 'jquery';
 
 $(document).ready(function () {

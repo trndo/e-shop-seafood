@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -35,22 +36,14 @@ class CartController extends AbstractController
         return $this->render('elements/cart.html.twig');
     }
 
-//    /**
-//     * @Route("/add/{slug}",name="addToCart")
-//     * @param string $slug
-//     * @param ProductRepository $productRepository
-//     * @param SerializerInterface $serializer
-//     * @return JsonResponse
-//     */
-//    public function addTest(string $slug,ProductRepository $productRepository, SerializerInterface $serializer):JsonResponse
-//    {
-//        $product = $productRepository->findOneBy(['slug' => $slug]);
-//
-//       $f = $product->expose();
-//
-//        dd($f);
-//        return new JsonResponse($product,200);
-//    }
-
-
+    /**
+     * @Route("/cart",name="cart")
+     *
+     * @param SessionInterface $session
+     * @return Response
+     */
+    public function showCart(SessionInterface $session): Response
+    {
+        return $this->render('cart.html.twig');
+    }
 }

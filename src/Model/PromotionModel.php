@@ -271,10 +271,10 @@ class PromotionModel
     }
 
     /**
-     * @param \DateTime|null $availableAt
+     * @param \DateTimeInterface|null $availableAt
      * @return PromotionModel
      */
-    public function setAvailableAt(?\DateTime $availableAt): self
+    public function setAvailableAt(?\DateTimeInterface $availableAt): self
     {
         $this->availableAt = $availableAt;
 

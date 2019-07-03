@@ -4,6 +4,7 @@
 namespace App\Service\PromotionService;
 
 
+use App\Entity\Category;
 use App\Entity\SpecialProposition;
 use App\Mapper\PromotionMapper;
 use App\Model\PromotionModel;
@@ -19,11 +20,16 @@ class GiftPromotion implements PromotionInterface
      * @var PromotionModel
      */
     private $model;
+    /**
+     * @var SpecialProposition
+     */
+    private $proposition;
 
-    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model)
+    public function __construct(EntityManagerInterface $entityManager, PromotionModel $model, SpecialProposition $proposition)
     {
         $this->entityManager = $entityManager;
         $this->model = $model;
+        $this->proposition = $proposition;
     }
 
     /**
@@ -33,7 +39,7 @@ class GiftPromotion implements PromotionInterface
      */
     public function addProductPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::giftProductModelToEntity($this->model);
+        $sProposition = PromotionMapper::giftProductModelToEntity($this->model, $this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();
@@ -49,7 +55,7 @@ class GiftPromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::giftReceiptModelToEntity($this->model);
+        $sProposition = PromotionMapper::giftReceiptModelToEntity($this->model, $this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();

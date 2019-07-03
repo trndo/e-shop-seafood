@@ -70,7 +70,7 @@ class SpecialProposition
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="gift", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="gift")
      */
     private $gift;
 

@@ -37,12 +37,14 @@
                                 {% endif %}
                             </div>
                         </div>
-                        {% if promotionType != 'gift' %}
                         <div class="card bg-dark text-white">
                             <img src="{{ asset('uploads/images/crayfish.jpg') }}" class="card-img" alt="..." style="opacity:0.4;-moz-opacity:0.8; background-color:#000;">
                             <div class="card-img-overlay text-center" style="margin-top: 15%">
                                 <h3 class="card-title">Рецепты</h3>
                                 <p class="card-text">Здесь вы можете выбрать рецепты для ваших акций.</p>
+                                {% if promotionType == 'gift' %}
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createGiftPromotion',{'type' : 'receipt'}) }}'">Использовать рецепт</button>
+                                {% endif %}
                                 {% if promotionType == 'percent' %}
                                     <button type="button" class="btn btn-primary" onclick="window.location.href='{{ path('createPercentPromotion',{'type' : 'receipt'}) }}'">Использовать рецепт</button>
                                 {% endif %}
@@ -54,11 +56,9 @@
                                 {% endif %}
                             </div>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- End of Main Content -->
         <!-- Footer -->

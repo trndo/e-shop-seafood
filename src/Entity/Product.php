@@ -139,7 +139,7 @@ class Product
     private $receiptSales;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SpecialProposition", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\SpecialProposition", mappedBy="product", cascade={"persist", "remove"})
      */
     private $specialPropositions;
 

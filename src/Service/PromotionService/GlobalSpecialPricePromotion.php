@@ -19,11 +19,16 @@ class GlobalSpecialPricePromotion implements PromotionInterface
      * @var PromotionModel
      */
     private $model;
+    /**
+     * @var SpecialProposition
+     */
+    private $proposition;
 
-    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model)
+    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model,SpecialProposition $proposition)
     {
         $this->entityManager = $entityManager;
         $this->model = $model;
+        $this->proposition = $proposition;
     }
 
     /**
@@ -33,7 +38,7 @@ class GlobalSpecialPricePromotion implements PromotionInterface
      */
     public function addProductPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::globalPriceProductModelToEntity($this->model);
+        $sProposition = PromotionMapper::globalPriceProductModelToEntity($this->model,$this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();
@@ -49,7 +54,7 @@ class GlobalSpecialPricePromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::globalPriceReceiptModelToEntity($this->model);
+        $sProposition = PromotionMapper::globalPriceReceiptModelToEntity($this->model,$this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();

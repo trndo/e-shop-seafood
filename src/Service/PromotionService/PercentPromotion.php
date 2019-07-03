@@ -21,11 +21,16 @@ class PercentPromotion implements PromotionInterface
      * @var PromotionModel
      */
     private $model;
+    /**
+     * @var SpecialProposition
+     */
+    private $proposition;
 
-    public function __construct(EntityManagerInterface $entityManager, PromotionModel $model)
+    public function __construct(EntityManagerInterface $entityManager, PromotionModel $model, SpecialProposition $proposition)
      {
          $this->entityManager = $entityManager;
          $this->model = $model;
+         $this->proposition = $proposition;
      }
 
     /**
@@ -35,7 +40,7 @@ class PercentPromotion implements PromotionInterface
      */
     public function addProductPromotion(): SpecialProposition
     {
-       $sProposition = PromotionMapper::percentProductModelToEntity($this->model);
+       $sProposition = PromotionMapper::percentProductModelToEntity($this->model,$this->proposition);
 
        $this->entityManager->persist($sProposition);
        $this->entityManager->flush();
@@ -51,7 +56,7 @@ class PercentPromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::percentReceiptModelToEntity($this->model);
+        $sProposition = PromotionMapper::percentReceiptModelToEntity($this->model,$this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();

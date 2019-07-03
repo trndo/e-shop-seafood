@@ -1,5 +1,6 @@
 import '../../css/lipinskie-raki/main.css';
 import '../../css/lipinskie-raki/small-page.css'
+import '../../css/lipinskie-raki/products.css'
 import 'simplebar/dist/simplebar.css';
 import $ from 'jquery';
 import SimpleBar from 'simplebar';

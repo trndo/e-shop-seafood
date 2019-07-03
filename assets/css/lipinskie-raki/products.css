@@ -1,0 +1,128 @@
+#products-with-size-photo{
+    background-image: url("../../img/image-products-size.jpg");
+    background-size: cover;
+    width: 495px;
+    height: 506px;
+    display: inline-block;
+    float: left;
+}
+.sizes-container{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: max-content;
+    margin-top: 22.5px;
+    padding-left: 20px;
+}
+
+.size-card{
+    width: 210px;
+    height: 124px;
+    display: inline-block;
+    background: #3C3C3C;
+    margin-right: 30px;
+}
+
+.warn{
+    width: 398px;
+    height: 124px;
+    background: #F13A3A;
+    position: absolute;
+    right: -85px;
+    top: 0;
+}
+.size-row{
+    margin-top: 22.5px;
+    display: block;
+    position: relative;
+    margin-bottom: 15.5px;
+}
+
+.warn h2{
+    width: 320px;
+    position: relative;
+    margin: 0 auto;
+
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 19px;
+}
+
+.warn-button{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 9px;
+}
+
+.size{
+    position: relative;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    width: 90px;
+    height: 72px;
+    padding-left: 24px;
+    padding-top: 13px;
+}
+
+.product-size-info{
+    position: relative;
+    width: 115px;
+    height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.size-card-info{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 72px;
+}
+
+.grams{
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 100%;
+    text-align: justify;
+    text-transform: lowercase;
+    color: #FFFFFF;
+    display: inline-block;
+    padding-left: 1px;
+    margin-top: 18px;
+    height: max-content;
+}
+
+
+.size-price{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: justify;
+    text-transform: lowercase;
+    color: #FFFFFF;
+    display: block;
+    padding-left: 22px;
+    margin-top: 10px;
+}
+#ruler{
+    display: inline-block;
+    vertical-align: middle;
+}

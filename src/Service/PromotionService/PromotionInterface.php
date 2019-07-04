@@ -24,4 +24,5 @@ interface PromotionInterface
      * @return SpecialProposition
      */
     public function addReceiptPromotion(): SpecialProposition;
+
 }

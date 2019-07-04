@@ -20,7 +20,9 @@
                     <div class="col-8">
                         {{ form_start(form) }}
                             {{ form_row(form.percent) }}
-                            {{ form_row(form.category) }}
+                            {% if form.category is defined %}
+                                {{ form_row(form.category) }}
+                            {% endif %}
                             {% if form.receipt is defined %}
                                 {{ form_row(form.receipt) }}
                             {% endif %}

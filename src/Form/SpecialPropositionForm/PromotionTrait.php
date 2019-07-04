@@ -7,6 +7,7 @@ namespace App\Form\SpecialPropositionForm;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Receipt;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -61,5 +62,36 @@ trait PromotionTrait
                 $modifier($event->getForm()->getParent(),$category);
             }
         );
+    }
+
+    private function isUpdateOption(FormBuilderInterface $builder,array $options): void
+    {
+        if (!$options['update']) {
+            $builder->add('category', EntityType::class, [
+                'class' => Category::class,
+                'placeholder' => '',
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) use ($options) {
+                    $builder = $er->createQueryBuilder('c')->where('c.type = :type');
+                    return $options['receipt'] == true ? $builder->setParameter('type', 'receipts') : $builder->setParameter('type', 'products');
+                }
+            ]);
+            $formModifierProduct = $options['receipt'] == true ? $this->modifyInput('receipt') : $this->modifyInput('product');
+            $this->changeOption($formModifierProduct, 'category', $builder);
+        } else {
+            if ($options['receipt']){
+                $builder->add('receipt',EntityType::class,[
+                    'class' => Receipt::class,
+                    'choice_label' => 'name',
+                    'disabled' => true
+                ]);
+            } else {
+                $builder->add('product',EntityType::class,[
+                    'class' => Product::class,
+                    'choice_label' => 'name',
+                    'disabled' => true
+                ]);
+            }
+        }
     }
 }

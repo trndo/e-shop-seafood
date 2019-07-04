@@ -19,11 +19,16 @@ class SpecialPricePromotion implements PromotionInterface
      * @var PromotionModel
      */
     private $model;
+    /**
+     * @var SpecialProposition
+     */
+    private $proposition;
 
-    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model)
+    public function __construct(EntityManagerInterface $entityManager,PromotionModel $model,SpecialProposition $proposition)
     {
         $this->entityManager = $entityManager;
         $this->model = $model;
+        $this->proposition = $proposition;
     }
 
     /**
@@ -33,7 +38,7 @@ class SpecialPricePromotion implements PromotionInterface
      */
     public function addProductPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::specialPriceProductModelToEntity($this->model);
+        $sProposition = PromotionMapper::specialPriceProductModelToEntity($this->model,$this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();
@@ -48,7 +53,7 @@ class SpecialPricePromotion implements PromotionInterface
      */
     public function addReceiptPromotion(): SpecialProposition
     {
-        $sProposition = PromotionMapper::specialPriceReceiptModelToEntity($this->model);
+        $sProposition = PromotionMapper::specialPriceReceiptModelToEntity($this->model,$this->proposition);
 
         $this->entityManager->persist($sProposition);
         $this->entityManager->flush();

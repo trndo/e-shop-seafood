@@ -4,6 +4,7 @@
 namespace App\Service\EntityService\SpecialPropositionService\Factory;
 
 
+use App\Entity\SpecialProposition;
 use App\Model\PromotionModel;
 use App\Service\PromotionService\GiftPromotion;
 use App\Service\PromotionService\GlobalSpecialPricePromotion;
@@ -26,37 +27,41 @@ class SpecialPropositionAbstractFactory
 
     /**
      * @param PromotionModel $model
+     * @param SpecialProposition $proposition
      * @return PromotionInterface
      */
-    public function createPercentPromotion(PromotionModel $model): PromotionInterface
+    public function createPercentPromotion(PromotionModel $model, SpecialProposition $proposition): PromotionInterface
     {
-        return new PercentPromotion($this->entityManager,$model);
+        return new PercentPromotion($this->entityManager,$model, $proposition);
     }
 
     /**
      * @param PromotionModel $model
+     * @param SpecialProposition $proposition
      * @return PromotionInterface
      */
-    public function createSpecialPricePromotion(PromotionModel $model): PromotionInterface
+    public function createSpecialPricePromotion(PromotionModel $model, SpecialProposition $proposition): PromotionInterface
     {
-        return new SpecialPricePromotion($this->entityManager,$model);
+        return new SpecialPricePromotion($this->entityManager,$model,$proposition);
     }
 
     /**
      * @param PromotionModel $model
+     * @param SpecialProposition $proposition
      * @return PromotionInterface
      */
-    public function createGlobalSpecialPricePromotion(PromotionModel $model): PromotionInterface
+    public function createGlobalSpecialPricePromotion(PromotionModel $model, SpecialProposition $proposition): PromotionInterface
     {
-        return new GlobalSpecialPricePromotion($this->entityManager,$model);
+        return new GlobalSpecialPricePromotion($this->entityManager,$model,$proposition);
     }
 
     /**
      * @param PromotionModel $model
+     * @param SpecialProposition $proposition
      * @return PromotionInterface
      */
-    public function createGiftPromotion(PromotionModel $model): PromotionInterface
+    public function createGiftPromotion(PromotionModel $model, SpecialProposition $proposition): PromotionInterface
     {
-        return new GiftPromotion($this->entityManager,$model);
+        return new GiftPromotion($this->entityManager,$model,$proposition);
     }
 }

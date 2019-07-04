@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Model\PromotionModel;
+use App\Service\UpdateTypeHandler\UpdateTypeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,7 +31,7 @@ class GiftPromotionType extends AbstractType
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -39,33 +40,27 @@ class GiftPromotionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $builder->add('giftCategory',EntityType::class,[
+        if(!$options['update']) {
+            $builder->add('giftCategory', EntityType::class, [
                 'class' => Category::class,
                 'placeholder' => 'Выберете категорию подарка',
                 'choice_label' => 'name',
-                'query_builder' => function(EntityRepository $er){
-                     return $er->createQueryBuilder('c')
-                         ->where('c.type = :type')
-                      ->setParameter('type','products');
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.type = :type')
+                        ->setParameter('type', 'products');
                 }
             ]);
-        $formModifierGift = $this->modifyGift('gift');
-        $this->changeOption($formModifierGift,'giftCategory',$builder);
-
-        $builder->add('category',EntityType::class,[
-            'class' => Category::class,
-            'placeholder' => '',
-            'choice_label' => 'name',
-            'query_builder' => function(EntityRepository $er) use ($options){
-                $builder = $er->createQueryBuilder('c')->where('c.type = :type');
-                return $options['receipt'] == true ? $builder->setParameter('type','receipts') : $builder->setParameter('type','products');
-            }
-        ]);
-
-    $formModifierProduct = $options['receipt'] == true ? $this->modifyInput('receipt') : $this->modifyInput('product');
-    $this->changeOption($formModifierProduct,'category',$builder);
-
+            $formModifierGift = $this->modifyGift('gift');
+            $this->changeOption($formModifierGift,'giftCategory',$builder);
+        } else {
+            $builder->add('gift',EntityType::class,[
+                'class' => Product::class,
+                'choice_label' => 'name',
+                'disabled' => true
+            ]);
+        }
+        $this->isUpdateOption($builder,$options);
         $builder->add('productSize',TextType::class)
         ->add('availableAt',DateType::class)
         ->add('quantity', IntegerType::class)
@@ -77,7 +72,8 @@ class GiftPromotionType extends AbstractType
     {
         return $resolver->setDefaults([
             'data_class' => PromotionModel::class,
-            'receipt' => false
+            'receipt' => false,
+            'update' => false
         ]);
     }
 
@@ -95,5 +91,6 @@ class GiftPromotionType extends AbstractType
 
         return $modifier;
     }
+
 
 }

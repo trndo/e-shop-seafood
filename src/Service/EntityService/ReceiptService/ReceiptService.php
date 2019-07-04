@@ -212,4 +212,15 @@ class ReceiptService implements ReceiptServiceInterface
     {
         return $this->receiptRepository->findForRating();
     }
+
+    /**
+     * Get receipt
+     *
+     * @param string|null $slug
+     * @return Receipt
+     */
+    public function getReceipt(?string $slug): Receipt
+    {
+       return $this->receiptRepository->findReceiptBySlug($slug);
+    }
 }

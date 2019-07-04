@@ -46,4 +46,36 @@ class HomeController extends AbstractController
         return $this->render('attention/attention.html.twig');
     }
 
+    /**
+     * @Route("/productTest/{slug}", methods={"GET"}, name="testProduct")
+     *
+     * @param string $slug
+     * @param ProductServiceInterface $productService
+     * @return Response
+     */
+    public function showProductTest(string $slug,ProductServiceInterface $productService): Response
+    {
+        $product = $productService->getProduct($slug);
+
+        return $this->render('product_test.html.twig',[
+            'product' => $product
+        ]);
+    }
+
+    /**
+     * @Route("/receiptTest/{slug}", methods={"GET"}, name="testReceipt")
+     *
+     * @param string $slug
+     * @param ReceiptServiceInterface $receiptService
+     * @return Response
+     */
+    public function showReceiptTest(string $slug,ReceiptServiceInterface $receiptService): Response
+    {
+        $receipt = $receiptService->getReceipt($slug);
+
+        return $this->render('receipt_test.html.twig',[
+            'receipt' => $receipt
+        ]);
+    }
+
 }

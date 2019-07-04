@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="product-card">
+                    <img src="{{ product.TitlePhotoPath }}" alt="">
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.description }}</p>
+                        <span class="price">{{ product.price }}</span>
+                        <input class="quantity" type="number" width="20px" name="quantity" min="1" value="1">
+                        <div class="in_basket to_basket" data-type="{{ product.getType }}" data-name="{{ product.slug }}">To cart</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -25,139 +25,143 @@
                 </h4>
             </div>
             <div class="cart-container cartItems">
+                {% set session = app.session.get('cart') %}
+                {% dump(session) %}
+                {% for cartItem in session %}
                 <div class="order-container">
                     <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                        <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
                         <div class="order-product-name">
-                            Раки дорогие XXXXXL
+                            {{ cartItem.item.name }}
                         </div>
                         <div class="quantity">
                             <span class="plus">+</span>
                             <div class="quantity-res">
-                                0.00 кг
+                                {{ cartItem.quantity }}
                             </div>
                             <span class="minus">-</span>
                         </div>
                         <div class="order-price">
-                            550 ₴
+                            {{ cartItem.item.price }}
                         </div>
                     </div>
                     <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
                 </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                        <div class="order-product-name">
-                            Раки дорогие XXXXXL
-                        </div>
-                        <div class="quantity">
-                            <span class="plus">+</span>
-                            <div class="quantity-res">
-                                0.00 кг
-                            </div>
-                            <span class="minus">-</span>
-                        </div>
-                        <div class="order-price">
-                            550 ₴
-                        </div>
-                    </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
-                </div>
+                {% endfor %}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
+{#                <div class="order-container">#}
+{#                    <div class="order">#}
+{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
+{#                        <div class="order-product-name">#}
+{#                            Раки дорогие XXXXXL#}
+{#                        </div>#}
+{#                        <div class="quantity">#}
+{#                            <span class="plus">+</span>#}
+{#                            <div class="quantity-res">#}
+{#                                0.00 кг#}
+{#                            </div>#}
+{#                            <span class="minus">-</span>#}
+{#                        </div>#}
+{#                        <div class="order-price">#}
+{#                            550 ₴#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
+{#                </div>#}
             </div>
             <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
             <div class="summary">

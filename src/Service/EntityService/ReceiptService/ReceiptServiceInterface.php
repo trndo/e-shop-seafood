@@ -5,6 +5,7 @@ namespace App\Service\EntityService\ReceiptService;
 use App\Collection\ReceiptCollection;
 use App\Entity\Receipt;
 use App\Model\ReceiptModel;
+use Doctrine\Common\Annotations\Annotation\Target;
 
 interface ReceiptServiceInterface
 {
@@ -38,4 +39,12 @@ interface ReceiptServiceInterface
      * @return array|null
      */
     public function getReceiptsForRating(): ?array;
+
+    /**
+     * Get receipt
+     *
+     * @param string|null $slug
+     * @return Receipt
+     */
+    public function getReceipt(?string $slug): Receipt;
 }

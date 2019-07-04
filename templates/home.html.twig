@@ -73,8 +73,11 @@
                                     <h4>{{ item.name }}</h4>
                                     <p>{{ item.description }}</p>
                                     <span class="price">{{ item.price }}</span>
-
-                                    <div class="in_basket" data-type="{{ item.getType }}" data-name="{{ item.slug }}">В коризну</div>
+                                    {% if item.getType == 'product' %}
+                                    <div class="in_basket" onclick="window.location.href='{{ path('testProduct',{'slug': item.slug}) }}'">Подробнее</div>
+                                    {% else %}
+                                    <div class="in_basket" onclick="window.location.href='{{ path('testReceipt',{'slug': item.slug}) }}'">Подробнее</div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

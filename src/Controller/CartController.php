@@ -20,20 +20,26 @@ class CartController extends AbstractController
 {
     /**
      * @Route("/addToCart",name="addToCart", methods={"POST"})
-
      * @param Request $request
      * @param CartHandlerInterface $cartHandler
-     * @return JsonResponse
+     * @return Response
      */
     public function addToCart(Request $request,CartHandlerInterface $cartHandler): Response
     {
         $slug = $request->request->get('slug');
         $type = $request->request->get('type');
-        $item = $cartHandler->getItem($type,$slug);
-
-        $request->getSession()->set('cartItems',$item);
-
-        return $this->render('elements/cart.html.twig');
+        $quantity = $request->request->get('quantity');
+        $session = $request->getSession();
+        $item = $cartHandler->getItem($type, $slug);
+        $shoppingCart = [];
+        if (!$session) {
+            $session->set('cart',$shoppingCart);
+        }else {
+            $shoppingCart = $session->get('cart');
+            $shoppingCart[$item->getSlug()] = ['item' => $item,'quantity' =>$quantity];
+            $session->set('cart',$shoppingCart);
+        }
+        return new JsonResponse(['status' => true],200);
     }
 
     /**

@@ -5,23 +5,27 @@ import $ from 'jquery';
 import SimpleBar from 'simplebar';
 
 $(document).ready(function () {
-    new SimpleBar($('.cart-container')[0],{
-        autoHide: false});
+    // new SimpleBar($('.cart-container')[0],{
+    //     autoHide: false});
 
-    $('.in_basket').on('click',function () {
+    $('.to_basket').on('click',function () {
         let type = $(this).data('type');
         let slug = $(this).data('name');
+        let quantity = $('.quantity').val();
 
         $.ajax({
            type: 'POST',
            url: '/addToCart',
            data: {
                type: type,
-               slug: slug
+               slug: slug,
+               quantity: quantity
            },
            success: function (res) {
-                $('.cartItems').html(res);
+                console.log(res);
            }
         });
-    })
+    });
+
+
 });

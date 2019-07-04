@@ -44,7 +44,17 @@ interface ProductServiceInterface
     public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection;
 
     /**
+     * Get products for rating
+     *
      * @return array|null
      */
     public function getProductsForRating(): ?array;
+
+    /**
+     * Get product by slug
+     *
+     * @param string|null $slug
+     * @return Product
+     */
+    public function getProduct(?string $slug): Product ;
 }

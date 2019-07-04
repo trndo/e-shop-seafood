@@ -11,6 +11,7 @@ use App\Repository\ProductRepository;
 use App\Repository\RepositoryInterface\FinderInterface;
 use App\Service\EntityService\ProductService\ProductService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
 use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -208,5 +209,8 @@ class ProductController extends AbstractController
             'type' => 'product'
         ]);
     }
+
+
+
 
 }

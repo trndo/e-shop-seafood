@@ -212,4 +212,13 @@ class ProductService implements ProductServiceInterface
     {
        return $this->productRepository->findForRating();
     }
+
+    /**
+     * @param string|null $slug
+     * @return Product
+     */
+    public function getProduct(?string $slug): Product
+    {
+        return $this->productRepository->findProductBySlug($slug);
+    }
 }

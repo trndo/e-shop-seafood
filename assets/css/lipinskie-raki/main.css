@@ -279,6 +279,7 @@ main{
     width: 690px;
     position: relative;
     margin: 0 auto;
+    margin-bottom: 100px;
 }
 .rating .row{
     margin-top: 20px;
@@ -363,7 +364,7 @@ main{
 .page-text{
     position: relative;
     width: 100%;
-    margin-top: 82px;
+    margin-top: 60px;
 }
 
 #main-photo{
@@ -409,8 +410,7 @@ main{
     color: #FFFFFF;
 }
 
-.fast-order-big{
-    position: absolute;
+.custom-button{
     width: 182px;
     height: 35px;
     box-shadow: 0 4px 4px rgba(50, 9, 9, 0.25);
@@ -422,10 +422,14 @@ main{
     font-size: 14px;
     line-height: 100%;
     text-align: center;
-    bottom: 100px;
-    right: 155px;
     padding-top: 10px;
     color: #F13A3A;
+}
+
+.fast-order-big{
+    position: absolute;
+    bottom: 100px;
+    right: 155px;
 }
 
 footer{

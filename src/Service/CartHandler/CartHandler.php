@@ -55,7 +55,7 @@ class CartHandler implements CartHandlerInterface
         $session = $request->getSession();
         $shoppingCart = [];
 
-        if (!$session->has('cart')) {
+        if (!$session) {
             $session->set('cart',$shoppingCart);
         } else {
             $shoppingCart = $session->get('cart');

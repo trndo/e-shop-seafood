@@ -194,6 +194,7 @@
     width: 100%;
     right: 23px;
     top: 17px;
+    position: relative;
 }
 
 .summary{

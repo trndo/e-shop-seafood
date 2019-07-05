@@ -6,8 +6,9 @@ import $ from 'jquery';
 import SimpleBar from 'simplebar';
 
 $(document).ready(function () {
-    // new SimpleBar($('.cart-container')[0],{
-    //     autoHide: false});
+     if($('.cart-container').length)
+     new SimpleBar($('.cart-container')[0],{
+         autoHide: false});
 
     $('.to_basket').on('click',function () {
         let type = $(this).data('type');

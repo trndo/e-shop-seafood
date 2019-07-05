@@ -21,4 +21,12 @@ class ProductWithSizeController extends AbstractController
         return $this->render('productsWithSize.html.twig');
     }
 
+    /**
+     * @Route("/products")
+     * @return Response
+     */
+    public function products(): Response
+    {
+        return $this->render('products.html.twig');
+    }
 }

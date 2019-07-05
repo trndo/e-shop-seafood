@@ -31,140 +31,26 @@
                     <h3>Ваша корзина пустая!</h3>
                 {% endif %}
                 {% for cartItem in session %}
-                <div class="order-container">
-                    <div class="order">
-                        <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
-                        <div class="order-product-name">
-                            {{ cartItem.item.name }}
-                        </div>
-                        <div class="quantity">
-                            <span data- class="plus">+</span>
-                            <div class="quantity-res">
-                                <input type="text" value="{{ cartItem.quantity }}">
+                    <div class="order-container">
+                        <div class="order">
+                            <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
+                            <div class="order-product-name">
+                                {{ cartItem.item.name }}
                             </div>
-                            <span class="minus">-</span>
+                            <div class="quantity">
+                                <span data- class="plus">+</span>
+                                <div class="quantity-res">
+                                    <input type="text" value="{{ cartItem.quantity }}">
+                                </div>
+                                <span class="minus">-</span>
+                            </div>
+                            <div class="order-price">
+                                {{ cartItem.item.price }} <span class="hryvnas">₴</span>
+                            </div>
                         </div>
-                        <div class="order-price">
-                            {{ cartItem.item.price }} <span class="hryvnas">₴</span>
-                        </div>
+                        <img class="delete-from-cart" data-name="{{ cartItem.item.slug }}" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/>
                     </div>
-                    <embed id="delete-from-cart" data-name="{{ cartItem.item.slug }}" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/></div>
-                </div>
                 {% endfor %}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
-{#                <div class="order-container">#}
-{#                    <div class="order">#}
-{#                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">#}
-{#                        <div class="order-product-name">#}
-{#                            Раки дорогие XXXXXL#}
-{#                        </div>#}
-{#                        <div class="quantity">#}
-{#                            <span class="plus">+</span>#}
-{#                            <div class="quantity-res">#}
-{#                                0.00 кг#}
-{#                            </div>#}
-{#                            <span class="minus">-</span>#}
-{#                        </div>#}
-{#                        <div class="order-price">#}
-{#                            550 ₴#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
-{#                </div>#}
             </div>
             <div class="summary">
                 <div class="final">

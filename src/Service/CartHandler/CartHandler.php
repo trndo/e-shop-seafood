@@ -63,4 +63,9 @@ class CartHandler implements CartHandlerInterface
             $session->set('cart',$shoppingCart);
         }
     }
+
+    public function removeFromCart(Request $request)
+    {
+        // TODO: Implement removeFromCart() method.
+    }
 }

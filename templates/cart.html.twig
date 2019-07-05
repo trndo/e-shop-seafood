@@ -38,7 +38,7 @@
                             {{ cartItem.item.name }}
                         </div>
                         <div class="quantity">
-                            <span class="plus">+</span>
+                            <span data- class="plus">+</span>
                             <div class="quantity-res">
                                 {{ cartItem.quantity }}
                             </div>
@@ -48,7 +48,7 @@
                             {{ cartItem.item.price }}
                         </div>
                     </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>
+                    <embed id="delete-from-cart" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/>
                 </div>
                 {% endfor %}
 {#                <div class="order-container">#}
@@ -166,7 +166,6 @@
 {#                    <embed id="delete-from-cart" type="image/svg+xml" src="/assets/img/delete.svg"/>#}
 {#                </div>#}
             </div>
-            <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
             <div class="summary">
                 <div class="final">
                     Итог: 670

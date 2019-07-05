@@ -24,16 +24,16 @@
 }
 
 .warn{
-    width: 398px;
+    width: 401px;
     height: 124px;
     background: #F13A3A;
     position: absolute;
-    right: -85px;
+    right: -79px;
     top: 0;
 }
 .size-row{
     margin-top: 22.5px;
-    display: block;
+    display: flex;
     position: relative;
     margin-bottom: 15.5px;
 }
@@ -125,4 +125,73 @@
 #ruler{
     display: inline-block;
     vertical-align: middle;
+}
+
+.size-xl{
+    padding-top: 12px;
+    padding-left: 17px;
+}
+.size-x{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 35px;
+    line-height: 73%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    position: absolute;
+    left: 14px;
+    top: 22px;
+}
+
+.size-l{
+    position: relative;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    width: 90px;
+    height: 72px;
+}
+
+.size-xx{
+    font-family: Raleway;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 35px;
+    line-height: 73%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: -15px;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+}
+
+.size-button{
+    background: #F13A3A;
+    border-radius: 50px;
+    width: 98.68px;
+    height: 25.03px;
+    position: relative;
+    margin: 0 auto;
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 100%;
+    text-align: center;
+    text-transform: lowercase;
+    padding: 5px;
+    margin-top: 15px;
+    color: #FFFFFF;
+
 }

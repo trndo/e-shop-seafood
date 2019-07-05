@@ -254,3 +254,19 @@
     text-align: center;
     color: #F13A3A;
 }
+
+.hryvnas{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 100%;
+    display: block;
+    position: absolute;
+    top: 26px;
+    right: 16px;
+    align-items: center;
+    text-align: center;
+    text-transform: lowercase;
+    color: #FFFFFF;
+}

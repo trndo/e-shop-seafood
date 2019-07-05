@@ -168,6 +168,24 @@
     margin: 0 auto;
     margin-top: 22px;
 }
+.quantity-res input{
+    background-color: transparent;
+    width: 100%;
+    outline: none;
+    border: none;
+    height: inherit;
+    border-radius: inherit;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    box-sizing: border-box;
+    padding-bottom: 6px;
+
+}
 .order-price{
     width: 123px;
     height: 70px;

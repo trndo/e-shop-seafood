@@ -32,6 +32,7 @@ $(document).ready(function () {
 
 $(document).on('click','.delete-from-cart',function () {
         let slug = $(this).data('name');
+        let item = $(this).parent();
         $.ajax({
             type: 'DELETE',
             url: '/removeFromCart',
@@ -39,8 +40,24 @@ $(document).on('click','.delete-from-cart',function () {
                 slug: slug
             },
             success: function (res) {
-                console.log(res)
+                item.remove();
             }
         });
     });
+$(document).on('click','.plus',function () {
+    let input = $(this).siblings('.quantity-res').children();
+    if(input.val() == 10)
+        return;
+    input.val(Number(input.val())+1);
+    });
+
+    $(document).on('click','.minus',function () {
+        let input = $(this).siblings('.quantity-res').children();
+        if(input.val() == 1)
+            return;
+        input.val(input.val()-1);
+    })
 });
+
+
+

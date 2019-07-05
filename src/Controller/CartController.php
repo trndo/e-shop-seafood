@@ -59,7 +59,7 @@ class CartController extends AbstractController
      */
     public function removeFromCart(Request $request, CartHandlerInterface $handler): JsonResponse
     {
-        $slug = $request->request->get('slug');
+        $slug = (string) $request->request->get('slug');
 
         $handler->removeFromCart($request,$slug);
 

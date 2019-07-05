@@ -30,18 +30,17 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click','.delete-from-cart',function () {
+$(document).on('click','.delete-from-cart',function () {
         let slug = $(this).data('name');
-        console.log(slug);
-        // $.ajax({
-        //     type: 'DELETE',
-        //     url: '/removeFromCart',
-        //     data: {
-        //         slug: slug
-        //     },
-        //     success: function (res) {
-        //         co nsole.log(res.status)
-        //     }
-        // });
+        $.ajax({
+            type: 'DELETE',
+            url: '/removeFromCart',
+            data: {
+                slug: slug
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        });
     });
 });

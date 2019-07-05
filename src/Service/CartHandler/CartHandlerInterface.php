@@ -30,7 +30,7 @@ interface CartHandlerInterface
      * Remove product or receipt from cart
      *
      * @param Request $request
-     * @param string $key
+     * @param string $slug
      */
-    public function removeFromCart(Request $request, string $key): void ;
+    public function removeFromCart(Request $request, string $slug): void ;
 }

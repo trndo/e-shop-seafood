@@ -64,13 +64,14 @@ class CartHandler implements CartHandlerInterface
         }
     }
 
-    public function removeFromCart(Request $request,string $key): void
+    public function removeFromCart(Request $request,string $slug): void
     {
         $session = $request->getSession();
         $cart = $session->get('cart');
 
-        if ($cart !== null) {
-            $session->remove($cart[$key]);
+        if (isset($cart[$slug])) {
+            unset($cart[$slug]);
+            $session->set('cart',$cart);
         }
     }
 }

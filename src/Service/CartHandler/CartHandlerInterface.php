@@ -26,5 +26,11 @@ interface CartHandlerInterface
      */
     public function addItemToCart(Request $request,string $key, array $options): void ;
 
-    public function removeFromCart(Request $request);
+    /**
+     * Remove product or receipt from cart
+     *
+     * @param Request $request
+     * @param string $key
+     */
+    public function removeFromCart(Request $request, string $key): void ;
 }

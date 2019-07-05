@@ -28,7 +28,7 @@ class CartController extends AbstractController
     {
         $slug = $request->request->get('slug');
         $type = $request->request->get('type');
-        $quantity = $request->request->get('quantity');
+        $quantity = (int)$request->request->get('quantity');
 
         $item = $cartHandler->getItem($type, $slug);
         $options = [
@@ -44,11 +44,26 @@ class CartController extends AbstractController
     /**
      * @Route("/cart",name="cart")
      *
-     * @param SessionInterface $session
      * @return Response
      */
-    public function showCart(SessionInterface $session): Response
+    public function showCart(): Response
     {
         return $this->render('cart.html.twig');
+    }
+
+    /**
+     * @Route("/removeFromCart",name="removeFromCart", methods={"DELETE"})
+     * @param Request $request
+     * @param CartHandlerInterface $handler
+     * @return JsonResponse
+     */
+    public function removeFromCart(Request $request, CartHandlerInterface $handler): JsonResponse
+    {
+        $slug = $request->request->get('slug');
+
+        $handler->removeFromCart($request,$slug);
+
+        return new JsonResponse(['status' => true],204);
+
     }
 }

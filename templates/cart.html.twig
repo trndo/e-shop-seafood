@@ -48,7 +48,7 @@
                             {{ cartItem.item.price }} <span class="hryvnas">₴</span>
                         </div>
                     </div>
-                    <embed id="delete-from-cart" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/>
+                    <embed id="delete-from-cart" data-name="{{ cartItem.item.slug }}" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/></div>
                 </div>
                 {% endfor %}
 {#                <div class="order-container">#}

@@ -7,9 +7,9 @@ import $ from 'jquery';
 import SimpleBar from 'simplebar';
 
 $(document).ready(function () {
-     if($('.cart-container').length)
-     new SimpleBar($('.cart-container')[0],{
-         autoHide: false});
+     // if($('.cart-container').length)
+     // new SimpleBar($('.cart-container')[0],{
+     //     autoHide: false});
 
     $('.to_basket').on('click',function () {
         let type = $(this).data('type');
@@ -30,5 +30,18 @@ $(document).ready(function () {
         });
     });
 
-
+    $('#delete-from-cart').on('click',function () {
+        let slug = $(this).data('name');
+        console.log(slug);
+        // $.ajax({
+        //     type: 'DELETE',
+        //     url: '/removeFromCart',
+        //     data: {
+        //         slug: slug
+        //     },
+        //     success: function (res) {
+        //         console.log(res.status)
+        //     }
+        // });
+    });
 });

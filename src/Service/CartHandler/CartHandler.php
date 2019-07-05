@@ -6,6 +6,8 @@ namespace App\Service\CartHandler;
 
 use App\Repository\ProductRepository;
 use App\Repository\ReceiptRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartHandler implements CartHandlerInterface
 {
@@ -38,6 +40,27 @@ class CartHandler implements CartHandlerInterface
 
         if ($type == 'receipt') {
             return $this->receiptRepository->findReceiptBySlug($slug);
+        }
+    }
+
+    /**
+     * Add receipt or product to cart
+     *
+     * @param Request $request
+     * @param string $key
+     * @param array $options
+     */
+    public function addItemToCart(Request $request,string $key, array $options): void
+    {
+        $session = $request->getSession();
+        $shoppingCart = [];
+
+        if (!$session->has('cart')) {
+            $session->set('cart',$shoppingCart);
+        } else {
+            $shoppingCart = $session->get('cart');
+            $shoppingCart[$key] = $options;
+            $session->set('cart',$shoppingCart);
         }
     }
 }

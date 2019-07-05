@@ -27,6 +27,9 @@
             <div class="cart-container cartItems">
                 {% set session = app.session.get('cart') %}
                 {% dump(session) %}
+                {% if session == null %}
+                    <h3>Ваша корзина пустая!</h3>
+                {% endif %}
                 {% for cartItem in session %}
                 <div class="order-container">
                     <div class="order">

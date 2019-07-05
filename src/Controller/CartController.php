@@ -29,16 +29,15 @@ class CartController extends AbstractController
         $slug = $request->request->get('slug');
         $type = $request->request->get('type');
         $quantity = $request->request->get('quantity');
-        $session = $request->getSession();
+
         $item = $cartHandler->getItem($type, $slug);
-        $shoppingCart = [];
-        if (!$session) {
-            $session->set('cart',$shoppingCart);
-        }else {
-            $shoppingCart = $session->get('cart');
-            $shoppingCart[$item->getSlug()] = ['item' => $item,'quantity' =>$quantity];
-            $session->set('cart',$shoppingCart);
-        }
+        $options = [
+            'item' => $item,
+            'quantity' => $quantity
+        ];
+
+        $cartHandler->addItemToCart($request,$item->getSlug(),$options);
+
         return new JsonResponse(['status' => true],200);
     }
 

@@ -36,40 +36,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
             ->getResult()
             ;
     }
-    // /**
-    //  * @return Supply[] Returns an array of Supply objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Supply
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-    /**
-     * Find name of products and return array of names
-     *
-     * @param string $name
-     * @return array|null
-     */
     public function findByName(string $name): ?array
     {
         // TODO: Implement findByName() method.

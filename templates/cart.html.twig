@@ -26,7 +26,8 @@
             </div>
             <div class="cart-container cartItems">
                 {% set session = app.session.get('cart') %}
-                {% dump(session) %}
+                {% set sum = app.session.get('totalSum') %}
+                {% dump(session) %}{% dump(sum) %}
                 {% if session == null %}
                     <h3>Ваша корзина пустая!</h3>
                 {% endif %}
@@ -34,7 +35,7 @@
                     <div class="order-container">
                         <div class="order">
                             <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
-                            <div class="order-product-name">
+                            <div class="order-product-name" data-name="{{ cartItem.item.slug }}">
                                 {{ cartItem.item.name }}
                             </div>
                             <div class="quantity">
@@ -54,7 +55,7 @@
             </div>
             <div class="summary">
                 <div class="final">
-                    Итог: <span> </span>
+                    Итог: <span>{{ sum }} </span>
                 </div>
                 <div class="checkout">Оформить заказ</div>
             </div>

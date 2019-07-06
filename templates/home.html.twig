@@ -15,12 +15,13 @@
                    </div>
                    <div class="user_basket">
                        <div id="basket-container">
-                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
+                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>{{app.session.get('totalSum')}} грн</span>
                        </div>
                        <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
                    </div>
                </div>
                <div class="row">
+
                    <div class="logo-container">
                        <embed id="logo" type="image/svg+xml" src="/assets/img/logo.svg"/>
                        <div id="logo-text">

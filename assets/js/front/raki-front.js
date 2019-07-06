@@ -45,19 +45,52 @@ $(document).on('click','.delete-from-cart',function () {
         });
     });
 $(document).on('click','.plus',function () {
-    let input = $(this).siblings('.quantity-res').children();
-    if(input.val() == 10)
-        return;
-    input.val(Number(input.val())+1);
-    });
 
-    $(document).on('click','.minus',function () {
-        let input = $(this).siblings('.quantity-res').children();
-        if(input.val() == 1)
-            return;
-        input.val(input.val()-1);
-    })
+    let input = $(this).siblings('.quantity-res').children();
+    let name = $(this).parent().siblings('.order-product-name').data('name');
+    if ( input.val() == 10) {
+        alert('Mojno zakazat tolko 10 edenic etoy posizui');
+        return;
+    }
+    let val = Number(input.val());
+    if (changeQuantity(val + 1,name)) {
+        input.val(val + 1);
+    }
 });
 
+$(document).on('click','.minus',function () {
+    let input = $(this).siblings('.quantity-res').children();
+    let name = $(this).parent().siblings('.order-product-name').data('name');
+    if(input.val() == 1)
+        return;
+    let val = Number(input.val());
+    input.val(val - 1);
+    changeQuantity(val - 1,name);
+})
 
+});
+
+function changeQuantity(quantity,name) {
+    let result = '';
+    $.ajax({
+        type: "POST",
+        url: "/changeQuantity",
+        async: false,
+        data: {
+            quantity: quantity,
+            name: name
+        },
+        success: function (res) {
+            if (res.status === false) {
+                alert(res.message);
+                result = res.status;
+            }
+            else {
+                result = res.status;
+            }
+
+        }
+    });
+    return result;
+}
 

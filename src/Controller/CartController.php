@@ -38,7 +38,12 @@ class CartController extends AbstractController
 
         $cartHandler->addItemToCart($request,$item->getSlug(),$options);
 
-        return new JsonResponse(['status' => true],200);
+        $totalSum = $request->getSession()->get('totalSum');
+
+        return new JsonResponse([
+            'status' => true,
+            'totalSum' => $totalSum
+        ],200);
     }
 
     /**
@@ -63,7 +68,13 @@ class CartController extends AbstractController
 
         $handler->removeFromCart($request,$slug);
 
-        return new JsonResponse(['status' => true],204);
+        $totalSum = $request->getSession()->get('totalSum');
+
+
+        return new JsonResponse([
+            'status' => true,
+            'totalSum' => $totalSum
+        ],200);
 
     }
 

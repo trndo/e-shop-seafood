@@ -99,6 +99,7 @@ class CartHandler implements CartHandlerInterface
         $cart = $session->get('cart');
 
         if ($quantity > $productQuantity ) {
+
             return [
                 'status'=> false,
                 'message' => 'На данный момент доступно '.$productQuantity.' '.$product->getUnit().' !'
@@ -110,9 +111,9 @@ class CartHandler implements CartHandlerInterface
             $session->set('cart',$cart);
         }
         $this->countTotalSum($session);
-
         return [
-            'status' => true
+            'status' => true,
+            'totalSum' => $session->get('totalSum')
         ];
 
     }

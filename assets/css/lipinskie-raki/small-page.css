@@ -302,7 +302,7 @@
 
 .order-form{
     position: relative;
-    width: 196px;
+    width: 300px;
     height: max-content;
     margin: 0 auto;
     padding: 2px 2px 2px 2px;
@@ -310,7 +310,7 @@
 }
 
 .order-input{
-    width: 190px;
+    width: 300px;
     height: 33px;
     box-sizing: border-box;
     padding: 1px 1px 1px 1px;
@@ -337,7 +337,7 @@
 }
 
 .date-input{
-    width: 126px;
+    width: 200px;
     height: 33px;
     box-sizing: border-box;
     padding: 1px 1px 1px 1px;
@@ -360,7 +360,7 @@
 }
 
 .time-input{
-    width: 55px;
+    width: 91px;
     height: 33px;
     box-sizing: border-box;
     padding: 1px 1px 1px 1px;
@@ -374,7 +374,7 @@
 }
 
 .delivery-type{
-    width: 190px;
+    width: 300px;
     height: max-content;
     position: relative;
     margin-top: 37px;
@@ -384,7 +384,7 @@
     background: #FFFFFF;
     box-shadow: 0 4px 4px #C12323;
     border-radius: 5px;
-    width:92px;
+    width:149px;
     height: 33px;
     font-family: Raleway,sans-serif;
     font-style: normal;
@@ -401,7 +401,7 @@
 #self-delivery{
     background: #F85B5B;
     border-radius: 5px;
-    width:92px;
+    width: 145px;
     height: 33px;
     color: #FFFFFF;
     font-family: Raleway,sans-serif;
@@ -426,6 +426,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 50px;
     position: relative;
+    margin: 0 auto;
     margin-top: 54px;
     width: 207px;
     height: 38px;
@@ -437,7 +438,6 @@
     border: none;
     text-align: center;
     color: #F13A3A;
-    margin-left: -8px;
 }
 button:focus{
     outline: none;

@@ -283,6 +283,8 @@
     width: 400px;
     height: 626px;
     position: relative;
+    display: inline-block;
+    float: left;
 }
 
 .order-block #order-title{
@@ -444,7 +446,7 @@ button:focus{
     width: 370px;
     height: 626px;
     position: relative;
-    float:left;
+    display: inline-block;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

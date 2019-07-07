@@ -98,6 +98,9 @@ $(document).on('click','.minus',function () {
             $('.sum').text(res.totalSum+' ₴');
         }
     });
-})
+});
+$(document).on('keyup','.quantity-res',function () {
+
+} )
 });
 

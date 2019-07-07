@@ -99,8 +99,73 @@ $(document).on('click','.minus',function () {
         }
     });
 });
-$(document).on('keyup','.quantity-res',function () {
+$(document).on('keyup','.quantity-res > input',function (e) {
+    let input = $(this);
+    let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
+    let val = Number(input.val());
 
-} )
+    if( val == '')
+        return;
+
+    if (val > 10) {
+        alert('Max 10');
+        input.val(10);
+        val = 10;
+    }
+
+    if(val < 0) {
+        alert('Min 1');
+        input.val(1);
+        val = 1;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/changeQuantity",
+        data: {
+            quantity: val,
+            name: name
+        },
+        success: function (res) {
+            if (res.status === false) {
+                alert('ostalos '+res.rest);
+                input.val(res.rest)
+            }
+            else {
+                input.val(val);
+                $('.sum').text(res.totalSum+' ₴');
+            }
+        }
+    });
+});
+$('input').bind('cut copy paste',function (e) {
+    e.preventDefault();
+});
+
+$(document).on('blur','.quantity-res > input',function (e) {
+    let input = $(this);
+    let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
+    let val = Number(input.val());
+    if(val == ''){
+        $.ajax({
+            type: "POST",
+            url: "/changeQuantity",
+            data: {
+                quantity: 1,
+                name: name
+            },
+            success: function (res) {
+                if (res.status === false) {
+                    alert('ostalos '+res.rest);
+                    input.val(res.rest)
+                }
+                else {
+                    input.val(1);
+                    $('.sum').text(res.totalSum+' ₴');
+                }
+            }
+        });
+    }
+})
 });
 

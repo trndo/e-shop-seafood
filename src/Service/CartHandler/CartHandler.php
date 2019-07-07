@@ -99,10 +99,10 @@ class CartHandler implements CartHandlerInterface
         $cart = $session->get('cart');
 
         if ($quantity > $productQuantity ) {
-
             return [
                 'status'=> false,
-                'message' => 'На данный момент доступно '.$productQuantity.' '.$product->getUnit().' !'
+                'rest' => $productQuantity,
+                'unit' => $product->getUnit(),
             ];
         }
 

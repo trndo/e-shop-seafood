@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('order') }}
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -93,7 +94,7 @@
                 </div>
                 <div class="user_basket-mini">
                     <div id="basket-container">
-                        <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
+                        <span>550 грн</span>
                     </div>
                     <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
                 </div>
@@ -121,7 +122,7 @@
                                 Самовывоз
                             </div>
                         </div>
-                        <input type="text" id="adress-order" class="order-input input-margin-16 order-address" placeholder="Address Bla Bla*">
+                        <input type="text" id="adress-order" class="order-input input-margin-16 order-address js-date-picker" placeholder="Address Bla Bla*">
                         <div class="checkout-order">
                             Оформить
                         </div>
@@ -183,10 +184,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script>
-
-
-    </script>
+    {{ encore_entry_script_tags('order') }}
     <script>
         // This example adds a search box to a map, using the Google Place Autocomplete
         // feature. People can enter geographical searches. The search box will return a

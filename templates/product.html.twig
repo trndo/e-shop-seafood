@@ -2,42 +2,7 @@
     {% block body %}
         <div class="container">
             <div class="container-inside">
-                <header>
-                    <div class="button-row">
-                        <div id="fast-order">
-                            <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
-                            <span>Быстрый заказ</span>
-                        </div>
-                        <div class="user_basket">
-                            <div id="basket-container">
-                                <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
-                            </div>
-                            <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="logo-container">
-                            <embed id="logo" type="image/svg+xml" src="/assets/img/logo.svg"/>
-                            <div id="logo-text">
-                                <span id="lipinskie">Lipinskie</span> <span id="raki">Raki</span>
-                                <div class="crayfish">
-                                    Crayfish & Delicacies
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row nav-row">
-                        <nav>
-                            <ul>
-                                <li class="active-nav">Главаня</li>
-                                <li>Живые раки</li>
-                                <li>Жареные раки</li>
-                                <li>Вареные раки</li>
-                                <li>Ассортимент</li>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
+                {% include 'elements/__header.html.twig' %}
                 <main>
                     <div class="product-container">
                         <div class="product-photo">
@@ -66,15 +31,18 @@
                                 </div>
                             </div>
                             <div class="description">
-                                Живые раки с киева, в большом количестве Живые раки с киева, в большом количестве
-                                Живые раки с киева, в большом количестве Живые раки с киева, в большом количестве
+                               {{ product.description }}
                             </div>
                             <div class="product-price">
-                                450 грн / кг.<span id="special-price">550 грн</span>
+                                {{ product.price }} грн / кг.<span class="special-price">550 грн</span>
                             </div>
                             <div class="product-to-basket">
-                                <div class="quantity-res quantity-product">
-                                    <input type="text" value="0.00">
+                                <div class="quantity">
+                                    <span data- class="plus">+</span>
+                                    <div class="quantity-res">
+                                        <input type="text" value="12">
+                                    </div>
+                                    <span class="minus">-</span>
                                 </div>
                                 <div class="custom-button add-basket">
                                     Добавить в козину
@@ -125,54 +93,7 @@
                 </main>
             </div>
         </div>
-        <footer>
-            <div class="container">
-                <div class="container-inside">
-                    <div class="row footer-row">
-                        <div class="logos">
-                            <div class="footer-raki-logo">
-                                <embed type="image/svg+xml" src="/assets/img/raki-footer-logo.svg"/>
-                            </div>
-                            <div class="footer-octo-logo">
-                                <embed type="image/svg+xml" src="/assets/img/octologo.svg"/>
-                            </div>
-                        </div>
-                        <div class="contact">
-                            <div class="contact-info">
-                                <span id="contact-num">+38(000)000-00-00</span>
-                                <span id="contact-email">rakiInf@gmail.com</span>
-                            </div>
-                            <div class="contact-social">
-                                <embed type="image/svg+xml" src="/assets/img/instagram.svg"/>
-                                <embed type="image/svg+xml" src="/assets/img/telegram-logo.svg"/>
-                                <embed type="image/svg+xml" src="/assets/img/viber-logo.svg"/>
-                            </div>
-                        </div>
-                        <div class="footer-nav">
-                            <ul>
-                                <li class="active-nav">
-                                    Главная
-                                </li>
-                                <li>
-                                    Живые раки
-                                </li>
-                                <li>
-                                    Жареные раки
-                                </li>
-                                <li>
-                                    Вареные раки
-                                </li>
-                                <li>
-                                    Ассортимент
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="red-line">
-            </div>
-        </footer>
+        {% include 'elements/__footer.html.twig' %}
         <div id="overlay" style="display: none">
             <div class="red-content">
                 <div id="shopping-cart">

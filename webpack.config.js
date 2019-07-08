@@ -28,6 +28,7 @@ Encore
     .addEntry('main','./assets/js/front/raki-front.js')
     .addEntry('promotion','./assets/js/promotion.js')
     .addEntry('addSales', './assets/js/sales.js')
+    .addEntry('common','./assets/js/front/common.js')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

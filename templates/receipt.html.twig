@@ -1,4 +1,134 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
+    <div class="container">
+        <div class="without-top-container">
+            {% include 'elements/__header.html.twig' %}
+        </div>
+            <main>
+                <div class="receipt-container">
+                    <img src="{{ product.getTitlePhotoPath }}" alt="">
+                    <div class="receipt-info">
+                        <div class="receipt-name">
+                            {{ product.name }}
+                        </div>
+                        <div class="description">
+                            {{ product.description }}
+                        </div>
+                        {% if product.products is defined %}
+                        <div class="receipt-sizes">
+                            <h4>
+                                Размер твоего рака:
+                            </h4>
+                            <div class="receipt-sizes-container">
+                                <div class="size-block">
+                                    S
+                                </div>
+                                <div class="size-block">
+                                    M
+                                </div>
+                                <div class="size-block">
+                                    L
+                                </div>
+                                <div class="size-block size-block-checked">
+                                    XL
+                                </div>
+                                <div class="size-block">
+                                    XXL
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="product-price receipt-price">
+                                {{ product.price }} грн / {{ product.unit }}.<span class="special-price-receipt special-price">550 грн</span>
+                            </div>
+                            <div class="product-to-basket">
+                                <div class="quantity">
+                                    <span data- class="plus">+</span>
+                                    <div class="quantity-res">
+                                        <input type="text" value="0">
+                                    </div>
+                                    <span class="minus">-</span>
+                                </div>
+                                <div class="custom-button add-basket">
+                                    Добавить в козину
+                                </div>
+                            </div>
+                        </div>
+                        <div class="percent-promotion">
+                                    <span id="percent">
+                                        -5 %
+                                    </span>
+                            <span id="percent-date">
+                                        до 10/11/12
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        <div class="container-inside-product">
+            <div class="additional-products">
+                <div class="see-also">
+                    Посмотри так же
+                </div>
+                <div class="row additional-products-row">
+                    <div class="col-4">
+                        <div class="product-card">
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                            <div class="card-content">
+                                <h4>Живой рак вкусный прекрасный</h4>
+                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                <span class="price">₴ 220</span>
+                                <div class="in_basket" >В корзину</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="product-card">
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                            <div class="card-content">
+                                <h4>Живой рак вкусный прекрасный</h4>
+                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                <span class="price">₴ 220</span>
+                                <div class="in_basket" >В корзину</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="product-card">
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                            <div class="card-content">
+                                <h4>Живой рак вкусный прекрасный</h4>
+                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                <span class="price">₴ 220</span>
+                                <div class="in_basket" >В корзину</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'elements/__footer.html.twig' %}
+    <div id="overlay" style="display: none">
+        <div class="red-content">
+            <div id="shopping-cart">
+                <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
+            </div>
+            <div class="check-shopping">
+                <p>
+                    Точно всё выбрал?
+                </p>
+                <h4>
+                    Проверяй и оформляй
+                </h4>
+            </div>
+            <div class="cart-container cartItems">
+                <div class="order">
+                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                    <div class="order-product-name">
+                    </div>
+                </div>
+            </div>
+            <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+        </div>
+    </div>
 {% endblock %}

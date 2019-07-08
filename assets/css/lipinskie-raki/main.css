@@ -44,6 +44,7 @@ header{
     font-size: 0.9em;
     line-height: 27px;
     color: white;
+    cursor: pointer;
 }
 #fast-order span{
     position: relative;
@@ -76,6 +77,12 @@ header{
     border-radius: 50px;
     top: 0;
     right: 45px;
+    background-image: url("../../img/online-shopping-cart.svg");
+    background-position: 6px 5px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    padding-top: 3px;
+    text-align: center;
 }
 #basket-container span{
     font-family: Raleway, sans-serif;
@@ -84,17 +91,17 @@ header{
     font-size: 18px;
     line-height: 100%;
     color: white;
-    display: inline;
-    position: absolute;
-    right: 7px;
-    top: 2px;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
-
+/*
 #basket{
     position: absolute;
     top: 3px;
     left: 11px;
-}
+}*/
 #basket::after{
     content: url("../../img/circle-solid.svg");
     color: red;
@@ -185,8 +192,14 @@ nav ul li{
     color: #9e9999;
     user-select: none;
     cursor: pointer;
+    transition: .2s;
 }
 
+nav ul li:hover{
+    font-weight: normal;
+    border-bottom: 3px solid #F13A3A;
+    color: white;
+}
 
 main{
     position: relative;
@@ -343,6 +356,7 @@ main{
     align-items: center;
     padding: 4px 10px 0 10px;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .price{
@@ -425,6 +439,7 @@ main{
     text-align: center;
     padding-top: 10px;
     color: #F13A3A;
+    cursor: pointer;
 }
 
 .fast-order-big{
@@ -529,6 +544,13 @@ footer{
     cursor: pointer;
     width: max-content;
     margin-top: 6px;
+    transition: .2s;
+}
+
+.footer-nav ul li:hover{
+    font-weight: normal;
+    border-bottom: 3px solid #F13A3A;
+    color: white;
 }
 
 .active-nav{
@@ -558,4 +580,36 @@ footer{
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 20;
     cursor: pointer;
+}
+.dropdown{
+    display: none;
+    width: 128px;
+    height: max-content;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(58, 10, 10, 0.25);
+    position: absolute;
+    z-index: 1000;
+    right: 60px;
+}
+.dropdown ul{
+    width: 100%;
+    list-style-type: none;
+    padding: 0 0 0 0;
+    margin-bottom: 0;
+}
+
+.dropdown ul li{
+    height: 30px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.dropdown ul li:hover{
+    background: #CD3131;
 }

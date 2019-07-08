@@ -7,44 +7,7 @@
 {% block body %}
     <div class="container">
         <div class="container-inside">
-           <header>
-               <div class="button-row">
-                   <div id="fast-order">
-                       <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
-                       <span>Быстрый заказ</span>
-                   </div>
-                   <div class="user_basket">
-                       {% set sum = app.session.get('totalSum')%}
-                       <div id="basket-container">
-                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
-                       </div>
-                       <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
-                   </div>
-               </div>
-               <div class="row">
-
-                   <div class="logo-container">
-                       <embed id="logo" type="image/svg+xml" src="/assets/img/logo.svg"/>
-                       <div id="logo-text">
-                           <span id="lipinskie">Lipinskie</span> <span id="raki">Raki</span>
-                           <div class="crayfish">
-                               Crayfish & Delicacies
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="row nav-row">
-                    <nav>
-                        <ul>
-                            <li class="active-nav">Главаня</li>
-                            <li>Живые раки</li>
-                            <li>Жареные раки</li>
-                            <li>Вареные раки</li>
-                            <li>Ассортимент</li>
-                        </ul>
-                    </nav>
-               </div>
-           </header>
+           {% include 'elements/__header.html.twig' %}
             <main>
                 <img src="{{ asset('assets/img/plate.png') }}" alt="" id="plate">
                 <div id="promotion">
@@ -74,11 +37,11 @@
                                 <div class="card-content">
                                     <h4>{{ item.name }}</h4>
                                     <p>{{ item.description }}</p>
-                                    <span class="price">{{ item.price }}</span>
+                                    <span class="price">{{ item.price }} ₴</span>
                                     {% if item.getType == 'product' %}
-                                    <div class="in_basket" onclick="window.location.href='{{ path('testProduct',{'slug': item.slug}) }}'">Подробнее</div>
+                                    <div class="in_basket" data-product-location="{{ path('product',{'slug': item.slug}) }}">Подробнее</div>
                                     {% else %}
-                                    <div class="in_basket" onclick="window.location.href='{{ path('testReceipt',{'slug': item.slug}) }}'">Подробнее</div>
+                                    <div class="in_basket" data-product-location="{{ path('receipt',{'slug': item.slug}) }}">Подробнее</div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -108,54 +71,7 @@
             </div>
         </div>
     </div>
-    <footer>
-        <div class="container">
-            <div class="container-inside">
-                <div class="row footer-row">
-                     <div class="logos">
-                         <div class="footer-raki-logo">
-                            <embed type="image/svg+xml" src="/assets/img/raki-footer-logo.svg"/>
-                         </div>
-                         <div class="footer-octo-logo">
-                             <embed type="image/svg+xml" src="/assets/img/octologo.svg"/>
-                         </div>
-                     </div>
-                     <div class="contact">
-                        <div class="contact-info">
-                            <span id="contact-num">+38(000)000-00-00</span>
-                            <span id="contact-email">rakiInf@gmail.com</span>
-                        </div>
-                         <div class="contact-social">
-                             <embed type="image/svg+xml" src="/assets/img/instagram.svg"/>
-                             <embed type="image/svg+xml" src="/assets/img/telegram-logo.svg"/>
-                             <embed type="image/svg+xml" src="/assets/img/viber-logo.svg"/>
-                         </div>
-                     </div>
-                     <div class="footer-nav">
-                            <ul>
-                                <li class="active-nav">
-                                    Главная
-                                </li>
-                                <li>
-                                    Живые раки
-                                </li>
-                                <li>
-                                    Жареные раки
-                                </li>
-                                <li>
-                                    Вареные раки
-                                </li>
-                                <li>
-                                    Ассортимент
-                                </li>
-                            </ul>
-                       </div>
-                </div>
-            </div>
-        </div>
-        <div id="red-line">
-        </div>
-    </footer>
+    {% include 'elements/__footer.html.twig' %}
 <div id="overlay" style="display: none">
     <div class="red-content">
         <div id="shopping-cart">

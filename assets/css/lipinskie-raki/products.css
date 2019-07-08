@@ -218,7 +218,8 @@
 #special-card{
     width: 209px;
     height: 299px;
-    background: #E23333;
+    background-image: url("../../img/special-card.svg");
+    background-size: cover;
     font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -229,3 +230,5 @@
     color: #FFFFFF;
     margin-top: 29px;
 }
+
+

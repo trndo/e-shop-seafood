@@ -67,5 +67,15 @@ class UserService implements UserServiceInterface
         }
     }
 
+    public function getUsers(): UserCollection
+    {
+        return new UserCollection($this->repository->findUsers());
+    }
 
+    public function deleteUserById(User $user): void
+    {
+        if ($user instanceof User){
+            $this->repository->delete($user);
+        }
+    }
 }

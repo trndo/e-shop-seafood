@@ -1,0 +1,135 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    {{ include('elements/admin_nav.html.twig', {'active' : 'users'}) }}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            {{ include('elements/admin_header.html.twig') }}
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="h3 mb-2 text-gray-800">Пользователь</h1>
+{#                <p class="mb-4">Добвить нового администратора -  <button onclick="window.location.href = '{{ path('admin_create') }}'" class="btn btn-primary">Добавить!</button></p>#}
+                <hr class="sidebar-divider">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Таблица Администраторов</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Адрес</th>
+                                    <th>Телефон</th>
+                                    <th>Бонусы</th>
+                                    <th>Токен регистрации</th>
+                                    <th>Статус регистрации</th>
+                                    <th>Дата регистрации</th>
+                                    <th>Google ID</th>
+                                    <th>Facebook ID</th>
+                                    <th>Instagram ID</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>
+                                            {{ user.email ?:'-'}}
+                                        </td>
+                                        <td>
+                                            {{ user.name ?:'-'}}
+                                        </td>
+                                        <td>
+                                            {{ user.surname ?:'-'}}
+                                        </td>
+                                        <td>
+                                           {{ user.address ?:'-'}}
+                                        </td>
+                                        <td>
+                                            {{ user.phone ?:'-' }}
+                                        </td>
+                                        <td>
+                                            {{ user.bonuses ?:'0' }}
+                                        </td>
+                                        <td>
+                                            {{ user.token ?:'Использован' }}
+                                        </td>
+                                        <td>
+                                            {{ user.registrationStatus ? 'Зарегистрирован':'Не зарегистрирован' }}
+                                        </td>
+                                        <td>
+                                            {{ user.createdAt|date('d/m/y H:i:s') }}
+                                        </td>
+                                        <td>
+                                            {{ user.googleId ?:'-' }}
+                                        </td>
+                                        <td>
+                                            {{ user.facebookId ?:'-' }}
+                                        </td>
+                                        <td>
+                                            {{ user.instagramId ?:'-' }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы хотите удалить этого пользователя ?')) window.location.href='{{ path('deleteUser',{'id': user.id}) }}'">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        {{ include('elements/admin_footer.html.twig') }}
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

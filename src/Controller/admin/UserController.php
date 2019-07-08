@@ -62,13 +62,13 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/lipadmin/admins/delete/{slug}", name="deleteUser")
+     * @Route("/lipadmin/admins/delete/{slug}", name="deleteAdminUser")
      *
      * @param UserServiceInterface $userService
      * @param User $user
      * @return Response
      */
-    public function deleteUser(UserServiceInterface $userService,User $user): Response
+    public function deleteAdminUser(UserServiceInterface $userService,User $user): Response
     {
         $userService->deleteUser($user);
 
@@ -105,5 +105,34 @@ class UserController extends AbstractController
         return $this->render('security/admin_registration.html.twig',[
            'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/users", name="users")
+     *
+     * @param UserServiceInterface $userService
+     * @return Response
+     */
+    public function showUsers(UserServiceInterface $userService): Response
+    {
+        $users = $userService->getUsers();
+
+        return $this->render('admin/users/users.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/users/delete/{id}", name="deleteUser")
+     *
+     * @param UserServiceInterface $userService
+     * @param User $user
+     * @return Response
+     */
+    public function deleteUser(UserServiceInterface $userService, User $user): Response
+    {
+        $userService->deleteUserById($user);
+
+        return $this->redirectToRoute('users');
     }
 }

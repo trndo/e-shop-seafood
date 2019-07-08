@@ -38,7 +38,7 @@ class ProductController extends AbstractController
 
             $productService->saveProduct($productModel);
 
-            return $this->redirectToRoute('admins');
+            return $this->redirectToRoute('products');
         }
 
         return $this->render('admin/product/create_product.html.twig',[

@@ -17,7 +17,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <h1 class="h3 mb-2 text-gray-800">Админисраторы</h1>
-                <p class="mb-4">Добвить нового администратора <button onclick="window.location.href = '{{ path('admin_create') }}'" class="btn btn-primary">Добавить!</button></p>
+                <p class="mb-4">Добвить нового администратора -  <button onclick="window.location.href = '{{ path('admin_create') }}'" class="btn btn-primary">Добавить!</button></p>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -52,7 +52,15 @@
                                     </td>
                                     <td>
                                         {% for role in admin.roles %}
-                                            {{ role }}&nbsp;
+                                            {% if role == 'ROLE_ADMIN_SUPPLIER' %}
+                                                Поставщик
+                                            {% elseif role == 'ROLE_ADMIN' %}
+                                                Администратор
+                                            {% elseif role == 'ROLE_ADMIN_VIEWER' %}
+                                                Наблюдатель
+                                            {% elseif role == 'ROLE_USER' %}
+                                                , Пользователь
+                                            {% endif %}
                                         {% endfor %}
                                     </td>
                                      <td>
@@ -62,7 +70,7 @@
                                          {{ admin.createdAt|date('d/m/y H:i:s') }}
                                      </td>
                                      <td>
-                                         <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы хотите удалить этого админа ?')) window.location.href='{{ path('deleteUser',{'slug': admin.slug}) }}'">
+                                         <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы хотите удалить этого админа ?')) window.location.href='{{ path('deleteAdminUser',{'slug': admin.slug}) }}'">
                                              <i class="fas fa-times"></i>
                                          </button>
                                      </td>

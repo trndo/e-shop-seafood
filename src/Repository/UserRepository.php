@@ -32,6 +32,15 @@ class UserRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function findUsers(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles NOT LIKE :roles')
+            ->setParameter('roles','%ROLE_AD%')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return array
      */

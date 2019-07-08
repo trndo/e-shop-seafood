@@ -192,8 +192,14 @@ nav ul li{
     color: #9e9999;
     user-select: none;
     cursor: pointer;
+    transition: .2s;
 }
 
+nav ul li:hover{
+    font-weight: normal;
+    border-bottom: 3px solid #F13A3A;
+    color: white;
+}
 
 main{
     position: relative;
@@ -350,6 +356,7 @@ main{
     align-items: center;
     padding: 4px 10px 0 10px;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .price{
@@ -432,6 +439,7 @@ main{
     text-align: center;
     padding-top: 10px;
     color: #F13A3A;
+    cursor: pointer;
 }
 
 .fast-order-big{
@@ -536,6 +544,13 @@ footer{
     cursor: pointer;
     width: max-content;
     margin-top: 6px;
+    transition: .2s;
+}
+
+.footer-nav ul li:hover{
+    font-weight: normal;
+    border-bottom: 3px solid #F13A3A;
+    color: white;
 }
 
 .active-nav{

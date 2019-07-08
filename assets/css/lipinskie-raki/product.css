@@ -200,7 +200,7 @@
 
 .receipt-info{
     width: 401px;
-    height: 510px;
+    height: max-content;
     background: #F13A3A;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;

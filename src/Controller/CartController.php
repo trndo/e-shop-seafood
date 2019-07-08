@@ -28,7 +28,7 @@ class CartController extends AbstractController
     {
         $slug = $request->request->get('slug');
         $type = $request->request->get('type');
-        $quantity = (int)$request->request->get('quantity');
+        $quantity = (float)$request->request->get('quantity');
 
         $item = $cartHandler->getItem($type, $slug);
         $options = [
@@ -38,7 +38,12 @@ class CartController extends AbstractController
 
         $cartHandler->addItemToCart($request,$item->getSlug(),$options);
 
-        return new JsonResponse(['status' => true],200);
+        $totalSum = $request->getSession()->get('totalSum');
+
+        return new JsonResponse([
+            'status' => true,
+            'totalSum' => $totalSum
+        ],200);
     }
 
     /**
@@ -63,7 +68,29 @@ class CartController extends AbstractController
 
         $handler->removeFromCart($request,$slug);
 
-        return new JsonResponse(['status' => true],204);
+        $totalSum = $request->getSession()->get('totalSum');
 
+
+        return new JsonResponse([
+            'status' => true,
+            'totalSum' => $totalSum
+        ],200);
+
+    }
+
+    /**
+     * @Route("/changeQuantity",name="changeQuantity", methods={"POST"})
+     *
+     * @param Request $request
+     * @param CartHandlerInterface $handler
+     * @return JsonResponse
+     */
+    public function changeQuantity(Request $request, CartHandlerInterface $handler): JsonResponse
+    {
+        $slug = $request->request->get('name');
+        $quantity = $request->request->get('quantity');
+
+        $response = $handler->changeItemQuantity($request,$slug,$quantity);
+        return new JsonResponse($response);
     }
 }

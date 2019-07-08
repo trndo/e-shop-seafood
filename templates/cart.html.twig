@@ -6,8 +6,9 @@
                 <embed type="image/svg+xml" src="/assets/img/raki-footer-logo.svg"/>
             </div>
             <div class="user_basket-mini">
+                {% set sum = app.session.get('totalSum') %}
                 <div id="basket-container">
-                    <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
+                    <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                 </div>
                 <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
             </div>
@@ -26,7 +27,7 @@
             </div>
             <div class="cart-container cartItems">
                 {% set session = app.session.get('cart') %}
-                {% dump(session) %}
+                {% dump(session) %}{% dump(sum) %}
                 {% if session == null %}
                     <h3>Ваша корзина пустая!</h3>
                 {% endif %}
@@ -34,13 +35,13 @@
                     <div class="order-container">
                         <div class="order">
                             <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
-                            <div class="order-product-name">
+                            <div class="order-product-name" data-name="{{ cartItem.item.slug }}">
                                 {{ cartItem.item.name }}
                             </div>
                             <div class="quantity">
-                                <span data- class="plus">+</span>
+                                <span class="plus">+</span>
                                 <div class="quantity-res">
-                                    <input type="text" value="{{ cartItem.quantity }}">
+                                    <input type="number" value="{{ cartItem.quantity }}">
                                 </div>
                                 <span class="minus">-</span>
                             </div>
@@ -54,7 +55,7 @@
             </div>
             <div class="summary">
                 <div class="final">
-                    Итог: 670
+                    Итог: <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                 </div>
                 <div class="checkout">Оформить заказ</div>
             </div>

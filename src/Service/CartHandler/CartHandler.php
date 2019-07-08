@@ -6,6 +6,7 @@ namespace App\Service\CartHandler;
 
 use App\Repository\ProductRepository;
 use App\Repository\ReceiptRepository;
+use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -19,6 +20,10 @@ class CartHandler implements CartHandlerInterface
      * @var ProductRepository
      */
     private $productRepository;
+    /**
+     * @var SupplyServiceInterface
+     */
+    private $supplyService;
 
     public function __construct(ReceiptRepository $receiptRepository, ProductRepository $productRepository)
     {
@@ -62,6 +67,7 @@ class CartHandler implements CartHandlerInterface
             $shoppingCart[$key] = $options;
             $session->set('cart',$shoppingCart);
         }
+        $this->countTotalSum($session);
     }
 
     public function removeFromCart(Request $request,string $key): void
@@ -69,8 +75,57 @@ class CartHandler implements CartHandlerInterface
         $session = $request->getSession();
         $cart = $session->get('cart');
 
-        if ($cart !== null) {
-            $session->remove($cart[$key]);
+        if (isset($cart[$key])) {
+            unset($cart[$key]);
+            $session->set('cart',$cart);
         }
+
+        $this->countTotalSum($session);
+    }
+
+    /**
+     * Add item's quantity by key
+     *
+     * @param Request $request
+     * @param string $key
+     * @param float $quantity
+     * @return array
+     */
+    public function changeItemQuantity(Request $request, string $key, float $quantity): array
+    {
+        $session = $request->getSession();
+        $product = $this->productRepository->findProductBySlug($key);
+        $productQuantity = $product->getSupply()->getQuantity();
+        $cart = $session->get('cart');
+
+        if ($quantity > $productQuantity ) {
+            return [
+                'status'=> false,
+                'rest' => $productQuantity,
+                'unit' => $product->getUnit(),
+            ];
+        }
+
+        if (isset($cart[$key])) {
+            $cart[$key]['quantity'] = $quantity ;
+            $session->set('cart',$cart);
+        }
+        $this->countTotalSum($session);
+        return [
+            'status' => true,
+            'totalSum' => $session->get('totalSum')
+        ];
+
+    }
+
+    private function countTotalSum(SessionInterface $session)
+    {
+        $total = 0;
+        $cart = $session->get('cart');
+
+        foreach ($cart as $value) {
+            $total += $value['item']->getPrice()*$value['quantity'];
+        }
+        $session->set('totalSum',$total);
     }
 }

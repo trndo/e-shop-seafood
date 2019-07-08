@@ -14,13 +14,15 @@
                        <span>Быстрый заказ</span>
                    </div>
                    <div class="user_basket">
+                       {% set sum = app.session.get('totalSum')%}
                        <div id="basket-container">
-                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span>550 грн</span>
+                           <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                        </div>
                        <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
                    </div>
                </div>
                <div class="row">
+
                    <div class="logo-container">
                        <embed id="logo" type="image/svg+xml" src="/assets/img/logo.svg"/>
                        <div id="logo-text">

@@ -7,6 +7,7 @@ namespace App\Service\EntityService\UserService;
 use App\Collection\UserCollection;
 use App\Entity\User;
 use App\Model\AdminModel;
+use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 
 interface UserServiceInterface
 {
@@ -39,5 +40,18 @@ interface UserServiceInterface
      */
     public function saveUser(User $user): void ;
 
+    /**
+     * Return users collection with ROLE_USER
+     *
+     * @return UserCollection
+     */
+    public function getUsers(): UserCollection;
+
+    /**
+     * Delete user by id
+     *
+     * @param User $user
+     */
+    public function deleteUserById(User $user): void ;
 
 }

@@ -106,11 +106,11 @@ class SpecialPropositionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sProposition = new SpecialProposition();
-            $percentFactory = $factory->createSpecialPricePromotion($promotion,$sProposition);
+            $specialPropositionFactory = $factory->createSpecialPricePromotion($promotion,$sProposition);
             if ($type === 'receipt') {
-                $percentFactory->addReceiptPromotion();
+                $specialPropositionFactory->addReceiptPromotion();
             } else {
-                $percentFactory->addProductPromotion();
+                $specialPropositionFactory->addProductPromotion();
             }
 
             return $this->redirectToRoute('promotion');
@@ -137,11 +137,11 @@ class SpecialPropositionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $percentFactory = $factory->createGiftPromotion($promotion,$sProposition);
+            $giftFactory = $factory->createGiftPromotion($promotion,$sProposition);
             if ($type === 'receipt') {
-                $percentFactory->addReceiptPromotion();
+                $giftFactory->addReceiptPromotion();
             } else {
-                $percentFactory->addProductPromotion();
+                $giftFactory->addProductPromotion();
             }
             return $this->redirectToRoute('promotion');
         }

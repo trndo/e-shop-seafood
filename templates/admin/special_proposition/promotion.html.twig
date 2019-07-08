@@ -59,81 +59,69 @@
                                 <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
                                     {% if promotion.percent %}
                                     <div class="card" style="width: 20rem;">
-                                            <img src="{{ asset('uploads/images/_percent_alt_icon_966004.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
+                                            <img src="{{ asset('images/_percent_alt_icon_966004.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
                                         <div class="card-body">
                                             <h5 class="card-title">Процентная скидка</h5>
                                             <div class="row justify-content-center">
-                                                <div class="col-6">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Скидка: {{ promotion.percent }} %</div><br>
-                                                            <div class="input-group-text">Размер: {{ promotion.productSize }} </div><br>
-                                                            <div class="input-group-text">Колиество: {{ promotion.quantity }} </div><br>
-                                                            <div class="input-group-text">Активна до: {{ promotion.availableAt|date }} </div><br>
-                                                            <div class="input-group-text">Описание: {{ promotion.description }} </div><br>
-                                                            {% if promotion.receipt %}
-                                                                <div class="input-group-text text-center">Относится к: {{ promotion.receipt.name }} </div>
-                                                            {% elseif promotion.product %}
-                                                                <div class="input-group-text text-center">Относится к: {{ promotion.product.name }} </div>
-                                                            {% endif %}
-                                                        </div>
-                                                        {% if promotion.receipt %}
-                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editPercentPromotion',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                        {% endif %}
-                                                        {% if promotion.product %}
-                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editPercentPromotion',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                        {% endif %}
-                                                        <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
-                                                    </div>
-                                                </div>
+                                                <p>
+                                                    Скидка: {{ promotion.percent }} % <br>
+                                                    Размер: {{ promotion.productSize }}<br>
+                                                    Колиество: {{ promotion.quantity }}<br>
+                                                    Активна до: {{ promotion.availableAt|date }}<br>
+                                                    Описание: {{ promotion.description }}<br>
+                                                </p>
+                                                    {% if promotion.receipt %}
+                                                        <div class="input-group-text text-center">Относится к: {{ promotion.receipt.name }} </div>
+                                                    {% elseif promotion.product %}
+                                                        <div class="input-group-text text-center">Относится к: {{ promotion.product.name }} </div>
+                                                    {% endif %}
+                                                {% if promotion.receipt %}
+                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editPercentPromotion',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                {% endif %}
+                                                {% if promotion.product %}
+                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editPercentPromotion',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                {% endif %}
+                                                <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
                                             </div>
                                             <div class="row justify-content-center" style="margin-top: 20px">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
+                                                <div class="custom-control custom-switch">
                                                         <input type="checkbox" onchange="activate({{ promotion.id }})" class="custom-control-input" id="customSwitch{{ promotion.id }}" {% if promotion.status %}checked{% endif %}>
                                                         <label class="custom-control-label" for="customSwitch{{ promotion.id }}">Активировать\Деактивировать</label>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {% elseif promotion.specialPrice%}
                             <div class="card" style="width: 20rem;">
-                                <img src="{{ asset('uploads/images/—Pngtree—promotion_256540.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
+                                <img src="{{ asset('images/—Pngtree—promotion_256540.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
                                 <div class="card-body">
                                     <h5 class="card-title">Спец цена</h5>
                                     <div class="row justify-content-center">
-                                        <div class="col-6">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">Новая цена {{ promotion.specialPrice }} </div><br>
-                                                    <div class="input-group-text">Размер: {{ promotion.productSize }} </div><br>
-                                                    <div class="input-group-text">Количество: {{ promotion.quantity }} </div><br>
-                                                    <div class="input-group-text">Актвна до: {{ promotion.availableAt|date }} </div><br>
-                                                    <div class="input-group-text">Описание: {{ promotion.description }} </div><br>
-                                                    {% if promotion.receipt %}
-                                                        <div class="input-group-text">Относится к: {{ promotion.receipt.name }} </div>
-                                                    {% elseif promotion.product %}
-                                                        <div class="input-group-text">Относится к: {{ promotion.product.name }} </div>
-                                                    {% endif %}
-                                                </div>
-                                                {% if promotion.receipt %}
-                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editSpecialPrice',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                {% endif %}
-                                                {% if promotion.product %}
-                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editSpecialPrice',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                {% endif %}
-                                                <button class="btn btn-danger " onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
-                                            </div>
-                                        </div>
+                                        <p>
+                                            Скидка: {{ promotion.specialPrice }}<br>
+                                            Размер: {{ promotion.productSize }}<br>
+                                            Колиество: {{ promotion.quantity }}<br>
+                                            Активна до: {{ promotion.availableAt|date }}<br>
+                                            Описание: {{ promotion.description }}<br>
+                                        </p>
+                                        {% if promotion.receipt %}
+                                            <div class="input-group-text text-center">Относится к: {{ promotion.receipt.name }} </div>
+                                        {% elseif promotion.product %}
+                                            <div class="input-group-text text-center">Относится к: {{ promotion.product.name }} </div>
+                                        {% endif %}
+                                        {% if promotion.receipt %}
+                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editSpecialPrice',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
+                                        {% endif %}
+                                        {% if promotion.product %}
+                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editSpecialPrice',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
+                                        {% endif %}
+                                        <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
                                     </div>
                                     <div class="row justify-content-center" style="margin-top: 20px">
-                                        <div class="col-6">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" onchange="activate({{ promotion.id }})" class="custom-control-input" id="customSwitch{{ promotion.id }}" {% if promotion.status %}checked{% endif %}>
                                                 <label class="custom-control-label" for="customSwitch{{ promotion.id }}">Активировать\Деактивировать</label>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,75 +131,63 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Подарок</h5>
                                             <div class="row justify-content-center">
-                                                <div class="col-6">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">Подарок: {{ promotion.gift.name }} </div><br>
-                                                            <div class="input-group-text">Размер подарка: {{ promotion.productSize }} </div><br>
-                                                            <div class="input-group-text">Количество: {{ promotion.quantity }} </div><br>
-                                                            <div class="input-group-text">Активна до: {{ promotion.availableAt|date }} </div><br>
-                                                            <div class="input-group-text">Описание: {{ promotion.description }} </div><br>
-                                                            {% if promotion.receipt %}
-                                                                <div class="input-group-text">Относится к: {{ promotion.receipt.name }} </div>
-                                                            {% elseif promotion.product %}
-                                                                <div class="input-group-text">Относится к: {{ promotion.product.name }} </div>
-                                                            {% endif %}
-                                                        </div>
-                                                        {% if promotion.receipt %}
-                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editGift',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                        {% endif %}
-                                                        {% if promotion.product %}
-                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editGift',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                        {% endif %}
-                                                        <button class="btn btn-danger " onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
-                                                    </div>
-                                                </div>
+                                                <p>
+                                                    Скидка: {{ promotion.gift.name }}<br>
+                                                    Размер: {{ promotion.productSize }}<br>
+                                                    Колиество: {{ promotion.quantity }}<br>
+                                                    Активна до: {{ promotion.availableAt|date }}<br>
+                                                    Описание: {{ promotion.description }}<br>
+                                                </p>
+                                                {% if promotion.receipt %}
+                                                    <div class="input-group-text text-center">Относится к: {{ promotion.receipt.name }} </div>
+                                                {% elseif promotion.product %}
+                                                    <div class="input-group-text text-center">Относится к: {{ promotion.product.name }} </div>
+                                                {% endif %}
+                                                {% if promotion.receipt %}
+                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editGift',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                {% endif %}
+                                                {% if promotion.product %}
+                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editGift',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                {% endif %}
+                                                <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
                                             </div>
                                             <div class="row justify-content-center" style="margin-top: 20px">
-                                                <div class="col-6">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" onchange="activate({{ promotion.id }})" class="custom-control-input" id="customSwitch{{ promotion.id }}" {% if promotion.status %}checked{% endif %}>
-                                                        <label class="custom-control-label" for="customSwitch{{ promotion.id }}">Активировать\Деактивировать</label>
-                                                    </div>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" onchange="activate({{ promotion.id }})" class="custom-control-input" id="customSwitch{{ promotion.id }}" {% if promotion.status %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="customSwitch{{ promotion.id }}">Активировать\Деактивировать</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                         {% elseif promotion.globalPrice%}
                                             <div class="card" style="width: 20rem;">
-                                                <img src="{{ asset('uploads/images/—Pngtree—money_1043061.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
+                                                <img src="{{ asset('images/—Pngtree—money_1043061.png') }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Сумма</h5>
                                                     <div class="row justify-content-center">
-                                                        <div class="col-6">
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <div class="input-group-text">Сумма для получения подарка: {{ promotion.globalPrice }} </div><br>
-                                                                    <div class="input-group-text">Размер подарка: {{ promotion.productSize }} </div><br>
-                                                                    <div class="input-group-text">Количество: {{ promotion.quantity }} </div><br>
-                                                                    <div class="input-group-text">Описание: {{ promotion.description }} </div><br>
-                                                                    {% if promotion.receipt %}
-                                                                        <div class="input-group-text">Подарок за сумму: {{ promotion.receipt.name }} </div>
-                                                                    {% elseif promotion.product %}
-                                                                        <div class="input-group-text">Подарок за сумму: {{ promotion.product.name }} </div>
-                                                                    {% endif %}
-                                                                </div>
-                                                                {% if promotion.receipt %}
-                                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editGlobalSpecialPrice',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                                {% endif %}
-                                                                {% if promotion.product %}
-                                                                    <button class="btn btn-primary" onclick="window.location.href='{{ path('editGlobalSpecialPrice',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
-                                                                {% endif %}
-                                                                <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
-                                                            </div>
-                                                        </div>
+                                                        <p>
+                                                            Скидка: {{ promotion.globalPrice }}<br>
+                                                            Размер: {{ promotion.productSize }}<br>
+                                                            Колиество: {{ promotion.quantity }}<br>
+                                                            Описание: {{ promotion.description }}<br>
+                                                        </p>
+                                                        {% if promotion.receipt %}
+                                                            <div class="input-group-text text-center">Относится к: {{ promotion.receipt.name }} </div>
+                                                        {% elseif promotion.product %}
+                                                            <div class="input-group-text text-center">Относится к: {{ promotion.product.name }} </div>
+                                                        {% endif %}
+                                                        {% if promotion.receipt %}
+                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editGlobalSpecialPrice',{'type' : 'receipt' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                        {% endif %}
+                                                        {% if promotion.product %}
+                                                            <button class="btn btn-primary" onclick="window.location.href='{{ path('editGlobalSpecialPrice',{'type' : 'product' ,'id': promotion.id}) }}'">Редактировать</button>
+                                                        {% endif %}
+                                                        <button class="btn btn-danger" onclick="if(confirm('Точно удалить акцию? Она удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deletePromotion', {'id': promotion.id}) }}'">Удалить</button>
                                                     </div>
                                                     <div class="row justify-content-center" style="margin-top: 20px">
-                                                        <div class="col-6">
-                                                            <div class="custom-control custom-switch">
+                                                        <div class="custom-control custom-switch">
                                                                 <input type="checkbox" onchange="activate({{ promotion.id }})" class="custom-control-input" id="customSwitch{{ promotion.id }}" {% if promotion.status %}checked{% endif %}>
                                                                 <label class="custom-control-label" for="customSwitch{{ promotion.id }}">Активировать\Деактивировать</label>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

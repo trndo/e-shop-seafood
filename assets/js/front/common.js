@@ -9,3 +9,10 @@ $('.in_basket').click(function () {
    if($(this).data('product-location'))
        window.location.href = $(this).data('product-location')
 });
+
+$('.toogle-dropdown').click(function () {
+    if($('.dropdown').css('display') === 'none')
+        $('.dropdown').fadeIn();
+    else
+        $('.dropdown').fadeOut();
+});

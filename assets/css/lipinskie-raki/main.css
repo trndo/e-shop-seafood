@@ -581,3 +581,35 @@ footer{
     z-index: 20;
     cursor: pointer;
 }
+.dropdown{
+    display: none;
+    width: 128px;
+    height: max-content;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(58, 10, 10, 0.25);
+    position: absolute;
+    z-index: 1000;
+    right: 60px;
+}
+.dropdown ul{
+    width: 100%;
+    list-style-type: none;
+    padding: 0 0 0 0;
+    margin-bottom: 0;
+}
+
+.dropdown ul li{
+    height: 30px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.dropdown ul li:hover{
+    background: #CD3131;
+}

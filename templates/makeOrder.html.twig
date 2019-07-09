@@ -93,8 +93,9 @@
                     <embed type="image/svg+xml" src="/assets/img/raki-footer-logo.svg"/>
                 </div>
                 <div class="user_basket-mini">
+                    {% set sum = app.session.get('totalSum')%}
                     <div id="basket-container">
-                        <span>550 грн</span>
+                        <span>{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                     </div>
                     <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
                 </div>

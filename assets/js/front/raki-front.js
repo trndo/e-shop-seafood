@@ -11,6 +11,26 @@ $(document).ready(function () {
         new SimpleBar($('.cart-container')[0],{
           autoHide: false});
 
+    $('.add-basket').on('click',function () {
+        let type = $(this).data('type');
+        let slug = $(this).data('name');
+        let quantity = $('.quantity-res > input').val();
+        $.ajax({
+            type: 'POST',
+            url: '/addToCart',
+            data: {
+                type: type,
+                slug: slug,
+                quantity: quantity
+            },
+            success: function (res) {
+                console.log(res);
+                $('.sum').text(res.totalSum+' ₴');
+            }
+        });
+
+    });
+
     $('.to_basket').on('click',function () {
         let type = $(this).data('type');
         let slug = $(this).data('name');

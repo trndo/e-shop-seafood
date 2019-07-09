@@ -6,7 +6,7 @@
                 <main>
                     <div class="product-container">
                         <div class="product-photo">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                            <img src="{{ product.titlePhotoPath }}" alt="">
                         </div>
                         <div class="product-info">
                             <div class="product-size">
@@ -40,11 +40,11 @@
                                 <div class="quantity">
                                     <span data- class="plus">+</span>
                                     <div class="quantity-res">
-                                        <input type="text" value="12">
+                                        <input type="text" value="1">
                                     </div>
                                     <span class="minus">-</span>
                                 </div>
-                                <div class="custom-button add-basket">
+                                <div class="custom-button add-basket" data-name="{{ product.slug }}" data-type="{{ product.getType }}">
                                     Добавить в козину
                                 </div>
                             </div>

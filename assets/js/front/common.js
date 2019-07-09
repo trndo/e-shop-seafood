@@ -16,3 +16,11 @@ $('.toogle-dropdown').click(function () {
     else
         $('.dropdown').fadeOut();
 });
+
+$('#basket-container').click(function () {
+    window.location.href = '/cart';
+});
+
+$('.checkout').click(function () {
+   window.location.href = '/makeOrder'
+});

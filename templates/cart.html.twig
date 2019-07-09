@@ -8,7 +8,7 @@
             <div class="user_basket-mini">
                 {% set sum = app.session.get('totalSum') %}
                 <div id="basket-container">
-                    <embed id="basket" type="image/svg+xml" src="/assets/img/online-shopping-cart.svg"/>  <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
+                     <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                 </div>
                 <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
             </div>
@@ -29,7 +29,7 @@
                 {% set session = app.session.get('cart') %}
                 {% dump(session) %}{% dump(sum) %}
                 {% if session == null %}
-                    <h3>Ваша корзина пустая!</h3>
+                    <h3 style="color: white">Ваша корзина пустая!</h3>
                 {% endif %}
                 {% for cartItem in session %}
                     <div class="order-container">

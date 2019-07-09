@@ -145,12 +145,16 @@
     position: absolute;
     top: 15px;
     left: 0;
+    user-select: none;
+    cursor: pointer;
 }
 
 .plus{
     position: absolute;
     top: 16px;
     right: 0;
+    user-select: none;
+    cursor: pointer;
 }
 
 .quantity-res{
@@ -206,6 +210,7 @@
     right: 23px;
     top: 17px;
     position: absolute;
+    cursor: pointer;
 }
 
 .order-container{
@@ -253,6 +258,7 @@
     line-height: 38px;
     text-align: center;
     color: #F13A3A;
+    cursor: pointer;
 }
 
 .hryvnas{
@@ -438,6 +444,7 @@
     border: none;
     text-align: center;
     color: #F13A3A;
+    cursor: pointer;
 }
 button:focus{
     outline: none;

@@ -4,6 +4,7 @@
 namespace App\Service\FileSystemService;
 
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -16,10 +17,16 @@ class FileUploader implements UploadFileInterface
     private $uploadsDir;
 
     /**
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
+    /**
      * FileUploader constructor.
      * @param $uploadsDir
+     * @param LoggerInterface $logger
      */
-    public function __construct($uploadsDir)
+    public function __construct($uploadsDir, LoggerInterface $logger)
     {
         $this->uploadsDir = $uploadsDir;
     }
@@ -43,6 +50,7 @@ class FileUploader implements UploadFileInterface
 
             $file->move($this->uploadsDir.$folder,$newFileName);
         } catch (FileException $exception) {
+            $this->logger->error('Error of file uploader cause of: '.$exception->getMessage());
             return null;
         }
 

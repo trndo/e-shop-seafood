@@ -36,15 +36,7 @@
     </div>
     <div class="dropdown">
         <ul>
-            <li>
-                Лангустины
-            </li>
-            <li>
-                Рыба
-            </li>
-            <li>
-                Икра
-            </li>
+           {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
         </ul>
     </div>
 </header>

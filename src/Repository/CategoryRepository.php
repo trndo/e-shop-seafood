@@ -53,5 +53,19 @@ class CategoryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getCategoriesForRender(): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name','c.slug')
+            ->andWhere('c.name != :name1')
+            ->andWhere('c.name != :name2')
+            ->andWhere('c.name != :name3')
+            ->setParameter('name1','Живые Раки')
+            ->setParameter('name2','Жареные Раки')
+            ->setParameter('name3','Вареные Раки')
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

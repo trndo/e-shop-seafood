@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Service\EntityService\CategoryService\CategoryServiceInterface;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,5 +23,17 @@ class CategoryController extends AbstractController
         return $category->getDisplayType() == 'simple'
             ? $this->render('products.html.twig',['items' => $items])
             : $this->render('productsWithSize.html.twig',['items' => $items]);
+    }
+
+    /**
+     * @param CategoryServiceInterface $categoryService
+     * @return Response
+     */
+    public function renderCategories(CategoryServiceInterface $categoryService): Response
+    {
+        $categories = $categoryService->getCategoryForHeader();
+
+        return $this->render('elements/category_list.html.twig',[
+            'categories' => $categories]);
     }
 }

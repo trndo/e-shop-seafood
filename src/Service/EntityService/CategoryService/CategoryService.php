@@ -60,4 +60,9 @@ class CategoryService implements CategoryServiceInterface
     {
         return new CategoryCollection($this->repository->findBy($criteria,$orderBy));
     }
+
+    public function getCategoryForHeader(): ?CategoryCollection
+    {
+        return new CategoryCollection($this->repository->getCategoriesForRender());
+    }
 }

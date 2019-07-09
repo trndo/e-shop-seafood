@@ -36,4 +36,9 @@ interface CategoryServiceInterface
      * @return CategoryCollection|null
      */
     public function getCategoryByCriteria(array $criteria, array $orderBy = []): ?CategoryCollection;
+
+    /**
+     * @return CategoryCollection|null
+     */
+    public function getCategoryForHeader(): ?CategoryCollection;
 }

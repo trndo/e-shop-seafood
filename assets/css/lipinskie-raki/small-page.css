@@ -386,9 +386,9 @@
     margin-top: 37px;
 }
 
-#delivery{
-    background: #FFFFFF;
-    box-shadow: 0 4px 4px #C12323;
+
+.delivery{
+    background: #F85B5B;
     border-radius: 5px;
     width:149px;
     height: 33px;
@@ -398,13 +398,13 @@
     font-size: 14px;
     line-height: 100%;
     text-align: center;
-    color: #651313;
+    color: #FFFFFF;
     display: inline-block;
-    outline: none;
     padding-top: 9px;
+    cursor: pointer;
 }
 
-#self-delivery{
+.self-delivery{
     background: #F85B5B;
     border-radius: 5px;
     width: 145px;
@@ -418,8 +418,13 @@
     text-align: center;
     padding-top: 9px;
     display: inline-block;
+    cursor: pointer;
 }
-
+.delivery-active{
+    color: #651313;
+    background: #FFFFFF;
+    box-shadow: 0 4px 4px #C12323;
+}
 .order-address{
     background-image: url('../../img/marker-form.svg');
     background-position: 10px 10px;
@@ -479,4 +484,9 @@ input[type=number] {
 
 :-ms-input-placeholder {
     text-align: center;
+}
+
+.lipinka-street{
+    width: 30px;
+    position: relative;
 }

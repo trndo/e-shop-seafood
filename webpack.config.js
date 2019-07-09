@@ -1,5 +1,5 @@
 let Encore = require('@symfony/webpack-encore');
-
+let webpack = require('webpack');
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -57,7 +57,10 @@ Encore
         useBuiltIns: 'usage',
         corejs: 3
     })
-
+    .addPlugin(new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+    }))
     // enables Sass/SCSS support
     //.enableSassLoader()
 

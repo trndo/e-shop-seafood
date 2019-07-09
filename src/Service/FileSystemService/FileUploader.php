@@ -29,6 +29,7 @@ class FileUploader implements UploadFileInterface
     public function __construct($uploadsDir, LoggerInterface $logger)
     {
         $this->uploadsDir = $uploadsDir;
+        $this->logger = $logger;
     }
 
     /**

@@ -9,51 +9,21 @@
                         <div id="special-card">
                             Выбери рецепт по которому Мы приготовим для тебя раков
                         </div>
-                        <div class="product-card">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                            <div class="card-content">
-                                <h4>Живой рак вкусный прекрасный</h4>
-                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                <span class="price">₴ 220</span>
-                                <div class="in_basket" >В корзину</div>
+                        {% for item in items %}
+                            <div class="product-card">
+                                <img src="{{ item.titlePhotoPath }}" alt="">
+                                <div class="card-content">
+                                    <h4>{{ item.name }}</h4>
+                                    <p>{{ item.description }}</p>
+                                    <span class="price">₴ {{ item.price }}</span>
+                                    {% if item.getType == 'product' %}
+                                        <div class="in_basket" data-product-location="{{ path('product',{'slug': item.slug}) }}">Подробнее</div>
+                                    {% else %}
+                                        <div class="in_basket" data-product-location="{{ path('receipt',{'slug': item.slug}) }}">Подробнее</div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-card">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                            <div class="card-content">
-                                <h4>Живой рак вкусный прекрасный</h4>
-                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                <span class="price">₴ 220</span>
-                                <div class="in_basket" >В корзину</div>
-                            </div>
-                        </div>
-                        <div class="product-card">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                            <div class="card-content">
-                                <h4>Живой рак вкусный прекрасный</h4>
-                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                <span class="price">₴ 220</span>
-                                <div class="in_basket" >В корзину</div>
-                            </div>
-                        </div>
-                        <div class="product-card">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                            <div class="card-content">
-                                <h4>Живой рак вкусный прекрасный</h4>
-                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                <span class="price">₴ 220</span>
-                                <div class="in_basket" >В корзину</div>
-                            </div>
-                        </div>
-                        <div class="product-card">
-                            <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                            <div class="card-content">
-                                <h4>Живой рак вкусный прекрасный</h4>
-                                <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                <span class="price">₴ 220</span>
-                                <div class="in_basket" >В корзину</div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <img id="down" src="{{ asset('assets/img/donw.svg') }}" alt="">
                 </div>

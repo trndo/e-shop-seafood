@@ -28,6 +28,30 @@ class CategoryModel
     private $type;
 
     /**
+     * @var string|null $displayType
+     */
+    private $displayType = 'simple';
+
+    /**
+     * @return string|null
+     */
+    public function getDisplayType(): ?string
+    {
+        return $this->displayType;
+    }
+
+    /**
+     * @param string|null $displayType
+     * @return CategoryModel
+     */
+    public function setDisplayType(?string $displayType): CategoryModel
+    {
+        $this->displayType = $displayType;
+        return $this;
+    }
+
+
+    /**
      * @return string|null
      */
     public function getType(): ?string

@@ -27,8 +27,8 @@
         <nav>
             <ul>
                 <li class="active-nav" data-location="{{ path('home') }}">Главаня</li>
-                <li data-location="">Живые раки</li>
-                <li data-location="">Жареные раки</li>
+                <li data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
+                <li data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
                 <li data-location="">Вареные раки</li>
                 <li class="toogle-dropdown">Ассортимент</li>
             </ul>

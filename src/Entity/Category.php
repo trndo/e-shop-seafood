@@ -65,6 +65,11 @@ class Category
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=191, nullable=true)
+     */
+    private $displayType;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -206,6 +211,18 @@ class Category
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDisplayType(): ?string
+    {
+        return $this->displayType;
+    }
+
+    public function setDisplayType(?string $displayType): self
+    {
+        $this->displayType = $displayType;
 
         return $this;
     }

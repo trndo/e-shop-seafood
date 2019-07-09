@@ -11,22 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/productsWithSize/{slug}")
+     * @Route("/category/{slug}", name="category_show")
      *
      * @param Category $category
      * @return Response
      */
-    public function productsWithSize(Category $category): Response
+    public function category(Category $category): Response
     {
-        return $this->render('productsWithSize.html.twig');
-    }
-
-    /**
-     * @Route("/products")
-     * @return Response
-     */
-    public function products(): Response
-    {
-        return $this->render('products.html.twig');
+        return $category->getDisplayType() == 'simple'
+            ? $this->render('products.html.twig',['items' => $category->getProducts()])
+            : $this->render('productsWithSize.html.twig',['items' => $category->getProducts()]);
     }
 }

@@ -16,7 +16,8 @@ final class CategoryMapper
         $model->setName($entity->getName())
               ->setSeoTitle($entity->getSeoTitle())
               ->setSeoDescription($entity->getSeoDescription())
-              ->setType($entity->getType());
+              ->setType($entity->getType())
+              ->setDisplayType($entity->getDisplayType());
 
         return $model;
     }
@@ -26,7 +27,8 @@ final class CategoryMapper
          $category->setName($model->getName())
                   ->setSeoTitle($model->getSeoTitle())
                   ->setSeoDescription($model->getSeoDescription())
-                  ->setType($model->getType());
+                  ->setType($model->getType())
+                  ->setDisplayType($model->getDisplayType());
 
          return $category;
     }

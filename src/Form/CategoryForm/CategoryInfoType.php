@@ -30,6 +30,14 @@ class CategoryInfoType extends AbstractType
             'expanded' => true,
             'label' => 'Тип категории'
         ])
+        ->add('displayType',ChoiceType::class,[
+                'choices' => [
+                    'Обычное отображение' => 'simple',
+                    'Отображение размерами' => 'size'
+                ],
+                'expanded' => true,
+                'label' => 'Тип отображение категории'
+        ])
         ->add('seoTitle',TextType::class,[
             'label' => 'Сео тайтл',
             'attr' => [

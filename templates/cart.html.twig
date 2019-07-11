@@ -1,18 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
-        <header class="mini">
-            <div class="header-raki-logo">
-                <embed type="image/svg+xml" src="/assets/img/raki-footer-logo.svg"/>
-            </div>
-            <div class="user_basket-mini">
-                {% set sum = app.session.get('totalSum') %}
-                <div id="basket-container">
-                     <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
-                </div>
-                <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
-            </div>
-        </header>
+        {% set sum = app.session.get('totalSum') %}
+        {% include 'elements/small_header.html.twig' %}
         <div class="red-content">
             <div id="shopping-cart">
                 <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>

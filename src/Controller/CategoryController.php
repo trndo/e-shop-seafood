@@ -21,8 +21,8 @@ class CategoryController extends AbstractController
     {
         $items = $category->getType() == 'products' ? $category->getProducts() : $category->getReceipts();
         return $category->getDisplayType() == 'simple'
-            ? $this->render('products.html.twig',['items' => $items])
-            : $this->render('productsWithSize.html.twig',['items' => $items]);
+            ? $this->render('products.html.twig',['items' => $items, 'active' => $category->getSlug()])
+            : $this->render('productsWithSize.html.twig',['items' => $items, 'active' => $category->getSlug()]);
     }
 
     /**

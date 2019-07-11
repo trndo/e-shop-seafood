@@ -524,9 +524,10 @@ footer{
     width: 128px;
     height: 124px;
     margin-left: 179px;
+    position: relative;
 }
 
-.footer-nav ul{
+.footer-nav #footer-ul{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -534,7 +535,7 @@ footer{
     margin-top: -2px;
 }
 
-.footer-nav ul li{
+#footer-ul li{
     list-style-type: none;
     display: block;
     font-family: Raleway, sans-serif;
@@ -549,7 +550,7 @@ footer{
     transition: .2s;
 }
 
-.footer-nav ul li:hover{
+#footer-ul li:hover{
     font-weight: normal;
     border-bottom: 3px solid #F13A3A;
     color: white;
@@ -614,4 +615,10 @@ footer{
 
 .dropdown ul li:hover{
     background: #CD3131;
+}
+
+.dropdown-footer{
+    right: 0;
+    left: 31px;
+    top: 15px;
 }

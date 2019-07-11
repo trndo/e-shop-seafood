@@ -26,11 +26,11 @@
     <div class="row nav-row">
         <nav>
             <ul>
-                <li class="active-nav" data-location="{{ path('home') }}">Главаня</li>
-                <li data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
-                <li data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
-                <li data-location="">Вареные раки</li>
-                <li class="toogle-dropdown">Ассортимент</li>
+                <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главаня</li>
+                <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
+                <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
+                <li {% if active == 'not exist yet' %} {% set active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
+                <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>
             </ul>
         </nav>
     </div>

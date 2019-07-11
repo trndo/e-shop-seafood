@@ -20,8 +20,12 @@ class ProductController extends AbstractController
     public function product(Product $product): Response
     {
         return $product->getProductSize()
-            ? $this->render('product.html.twig', ['product' => $product])
-            : $this->render('receipt.html.twig', ['product' => $product]);
+            ? $this->render('product.html.twig', [
+                'product' => $product,
+                'active' => $product->getCategory()->getSlug()])
+            : $this->render('receipt.html.twig', [
+                'product' => $product,
+                'active' => $product->getCategory()->getSlug()]);
     }
 
     /**
@@ -33,6 +37,7 @@ class ProductController extends AbstractController
     public function receipt(Receipt $receipt): Response
     {
         return $this->render('receipt.html.twig', [
-            'product' => $receipt]);
+            'product' => $receipt,
+            'active' => $receipt->getCategory()->getSlug()]);
     }
 }

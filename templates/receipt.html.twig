@@ -2,7 +2,7 @@
 {% block body %}
     <div class="container">
         <div class="without-top-container">
-            {% include 'elements/__header.html.twig' %}
+            {% include 'elements/__header.html.twig' with {'active': active } %}
         </div>
             <main>
                 <div class="receipt-container">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    {% include 'elements/__footer.html.twig' %}
+    {% include 'elements/__footer.html.twig' with {'active': active } %}
     <div id="overlay" style="display: none">
         <div class="red-content">
             <div id="shopping-cart">

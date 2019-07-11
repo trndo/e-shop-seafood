@@ -17,9 +17,13 @@ new Picker(document.querySelector('.time-input'), {
 $('.delivery').click(function () {
     $('.self-delivery').removeClass('delivery-active');
     $(this).addClass('delivery-active');
+    $('.order-address').css('display','block');
+    $('.lipinka-street').css('display','none')
 });
 
 $('.self-delivery').click(function () {
     $('.delivery').removeClass('delivery-active');
     $(this).addClass('delivery-active');
+    $('.order-address').css('display','none');
+    $('.lipinka-street').css('display','block')
 });

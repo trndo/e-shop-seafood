@@ -503,3 +503,48 @@ input[type=number] {
     line-height: 100%;
     color: #FFFFFF
 }
+
+.small-red-content{
+    position: relative;
+    width: 770px;
+    height: 273px;
+    margin: 0 auto;
+    margin-top: 45px;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+#shrimps{
+    position: absolute;
+    width: 205.9px;
+    height: 205.9px;
+    left: 30px;
+    top: 20px;
+    z-index: 1;
+}
+.form-container{
+    width: 345px;
+    margin: 0 auto;
+    z-index: 100;
+}
+
+.form-title{
+    text-align: left;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    color: white;
+}
+#subtitle{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 100%;
+}
+
+#title{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 100%;
+}

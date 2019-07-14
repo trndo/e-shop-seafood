@@ -3,34 +3,66 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="container">
+        <div class="container-inside">
+            {% include 'elements/__header.html.twig' with {'active': false} %}
+            <main>
+                <div class="small-red-content">
+                    <embed id="shrimps" type="image/svg+xml" src="/assets/img/shrimp.svg"/>
+                    <div class="form-container">
+                        <div class="form-title">
+                            <span id="subtitle"> Пора сделать заказ!</span><br>
+                            <span id="title">Осталось только зайти</span>
+                        </div>
+                    </div>
+                    {#<form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                        <label for="inputEmail" class="sr-only">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Sign in
+                        </button>
+                    </form>#}
+                </div>
+            </main>
         </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    </div>
+    {% include 'elements/__footer.html.twig' with {'active': false} %}
+    <div id="overlay" style="display: none">
+        <div class="red-content">
+            <div id="shopping-cart">
+            </div>
+            <div class="check-shopping">
+                <p>
+                    Точно всё выбрал?
+                </p>
+                <h4>
+                    Проверяй и оформляй
+                </h4>
+            </div>
+            <div class="cart-container cartItems">
+                <div class="order">
+                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                    <div class="order-product-name">
+                    </div>
+                </div>
+            </div>
+            <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+        </div>
+    </div>
 {% endblock %}

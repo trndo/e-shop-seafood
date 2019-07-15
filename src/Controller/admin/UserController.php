@@ -135,4 +135,19 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('users');
     }
+
+    public function editBonuses(UserServiceInterface $userService, User $user, Request $request): Response
+    {
+        $defaultBonuses = $user->getBonuses();
+        $newBonuses = (int)$request->request->get('bonuses');
+        $em = $this->getDoctrine()->getManager();
+        if ($newBonuses != $defaultBonuses)
+        {
+            $user->setBonuses($newBonuses);
+            $em->flush();
+        }
+        return $this->render('elements/bonus_modal.html.twig',[
+            'defaultBonuses' => $defaultBonuses
+        ]);
+    }
 }

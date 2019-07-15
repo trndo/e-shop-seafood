@@ -8,6 +8,7 @@ use App\Collection\UserCollection;
 use App\Entity\User;
 use App\Model\AdminModel;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 interface UserServiceInterface
 {
@@ -53,5 +54,8 @@ interface UserServiceInterface
      * @param User $user
      */
     public function deleteUserById(User $user): void ;
+
+    public function saveBonuses(User $user,int $bonuses): void;
+
 
 }

@@ -123,7 +123,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route(path="/lipadmin/users/delete/{id}", name="deleteUser")
+     * @Route("/lipadmin/users/delete/{id}", name="deleteUser")
      *
      * @param UserServiceInterface $userService
      * @param User $user
@@ -136,18 +136,38 @@ class UserController extends AbstractController
         return $this->redirectToRoute('users');
     }
 
+    /**
+     * @Route("/lipadmin/users/showBonuses/{id}", name="showBonuses")
+     *
+     * @param UserServiceInterface $userService
+     * @param User $user
+     * @param Request $request
+     * @return Response
+     */
+    public function showBonuses(UserServiceInterface $userService, User $user, Request $request): Response
+    {
+        return $this->render('elements/bonus_modal.html.twig',[
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/lipadmin/users/editBonuses/{id}", name="editUserBonuses")
+     *
+     * @param UserServiceInterface $userService
+     * @param User $user
+     * @param Request $request
+     * @return Response
+     */
     public function editBonuses(UserServiceInterface $userService, User $user, Request $request): Response
     {
-        $defaultBonuses = $user->getBonuses();
-        $newBonuses = (int)$request->request->get('bonuses');
-        $em = $this->getDoctrine()->getManager();
-        if ($newBonuses != $defaultBonuses)
-        {
-            $user->setBonuses($newBonuses);
-            $em->flush();
+        $newBonuses = $request->request->get('bonuses');
+        $oldBonuses = $user->getBonuses();
+
+        if ($newBonuses != $oldBonuses && $newBonuses !=null) {
+            $userService->saveBonuses($user,$newBonuses);
         }
-        return $this->render('elements/bonus_modal.html.twig',[
-            'defaultBonuses' => $defaultBonuses
-        ]);
+
+        return $this->redirectToRoute('users');
     }
 }

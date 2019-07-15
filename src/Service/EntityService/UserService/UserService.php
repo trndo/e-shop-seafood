@@ -8,6 +8,7 @@ use App\Mapper\UserMapper;
 use App\Model\AdminModel;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserService implements UserServiceInterface
 {
@@ -78,4 +79,12 @@ class UserService implements UserServiceInterface
             $this->repository->delete($user);
         }
     }
+
+    public function saveBonuses(User $user,int $bonuses): void
+    {
+        $user->setBonuses($bonuses);
+        $this->saveUser($user);
+    }
+
+
 }

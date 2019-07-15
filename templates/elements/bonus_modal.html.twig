@@ -1,21 +1,67 @@
-<!-- Bonus Modal-->
-<div class="modal fade" id="bonusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Хотите отредактировать бонусы?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <form action="" method="post">
-                <div class="modal-body">
-                    <input type="number" class="form-control" name="bonuses" value="{{ userBonuses }}" required autofocus>
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        {{ include('elements/admin_nav.html.twig', {'active' : 'users'}) }}
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                {{ include('elements/admin_header.html.twig') }}
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <h1 class="h3 mb-2 text-gray-800">Бонусы пользователя под номером - {{ user.id }}</h1>
+                    {#                <p class="mb-4">Добвить нового администратора -  <button onclick="window.location.href = '{{ path('admin_create') }}'" class="btn btn-primary">Добавить!</button></p>#}
+                    <hr class="sidebar-divider">
+                    <!-- DataTales Example -->
+                    <form action="{{ path('editUserBonuses',{'id':user.id}) }}" method="post">
+                        <div class="modal-body">
+                            <input type="number" min="0" class="form-control" value="{{ user.bonuses }}" name="bonuses" required autofocus>
+                        </div>
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Изменить
+                        </button>
+                    </form>
                 </div>
-                <button class="btn btn-lg btn-primary" type="submit">
-                    Изменить
-                </button>
-            </form>
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            {{ include('elements/admin_footer.html.twig') }}
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+{% endblock %}

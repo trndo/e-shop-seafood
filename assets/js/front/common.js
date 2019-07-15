@@ -31,3 +31,7 @@ $('#basket-container').click(function () {
 $('.checkout').click(function () {
    window.location.href = '/makeOrder'
 });
+
+$('.login-button').click(function () {
+    $(this).parent().submit();
+});

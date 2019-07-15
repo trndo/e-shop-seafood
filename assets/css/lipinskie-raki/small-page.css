@@ -515,13 +515,11 @@ input[type=number] {
 }
 #shrimps{
     position: absolute;
-    width: 205.9px;
-    height: 205.9px;
     left: 30px;
-    top: 20px;
-    z-index: 1;
+    top: 10px;
 }
 .form-container{
+    position: relative;
     width: 345px;
     margin: 0 auto;
     z-index: 100;
@@ -529,8 +527,8 @@ input[type=number] {
 
 .form-title{
     text-align: left;
-    padding-bottom: 40px;
-    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-top: 35px;
     color: white;
 }
 #subtitle{
@@ -547,4 +545,153 @@ input[type=number] {
     font-weight: 900;
     font-size: 24px;
     line-height: 100%;
+}
+
+.login-input-container{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.remeber_me{
+    width: 100%;
+    padding-top: 9px;
+    padding-bottom: 3px;
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 100%;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+.remeber_me label  input{
+    position: relative;
+    top: 2px;
+}
+
+.user-input{
+    height: 33px;
+    box-sizing: border-box;
+    padding: 1px 1px 1px 1px;
+    position: relative;
+    display: block;
+    outline: none;
+    margin-top: 9px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    border: none;
+    text-align: center;
+}
+
+.login-input{
+    width: 165px;
+}
+
+.login-button{
+    width: 289px;
+    height: 38px;
+    background: #FF9797;
+    box-shadow: 0 4px 10px #CB2828;
+    border-radius: 50px;
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.forgot-pass{
+    width: 100%;
+    text-align: center;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 100%;
+    color: #FFFFFF;
+    margin-top: 15px;
+    text-decoration-line: underline;
+}
+
+.forgot-pass a{
+    color: inherit;
+}
+
+.if-no-login{
+    width: 770px;
+    height: 60px;
+    margin: 0 auto;
+    padding-bottom: 19px;
+}
+
+.login-with{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 11px;
+    line-height: 100%;
+    text-align: left;
+    color: #FFFFFF;
+    width: 286px;
+    height: 18px;
+    padding-top: 3px;
+}
+
+.login-with-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.social-container{
+    display: flex;
+    width: 280px;
+    justify-content: space-between;
+}
+
+.social{
+    width: 80px;
+    height: 38px;
+    border-radius: 50px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.facebook{
+    background: #236CC1;
+    box-shadow: 0 4px 10px rgba(193, 35, 35, 0.2);
+}
+
+.google{
+    background: #F13A3A;
+    box-shadow: 0 4px 10px rgba(193, 35, 35, 0.2);
+}
+
+.insta{
+    background: linear-gradient(54.35deg, #F9ED32 -19.83%, #EE2A7B 58.8%, rgba(0, 42, 255, 0.8) 119.95%);
+    box-shadow: 0 4px 10px rgba(193, 35, 35, 0.2);
+}
+
+.register-button{
+    background: #FFFFFF;
+    border-radius: 50px;
+    height: 38px;
+    width: 309px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    color: #F13A3A;
+    cursor: pointer;
+    user-select: none;
 }

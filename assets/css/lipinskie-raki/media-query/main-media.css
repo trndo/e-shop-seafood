@@ -1,0 +1,69 @@
+@media (max-width: 991px) and (min-width: 768px){
+    .container{
+        width: 100% !important;
+        max-width: 991px;
+    }
+
+    .container-inside{
+        position: relative;
+        width: 100% !important;
+        top: 0 !important;
+    }
+    #desktop{
+        display: none;
+    }
+
+    #mobile{
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 78px;
+        background: #1F1E1E;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+        padding: 15px 26px 15px 15px;
+    }
+
+    header #mobile-logo{
+        display: inherit;
+        float: left;
+    }
+
+    .mobile-user_basket{
+        display: flex;
+        justify-content: space-between;
+        width: 171px;
+        position: relative;
+        float: right;
+        top: 8px;
+    }
+
+    #basket-container{
+        display: block;
+        position: static;
+        width: 113px;
+    }
+    #menu{
+        display: block;
+        cursor: pointer;
+    }
+
+    .menu-nav{
+        display: block;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        z-index: 400;
+        left: 0;
+        top: 78px;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+        background: rgba(13, 11, 11, 0.7);
+    }
+    #user{
+        top: 22px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+}

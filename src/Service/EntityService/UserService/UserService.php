@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Mapper\UserMapper;
 use App\Model\AdminModel;
 use App\Repository\UserRepository;
+use App\Service\MailService\MailSenderInterface;
+use App\Service\TokenService\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -20,16 +22,22 @@ class UserService implements UserServiceInterface
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var MailSenderInterface
+     */
+    private $mailSender;
 
     /**
      * UserService constructor.
      * @param UserRepository $repository
      * @param EntityManagerInterface $entityManager
+     * @param MailSenderInterface $mailSender
      */
-    public function __construct(UserRepository $repository, EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $repository, EntityManagerInterface $entityManager, MailSenderInterface $mailSender)
     {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
+        $this->mailSender = $mailSender;
     }
 
     /**
@@ -86,5 +94,42 @@ class UserService implements UserServiceInterface
         $this->saveUser($user);
     }
 
+    public function resetPassword(User $user): User
+    {
+        $user->setToken(TokenGenerator::generateToken(
+            $this->entityManager->getRepository(User::class)->findTokens(),60
+        ));
 
+        $this->mailSender->sendResetUserPassword($user);
+
+        return $user;
+    }
+
+    public function findUserByEmail(string $email): User
+    {
+        if ($email != null) {
+           return $user = $this->repository->findOneBy(['email' => $email]);
+        }
+        return null;
+    }
+
+
+    /**
+     * @param $user
+     * @param $newPassword
+     * @param $oldPassword
+     */
+    public function resetOldPassword($user, $newPassword, $oldPassword): void
+    {
+        // TODO: Implement resetOldPassword() method.
+    }
+
+    /**
+     * @param $user
+     * @param $password
+     */
+    public function addNewPassword($user, $password): void
+    {
+        // TODO: Implement addNewPassword() method.
+    }
 }

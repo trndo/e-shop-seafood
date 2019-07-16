@@ -106,10 +106,10 @@
                             <input type="text" class="time-input" placeholder="14:00*">
                         </div>
                         <div class="delivery-type">
-                            <div class="delivery-active delivery">
+                            <div id="del" class="delivery-active delivery">
                                 Доставка
                             </div>
-                            <div class="self-delivery">
+                            <div id="self-del" class="self-delivery">
                                 Самовывоз
                             </div>
                         </div>
@@ -148,10 +148,26 @@
                 mapTypeId: 'roadmap'
             });
 
-            var marker;
-            map.addListener('click', function(e) {
+            let geocoder = new google.maps.Geocoder;
+            let marker;
+            let listener = map.addListener('click', function(e) {
                 placeMarker(e.latLng, map);
             });
+
+            document.getElementById('del').onclick = function () {
+                if (typeof marker == "object") {
+                    marker.setMap(null);
+                    marker = null;
+                }
+                map.addListener('click', function(e) {
+                    placeMarker(e.latLng, map);
+                });
+            };
+
+            document.getElementById('self-del').onclick = function (e) {
+                placeMarker({lat: 50.495189, lng: 30.430260}, map);
+                google.maps.event.clearListeners(map,'click');
+            };
 
             function placeMarker(position, map) {
                 if (marker == null) {
@@ -159,9 +175,40 @@
                         position: position,
                         map: map
                     });
+                    let latLng = {
+                        lat: marker.getPosition().lat(),
+                        lng: marker.getPosition().lng()
+                    };
+                    geocoder.geocode({
+                        'location' : latLng,
+                    },function (results, status) {
+                        if (status === 'OK'){
+                            if (results[0]){
+                                document.getElementById('adress-order').value = results[0].formatted_address ;
+                            } else {
+                                document.getElementById('adress-order').value = '';
+                            }
+                        };
+                    });
                     map.panTo(position);
                 } else {
+                    let latLng = {
+                        lat: marker.getPosition().lat(),
+                        lng: marker.getPosition().lng()
+                    };
+                    geocoder.geocode({
+                        'location' : latLng,
+                    },function (results, status) {
+                        if (status === 'OK'){
+                            if (results[0]){
+                                document.getElementById('adress-order').value = results[0].formatted_address ;
+                            } else {
+                                document.getElementById('adress-order').value = '';
+                            }
+                        };
+                    });
                     marker.setPosition(position);
+                    map.panTo(position);
                 }
             }
 

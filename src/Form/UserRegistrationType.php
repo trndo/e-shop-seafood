@@ -25,7 +25,7 @@ class UserRegistrationType extends AbstractType
             ->add('address',TextType::class)
             ->add('password',RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => 'IDI VON!',
+                'invalid_message' => 'Пароли не совпадают!',
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])

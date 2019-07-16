@@ -26,4 +26,5 @@ $('.self-delivery').click(function () {
     $(this).addClass('delivery-active');
     $('.order-address').css('display','none');
     $('.lipinka-street').css('display','block')
+
 });

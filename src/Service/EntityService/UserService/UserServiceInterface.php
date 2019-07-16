@@ -55,7 +55,36 @@ interface UserServiceInterface
      */
     public function deleteUserById(User $user): void ;
 
-    public function saveBonuses(User $user,int $bonuses): void;
+    /**
+     * @param User $user
+     * @param int $bonuses
+     */
+    public function saveBonuses(User $user, int $bonuses): void;
+
+    /**
+     * @param User $user
+     * @return User
+     */
+    public function resetPassword(User $user): User ;
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    public function findUserByEmail(string $email): User ;
+
+    /**
+     * @param $user
+     * @param $newPassword
+     * @param $oldPassword
+     */
+    public function resetOldPassword($user, $newPassword, $oldPassword): void ;
+
+    /**
+     * @param $user
+     * @param $password
+     */
+    public function addNewPassword($user, $password): void ;
 
 
 }

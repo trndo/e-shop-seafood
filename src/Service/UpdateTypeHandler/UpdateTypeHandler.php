@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UpdateTypeHandler implements UpdateTypeInterface
 {
 
-
     public function isUpdateOption(FormBuilderInterface $builder, array $options): void
     {
         // TODO: Implement isUpdateOption() method.

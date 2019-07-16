@@ -18,4 +18,10 @@ interface MailSenderInterface
      * Send message to admin
      */
     public function sendAdminMessage(User $admin): void ;
+
+    /**
+     * Send message for resetting password
+     * @param User $user
+     */
+    public function sendResetUserPassword(User $user): void ;
 }

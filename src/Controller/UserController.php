@@ -24,33 +24,34 @@ class UserController extends AbstractController
     public function enterEmail(Request $request, UserServiceInterface $userService)
     {
         $emailModel = new ResetPasswordModel();
-        $options = [
-            'email' => true
-        ];
+        $options['email'] = true;
         $form = $this->createForm(ResetPasswordType::class,$emailModel,$options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ResetPasswordModel $email */
-            $email = $form->getData()->getEmail();
+            /** @var ResetPasswordModel $data */
+            $data = $form->getData();
+            $email = $data->getEmail();
             $user = $userService->findUserByEmail($email);
-            if ($user && $user->getRegistrationStatus()) {
+            if ($user->getRegistrationStatus()) {
                 $userService->resetPassword($user);
             }
             if (!$user->getRegistrationStatus()) {
                 return $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
-            } else {
-                return $this->createNotFoundException('Такая почта '.$email.' не найдена');
             }
+            if(!$user){
+                return $this->createNotFoundException('Такая почта '.$email.' не найдена!');
+            }
+            return $this->redirectToRoute('home');
         }
-        return $this->render('forgot_password.html.twig',[
+        return $this->render('enter_email.html.twig',[
             'form' => $form->createView()
         ]);
 
     }
 
     /**
-     * @Route("/newPassword/{token}", name="newPassword")
+     * @Route("/newPassword-{passToken}", name="newPassword")
      * @param Request $request
      * @param UserServiceInterface $userService
      * @param User $user
@@ -59,21 +60,20 @@ class UserController extends AbstractController
     public function newPassword(Request $request, UserServiceInterface $userService, User $user)
     {
         $newPasswordModel = new ResetPasswordModel();
-        $options = [
-            'forgotPassword' => true
-        ];
+        $options['forgotPassword'] = true;
         $form = $this->createForm(ResetPasswordType::class,$newPasswordModel,$options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var ResetPasswordModel $email */
             $password = $form->getData()->getPassword();
+            $user = $userService->getUserByPassToken($user->getPassToken());
             $userService->addNewPassword($user,$password);
 
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('new_password.html.twig',[
+        return $this->render('forgot_password.html.twig',[
             'form' => $form->createView()
         ]);
 
@@ -89,10 +89,8 @@ class UserController extends AbstractController
     public function resetPassword(Request $request,UserServiceInterface $userService, User $user)
     {
         $resetPasswordModel = new ResetPasswordModel();
-        $options = [
-            'forgotPassword' => true,
-            'oldPassword' => true
-        ];
+        $options['forgotPassword'] = true;
+        $options['oldPassword'] = true;
         $form = $this->createForm(ResetPasswordType::class,$resetPasswordModel,$options);
         $form->handleRequest($request);
 
@@ -103,7 +101,7 @@ class UserController extends AbstractController
             $newPassword = $data->getPassword();
             $userService->resetOldPassword($user,$newPassword,$oldPassword);
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('new_password.html.twig',[

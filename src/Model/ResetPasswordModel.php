@@ -8,19 +8,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ResetPasswordModel
 {
     /**
-     * @Assert\NotBlank(message="Это поле не должно быть пустым")
      * @var string|null
      */
     private $oldPassword;
 
     /**
-     * @Assert\NotBlank(message="Это поле не должно быть пустым")
      * @var string|null
      */
     private $password;
 
     /**
-     * @Assert\NotBlank(message="Это поле не должно быть пустым")
      * @var string|null
      */
     private $email;

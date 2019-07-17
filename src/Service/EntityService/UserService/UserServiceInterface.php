@@ -25,21 +25,21 @@ interface UserServiceInterface
      *
      * Get one user by user token
      */
-    public function getUserByToken(string $token): ?User ;
+    public function getUserByToken(?string $token): ?User ;
 
     /**
      * @param User $user
      *
      * Delete User
      */
-    public function deleteUser(User $user): void ;
+    public function deleteUser(?User $user): void ;
 
     /**
      * @param User $user
      *
      * Save User
      */
-    public function saveUser(User $user): void ;
+    public function saveUser(?User $user): void ;
 
     /**
      * Return users collection with ROLE_USER
@@ -53,38 +53,44 @@ interface UserServiceInterface
      *
      * @param User $user
      */
-    public function deleteUserById(User $user): void ;
+    public function deleteUserById(?User $user): void ;
 
     /**
      * @param User $user
      * @param int $bonuses
      */
-    public function saveBonuses(User $user, int $bonuses): void;
+    public function saveBonuses(?User $user, ?int $bonuses): void;
 
     /**
      * @param User $user
      * @return User
      */
-    public function resetPassword(User $user): User ;
+    public function resetPassword(?User $user): User ;
 
     /**
      * @param string $email
      * @return User
      */
-    public function findUserByEmail(string $email): User ;
+    public function findUserByEmail(?string $email): User ;
 
     /**
      * @param $user
      * @param $newPassword
      * @param $oldPassword
      */
-    public function resetOldPassword($user, $newPassword, $oldPassword): void ;
+    public function resetOldPassword(?User $user,?string $newPassword,?string $oldPassword): void ;
 
     /**
      * @param $user
      * @param $password
      */
-    public function addNewPassword($user, $password): void ;
+    public function addNewPassword(?User $user,?string $password): void ;
+
+    /**
+     * @param string|null $passToken
+     * @return User
+     */
+    public function getUserByPassToken(?string $passToken): User ;
 
 
 }

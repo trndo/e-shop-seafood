@@ -33,12 +33,10 @@ class ResetPasswordType extends AbstractType
                 'second_options' => ['label' => false]
             ]);
 
-
         $builder->add('save',SubmitType::class,[
-                'label' => false
+                'label' => 'Отправить'
             ]);
 
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

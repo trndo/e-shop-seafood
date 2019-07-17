@@ -105,6 +105,11 @@ class User implements UserInterface
      */
     private $instagramId;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passToken;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -347,6 +352,18 @@ class User implements UserInterface
     public function setInstagramId(?int $instagramId): self
     {
         $this->instagramId = $instagramId;
+
+        return $this;
+    }
+
+    public function getPassToken(): ?string
+    {
+        return $this->passToken;
+    }
+
+    public function setPassToken(?string $passToken): self
+    {
+        $this->passToken = $passToken;
 
         return $this;
     }

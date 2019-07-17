@@ -26,7 +26,7 @@ class SocialNetworkController extends AbstractController
      * @param string $social
      * @return Response
      */
-    public function connectAction(ClientRegistry $clientRegistry,SocialNetworkScopeServiceInterface $scopeService, string $social): Response
+    public function connectAction(ClientRegistry $clientRegistry,SocialNetworkScopeServiceInterface $scopeService, ?string $social): Response
     {
         return $clientRegistry
             ->getClient($social)
@@ -43,7 +43,7 @@ class SocialNetworkController extends AbstractController
      * @param string $social
      * @return Response
      */
-    public function connectRegister(ClientRegistry $clientRegistry, SocialNetworkScopeServiceInterface $scopeService,string $social): Response
+    public function connectRegister(ClientRegistry $clientRegistry, SocialNetworkScopeServiceInterface $scopeService,?string $social): Response
     {
         $socialRegister = $social.'_register';
 
@@ -79,7 +79,7 @@ class SocialNetworkController extends AbstractController
      * @param string $social
      * @return Response
      */
-    public function registerUserWithFacebook(UserService $userService, ClientRegistry $clientRegistry,string $social): Response
+    public function registerUserWithSocialNetwork(UserService $userService, ClientRegistry $clientRegistry,?string $social): Response
     {
         $socialRegister = $social.'_register';
 

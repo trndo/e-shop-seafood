@@ -3,7 +3,9 @@
         width: 100% !important;
         max-width: 991px;
     }
-
+    footer{
+        display: none;
+    }
     .container-inside{
         position: relative;
         width: 100% !important;
@@ -42,6 +44,7 @@
         position: static;
         width: 113px;
     }
+
     #menu{
         display: block;
         cursor: pointer;
@@ -49,7 +52,10 @@
 
     .menu-nav{
         display: block;
-        height: 100%;
+        height: calc(100% - 78px);
+        height: -o-calc(100% - 78px); /* opera */
+        height: -webkit-calc(100% - 78px); /* google, safari */
+        height: -moz-calc(100% - 78px);
         width: 100%;
         position: fixed;
         z-index: 400;
@@ -64,6 +70,80 @@
         right: 20px;
         width: 50px;
         height: 50px;
+    }
+
+    .menu-nav ul{
+        list-style-type: none;
+        padding-left: 60px;
+        margin-top: 43px;
+        font-family: Raleway,sans-serif;
+        font-style: normal;
+        font-weight: 200;
+        font-size: 24px;
+        line-height: 100%;
+        color: #9e9999;
+    }
+    .menu-nav ul li{
+        margin-top: 30px;
+        width: max-content;
+        cursor: pointer;
+        user-select: none;
+    }
+    .menu-nav ul li:hover{
+        font-weight: normal !important;
+        border-bottom: 3px solid #F13A3A;
+        color: white !important;
+    }
+    .curtain-line{
+        width: 344px;
+        height: 0;
+        border: 4px solid #F13A3A;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        /*margin: 0 auto;*/
+        /*bottom: -webkit-calc(-100% + 40px);*/
+
+    }
+
+    .curtain-info{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 88px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 215px;
+        height: 78px;
+        text-align: center;
+        font-family: Raleway, sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 100%;
+        /*bottom: -webkit-calc(-100% + 40px);*/
+    }
+
+    .curtain-info #phone{
+        text-transform: uppercase;
+        color: #FFFFFF;
+        font-size: 24px;
+    }
+
+    .curtain-info #email{
+        margin-top: 12px;
+        font-size: 18px;
+        color: #CECECE;
+        display: block;
+    }
+
+    .curtain-info #address{
+        color: #FFFFFF;
+        font-size: 18px;
+        margin-top: 6px;
+        display: block;
     }
 
 }

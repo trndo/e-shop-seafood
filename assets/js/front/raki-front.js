@@ -159,7 +159,7 @@ $(document).on('keyup','.quantity-res > input',function (e) {
         }
     });
 });
-$('input').bind('cut copy paste',function (e) {
+$('.quantity-res > input').bind('cut copy paste',function (e) {
     e.preventDefault();
 });
 

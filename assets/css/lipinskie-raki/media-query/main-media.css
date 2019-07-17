@@ -49,6 +49,9 @@
         display: block;
         cursor: pointer;
     }
+    #menu object{
+        pointer-events: none;
+    }
 
     .menu-nav{
         display: block;

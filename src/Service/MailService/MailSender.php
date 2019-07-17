@@ -77,4 +77,24 @@ class MailSender implements MailSenderInterface
             );
         $this->mailer->send($message);
     }
+
+    public function sendAboutResettingPassword(User $user): void
+    {
+        $this->sendMessageTo($user,'mail/resetting_message.html.twig',['user' => $user]);
+    }
+
+    private function sendMessageTo(User $user,string $template,array $options = null)
+    {
+        $message = (new \Swift_Message(self::TRANSPORT))
+            ->setFrom(self::SELF_EMAIL)
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->environment->render(
+                    $template,$options
+                ),
+                self::CONTENT_TYPE
+            );
+        $this->mailer->send($message);
+    }
+
 }

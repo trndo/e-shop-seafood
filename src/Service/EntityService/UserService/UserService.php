@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class UserService implements UserServiceInterface
 {
@@ -131,7 +132,14 @@ class UserService implements UserServiceInterface
      */
     public function resetOldPassword(?User $user, ?string $newPassword, ?string  $oldPassword): void
     {
-        // TODO: Implement resetOldPassword() method.
+        if($this->comparePasswords($user,$oldPassword)) {
+            $this->newPassword($user,$newPassword);
+            $this->entityManager->flush();
+            $this->mailSender->sendAboutResettingPassword($user);
+        } else {
+            throw new NotFoundResourceException('Неверный старый пароль!');
+        }
+
     }
 
     /**
@@ -141,10 +149,7 @@ class UserService implements UserServiceInterface
     public function addNewPassword(?User $user,?string $password): void
     {
         if ($password != null) {
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $password
-            ));
+            $this->newPassword($user,$password);
             $user->setPassToken(null);
             $this->entityManager->flush();
         }
@@ -157,4 +162,23 @@ class UserService implements UserServiceInterface
         }
         return null;
     }
+
+    private function newPassword(?User $user, ?string $password): void
+    {
+        $user->setPassword($this->passwordEncoder->encodePassword(
+            $user,
+            $password
+        ));
+    }
+
+    private function comparePasswords(?User $user, ?string $oldPassword): bool
+    {
+        $passForCompare = $this->passwordEncoder->isPasswordValid($user,$oldPassword);
+        if ($passForCompare)
+            return true;
+        else
+            return false;
+
+    }
+
 }

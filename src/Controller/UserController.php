@@ -89,10 +89,8 @@ class UserController extends AbstractController
     public function resetPassword(Request $request,UserServiceInterface $userService, User $user)
     {
         $resetPasswordModel = new ResetPasswordModel();
-        $options = [
-            'forgotPassword' => true,
-            'oldPassword' => true
-        ];
+        $options['forgotPassword'] = true;
+        $options['oldPassword'] = true;
         $form = $this->createForm(ResetPasswordType::class,$resetPasswordModel,$options);
         $form->handleRequest($request);
 
@@ -103,7 +101,7 @@ class UserController extends AbstractController
             $newPassword = $data->getPassword();
             $userService->resetOldPassword($user,$newPassword,$oldPassword);
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('new_password.html.twig',[

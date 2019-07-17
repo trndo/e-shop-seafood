@@ -70,11 +70,6 @@ class User implements UserInterface
     private $bonuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
-     */
-    private $orders;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      * @Gedmo\Slug(fields={"name","surname","id"})
      */
@@ -110,9 +105,14 @@ class User implements UserInterface
      */
     private $passToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderInfo", mappedBy="user")
+     */
+    private $orderInfos;
+
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->orderInfos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,37 +253,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -364,6 +333,37 @@ class User implements UserInterface
     public function setPassToken(?string $passToken): self
     {
         $this->passToken = $passToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderInfo[]
+     */
+    public function getOrderInfos(): Collection
+    {
+        return $this->orderInfos;
+    }
+
+    public function addOrderInfo(OrderInfo $orderInfo): self
+    {
+        if (!$this->orderInfos->contains($orderInfo)) {
+            $this->orderInfos[] = $orderInfo;
+            $orderInfo->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderInfo(OrderInfo $orderInfo): self
+    {
+        if ($this->orderInfos->contains($orderInfo)) {
+            $this->orderInfos->removeElement($orderInfo);
+            // set the owning side to null (unless already changed)
+            if ($orderInfo->getUser() === $this) {
+                $orderInfo->setUser(null);
+            }
+        }
 
         return $this;
     }

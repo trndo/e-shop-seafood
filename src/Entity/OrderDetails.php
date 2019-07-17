@@ -27,14 +27,14 @@ class OrderDetails
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderDetails")
-     */
-    private $orderNumber;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Receipt", mappedBy="orderDetails", cascade={"persist", "remove"})
      */
     private $receipt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\OrderInfo", inversedBy="orderDetails")
+     */
+    private $orderInfo;
 
     public function getId(): ?int
     {
@@ -65,18 +65,6 @@ class OrderDetails
         return $this;
     }
 
-    public function getOrderNumber(): ?Order
-    {
-        return $this->orderNumber;
-    }
-
-    public function setOrderNumber(?Order $orderNumber): self
-    {
-        $this->orderNumber = $orderNumber;
-
-        return $this;
-    }
-
     public function getReceipt(): ?Receipt
     {
         return $this->receipt;
@@ -91,6 +79,18 @@ class OrderDetails
         if ($newOrderDetails !== $receipt->getOrderDetails()) {
             $receipt->setOrderDetails($newOrderDetails);
         }
+
+        return $this;
+    }
+
+    public function getOrderInfo(): ?OrderInfo
+    {
+        return $this->orderInfo;
+    }
+
+    public function setOrderInfo(?OrderInfo $orderInfo): self
+    {
+        $this->orderInfo = $orderInfo;
 
         return $this;
     }

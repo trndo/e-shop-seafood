@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderInfoRepository")
  */
-class Order
+class OrderInfo
 {
     /**
      * @ORM\Id()
@@ -19,7 +19,12 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orderInfos")
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $totalPrice;
 
@@ -29,14 +34,24 @@ class Order
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetails", mappedBy="orderNumber")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetails", mappedBy="orderInfo")
      */
     private $orderDetails;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $user;
+    private $orderDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $orderTime;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $status;
 
     public function __construct()
     {
@@ -48,12 +63,24 @@ class Order
         return $this->id;
     }
 
-    public function getTotalPrice(): ?float
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?int
     {
         return $this->totalPrice;
     }
 
-    public function setTotalPrice(?float $totalPrice): self
+    public function setTotalPrice(?int $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
 
@@ -84,7 +111,7 @@ class Order
     {
         if (!$this->orderDetails->contains($orderDetail)) {
             $this->orderDetails[] = $orderDetail;
-            $orderDetail->setOrderNumber($this);
+            $orderDetail->setOrderInfo($this);
         }
 
         return $this;
@@ -95,22 +122,46 @@ class Order
         if ($this->orderDetails->contains($orderDetail)) {
             $this->orderDetails->removeElement($orderDetail);
             // set the owning side to null (unless already changed)
-            if ($orderDetail->getOrderNumber() === $this) {
-                $orderDetail->setOrderNumber(null);
+            if ($orderDetail->getOrderInfo() === $this) {
+                $orderDetail->setOrderInfo(null);
             }
         }
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getOrderDate(): ?\DateTimeInterface
     {
-        return $this->user;
+        return $this->orderDate;
     }
 
-    public function setUser(?User $user): self
+    public function setOrderDate(?\DateTimeInterface $orderDate): self
     {
-        $this->user = $user;
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    public function getOrderTime(): ?\DateTimeInterface
+    {
+        return $this->orderTime;
+    }
+
+    public function setOrderTime(?\DateTimeInterface $orderTime): self
+    {
+        $this->orderTime = $orderTime;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

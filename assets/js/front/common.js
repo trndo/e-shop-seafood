@@ -35,3 +35,9 @@ $('.checkout').click(function () {
 $('.login-button').click(function () {
     $(this).parent().submit();
 });
+
+$('#menu').click(function () {
+    console.log('d');
+    let nav = $('.menu-nav');
+    nav.css('display') === 'none' ? nav.fadeIn() : nav.fadeOut();
+});

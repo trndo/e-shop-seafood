@@ -41,3 +41,9 @@ $('#menu').click(function () {
     let nav = $('.menu-nav');
     nav.css('display') === 'none' ? nav.fadeIn() : nav.fadeOut();
 });
+
+$('.toggle-mobile').click(function () {
+    $(this).siblings().each(function () {
+        let li = $(this).slideToggle();
+    })
+});

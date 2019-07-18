@@ -96,14 +96,20 @@
                     <div id="order-title">
                         Оформление заказа
                     </div>
-                    <form action="" class="order-form">
-                        <input type="text" class="order-input" placeholder="Имя*">
-                        <input type="text" class="order-input" placeholder="Фамилия*">
-                        <input type="text" class="order-input input-margin-29" placeholder="+38(000)___-__-__*">
-                        <input type="text" class="order-input" placeholder="Email*">
+                    {{ form_start(form,{'attr': {'class': 'order-form'}}) }}
+                        {{ form_row(form.name,{'attr': {'class': 'order-input',
+                            'placeholder':'Имя*'}}) }}
+                        {{ form_row(form.surname,{'attr': {'class': 'order-input',
+                            'placeholder':'Фамилия*'}}) }}
+                        {{ form_row(form.phoneNumber,{'attr': {'class': 'order-input input-margin-29',
+                            'placeholder':'+38(000)___-__-__*'}}) }}
+                        {{ form_row(form.email,{'attr': {'class': 'order-input',
+                            'placeholder':'Email*'}}) }}
                         <div class="form-row input-margin-16">
-                            <input type="text" class="date-input" placeholder="Дата*">
-                            <input type="text" class="time-input" placeholder="14:00*">
+                            {{ form_row(form.orderDate,{'attr': {'class': 'date-input',
+                                'placeholder':'Дата*'}}) }}
+                            {{ form_row(form.orderTime,{'attr': {'class': 'time-input',
+                                'placeholder':'14:00*'}}) }}
                         </div>
                         <div class="delivery-type">
                             <div id="del" class="delivery-active delivery">
@@ -113,14 +119,39 @@
                                 Самовывоз
                             </div>
                         </div>
-                        <input type="text" id="adress-order" class="order-input input-margin-16 order-address" placeholder="Address Bla Bla*">
+                        {{ form_row(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
                         <div class="lipinka-street">
                             проспект раков Липинка
                         </div>
                         <div class="checkout-order">
                             Оформить
                         </div>
-                    </form>
+                    {{ form_end(form) }}
+{#                    <form action="" class="order-form">#}
+{#                        <input type="text" class="order-input" placeholder="Имя*">#}
+{#                        <input type="text" class="order-input" placeholder="Фамилия*">#}
+{#                        <input type="text" class="order-input input-margin-29" placeholder="+38(000)___-__-__*">#}
+{#                        <input type="text" class="order-input" placeholder="Email*">#}
+{#                        <div class="form-row input-margin-16">#}
+{#                            <input type="text" class="date-input" placeholder="Дата*">#}
+{#                            <input type="text" class="time-input" placeholder="14:00*">#}
+{#                        </div>#}
+{#                        <div class="delivery-type">#}
+{#                            <div id="del" class="delivery-active delivery">#}
+{#                                Доставка#}
+{#                            </div>#}
+{#                            <div id="self-del" class="self-delivery">#}
+{#                                Самовывоз#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <input type="text" id="adress-order" class="order-input input-margin-16 order-address" placeholder="Address Bla Bla*">#}
+{#                        <div class="lipinka-street">#}
+{#                            проспект раков Липинка#}
+{#                        </div>#}
+{#                        <div class="checkout-order">#}
+{#                            Оформить#}
+{#                        </div>#}
+{#                    </form>#}
                 </div>
                 <div id="map-block">
 

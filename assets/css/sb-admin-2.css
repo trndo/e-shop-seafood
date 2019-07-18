@@ -12092,3 +12092,24 @@ body.sidebar-toggled footer.sticky-footer {
   display: none;
   margin-top: 4px;
 }
+
+.relative{
+   position: relative;
+}
+
+.order-number{
+  position: absolute;
+  top: 0;
+  left: 20px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background: lightgray;
+  padding: 10px 10px 10px 10px;
+}
+.order-status{
+  top: 0;
+  right: 20px;
+  position: absolute;
+}
+
+

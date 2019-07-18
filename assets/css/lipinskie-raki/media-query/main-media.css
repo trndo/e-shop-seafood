@@ -172,4 +172,12 @@
         justify-content: space-around;
     }
 
+    .contact-social{
+        margin-top: 60px;
+    }
+
+    .contact{
+        margin-left: 0;
+    }
+
 }

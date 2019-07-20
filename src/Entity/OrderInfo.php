@@ -49,9 +49,19 @@ class OrderInfo
     private $orderTime;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderEmail;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderPhone;
 
     public function __construct()
     {
@@ -154,14 +164,38 @@ class OrderInfo
         return $this;
     }
 
-    public function getStatus(): ?bool
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(?bool $status): self
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOrderEmail(): ?string
+    {
+        return $this->orderEmail;
+    }
+
+    public function setOrderEmail(?string $orderEmail): self
+    {
+        $this->orderEmail = $orderEmail;
+
+        return $this;
+    }
+
+    public function getOrderPhone(): ?string
+    {
+        return $this->orderPhone;
+    }
+
+    public function setOrderPhone(?string $orderPhone): self
+    {
+        $this->orderPhone = $orderPhone;
 
         return $this;
     }

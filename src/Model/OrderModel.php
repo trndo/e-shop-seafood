@@ -4,6 +4,8 @@
 namespace App\Model;
 
 
+use App\Entity\User;
+
 class OrderModel
 {
     /**
@@ -27,12 +29,12 @@ class OrderModel
     private $phoneNumber;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $orderDate;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $orderTime;
 
@@ -40,6 +42,16 @@ class OrderModel
      * @var string|null
      */
     private $deliveryType;
+
+    /**
+     * @var User|null
+     */
+    private $user;
+
+    /**
+     * @var int|null
+     */
+    private $totalPrice;
 
     /**
      * @return string|null
@@ -120,44 +132,6 @@ class OrderModel
     }
 
     /**
-     * @return \DateTime|null
-     */
-    public function getOrderDate(): ?\DateTime
-    {
-        return $this->orderDate;
-    }
-
-    /**
-     * @param \DateTime|null $orderDate
-     * @return OrderModel
-     */
-    public function setOrderDate(?\DateTime $orderDate): self
-    {
-        $this->orderDate = $orderDate;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getOrderTime(): ?\DateTime
-    {
-        return $this->orderTime;
-    }
-
-    /**
-     * @param \DateTime|null $orderTime
-     * @return OrderModel
-     */
-    public function setOrderTime(?\DateTime $orderTime): self
-    {
-        $this->orderTime = $orderTime;
-
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getDeliveryType(): ?string
@@ -175,6 +149,87 @@ class OrderModel
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderDate(): ?string
+    {
+        return $this->orderDate;
+    }
+
+    /**
+     * @param string|null $orderDate
+     * @return OrderModel
+     */
+    public function setOrderDate(?string $orderDate): self
+    {
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderTime(): ?string
+    {
+        return $this->orderTime;
+    }
+
+    /**
+     * @param string|null $orderTime
+     * @return OrderModel
+     */
+    public function setOrderTime(?string $orderTime): self
+    {
+        $this->orderTime = $orderTime;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return OrderModel
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTotalPrice(): ?int
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param int|null $totalPrice
+     * @return OrderModel
+     */
+    public function setTotalPrice(?int $totalPrice): self
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\OrderType;
+use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +21,9 @@ class OrderController extends AbstractController
     public function order(Request $request): Response
     {
         $user = $this->getUser();
-
         if ($user && $this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
-            $orderModel = new OrderModel();
-        if (!$user && $this->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'))
+            $orderModel = OrderMapper::entityUserToOrderModel($user);
+        else
             $orderModel = new OrderModel();
 
         $form = $this->createForm(OrderType::class,$orderModel);

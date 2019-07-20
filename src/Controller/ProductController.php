@@ -12,7 +12,7 @@ class ProductController extends AbstractController
 {
 
     /**
-     * @Route("/product/{slug}", name="product")
+     * @Route("/catagegory-{category}/{slug}", name="product")
      *
      * @param Product $product
      * @return Response

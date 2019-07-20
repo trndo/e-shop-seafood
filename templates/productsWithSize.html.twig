@@ -6,38 +6,42 @@
             <main>
                 <div class="sizes-container">
                     <div class="size-row">
+                        {% if items[0] is defined %}
                         <div class="size-card">
                             <div class="size-card-info">
-                                <div class="size">S</div>
+                                {{ getSize(items[0].ProductSize)|raw  }}
                                 <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[0].weightPerUnit}}.</span>
                                         </span>
                                         <span class="size-price">
-                                           ₴ 550
+                                           ₴ {{ items[0].price }}
                                         </span>
                                 </div>
                             </div>
-                            <div class="size-button">
+                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'">
                                 Перейти
                             </div>
                         </div>
+                        {% endif %}
+                        {% if items[1] is defined %}
                         <div class="size-card">
                             <div class="size-card-info">
-                                <div class="size">M</div>
+                                {{ getSize(items[1].ProductSize)|raw  }}
                                 <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[1].weightPerUnit}}.</span>
                                         </span>
-                                    <span class="size-price">
-                                           ₴ 550
+                                    <span class="size-price" >
+                                           ₴ {{ items[1].price }}
                                         </span>
                                 </div>
                             </div>
-                            <div class="size-button">
+                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug': items[1].category.slug,'slug': items[1].slug}) }}'">
                                 Перейти
                             </div>
                         </div>
+                        {% endif %}
                         <div class="warn">
                             <h2>
                                 Тут ты можешь купить только живых раков!
@@ -48,61 +52,63 @@
                         </div>
                     </div>
                     <div class="size-row">
+                        {% if items[2] is defined %}
                         <div class="size-card">
                             <div class="size-card-info">
-                                <div class="size">L</div>
+                                {{ getSize(items[2].ProductSize)|raw  }}
                                 <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[2].weightPerUnit}}.</span>
                                         </span>
-                                    <span class="size-price">
-                                           ₴ 550
+                                    <span class="size-price" >
+                                           ₴ {{ items[2].price }}
                                         </span>
                                 </div>
                             </div>
-                            <div class="size-button">
+                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[2].category.slug,'slug':items[2].slug}) }}'">
                                 Перейти
                             </div>
                         </div>
+                        {% endif %}
+                        {% if items[3] is defined %}
                         <div class="size-card">
                             <div class="size-card">
                                 <div class="size-card-info">
-                                    <div class="size-xl">
-                                        <span class="size-x">x</span><span class="size-l">L</span>
-                                    </div>
+                                    {{ getSize(items[3].ProductSize)|raw  }}
                                     <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[3].weightPerUnit}}.</span>
                                         </span>
-                                        <span class="size-price">
-                                           ₴ 550
+                                        <span class="size-price" >
+                                           ₴ {{ items[3].price }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="size-button">
+                                <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'">
                                     Перейти
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
+                        {% if items[4] is defined %}
                         <div class="size-card">
                             <div class="size-card">
                                 <div class="size-card-info">
-                                    <div class="size-xl">
-                                        <span class="size-xx">xx</span><span class="size-l">L</span>
-                                    </div>
+                                    {{ getSize(items[4].ProductSize)|raw  }}
                                     <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[4].weightPerUnit}}.</span>
                                         </span>
-                                        <span class="size-price">
-                                           ₴ 550
+                                        <span class="size-price" >
+                                           ₴ {{ items[4].price }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="size-button">
+                                <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'">
                                     Перейти
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

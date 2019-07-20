@@ -29,3 +29,4 @@ $('.self-delivery').click(function () {
     $('.lipinka-street').css('display','block')
 
 });
+

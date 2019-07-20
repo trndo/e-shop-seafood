@@ -14,9 +14,9 @@ interface CartHandlerInterface
      * Get product or receipt
      *
      * @param string $type
-     * @param string $slug
+     * @param string $id
      */
-    public function getItem(string $type, string $slug);
+    public function getItem(string $type, string $id);
 
     /**
      * Add receipt or product to cart

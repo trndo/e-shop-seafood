@@ -34,17 +34,18 @@ class CartHandler implements CartHandlerInterface
 
     /**
      * @param string $type
-     * @param string $slug
+     * @param string $id
      * @return \App\Entity\Product|\App\Entity\Receipt
      */
-    public function getItem(string $type, string $slug)
+    public function getItem(string $type, string $id)
     {
+        $id = $this->explodeId($id);
         if ($type == 'product') {
-            return $this->productRepository->findProductBySlug($slug);
+            return $this->productRepository->find($id);
         }
 
         if ($type == 'receipt') {
-            return $this->receiptRepository->findReceiptBySlug($slug);
+            return $this->receiptRepository->find($id);
         }
     }
 
@@ -96,7 +97,10 @@ class CartHandler implements CartHandlerInterface
         $session = $request->getSession();
         $product = $this->productRepository->findProductBySlug($key);
         $productQuantity = $product->getSupply()->getQuantity();
-        $cart = $session->get('cart');
+        if(!$session->get('cart'))
+            $cart = $session->set('cart',[]);
+        else
+            $cart = $session->get('cart');
 
         if ($quantity > $productQuantity ) {
             return [
@@ -127,5 +131,10 @@ class CartHandler implements CartHandlerInterface
             $total += $value['item']->getPrice()*$value['quantity'];
         }
         $session->set('totalSum',$total);
+    }
+
+    private function explodeId(string $id)
+    {
+        return (int)explode('-',$id)[1];
     }
 }

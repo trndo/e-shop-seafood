@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<section class="wrapper">
     <div class="container">
         <div class="container-inside">
            {% include 'elements/__header.html.twig' with {'active': 'home'} %}
@@ -72,6 +73,7 @@
         </div>
     </div>
     {% include 'elements/__footer.html.twig' with {'active': 'home'} %}
+</section>
 <div id="overlay" style="display: none">
     <div class="red-content">
         <div id="shopping-cart">

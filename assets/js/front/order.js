@@ -6,6 +6,7 @@ import $ from 'jquery';
 
 $('.date-input').datepicker();
 
+if(screen.width < 992)
 new Picker(document.querySelector('.time-input'), {
     format: 'HH:mm',
     headers: true,

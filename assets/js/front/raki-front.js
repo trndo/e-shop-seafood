@@ -12,6 +12,10 @@ $(document).ready(function () {
         new SimpleBar($('.cart-container')[0],{
           autoHide: false});
 
+    if($('.menu-nav > ul').length)
+        new SimpleBar($('.menu-nav > ul')[0],{
+            autoHide: false});
+
     $('.add-basket').on('click',function () {
         let type = $(this).data('type');
         let slug = $(this).data('name');

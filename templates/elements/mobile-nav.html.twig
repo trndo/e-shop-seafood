@@ -5,7 +5,10 @@
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
         <li {% if mob_active == 'zharenye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
         <li {% if mob_active == 'not exist yet' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
-        <li class="toogle-dropdown {% if mob_active %}active-nav{% endif %}">Ассортимент</li>
+        <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент</li>
+        <div class="mobile-dropdown">
+        {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
+        </div>
     </ul>
     <div class="curtain-info">
         <span id="phone">+38(000)000-00-00</span>

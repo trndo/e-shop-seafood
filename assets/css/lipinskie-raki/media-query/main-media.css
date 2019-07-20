@@ -1,11 +1,10 @@
 @media (max-width: 991px) and (min-width: 768px){
+
     .container{
         width: 100% !important;
         max-width: 991px;
     }
-    footer{
-        display: none;
-    }
+
     .container-inside{
         position: relative;
         width: 100% !important;
@@ -14,6 +13,7 @@
     #desktop{
         display: none;
     }
+
 
     #mobile{
         display: block;
@@ -54,7 +54,7 @@
     }
 
     .menu-nav{
-        display: block;
+        display: none;
         height: calc(100% - 78px);
         height: -o-calc(100% - 78px); /* opera */
         height: -webkit-calc(100% - 78px); /* google, safari */
@@ -85,6 +85,9 @@
         font-size: 24px;
         line-height: 100%;
         color: #9e9999;
+        overflow-y: scroll;
+        max-height: 65%;
+
     }
     .menu-nav ul li{
         margin-top: 30px;
@@ -147,6 +150,34 @@
         font-size: 18px;
         margin-top: 6px;
         display: block;
+    }
+    .mobile-dropdown{
+        display: none;
+    }
+
+    footer{
+        margin-top: 20px;
+    }
+
+    .footer-row{
+        margin-top: 40px;
+    }
+
+    .footer-nav{
+        display: none;
+    }
+    .row{
+        margin-left: 0;
+        margin-right: 0;
+        justify-content: space-around;
+    }
+
+    .contact-social{
+        margin-top: 60px;
+    }
+
+    .contact{
+        margin-left: 0;
     }
 
 }

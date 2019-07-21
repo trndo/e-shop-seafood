@@ -6,6 +6,7 @@
             <main>
                 <div class="sizes-container">
                     <div class="size-row">
+                        {% set items = items.toArray|sortSizes %}
                         {% if items[0] is defined %}
                         <div class="size-card">
                             <div class="size-card-info">

@@ -2,12 +2,21 @@
 
 namespace App\Twig;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class ItemSizeExtension extends AbstractExtension
 {
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('sortSizes', [$this, 'sortSize']),
+        ];
+    }
+
 
     public function getFunctions(): array
     {
@@ -34,5 +43,17 @@ class ItemSizeExtension extends AbstractExtension
             default:
                 return null;
         }
+    }
+
+    public function sortSize(array $items)
+    {
+        $baseSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+        usort($items,function ($a, $b) use ($baseSizes){
+            $a = array_search($a->getProductSize(), $baseSizes);
+            $b = array_search($b->getProductSize(), $baseSizes);
+
+            return $a-$b;
+        });
+        return $items;
     }
 }

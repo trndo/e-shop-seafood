@@ -13,36 +13,39 @@ interface CartHandlerInterface
     /**
      * Get product or receipt
      *
-     * @param string $type
      * @param string $id
      */
-    public function getItem(string $type, string $id);
+    public function getItem(string $id);
 
     /**
      * Add receipt or product to cart
      *
      * @param Request $request
-     * @param string $key
-     * @param array $options
+     *
      */
-    public function addItemToCart(Request $request,string $key, array $options): void ;
+    public function addItemToCart(Request $request): void ;
 
     /**
      * Remove product or receipt from cart by key
      *
      * @param Request $request
-     * @param string $key
      */
-    public function removeFromCart(Request $request, string $key): void ;
+    public function removeFromCart(Request $request): void ;
 
     /**
      * Add item's quantity by key
      *
      * @param Request $request
-     * @param string $key
-     * @param float $quantity
-     * @param string $type
      * @return array
      */
-    public function changeItemQuantity(Request $request, string $key, float $quantity): array;
+    public function changeItemQuantity(Request $request): array;
+
+
+    /**
+     * Return cart items
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getItems(Request $request): array ;
 }

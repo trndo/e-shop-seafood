@@ -45,8 +45,11 @@ class CartController extends AbstractController
      */
     public function showCart(Request $request,CartHandlerInterface $cartHandler): Response
     {
-        $cartHandler->getItems($request);
-        return $this->render('cart.html.twig');
+        $items = $cartHandler->getItems($request);
+
+        return $this->render('cart.html.twig',[
+            'items' => $items
+        ]);
     }
 
     /**

@@ -6,29 +6,29 @@
         </div>
             <main>
                 <div class="receipt-container">
-                    <img src="{{ product.getTitlePhotoPath }}" alt="">
+                    <img src="{{ item.getTitlePhotoPath }}" alt="">
                     <div class="receipt-info">
-                        <div class="receipt-name">
-                            {{ product.name }}
+                        <div class="receipt-name" {% if item.products.count == 1 and item.products[0].ProductSize is null %} data-related="product-{{ item.products[0].id }}"{% endif %}>
+                            {{ item.name }}
                         </div>
                         <div class="description">
-                            {{ product.description }}
+                            {{ item.description }}
                         </div>
-                        {% if product.products is defined %}
+                        {% if item.products is defined and item.products[0].ProductSize %}
                         <div class="receipt-sizes">
                             <h4>
-                                Размер твоего рака:
+                                Выбери размер:
                             </h4>
                             <div class="receipt-sizes-container">
-                                {% for item in product.products %}
-                                <div class="size-block" data-name="item-{{ item.id }}">
-                                    {{ item.ProductSize }}
+                                {% for relatedProduct in item.products %}
+                                <div class="size-block" data-name="product-{{ relatedProduct.id }}" data-size="{{ relatedProduct.ProductSize  }}">
+                                    {{ relatedProduct.ProductSize }}
                                 </div>
                                 {% endfor %}
                             </div>
                             {% endif %}
                             <div class="product-price receipt-price">
-                                {{ product.price }} грн / {{ product.unit }}.<span class="special-price-receipt special-price">550 грн</span>
+                                {{ item.price }} грн / {{ item.unit }}.<span class="special-price-receipt special-price">550 грн</span>
                             </div>
                             <div class="product-to-basket">
                                 <div class="quantity">
@@ -38,7 +38,7 @@
                                     </div>
                                     <span class="minus">-</span>
                                 </div>
-                                <div class="custom-button add-basket item-name" data-name="{{ product.slug }}" data-type="{{ product.getType }}">
+                                <div class="custom-button add-basket item-name" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                     Добавить в козину
                                 </div>
                             </div>

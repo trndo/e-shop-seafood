@@ -18,14 +18,21 @@ $(document).ready(function () {
 
     $('.add-basket').on('click',function () {
         let type = $(this).data('type');
-        let slug = $(this).data('name');
+        let id = $(this).data('name') ;
+
+        if (checked == null && type === 'receipt') {
+            alert('Vyberi razmer!');
+            return ;
+        }
+
         let quantity = $('.quantity-res > input').val();
+
         $.ajax({
             type: 'POST',
             url: '/addToCart',
             data: {
-                type: type,
-                slug: slug,
+                size: checked,
+                id: size ? type+'-'+id+'-'+size : type+'-'+id,
                 quantity: quantity
             },
             success: function (res) {
@@ -63,7 +70,7 @@ $(document).ready(function () {
                 type: 'DELETE',
                 url: '/removeFromCart',
                 data: {
-                    slug: slug
+                    id: slug
                 },
                 success: function (res) {
                     item.remove();
@@ -77,17 +84,13 @@ $(document).ready(function () {
         let input = $(this).siblings('.quantity-res').children();
         let name = $(this).parent().siblings('.item-name').data('name');
 
-        if (input.val() == 10) {
-            alert('Mojno zakazat tolko 10 edenic etoy posizui');
-            return;
-        }
         let val = Number(input.val());
         $.ajax({
             type: "POST",
             url: "/changeQuantity",
             data: {
                 quantity: val + 1,
-                name: name
+                id: name
             },
             success: function (res) {
                 if (res.status === false) {
@@ -116,7 +119,7 @@ $(document).ready(function () {
             url: "/changeQuantity",
             data: {
                 quantity: val - 1,
-                name: name
+                id: name
             },
             success: function (res) {
                 input.val(val - 1);
@@ -132,11 +135,11 @@ $(document).ready(function () {
         if( val == '')
             return;
 
-        if (val > 10) {
-            alert('Max 10');
-            input.val(10);
-            val = 10;
-        }
+        // if (val > 10) {
+        //     alert('Max 10');
+        //     input.val(10);
+        //     val = 10;
+        // }
 
         if(val < 0) {
             alert('Min 1');
@@ -149,7 +152,7 @@ $(document).ready(function () {
             url: "/changeQuantity",
             data: {
                 quantity: val,
-                name: name
+                id: name
             },
             success: function (res) {
                 if (res.status === false) {
@@ -177,7 +180,7 @@ $(document).ready(function () {
                 url: "/changeQuantity",
                 data: {
                     quantity: 1,
-                    name: name
+                    id: name
                 },
                 success: function (res) {
                     if (res.status === false) {
@@ -192,15 +195,18 @@ $(document).ready(function () {
             });
         }
     });
-
-    let checked = null;
+    let size = null;
+    let related = $('.receipt-name').data('related');
+    let checked = related ? related : null;
     $(document).on('click','.size-block',function (e) {
         $('.size-block-checked').each(function () {
            $(this).removeClass('size-block-checked');
         });
         $(this).addClass('size-block-checked');
-        checked = $(this).data('name');
+        checked = $(this).data('name') ;
+        size = $(this).data('size');
     })
+
 
 });
 

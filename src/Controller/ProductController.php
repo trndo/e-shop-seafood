@@ -35,10 +35,10 @@ class ProductController extends AbstractController
            $item = $receiptService->getReceipt($slug);
         return $item->getType() == 'product'
             ? $this->render('product.html.twig', [
-                'product' => $item,
+                'item' => $item,
                 'active' => $item->getCategory()->getSlug()])
             : $this->render('receipt.html.twig', [
-                'product' => $item,
+                'item' => $item,
                 'active' => $item->getCategory()->getSlug()]);
     }
 

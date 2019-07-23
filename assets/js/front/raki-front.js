@@ -8,7 +8,7 @@ import $ from 'jquery';
 import SimpleBar from 'simplebar';
 
 $(document).ready(function () {
-        if($('.cart-container').length)
+    if($('.cart-container').length)
         new SimpleBar($('.cart-container')[0],{
           autoHide: false});
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
             return ;
         }
 
-        let quantity = $('.quantity-res > input').val();
+        let quantity = $('.item-res > input').val();
 
         $.ajax({
             type: 'POST',
@@ -36,100 +36,61 @@ $(document).ready(function () {
                 quantity: quantity
             },
             success: function (res) {
-                console.log(res);
-                $('.sum').text(res.totalSum+' ₴');
+                if (res.status){
+                    $('.sum').text(res.totalSum+' ₴');
+                    console.log(res);
+                } else {
+                    console.log('ne-ok');
+                    alert('Ostalos-'+res.rest+''+res.unit);
+                    $('.item-res > input').val(res.rest);
+                }
+
+
             }
         });
 
     });
 
-    $('.to_basket').on('click',function () {
-        let type = $(this).data('type');
-        let slug = $(this).data('name');
-        let quantity = $('.quantity').val();
+    // $('.to_basket').on('click',function () {
+    //     let type = $(this).data('type');
+    //     let slug = $(this).data('name');
+    //     let quantity = $('.quantity').val();
+    //
+    //     $.ajax({
+    //        type: 'POST',
+    //        url: '/addToCart',
+    //        data: {
+    //            type: type,
+    //            slug: slug,
+    //            quantity: quantity
+    //        },
+    //        success: function (res) {
+    //             console.log(res);
+    //            $('.sum').text(res.totalSum+' ₴');
+    //        }
+    //     });
+    // });
 
-        $.ajax({
-           type: 'POST',
-           url: '/addToCart',
-           data: {
-               type: type,
-               slug: slug,
-               quantity: quantity
-           },
-           success: function (res) {
-                console.log(res);
-               $('.sum').text(res.totalSum+' ₴');
-           }
-        });
-    });
 
-    $(document).on('click','.delete-from-cart',function () {
-            let slug = $(this).data('name');
-            let item = $(this).parent();
-            $.ajax({
-                type: 'DELETE',
-                url: '/removeFromCart',
-                data: {
-                    id: slug
-                },
-                success: function (res) {
-                    item.remove();
-                    console.log(res.status+' '+res.totalSum);
-                    $('.sum').text(res.totalSum+' ₴');
-                }
-            });
-        });
-    $(document).on('click','.plus',function () {
 
-        let input = $(this).siblings('.quantity-res').children();
-        let name = $(this).parent().siblings('.item-name').data('name');
+    $(document).on('click','.item-plus',function () {
 
+        let input = $(this).siblings('.item-res').children();
         let val = Number(input.val());
-        $.ajax({
-            type: "POST",
-            url: "/changeQuantity",
-            data: {
-                quantity: val + 1,
-                id: name
-            },
-            success: function (res) {
-                if (res.status === false) {
-                    alert(res.message);
-                }
-                else {
-                    input.val(val + 1);
-                    $('.sum').text(res.totalSum+' ₴');
-                }
 
-            }
-        });
-
+        input.val(val + 0.5);
     });
 
-    $(document).on('click','.minus',function () {
-        let input = $(this).siblings('.quantity-res').children();
-        let name = $(this).parent().siblings('.item-name').data('name');
+    $(document).on('click','.item-minus',function () {
+        let input = $(this).siblings('.item-res').children();
 
         if(input.val() == 1)
             return;
         let val = Number(input.val());
-
-        $.ajax({
-            type: "POST",
-            url: "/changeQuantity",
-            data: {
-                quantity: val - 1,
-                id: name
-            },
-            success: function (res) {
-                input.val(val - 1);
-                $('.sum').text(res.totalSum+' ₴');
-            }
-        });
+        input.val(val - 0.5);
     });
-    $(document).on('keyup','.quantity-res > input',function (e) {
+    $(document).on('keyup','.item-res > input',function (e) {
         let input = $(this);
-        let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
         let val = Number(input.val());
 
         if( val == '')
@@ -142,59 +103,20 @@ $(document).ready(function () {
         // }
 
         if(val < 0) {
-            alert('Min 1');
             input.val(1);
-            val = 1;
         }
-
-        $.ajax({
-            type: "POST",
-            url: "/changeQuantity",
-            data: {
-                quantity: val,
-                id: name
-            },
-            success: function (res) {
-                if (res.status === false) {
-                    alert('ostalos '+res.rest);
-                    input.val(res.rest)
-                }
-                else {
-                    input.val(val);
-                    $('.sum').text(res.totalSum+' ₴');
-                }
-            }
-        });
     });
-    $('.quantity-res > input').bind('cut copy paste',function (e) {
+    $('.item-res > input').bind('cut copy paste',function (e) {
         e.preventDefault();
     });
 
-    $(document).on('blur','.quantity-res > input',function (e) {
+    $(document).on('blur','.item-res > input',function (e) {
         let input = $(this);
-        let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
         let val = Number(input.val());
-        if(val == ''){
-            $.ajax({
-                type: "POST",
-                url: "/changeQuantity",
-                data: {
-                    quantity: 1,
-                    id: name
-                },
-                success: function (res) {
-                    if (res.status === false) {
-                        alert('ostalos '+res.rest);
-                        input.val(res.rest)
-                    }
-                    else {
-                        input.val(1);
-                        $('.sum').text(res.totalSum+' ₴');
-                    }
-                }
-            });
-        }
+        if(val == '')
+            input.val(1);
     });
+
     let size = null;
     let related = $('.receipt-name').data('related');
     let checked = related ? related : null;

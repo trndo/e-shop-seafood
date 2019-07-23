@@ -26,14 +26,9 @@ class CartController extends AbstractController
      */
     public function addToCart(Request $request,CartHandlerInterface $cartHandler): Response
     {
-        $cartHandler->addItemToCart($request);
+        $response = $cartHandler->addItemToCart($request);
 
-        $totalSum = $request->getSession()->get('totalSum');
-
-        return new JsonResponse([
-            'status' => true,
-            'totalSum' => $totalSum
-        ],200);
+        return new JsonResponse($response,200);
     }
 
     /**

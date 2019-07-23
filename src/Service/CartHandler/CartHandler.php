@@ -52,32 +52,42 @@ class CartHandler implements CartHandlerInterface
      * Add receipt or product to cart
      *
      * @param Request $request
+     * @return array
      */
-    public function addItemToCart(Request $request): void
+    public function addItemToCart(Request $request): array
     {
         $session = $request->getSession();
         $post = $request->request;
-        $shoppingCart = [];
         $id = $post->get('id');
         $productWithSize = $post->get('size');
+        $shoppingCart = $session->get('cart',[]);
 
-        if (!$session->get('cart')) {
-            $session->set('cart', $shoppingCart);
-        }
-
-        $shoppingCart = $session->get('cart');
-
-        if($this->checkReceiptRelation($id,$productWithSize)) {
+        if($this->checkReceiptRelation($id, $productWithSize)) {
+            $result = $this->checkItemQuantity($productWithSize, $post->get('quantity',1));
+            if ($result['status']){
                 $shoppingCart[$id] = [
-                    $post->get('size') => $post->get('quantity',1)
+                    $productWithSize => $post->get('quantity',1)
                 ];
+            } else {
+                return $result;
             }
+        }
         if ($this->checkIsValidId($id)) {
+            $result = $this->checkItemQuantity($id, $post->get('quantity',1));
+            if ($result['status']){
                 $shoppingCart[$id] = $post->get('quantity', 1);
+            } else {
+                return $result;
+            }
         }
 
         $session->set('cart',$shoppingCart);
         $this->countTotalSum($session);
+
+        return [
+            'status' => true,
+            'totalSum' => $session->get('totalSum')
+        ];
     }
 
     public function removeFromCart(Request $request): void
@@ -105,29 +115,28 @@ class CartHandler implements CartHandlerInterface
         $post = $request->request;
         $id = $post->get('id');
         $quantity = $post->get('quantity');
-        $product = $this->getItem($id);
-        $productQuantity = $product->getSupply()->getQuantity();
-
-        if(!$session->get('cart'))
-            $cart = $session->set('cart',[]);
-        else
-            $cart = $session->get('cart');
-
-        if ($quantity > $productQuantity ) {
-            return [
-                'status'=> false,
-                'rest' => $productQuantity,
-                'unit' => $product->getUnit(),
-            ];
-        }
-
+        $cart = $session->get('cart',[]);
         if (isset($cart[$id])) {
+
             if(is_array($cart[$id])) {
+
                 $keys = array_keys($cart[$id]);
-                $cart[$id][$keys[0]] = $quantity;
+                $result = $this->checkItemQuantity($keys[0],$quantity);
+
+                if ($result['status'])
+                    $cart[$id][$keys[0]] = $quantity;
+                else
+                    return $result;
             }
-            else
-            $cart[$id] = $quantity ;
+            else{
+                $result =$this->checkItemQuantity($id,$quantity);
+
+                if ($result['status'])
+                    $cart[$id] = $quantity ;
+                else
+                    return $result;
+
+            }
             $session->set('cart',$cart);
             $this->countTotalSum($session);
         }
@@ -151,9 +160,9 @@ class CartHandler implements CartHandlerInterface
                     $total += ceil(($relatedProduct->getPrice() + $item->getPrice()) * $id[$keys[0]]);
                 } else
                     $total += ceil($item->getPrice() * $cart[$key]);
-                $session->set('totalSum', $total);
             }
         }
+        $session->set('totalSum', $total);
     }
 
     private function explodeId(string $id)
@@ -175,7 +184,7 @@ class CartHandler implements CartHandlerInterface
 
     private function checkReceiptRelation(string $receiptId,string $productId)
     {
-        if(!preg_match('/^receipt\-\d+?(\-(S|M|L|XL|XXL))$/',$receiptId) || !preg_match('/^product\-\d+$/',$productId))
+        if (!preg_match('/^receipt\-\d+(\-(S|M|L|XL|XXL))?$/', $receiptId) || !preg_match('/^product\-\d+$/', $productId))
             return false;
 
         $receipt = $this->getItem($receiptId);
@@ -219,5 +228,23 @@ class CartHandler implements CartHandlerInterface
         }
 
         return $result;
+    }
+
+    private function checkItemQuantity(string $id, float $quantity): array
+    {
+        $product = $this->getItem($id);
+        $productQuantity = $product->getSupply()->getQuantity();
+
+        if ($quantity > $productQuantity ) {
+            return [
+                'status'=> false,
+                'rest' => $productQuantity,
+                'unit' => $product->getUnit(),
+            ];
+        }
+        else
+            return [
+                'status' => true
+            ];
     }
 }

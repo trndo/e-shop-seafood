@@ -25,15 +25,17 @@
                     <div class="order-container">
                         <div class="order">
                             <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
-                            <div class="order-product-name item-name" data-name="{{ cartItem.item.type == 'receipt' ? 'receipt-' ~ cartItem.item.id : 'product-' ~ cartItem.item.id}}">
+                            <div class="order-product-name item-name" data-name="{{ cartItem.item.type == 'receipt'
+                            ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.ProductSize : 'receipt-' ~ cartItem.item.id
+                            : 'product-' ~ cartItem.item.id }}">
                                 {{ cartItem.item.name }}&nbsp;{{ cartItem.item.type == 'receipt' ?  cartItem.product.ProductSize : ''}}
                             </div>
                             <div class="quantity">
-                                <span class="plus">+</span>
-                                <div class="quantity-res">
+                                <span class="plus cart-plus">+</span>
+                                <div class="quantity-res cart-res">
                                     <input type="number" value="{{ cartItem.quantity }}">
                                 </div>
-                                <span class="minus">-</span>
+                                <span class="minus cart-minus">-</span>
                             </div>
                             <div class="order-price">
                                 {{ cartItem.item.price }} <span class="hryvnas">₴</span>
@@ -54,4 +56,8 @@
         </div>
     </div>
    {% include 'elements/__footer.html.twig' with { 'active': false } %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('cart') }}
 {% endblock %}

@@ -21,9 +21,9 @@ interface CartHandlerInterface
      * Add receipt or product to cart
      *
      * @param Request $request
-     *
+     * @return array
      */
-    public function addItemToCart(Request $request): void ;
+    public function addItemToCart(Request $request): array ;
 
     /**
      * Remove product or receipt from cart by key

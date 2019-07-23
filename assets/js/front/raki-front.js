@@ -129,6 +129,26 @@ $(document).ready(function () {
         size = $(this).data('size');
     })
 
+    $('.show-modal').on('click', function () {
+        $('#modalWindow').show();
+    });
+
+    $('.choose-type').on('click', function () {
+        let orderType = $(this).data('order');
+
+        $.ajax({
+            type: 'POST',
+            url: '/chooseOrder',
+            data: {
+                orderType: orderType === 'today'
+            },
+            success: function (res) {
+                $('#modalWindow').remove();
+                $('.order-type').addClass('add-basket').removeClass('show-modal').removeClass('order-type');
+                $('.add-basket')[0].click();
+            }
+        });
+    });
 
 });
 

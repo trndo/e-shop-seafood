@@ -61,9 +61,10 @@ class CartHandler implements CartHandlerInterface
         $id = $post->get('id');
         $productWithSize = $post->get('size');
         $shoppingCart = $session->get('cart',[]);
+        $orderType = $session->get('orderChoose',true);
 
         if($this->checkReceiptRelation($id, $productWithSize)) {
-            $result = $this->checkItemQuantity($productWithSize, $post->get('quantity',1));
+            $result = $this->checkItemQuantity($productWithSize, $post->get('quantity',1), $orderType);
             if ($result['status']){
                 $shoppingCart[$id] = [
                     $productWithSize => $post->get('quantity',1)
@@ -73,7 +74,7 @@ class CartHandler implements CartHandlerInterface
             }
         }
         if ($this->checkIsValidId($id)) {
-            $result = $this->checkItemQuantity($id, $post->get('quantity',1));
+            $result = $this->checkItemQuantity($id, $post->get('quantity',1), $orderType);
             if ($result['status']){
                 $shoppingCart[$id] = $post->get('quantity', 1);
             } else {
@@ -116,12 +117,14 @@ class CartHandler implements CartHandlerInterface
         $id = $post->get('id');
         $quantity = $post->get('quantity');
         $cart = $session->get('cart',[]);
+        $orderType = $session->get('orderChoose',true);
+
         if (isset($cart[$id])) {
 
             if(is_array($cart[$id])) {
 
                 $keys = array_keys($cart[$id]);
-                $result = $this->checkItemQuantity($keys[0],$quantity);
+                $result = $this->checkItemQuantity($keys[0], $quantity, $orderType);
 
                 if ($result['status'])
                     $cart[$id][$keys[0]] = $quantity;
@@ -129,7 +132,7 @@ class CartHandler implements CartHandlerInterface
                     return $result;
             }
             else{
-                $result =$this->checkItemQuantity($id,$quantity);
+                $result =$this->checkItemQuantity($id, $quantity, $orderType);
 
                 if ($result['status'])
                     $cart[$id] = $quantity ;
@@ -230,12 +233,12 @@ class CartHandler implements CartHandlerInterface
         return $result;
     }
 
-    private function checkItemQuantity(string $id, float $quantity): array
+    private function checkItemQuantity(string $id, float $quantity, bool $validation): array
     {
         $product = $this->getItem($id);
         $productQuantity = $product->getSupply()->getQuantity();
 
-        if ($quantity > $productQuantity ) {
+        if ($quantity > $productQuantity && $validation) {
             return [
                 'status'=> false,
                 'rest' => $productQuantity,

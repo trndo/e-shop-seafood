@@ -130,7 +130,7 @@ $(document).ready(function () {
     })
 
     $('.show-modal').on('click', function () {
-        $('#modalWindow').show();
+        $('#overlay').show();
     });
 
     $('.choose-type').on('click', function () {
@@ -139,13 +139,14 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/chooseOrder',
-            data: {
-                orderType: orderType === 'today'
-            },
+            dataType: 'application/json',
+            data: JSON.stringify({
+                orderType: orderType === "today"
+            }),
             success: function (res) {
-                $('#modalWindow').remove();
+                $('#overlay').hide();
                 $('.order-type').addClass('add-basket').removeClass('show-modal').removeClass('order-type');
-                $('.add-basket')[0].click();
+                $('.adder').trigger('click');
             }
         });
     });

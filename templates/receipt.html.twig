@@ -1,27 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .modalBox {
-            position: fixed; /* create the modal window layer, and have it fill the entire screen */
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8); /* set the modal window layer's background color to a translucent black */
-            z-index: 99999; /* put the layer on top of every other layer */
-
-            display: none;
-        }
-        .modalBox > div {
-            width: 500px; /* set the window's width */
-            position: relative;
-            margin: 10% auto; /* center the window horizontally */
-            padding: 5px;
-            background: #fff;
-        }
-    </style>
-{% endblock %}
 {% block body %}
     <div class="container">
         <div class="without-top-container">
@@ -61,16 +38,17 @@
                                     </div>
                                     <span class="minus item-minus">-</span>
                                 </div>
-                                {% if app.session.get('orderChoose') is not null %}
-                                <div class="custom-button add-basket " data-name="{{ item.id }}" data-type="{{ item.getType }}">
+                                {% set session = app.session.get('chooseOrder') %}
+                                {% if session is not null %}
+                                    {% dump(session) %}
+                                <div class="custom-button add-basket adder" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                     Добавить в козину
                                 </div>
                                 {% else %}
-                                    <div class="custom-button order-type show-modal" data-name="{{ item.id }}" data-type="{{ item.getType }}">
+                                    <div class="custom-button order-type show-modal adder" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                         Добавить в козину
                                     </div>
                                 {% endif %}
-
                             </div>
                         </div>
                         <div class="percent-promotion">
@@ -127,47 +105,20 @@
             </div>
         </div>
     </div>
-    <div id="modalWindow" class="modalBox">
-    <div>
-        <a class="closeWindow" href="#close">X</a>
-        <div class="custom-button choose-type" data-order="today">
-            Сегодня
-        </div>
-        <div class="custom-button choose-type" data-order="tomorrow">
-            Другой день
-        </div>
-    </div>
-    </div>
     {% include 'elements/__footer.html.twig' with {'active': active } %}
-    <div id="overlay" style="display: none">
+    <div id="overlay">
         <div class="red-content">
             <div id="shopping-cart">
                 <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
             </div>
             <div class="check-shopping">
-                <p>
-                    Точно всё выбрал?
-                </p>
-                <h4>
-                    Проверяй и оформляй
-                </h4>
-            </div>
-            <div class="cart-container cartItems">
-                <div class="order">
-                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                    <div class="order-product-name">
-                    </div>
+                 <div class="custom-button choose-type" data-order="today">
+                     Сегодня
+                 </div>
+                 <div class="custom-button choose-type" data-order="tomorrow">
+                    Другой день
                 </div>
-            </div>
             <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
         </div>
     </div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
-    </script>
-    <script>
-
-    </script>
 {% endblock %}

@@ -3,9 +3,11 @@ import '../../css/lipinskie-raki/small-page.css'
 import '../../css/lipinskie-raki/products.css'
 import '../../css/lipinskie-raki/product.css';
 import '../../css/lipinskie-raki/media-query/main-media.css';
+import '../../css/lipinskie-raki/media-query/small-page-query.css';
 import 'simplebar/dist/simplebar.css';
 import $ from 'jquery';
 import SimpleBar from 'simplebar';
+import 'slick-carousel';
 
 $(document).ready(function () {
     if($('.cart-container').length)
@@ -15,6 +17,15 @@ $(document).ready(function () {
     if($('.menu-nav > ul').length)
         new SimpleBar($('.menu-nav > ul')[0],{
             autoHide: false});
+    if(window.screen.width < 376) {
+        $('.additional-nav-container').slick({
+            infinite: false,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            variableWidth: true,
+            centerMode: false,
+        })
+    }
 
     $('.add-basket').on('click',function () {
         let type = $(this).data('type');
@@ -127,7 +138,7 @@ $(document).ready(function () {
         $(this).addClass('size-block-checked');
         checked = $(this).data('name') ;
         size = $(this).data('size');
-    })
+    });
 
     $('.show-modal').on('click', function () {
         $('#overlay').show();

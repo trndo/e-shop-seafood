@@ -1,12 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+{% endblock %}
 {% block body %}
     <section class="wrapper">
     <div class="container">
         <div class="container-inside">
             {% include 'elements/__header.html.twig' with {'active': false} %}
             <main>
+                <div class="additional-nav">
+                    <div class="additional-nav-container">
+                        <div class="additional-nav-item">
+                            Живые раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Вареные раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Жареные раки
+                        </div>
+                    </div>
+                </div>
                 <div class="small-red-content">
                     <embed id="shrimps" type="image/svg+xml" src="/assets/img/shrimp.svg"/>
                     <div class="form-container">
@@ -18,9 +38,7 @@
                             <div class="login-input-container">
                                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="user-input login-input" placeholder="Email" required autofocus>
                                 <input type="password" name="password" id="inputPassword" class="user-input login-input" placeholder="Пароль" required>
-                                <input type="hidden" name="_csrf_token"
-                                       value="{{ csrf_token('authenticate') }}"
-                                >
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             </div>
                             <div class="remeber_me">
                                 <label>

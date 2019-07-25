@@ -1,4 +1,4 @@
-@media (max-device-height: 740px) and (min-width: 992px) {
+@media (max-device-height: 768px) and (min-width: 992px) {
     footer{
         position: relative;
         top: unset;
@@ -87,7 +87,6 @@
     .contact{
         margin-left: 0;
     }
-
 }
 
 @media (min-width: 375px) and (max-width: 767px) {
@@ -135,7 +134,7 @@
     .menu-nav ul li:nth-child(5) span{
         display: inline;
     }
-    /* delL! */
+    /* delL!
     .small-red-content{
         display: none;
     }
@@ -144,7 +143,7 @@
         display: none;
     }
 
-    /* delL! */
+     delL! */
     #mobile-basket{
         display: block;
         background-image: url("../../../img/online-shopping-cart.svg");
@@ -185,6 +184,10 @@
     }
     .row{
         margin-right: unset;
+    }
+
+    .contact-social{
+        margin-top: 58px;
     }
 }
 
@@ -239,16 +242,6 @@
         padding-left: 45px;
     }
 
-    /* delL! */
-    .small-red-content{
-        display: none;
-    }
-
-    .if-no-login{
-        display: none;
-    }
-
-    /* delL! */
     #mobile-basket{
         display: block;
         background-image: url("../../../img/online-shopping-cart.svg");

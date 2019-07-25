@@ -630,7 +630,7 @@ input[type=number] {
     width: 770px;
     height: 60px;
     margin: 0 auto;
-    padding-bottom: 19px;
+    margin-bottom: 40px;
 }
 
 .login-with{

@@ -1,16 +1,17 @@
 <div class="menu-nav">
-    <object id="user" type="image/svg+xml" data="/assets/img/avatar.svg"></object>
+    <object id="user-mobile" type="image/svg+xml" data="/assets/img/avatar.svg"></object>
     <ul>
         <li {% if mob_active == 'home' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главаня</li>
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
         <li {% if mob_active == 'zharenye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
         <li {% if mob_active == 'not exist yet' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
-        <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент</li>
+        <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент <span> &nbsp;></span></li>
         <div class="mobile-dropdown">
         {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
         </div>
     </ul>
     <div class="curtain-info">
+        <span id="mobile-basket">550 грн</span>
         <span id="phone">+38(000)000-00-00</span>
         <span id="email">rakiInf@gmail.com</span>
         <span id="address">вулиця Сергія Данеченко 12, Киев</span>

@@ -7,8 +7,11 @@ namespace App\Form;
 use App\Model\OrderModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,13 +31,22 @@ class OrderType extends AbstractType
             ->add('phoneNumber',TextType::class,[
                 'label' => false
             ])
-            ->add('orderDate',TextType::class,[
-                'label' => false
+            ->add('orderDate',DateType::class,[
+                'label' => false,
+                'widget' => 'single_text',
+                'html5' => false
             ])
-            ->add('orderTime',TextType::class,[
-                'label' => false
+            ->add('orderTime',TimeType::class,[
+                'label' => false,
+                'input'  => 'datetime',
+                'widget' => 'single_text',
+                'html5' => false,
+
             ])
             ->add('deliveryType',TextType::class,[
+                'label' => false
+            ])
+            ->add('save',SubmitType::class,[
                 'label' => false
             ]);
     }

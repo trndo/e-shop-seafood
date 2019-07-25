@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\OrderType;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,14 @@ class OrderController extends AbstractController
      * @Route("/cart/makeOrder")
      *
      * @param Request $request
+     * @param OrderInfoInterface $orderInfo
      * @return Response
      */
-    public function order(Request $request): Response
+    public function makeOrder(Request $request, OrderInfoInterface $orderInfo): Response
     {
         $user = $this->getUser();
-        if ($user && $this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
             $orderModel = OrderMapper::entityUserToOrderModel($user);
         else
             $orderModel = new OrderModel();
@@ -30,7 +33,7 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-//            $orderInfo->addOrder($user);
+            $orderInfo->addOrder($orderModel,$request);
 
             return $this->redirectToRoute('home');
         }

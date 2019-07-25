@@ -25,15 +25,15 @@ final class OrderMapper
         return $model;
     }
 
-    public static function orderModelToEntity(OrderModel $model, User $user): OrderInfo
+    public static function orderModelToEntity(OrderModel $model): OrderInfo
     {
         $entity = new OrderInfo();
 
-        $entity->setOrderDate(strtotime($model->getOrderDate(),time()))
-            ->setOrderTime(strtotime($model->getOrderTime()))
+        $entity->setOrderDate($model->getOrderDate())
+            ->setOrderTime($model->getOrderTime())
             ->setCreatedAt(new \DateTime())
             ->setUser($model->getUser())
-            ->setStatus(false)
+            ->setStatus('new')
             ->setTotalPrice($model->getTotalPrice())
             ->setOrderPhone($model->getPhoneNumber())
             ->setOrderEmail($model->getEmail());

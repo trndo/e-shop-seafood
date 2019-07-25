@@ -29,12 +29,12 @@ class OrderModel
     private $phoneNumber;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $orderDate;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $orderTime;
 
@@ -151,44 +151,6 @@ class OrderModel
     }
 
     /**
-     * @return string|null
-     */
-    public function getOrderDate(): ?string
-    {
-        return $this->orderDate;
-    }
-
-    /**
-     * @param string|null $orderDate
-     * @return OrderModel
-     */
-    public function setOrderDate(?string $orderDate): self
-    {
-        $this->orderDate = $orderDate;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOrderTime(): ?string
-    {
-        return $this->orderTime;
-    }
-
-    /**
-     * @param string|null $orderTime
-     * @return OrderModel
-     */
-    public function setOrderTime(?string $orderTime): self
-    {
-        $this->orderTime = $orderTime;
-
-        return $this;
-    }
-
-    /**
      * @return User|null
      */
     public function getUser(): ?User
@@ -225,6 +187,46 @@ class OrderModel
 
         return $this;
     }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getOrderDate(): ?\DateTime
+    {
+        return $this->orderDate;
+    }
+
+    /**
+     * @param \DateTime|null $orderDate
+     * @return OrderModel
+     */
+    public function setOrderDate(?\DateTime $orderDate): self
+    {
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getOrderTime(): ?\DateTime
+    {
+        return $this->orderTime;
+    }
+
+    /**
+     * @param \DateTime|null $orderTime
+     * @return OrderModel
+     */
+    public function setOrderTime(?\DateTime $orderTime): self
+    {
+        $this->orderTime = $orderTime;
+
+        return $this;
+    }
+
+
 
 
 

@@ -26,7 +26,7 @@ class CartController extends AbstractController
      */
     public function chooseOrderType(Request $request): JsonResponse
     {
-        $orderType = $request->request->get('orderType');
+        $orderType = json_decode($request->getContent(),true)['orderType'];
         $request->getSession()->set('chooseOrder',$orderType);
         return new JsonResponse([
             'status' => true

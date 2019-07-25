@@ -61,7 +61,7 @@ class CartHandler implements CartHandlerInterface
         $id = $post->get('id');
         $productWithSize = $post->get('size');
         $shoppingCart = $session->get('cart',[]);
-        $orderType = $session->get('orderChoose',true);
+        $orderType = $session->get('chooseOrder',true);
 
         if($this->checkReceiptRelation($id, $productWithSize)) {
             $result = $this->checkItemQuantity($productWithSize, $post->get('quantity',1), $orderType);
@@ -117,7 +117,7 @@ class CartHandler implements CartHandlerInterface
         $id = $post->get('id');
         $quantity = $post->get('quantity');
         $cart = $session->get('cart',[]);
-        $orderType = $session->get('orderChoose',true);
+        $orderType = $session->get('chooseOrder',true);
 
         if (isset($cart[$id])) {
 

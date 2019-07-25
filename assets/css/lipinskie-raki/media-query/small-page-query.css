@@ -1,0 +1,302 @@
+@media (max-width: 991px) and (min-width: 768px){
+    .if-no-login{
+        padding-left: 44px;
+        padding-right: 46px;
+        margin-bottom: 0;
+    }
+
+    .small-red-content{
+        margin-top: 0;
+    }
+
+    .login-with{
+        padding-top: 9px;
+        padding-bottom: 30px;
+        font-weight: 300;
+        font-size: 14px;
+        color: #FFFFFF;
+    }
+
+    .additional-nav{
+        display: block;
+        height: 69px;
+        width: 100%;
+        padding-top: 14px;
+        padding-bottom: 25px;
+    }
+
+    .additional-nav-container{
+        width: 530px;
+        height: 30px;
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .additional-nav-item{
+        width: 150px;
+        height: 30px;
+        font-family: Raleway, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        color: #FFFFFF;
+        background: #F13A3A;
+        cursor: pointer;
+    }
+
+}
+
+@media (min-width: 375px) and (max-width: 767px){
+    .additional-nav{
+        display: block;
+        height: 69px;
+        width: 100%;
+        padding-top: 7px;
+        padding-bottom: 25px;
+    }
+
+    .additional-nav-container{
+        width: 100%;
+        height: 30px;
+        position: relative;
+        margin: unset;
+        display: flex;
+        justify-content: space-between;
+        overflow-x: hidden;
+    }
+
+    .additional-nav-item{
+        width: 150px;
+        height: 30px;
+        font-family: Raleway, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        color: #FFFFFF;
+        background: #F13A3A;
+        cursor: pointer;
+    }
+
+    .small-red-content{
+        margin: 0 auto;
+        margin-top: 7px;
+        width: 286px;
+        height: 375px;
+    }
+
+    .form-container {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        z-index: 100;
+    }
+
+    footer{
+        position: relative;
+        top:unset;
+    }
+
+    .form-title{
+        padding-left: 19px;
+    }
+
+    #subtitle{
+        font-size: 14px;
+    }
+
+    #title{
+        font-size: 18px;
+    }
+
+    .login-input-container {
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .login-input{
+        width: 200px;
+    }
+
+    .remeber_me{
+        margin-top: 22px;
+    }
+
+    .login-button{
+        width: 195px;
+        margin-top: 25px;
+    }
+    .forgot-pass{
+        font-size: 18px;
+    }
+    .if-no-login{
+        height: 130px;
+        width: 255px;
+    }
+
+    .login-with{
+        padding-bottom: 24px;
+        padding-top: 14px;
+        font-size: 10px;
+        color: gray;
+    }
+
+    .login-with-container{
+        display: block;
+        height: 100px;
+    }
+
+    .social-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .social{
+        width: 59px;
+        height: 28px;
+    }
+
+    .social embed{
+        width: 19px;
+        height: 19px
+    }
+    .register-button{
+        margin-left: -28px;
+        margin-top: 34px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 375px) {
+    .additional-nav{
+        display: block;
+        height: 69px;
+        width: 100%;
+        padding-top: 7px;
+        padding-bottom: 25px;
+    }
+
+    .additional-nav-container{
+        width: 100%;
+        height: 30px;
+        position: relative;
+        margin: unset;
+        display: block;
+        overflow: hidden;
+    }
+
+    .additional-nav-item{
+        width: 150px;
+        height: 30px;
+        font-family: Raleway, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        color: #FFFFFF;
+        background: #F13A3A;
+        cursor: pointer;
+    }
+
+    .small-red-content{
+        margin: 0 auto;
+        margin-top: 7px;
+        width: 286px;
+        height: 375px;
+    }
+
+    .form-container {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        z-index: 100;
+    }
+
+    footer{
+        position: relative;
+        top:unset;
+    }
+
+    .form-title{
+        padding-left: 19px;
+    }
+
+    #subtitle{
+        font-size: 14px;
+    }
+
+    #title{
+        font-size: 18px;
+    }
+
+    .login-input-container {
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .login-input{
+        width: 200px;
+    }
+
+    .remeber_me{
+        margin-top: 22px;
+    }
+
+    .login-button{
+        width: 195px;
+        margin-top: 25px;
+    }
+    .forgot-pass{
+        font-size: 18px;
+    }
+    .if-no-login{
+        height: 130px;
+        width: 255px;
+    }
+
+    .login-with{
+        padding-bottom: 24px;
+        padding-top: 14px;
+        font-size: 10px;
+        color: gray;
+    }
+
+    .login-with-container{
+        display: block;
+        height: 100px;
+    }
+
+    .social-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .social{
+        width: 59px;
+        height: 28px;
+    }
+
+    .social embed{
+        width: 19px;
+        height: 19px
+    }
+    .register-button{
+        margin-left: -28px;
+        margin-top: 34px;
+    }
+}

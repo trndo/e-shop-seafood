@@ -20,6 +20,7 @@
         "jquery-ui": "^1.12.1",
         "pickerjs": "^1.2.1",
         "popper.js": "^1.15.0",
-        "simplebar": "^4.0.0"
+        "simplebar": "^4.0.0",
+        "slick-carousel": "^1.8.1"
     }
 }

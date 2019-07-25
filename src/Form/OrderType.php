@@ -34,6 +34,7 @@ class OrderType extends AbstractType
             ->add('orderDate',DateType::class,[
                 'label' => false,
                 'widget' => 'single_text',
+                'format' => 'dd.MM.yyyy',
                 'html5' => false
             ])
             ->add('orderTime',TimeType::class,[

@@ -24,8 +24,10 @@ $(document).ready(function () {
             slidesToScroll: 1,
             variableWidth: true,
             centerMode: false,
+            arrows: false
         })
     }
+
 
     $('.add-basket').on('click',function () {
         let type = $(this).data('type');

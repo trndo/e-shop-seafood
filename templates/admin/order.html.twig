@@ -1,0 +1,143 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    {{ include('elements/admin_nav.html.twig', {'active' : false}) }}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+            {{ include('elements/admin_header.html.twig') }}
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="h3 mb-2 text-gray-800">Заказ #123123</h1>
+                <hr class="sidebar-divider">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('admin') }}">Главная</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Заказ #123123</li>
+                    </ol>
+                </nav>
+                <div class="row relative justify-content-center mt-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body" style="padding-top: 60px">
+                                <div class="order-number text-center">
+                                    Zakaz #1123123  &nbsp;Дата: <u>21.10.2012</u>
+                                </div>
+                                <div class="order-status status-new">
+                                    Новый Заказ
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-11 col-md-11 col-sm-12">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" aria-disabled="true"><span class="badge badge-dark">1</span> Cras justo odio</li>
+                                            <li class="list-group-item"><span class="badge badge-dark">2</span> Dapibus ac facilisis in</li>
+                                            <li class="list-group-item"><span class="badge badge-dark">3</span> Morbi leo risus</li>
+                                            <li class="list-group-item"><span class="badge badge-dark">4</span> Porta ac consectetur ac</li>
+                                            <li class="list-group-item"><span class="badge badge-dark">5</span> Vestibulum at eros</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-4 text-center text-primary h4">
+                                        На какую дату: 12.11.12
+                                    </div>
+                                    <div class="col-4 text-center text-primary h4">
+                                        На какое время: 14:00
+                                    </div>
+                                    <div class="col-4 text-center text-primary h4">
+                                        Тип Доставки: Самовывоз
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                     <div class="col-6">
+                                         <div id="map">
+
+                                         </div>
+                                     </div>
+                                    <div class="col-6 text-center pt-5">
+                                        <p class="h3">Андрей Литковский</p>
+                                        <p class="h5" >+3809567345</p>
+                                        <p class="h5">lewf@gmail.com</p>
+                                        <p class="h5">Большая Васильковская 12</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 justify-content-center">
+                                    <div class="col-6 text-center">
+                                        <button class="btn btn-danger mr-2 list-inline-item">Удалить заказ</button>
+                                        <button class="btn btn-primary mr-2  list-inline-item">Изменить заказ</button>
+                                        <div class="dropdown  list-inline-item">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Изменить статус заказа
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">В готовку!</a>
+                                                <a class="dropdown-item" href="#">Отложить заказ</a>
+                                            </div>
+                                        </div>
+                                        {# button class="btn btn-secondary ">В готовку</button>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        {{ include('elements/admin_footer.html.twig') }}
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5CSb-iMy9DtAHF2u-LGV_j2dZ0UQFTCE&libraries=places&callback=initMap"
+            async defer></script>
+    <script>
+        let map;
+        let position = { lat: -34.397, lng: 150.644};
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: position,
+                zoom: 8
+            });
+            let marker = new google.maps.Marker({position: position, map: map});
+        }
+    </script>
+{% endblock %}
+

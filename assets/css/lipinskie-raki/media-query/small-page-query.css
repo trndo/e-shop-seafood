@@ -186,12 +186,10 @@
     }
 
     .additional-nav-container{
-        width: 100%;
         height: 30px;
         position: relative;
         margin: unset;
         display: block;
-        overflow: hidden;
     }
 
     .additional-nav-item{

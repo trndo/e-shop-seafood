@@ -6,6 +6,8 @@ use App\Form\OrderType;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
+use App\Service\EntityService\UserService\UserServiceInterface;
+use App\Service\RegistrationService\RegisterUserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +20,10 @@ class OrderController extends AbstractController
      *
      * @param Request $request
      * @param OrderInfoInterface $orderInfo
+     * @param UserServiceInterface $userService
      * @return Response
      */
-    public function makeOrder(Request $request, OrderInfoInterface $orderInfo): Response
+    public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
     {
         $user = $this->getUser();
 
@@ -35,6 +38,14 @@ class OrderController extends AbstractController
         {
             if ($user) {
                 $orderModel = $orderModel->setUser($user);
+            } else {
+                $user = $registerUser->registerUnknownUser($orderModel);
+                $orderModel = $orderModel->setUser($user);
+                $orderInfo->addOrder($orderModel,$request);
+
+                return $this->redirectToRoute('confirmUnknownRegistration',[
+                    'email' => $user->getEmail()
+                ]);
             }
             $orderInfo->addOrder($orderModel,$request);
 

@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -47,6 +48,7 @@ class OrderType extends AbstractType
             ->add('deliveryType',TextType::class,[
                 'label' => false
             ])
+            ->add('coordinates',HiddenType::class)
             ->add('save',SubmitType::class,[
                 'label' => false
             ]);

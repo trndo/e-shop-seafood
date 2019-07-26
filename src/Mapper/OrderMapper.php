@@ -18,9 +18,8 @@ final class OrderMapper
             ->setSurname($user->getSurname())
             ->setEmail($user->getEmail())
             ->setPhoneNumber($user->getPhone())
-            ->setDeliveryType($user->getAddress());
-        if ($user)
-            $model->setUser($user);
+            ->setDeliveryType($user->getAddress())
+            ->setUser($user);
 
         return $model;
     }
@@ -36,7 +35,9 @@ final class OrderMapper
             ->setStatus('new')
             ->setTotalPrice($model->getTotalPrice())
             ->setOrderPhone($model->getPhoneNumber())
-            ->setOrderEmail($model->getEmail());
+            ->setOrderEmail($model->getEmail())
+            ->setAddress($model->getDeliveryType())
+            ->setCoordinates($model->getCoordinates());
 
         return $entity;
 

@@ -123,6 +123,7 @@
                         <div class="lipinka-street">
                             проспект раков Липинка
                         </div>
+                        {{ form_widget(form.coordinates) }}
                         {{ form_widget(form.save,{'attr': {'class': 'checkout-order','label': 'Оформить'}}) }}
 {#                        <div class="checkout-order">#}
 {#                            Оформить#}
@@ -222,6 +223,7 @@
                             }
                         };
                     });
+                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
                     map.panTo(position);
                 } else {
                     let latLng = {
@@ -240,6 +242,7 @@
                         };
                     });
                     marker.setPosition(position);
+                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
                     map.panTo(position);
                 }
             }
@@ -291,7 +294,9 @@
                         title: place.name,
                         position: place.geometry.location
                     });
+                     document.getElementById('order_coordinates').value = place.geometry.location.lat()+' '+place.geometry.location.lng();
 
+                    console.log(place.geometry.location);
                     if (place.geometry.viewport) {
                         // Only geocodes have viewport.
                         bounds.union(place.geometry.viewport);

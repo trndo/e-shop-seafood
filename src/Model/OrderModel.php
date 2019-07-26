@@ -54,6 +54,54 @@ class OrderModel
     private $totalPrice;
 
     /**
+     * @var string|null
+     */
+    private $address;
+
+    /**
+     * @var string|null
+     */
+    private $coordinates;
+
+    /**
+     * @return string|null
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string|null $address
+     * @return OrderModel
+     */
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCoordinates(): ?string
+    {
+        return $this->coordinates;
+    }
+
+    /**
+     * @param string|null $coordinates
+     * @return OrderModel
+     */
+    public function setCoordinates(?string $coordinates): self
+    {
+        $this->coordinates = $coordinates;
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getName(): ?string

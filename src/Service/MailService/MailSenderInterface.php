@@ -25,5 +25,14 @@ interface MailSenderInterface
      */
     public function sendResetUserPassword(User $user): void ;
 
+    /**
+     * @param User $user
+     */
     public function sendAboutResettingPassword(User $user): void ;
+
+    /**
+     * @param User $user
+     * @param string $temporaryPass
+     */
+    public function sendAboutUnknownRegistration(User $user, string $temporaryPass): void ;
 }

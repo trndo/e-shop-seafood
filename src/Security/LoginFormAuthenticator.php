@@ -88,6 +88,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+        if ('/cart/makeOrder' === $request->headers->get('referer')) {
+            return new RedirectResponse($this->urlGenerator->generate('cart'));
+        }
+
+
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

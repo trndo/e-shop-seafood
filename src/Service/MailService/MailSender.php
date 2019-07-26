@@ -83,6 +83,13 @@ class MailSender implements MailSenderInterface
         $this->sendMessageTo($user,'mail/resetting_message.html.twig',['user' => $user]);
     }
 
+    public function sendAboutUnknownRegistration(User $user, string $temporaryPass): void
+    {
+        $this->sendMessageTo($user,'mail/unknown_message.html.twig',[
+            'user' => $user,
+            'temporaryPass' => $temporaryPass
+        ]);
+    }
     private function sendMessageTo(User $user,string $template,array $options = null)
     {
         $message = (new \Swift_Message(self::TRANSPORT))
@@ -96,5 +103,6 @@ class MailSender implements MailSenderInterface
             );
         $this->mailer->send($message);
     }
+
 
 }

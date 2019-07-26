@@ -5,6 +5,7 @@ namespace App\Service\RegistrationService;
 
 use App\Entity\User;
 use App\Model\AdminModel;
+use App\Model\OrderModel;
 use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\TokenService\TokenGenerator;
@@ -119,5 +120,40 @@ class RegisterUser implements RegisterUserInterface
 
             return $admin;
     }
+
+    public function registerUnknownUser(OrderModel $orderModel): User
+    {
+        $user = new User();
+
+        $user->setEmail($orderModel->getEmail())
+            ->setPhone($orderModel->getPhoneNumber())
+            ->setAddress($orderModel->getAddress())
+            ->setName($orderModel->getName())
+            ->setSurname($orderModel->getSurname())
+            ->setRegistrationStatus(true);
+
+        $userTemporaryPass = $this->createShortPass($orderModel->getEmail(),$orderModel->getName(),6);
+        $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                $userTemporaryPass
+        ));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $this->mailSender->sendAboutUnknownRegistration($user,$userTemporaryPass);
+
+        return $user;
+    }
+
+    private function createShortPass(string $email, string $name, int $numberOfSymbols): string
+    {
+        $userData = $email.$name;
+        $randomSymbols = str_shuffle($userData);
+
+        return \substr(\md5($randomSymbols),0,$numberOfSymbols);
+
+    }
+
 
 }

@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Form\OrderType;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
+use App\Service\EntityService\UserService\UserServiceInterface;
+use App\Service\RegistrationService\RegisterUserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +19,15 @@ class OrderController extends AbstractController
      * @Route("/cart/makeOrder")
      *
      * @param Request $request
+     * @param OrderInfoInterface $orderInfo
+     * @param UserServiceInterface $userService
      * @return Response
      */
-    public function order(Request $request): Response
+    public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
     {
         $user = $this->getUser();
-        if ($user && $this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
             $orderModel = OrderMapper::entityUserToOrderModel($user);
         else
             $orderModel = new OrderModel();
@@ -30,7 +36,18 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
-//            $orderInfo->addOrder($user);
+            if ($user) {
+                $orderModel = $orderModel->setUser($user);
+            } else {
+                $user = $registerUser->registerUnknownUser($orderModel);
+                $orderModel = $orderModel->setUser($user);
+                $orderInfo->addOrder($orderModel,$request);
+
+                return $this->redirectToRoute('confirmUnknownRegistration',[
+                    'email' => $user->getEmail()
+                ]);
+            }
+            $orderInfo->addOrder($orderModel,$request);
 
             return $this->redirectToRoute('home');
         }

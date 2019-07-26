@@ -7,6 +7,7 @@ use App\Form\UserRegistrationType;
 use App\Model\UserRegistrationModel;
 use App\Security\LoginFormAuthenticator;
 use App\Service\EntityService\UserService\UserService;
+use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\RegistrationService\RegisterUser;
 use App\Service\RegistrationService\RegisterUserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,17 +73,17 @@ class SecurityController extends AbstractController
     }
 
     /**
-     *@Route("/confirmation/{token}", name="confirmation")
+     * @Route("/confirmation/{token}", name="confirmation")
      *
      * @param string $token
-     * @param UserService $userService
+     * @param UserServiceInterface $userService
      * @param Request $request
      * @param GuardAuthenticatorHandler $handler
      * @param LoginFormAuthenticator $loginFormAuthenticator
      * @param RegisterUserInterface $registerUser
      * @return Response
      */
-    public function confirmRegistration(string $token,UserService $userService,Request $request,
+    public function confirmRegistration(string $token,UserServiceInterface $userService,Request $request,
                                         GuardAuthenticatorHandler $handler,
                                         LoginFormAuthenticator $loginFormAuthenticator,
                                         RegisterUserInterface $registerUser): Response
@@ -101,5 +102,33 @@ class SecurityController extends AbstractController
             );
         }
         return new Response('Ooops 404',404);
+    }
+
+    /**
+     * @Route("/confirmUnknownRegistration/{email}", name="confirmUnknownRegistration")
+     * @param User $user
+     * @param UserServiceInterface $userService
+     * @param Request $request
+     * @param GuardAuthenticatorHandler $handler
+     * @param LoginFormAuthenticator $loginFormAuthenticator
+     * @return Response
+     */
+    public function loginUnknownUser(User $user, UserServiceInterface $userService, Request $request,
+                                     GuardAuthenticatorHandler $handler,
+                                     LoginFormAuthenticator $loginFormAuthenticator): Response
+    {
+        $user = $userService->findUserByEmail($user->getEmail());
+
+        if ($user instanceof User) {
+
+            return $handler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $loginFormAuthenticator,
+                'main'
+            );
+        }
+
+        return $this->redirectToRoute('home');
     }
 }

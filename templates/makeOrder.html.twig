@@ -97,18 +97,18 @@
                         Оформление заказа
                     </div>
                     {{ form_start(form,{'attr': {'class': 'order-form'}}) }}
-                        {{ form_row(form.name,{'attr': {'class': 'order-input',
+                        {{ form_widget(form.name,{'attr': {'class': 'order-input',
                             'placeholder':'Имя*'}}) }}
-                        {{ form_row(form.surname,{'attr': {'class': 'order-input',
+                        {{ form_widget(form.surname,{'attr': {'class': 'order-input',
                             'placeholder':'Фамилия*'}}) }}
-                        {{ form_row(form.phoneNumber,{'attr': {'class': 'order-input input-margin-29',
+                        {{ form_widget(form.phoneNumber,{'attr': {'class': 'order-input input-margin-29',
                             'placeholder':'+38(000)___-__-__*'}}) }}
-                        {{ form_row(form.email,{'attr': {'class': 'order-input',
+                        {{ form_widget(form.email,{'attr': {'class': 'order-input',
                             'placeholder':'Email*'}}) }}
                         <div class="form-row input-margin-16">
-                            {{ form_row(form.orderDate,{'attr': {'class': 'date-input',
+                            {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
                                 'placeholder':'Дата*'}}) }}
-                            {{ form_row(form.orderTime,{'attr': {'class': 'time-input',
+                            {{ form_widget(form.orderTime,{'attr': {'class': 'time-input',
                                 'placeholder':'14:00*'}}) }}
                         </div>
                         <div class="delivery-type">
@@ -119,13 +119,15 @@
                                 Самовывоз
                             </div>
                         </div>
-                        {{ form_row(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
+                        {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
                         <div class="lipinka-street">
                             проспект раков Липинка
                         </div>
-                        <div class="checkout-order">
-                            Оформить
-                        </div>
+                        {{ form_widget(form.coordinates) }}
+                        {{ form_widget(form.save,{'attr': {'class': 'checkout-order','label': 'Оформить'}}) }}
+{#                        <div class="checkout-order">#}
+{#                            Оформить#}
+{#                        </div>#}
                     {{ form_end(form) }}
 {#                    <form action="" class="order-form">#}
 {#                        <input type="text" class="order-input" placeholder="Имя*">#}
@@ -221,6 +223,7 @@
                             }
                         };
                     });
+                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
                     map.panTo(position);
                 } else {
                     let latLng = {
@@ -239,6 +242,7 @@
                         };
                     });
                     marker.setPosition(position);
+                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
                     map.panTo(position);
                 }
             }
@@ -290,7 +294,9 @@
                         title: place.name,
                         position: place.geometry.location
                     });
+                     document.getElementById('order_coordinates').value = place.geometry.location.lat()+' '+place.geometry.location.lng();
 
+                    console.log(place.geometry.location);
                     if (place.geometry.viewport) {
                         // Only geocodes have viewport.
                         bounds.union(place.geometry.viewport);

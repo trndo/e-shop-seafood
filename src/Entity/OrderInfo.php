@@ -63,6 +63,16 @@ class OrderInfo
      */
     private $orderPhone;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $coordinates;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -196,6 +206,30 @@ class OrderInfo
     public function setOrderPhone(?string $orderPhone): self
     {
         $this->orderPhone = $orderPhone;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCoordinates(): ?string
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(?string $coordinates): self
+    {
+        $this->coordinates = $coordinates;
 
         return $this;
     }

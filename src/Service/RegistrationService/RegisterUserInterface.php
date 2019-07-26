@@ -5,6 +5,7 @@ namespace App\Service\RegistrationService;
 
 use App\Entity\User;
 use App\Model\AdminModel;
+use App\Model\OrderModel;
 use App\Model\UserRegistrationModel;
 
 interface RegisterUserInterface
@@ -41,4 +42,6 @@ interface RegisterUserInterface
      * Get admin data after registerAdmin
      */
     public function getRegisterAdminData(AdminModel $model, User $admin): User ;
+
+    public function registerUnknownUser(OrderModel $orderModel): User;
 }

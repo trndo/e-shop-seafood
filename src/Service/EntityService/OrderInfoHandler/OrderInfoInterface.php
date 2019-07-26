@@ -4,9 +4,17 @@
 namespace App\Service\EntityService\OrderInfoHandler;
 
 
-use App\Entity\OrderInfo;
+use App\Model\OrderModel;
+use Symfony\Component\HttpFoundation\Request;
 
 interface OrderInfoInterface
 {
-    public function addOrder(OrderInfo $orderInfo);
+    /**
+     * Add order
+     *
+     * @param OrderModel $orderModel
+     * @param Request $request
+     * @return void
+     */
+    public function addOrder(OrderModel $orderModel, Request $request): void ;
 }

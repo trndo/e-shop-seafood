@@ -47,3 +47,7 @@ $('.toggle-mobile').click(function () {
         let li = $(this).slideToggle();
     })
 });
+
+$('.social').click(function () {
+    window.location.href = $(this).data('login-social');
+});

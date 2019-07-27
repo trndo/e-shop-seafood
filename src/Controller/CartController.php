@@ -30,7 +30,7 @@ class CartController extends AbstractController
         $request->getSession()->set('chooseOrder',$orderType);
         return new JsonResponse([
             'status' => true
-        ]);
+        ], 200);
     }
 
     /**

@@ -29,7 +29,7 @@ $(document).ready(function () {
     }
 
 
-    $('.add-basket').on('click',function () {
+    $(document).on('click','.add-basket',function () {
         let type = $(this).data('type');
         let id = $(this).data('name') ;
 
@@ -143,8 +143,14 @@ $(document).ready(function () {
     });
 
     $('.show-modal').on('click', function () {
-        $('#overlay').show();
+        console.log('i am in show modal');
+        let name = $(this).data('name');
+        let type = $(this).data('type');
+        $('#overlay').toggle();
+        replaceButton = ' <div class="custom-button add-basket" data-name="'+name+'" data-type="'+type+'">Добавить в козину</div>';
     });
+
+    let replaceButton = '';
 
     $('.choose-type').on('click', function () {
         let orderType = $(this).data('order');
@@ -152,16 +158,21 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/chooseOrder',
-            dataType: 'application/json',
+            dataType: 'json',
+            contentType: 'application/json',
             data: JSON.stringify({
                 orderType: orderType === "today"
             }),
             success: function (res) {
-                $('#overlay').hide();
-                $('.order-type').addClass('add-basket').removeClass('show-modal').removeClass('order-type');
-                $('.adder').trigger('click');
+                $('.order-type').replaceWith(replaceButton);
+                $('.add-basket').trigger('click');
+            },
+            error: function (res) {
+                console.log(res);
             }
         });
+        console.log('i am in ajax');
+        $('#overlay').toggle();
     });
 
 });

@@ -7,6 +7,7 @@ namespace App\Service\EntityService\UserService;
 use App\Collection\UserCollection;
 use App\Entity\User;
 use App\Model\AdminModel;
+use App\Model\OrderModel;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -91,6 +92,13 @@ interface UserServiceInterface
      * @return User
      */
     public function getUserByPassToken(?string $passToken): User ;
+
+    /**
+     * @param User $user
+     * @param OrderModel $model
+     * @return User
+     */
+    public function setEmptyPropertiesOfUser(User $user, OrderModel $model): User;
 
 
 

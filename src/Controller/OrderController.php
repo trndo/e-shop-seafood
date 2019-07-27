@@ -21,6 +21,7 @@ class OrderController extends AbstractController
      * @param Request $request
      * @param OrderInfoInterface $orderInfo
      * @param UserServiceInterface $userService
+     * @param RegisterUserInterface $registerUser
      * @return Response
      */
     public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
@@ -37,7 +38,9 @@ class OrderController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             if ($user) {
+                $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
                 $orderModel = $orderModel->setUser($user);
+
             } else {
                 $user = $registerUser->registerUnknownUser($orderModel);
                 $orderModel = $orderModel->setUser($user);

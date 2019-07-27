@@ -131,4 +131,24 @@ class SecurityController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
+
+    /**
+     * @Route("/user-{id}/credentials", name="showCredentials")
+     * @param User $user
+     * @param Request $request
+     * @return Response
+     */
+    public function showNewUserCredentials(User $user,Request $request): Response
+    {
+        $session = $request->getSession();
+        $email = $session->get('userEmail');
+        $password = $session->get('userPass');
+        if (!$email && !$password) {
+            $this->createNotFoundException();
+        }
+            return $this->render('user/credentials.html.twig',[
+                'email' => $email,
+                'password' => $password
+            ]);
+    }
 }

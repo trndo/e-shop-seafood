@@ -10,6 +10,9 @@ use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\TokenService\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterUser implements RegisterUserInterface
@@ -23,18 +26,24 @@ class RegisterUser implements RegisterUserInterface
      * @var MailSenderInterface
      */
     private $mailSender;
+    /**
+     * @var SessionInterface
+     */
+    private $session;
 
     /**
      * RegisterUser constructor.
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param EntityManagerInterface $entityManager
      * @param MailSenderInterface $mailSender
+     * @param SessionInterface $session
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager, MailSenderInterface $mailSender)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
         $this->mailSender = $mailSender;
+        $this->session = $session;
     }
 
     /**
@@ -142,6 +151,9 @@ class RegisterUser implements RegisterUserInterface
         $this->entityManager->flush();
 
         $this->mailSender->sendAboutUnknownRegistration($user,$userTemporaryPass);
+
+        $this->session->set('userEmail', $user->getEmail());
+        $this->session->set('userPass',$userTemporaryPass);
 
         return $user;
     }

@@ -87,9 +87,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
-        if ('/cart/makeOrder' === $request->headers->get('referer')) {
-            return new RedirectResponse($this->urlGenerator->generate('cart'));
+        if ('confirmUnknownRegistration' === $request->attributes->get('_route')) {
+            return new RedirectResponse($this->urlGenerator->generate('showCredentials',[
+                'id' => $token->getUser()->getId()
+            ]));
         }
 
 

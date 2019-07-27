@@ -6,6 +6,7 @@ use App\Collection\UserCollection;
 use App\Entity\User;
 use App\Mapper\UserMapper;
 use App\Model\AdminModel;
+use App\Model\OrderModel;
 use App\Repository\UserRepository;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\TokenService\TokenGenerator;
@@ -178,7 +179,17 @@ class UserService implements UserServiceInterface
             return true;
         else
             return false;
-
     }
 
+    public function setEmptyPropertiesOfUser(User $user, OrderModel $model): User
+    {
+        $user->getEmail() != null ?: $user->setEmail($model->getEmail())
+            ->getPhone() != null ?: $user->setPhone($model->getPhoneNumber())
+            ->getName() != null ?: $user->setName($model->getName())
+            ->getSurname() != null ?: $user->setSurname($model->getSurname());
+
+        $this->entityManager->flush();
+
+        return $user;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\admin;
 
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,15 @@ class AdminController extends AbstractController
      *
      * @return Response
      */
-    public function homeAdmin(): Response
+    public function homeAdmin(OrderInfoInterface $orderInfo): Response
     {
-        return $this->render('admin/admin.html.twig');
+        $orders = $orderInfo->getOrders();
+
+        return $this->render('admin/admin.html.twig',[
+            'orders' => $orders
+        ]);
     }
+
+
 
 }

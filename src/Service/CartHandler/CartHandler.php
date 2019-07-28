@@ -160,9 +160,9 @@ class CartHandler implements CartHandlerInterface
                 if (is_array($id)) {
                     $keys = array_keys($id);
                     $relatedProduct = $this->getItem($keys[0]);
-                    $total += ceil(($relatedProduct->getPrice() + $item->getPrice()) * $id[$keys[0]]);
+                    $total += $id[$keys[0]]*$relatedProduct->getPrice() + $item->getPrice() * ceil($id[$keys[0]]);
                 } else
-                    $total += ceil($item->getPrice() * $cart[$key]);
+                    $total += $item->getPrice() * $cart[$key];
             }
         }
         $session->set('totalSum', $total);

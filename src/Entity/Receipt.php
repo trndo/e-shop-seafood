@@ -78,11 +78,6 @@ class Receipt
     private $status;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetails", inversedBy="receipt", cascade={"persist", "remove"})
-     */
-    private $orderDetails;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="receipts")
      */
     private $category;
@@ -101,6 +96,11 @@ class Receipt
      * @ORM\OneToMany(targetEntity="App\Entity\SpecialProposition", mappedBy="receipt",cascade={"persist", "remove"})
      */
     private $specialPropositions;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", cascade={"persist", "remove"})
+     */
+    private $orderDetail;
 
     public function __construct()
     {
@@ -263,18 +263,6 @@ class Receipt
         return $this;
     }
 
-    public function getOrderDetails(): ?OrderDetails
-    {
-        return $this->orderDetails;
-    }
-
-    public function setOrderDetails(?OrderDetails $orderDetails): self
-    {
-        $this->orderDetails = $orderDetails;
-
-        return $this;
-    }
-
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -403,6 +391,24 @@ class Receipt
             if ($specialProposition->getReceipt() === $this) {
                 $specialProposition->setReceipt(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getOrderDetail(): ?OrderDetail
+    {
+        return $this->orderDetail;
+    }
+
+    public function setOrderDetail(?OrderDetail $orderDetail): self
+    {
+        $this->orderDetail = $orderDetail;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newReceipt = $orderDetail === null ? null : $this;
+        if ($newReceipt !== $orderDetail->getReceipt()) {
+            $orderDetail->setReceipt($newReceipt);
         }
 
         return $this;

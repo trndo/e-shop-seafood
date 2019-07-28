@@ -24,6 +24,16 @@ final class OrderMapper
         return $model;
     }
 
+    public static function entityToModel(OrderInfo $info): OrderModel
+    {
+        $model = new OrderModel();
+
+        return $model->setOrderDate($info->getOrderDate())
+                ->setOrderTime($info->getOrderTime())
+                ->setOrderDetails($info->getOrderDetails());
+
+    }
+
     public static function orderModelToEntity(OrderModel $model): OrderInfo
     {
         $entity = new OrderInfo();

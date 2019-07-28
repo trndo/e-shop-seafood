@@ -4,7 +4,8 @@
 namespace App\Service\EntityService\OrderInfoHandler;
 
 
-use App\Entity\OrderDetails;
+use App\Collection\OrdersCollection;
+use App\Entity\OrderDetail;
 use App\Entity\OrderInfo;
 use App\Entity\Product;
 use App\Entity\Receipt;
@@ -40,16 +41,18 @@ class OrderInfoHandler implements OrderInfoInterface
     public function addOrder(OrderModel $orderModel, Request $request): void
     {
         $orderInfo = OrderMapper::orderModelToEntity($orderModel);
+        $bonuses = $orderInfo->getUser()->getBonuses();
 
         $totalSum = $request->getSession()->get('totalSum');
         $items = $this->cartHandler->getItems($request);
 
         foreach ($items as $item) {
-            $orderDetails = new OrderDetails();
+            $orderDetails = new OrderDetail();
             if ($item['item'] instanceof Receipt) {
                 $orderDetails->setReceipt($item['item'])
                     ->setProduct($item['product']);
-            }
+                $bonuses = ($item['item']->getPrice()*ceil($item['quantity']) + $item['product']->getPrice()*$item['quantity'])*0.1 + $bonuses;
+        }
             if ($item['item'] instanceof Product) {
                 $orderDetails->setProduct($item['item']);
             }
@@ -60,12 +63,22 @@ class OrderInfoHandler implements OrderInfoInterface
         }
 
         $orderInfo->setTotalPrice($totalSum);
+        $orderInfo->getUser()->setBonuses($bonuses);
 
         $this->entityManager->persist($orderInfo);
         $this->entityManager->flush();
 
-        dd($orderInfo);
-
 
     }
+
+    public function getOrders(): OrdersCollection
+    {
+        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->findBy([],['id' => 'DESC']));
+    }
+
+    public function getOrder(int $id): OrderInfo
+    {
+        return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
+    }
+
 }

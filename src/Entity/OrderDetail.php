@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderDetailsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderDetailRepository")
  */
-class OrderDetails
+class OrderDetail
 {
     /**
      * @ORM\Id()
@@ -17,17 +17,17 @@ class OrderDetails
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $quantity;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetails", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetail", cascade={"persist", "remove"})
      */
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", mappedBy="orderDetails", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", inversedBy="orderDetail", cascade={"persist", "remove"})
      */
     private $receipt;
 
@@ -41,12 +41,12 @@ class OrderDetails
         return $this->id;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    public function setQuantity(?int $quantity): self
+    public function setQuantity(?float $quantity): self
     {
         $this->quantity = $quantity;
 
@@ -73,12 +73,6 @@ class OrderDetails
     public function setReceipt(?Receipt $receipt): self
     {
         $this->receipt = $receipt;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newOrderDetails = $receipt === null ? null : $this;
-        if ($newOrderDetails !== $receipt->getOrderDetails()) {
-            $receipt->setOrderDetails($newOrderDetails);
-        }
 
         return $this;
     }

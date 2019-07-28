@@ -4,6 +4,7 @@
 namespace App\Model;
 
 
+use App\Entity\OrderDetail;
 use App\Entity\User;
 
 class OrderModel
@@ -62,6 +63,32 @@ class OrderModel
      * @var string|null
      */
     private $coordinates;
+
+    /**
+     * @var OrderDetail[]|null
+     */
+    private $orderDetails;
+
+    /**
+     * @return OrderDetail[]|null
+     */
+    public function getOrderDetails(): ?array
+    {
+        return $this->orderDetails;
+    }
+
+    /**
+     * @param array|null $orderDetails
+     * @return OrderModel
+     */
+    public function setOrderDetails(?array $orderDetails): self
+    {
+        $this->orderDetails = $orderDetails;
+
+        return $this;
+    }
+
+
 
     /**
      * @return string|null

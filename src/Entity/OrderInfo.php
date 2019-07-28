@@ -34,11 +34,6 @@ class OrderInfo
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetails", mappedBy="orderInfo")
-     */
-    private $orderDetails;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $orderDate;
@@ -72,6 +67,11 @@ class OrderInfo
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $coordinates;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetail", mappedBy="orderInfo")
+     */
+    private $orderDetails;
 
     public function __construct()
     {
@@ -115,37 +115,6 @@ class OrderInfo
     public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|OrderDetails[]
-     */
-    public function getOrderDetails(): Collection
-    {
-        return $this->orderDetails;
-    }
-
-    public function addOrderDetail(OrderDetails $orderDetail): self
-    {
-        if (!$this->orderDetails->contains($orderDetail)) {
-            $this->orderDetails[] = $orderDetail;
-            $orderDetail->setOrderInfo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrderDetail(OrderDetails $orderDetail): self
-    {
-        if ($this->orderDetails->contains($orderDetail)) {
-            $this->orderDetails->removeElement($orderDetail);
-            // set the owning side to null (unless already changed)
-            if ($orderDetail->getOrderInfo() === $this) {
-                $orderDetail->setOrderInfo(null);
-            }
-        }
 
         return $this;
     }
@@ -230,6 +199,37 @@ class OrderInfo
     public function setCoordinates(?string $coordinates): self
     {
         $this->coordinates = $coordinates;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderDetail[]
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetail $orderDetail): self
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails[] = $orderDetail;
+            $orderDetail->setOrderInfo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetail $orderDetail): self
+    {
+        if ($this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->removeElement($orderDetail);
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getOrderInfo() === $this) {
+                $orderDetail->setOrderInfo(null);
+            }
+        }
 
         return $this;
     }

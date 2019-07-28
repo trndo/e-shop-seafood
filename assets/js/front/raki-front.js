@@ -17,7 +17,7 @@ $(document).ready(function () {
     if($('.menu-nav > ul').length)
         new SimpleBar($('.menu-nav > ul')[0],{
             autoHide: false});
-    if(window.screen.width < 376) {
+    if(window.screen.width < 500) {
         $('.additional-nav-container').slick({
             infinite: false,
             slidesToShow: 2,

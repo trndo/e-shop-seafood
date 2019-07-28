@@ -1,11 +1,102 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+    <style>
+        .slick-slide {
+            margin: 0 13px;
+            width: 150px;
+        }
+        /* the parent */
+        .slick-list {
+            margin: 0;
+        }
+        .slick-track{
 
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <section class="wrapper">
+        <div class="container">
+            <div class="container-inside">
+                {% include 'elements/__header.html.twig' with {'active': false} %}
+                <main>
+                    <div class="additional-nav">
+                        <div class="additional-nav-container">
+                            <div class="additional-nav-item">
+                                Живые раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Вареные раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Жареные раки
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-red-content">
+                        <embed id="shrimps" type="image/svg+xml" src="/assets/img/shrimp.svg"/>
+                        <div class="form-container">
+                            <div class="form-title">
+                                <span id="subtitle">Хочешь накопительную систему?</span><br>
+                                <span id="title">Пора зарегестрироваться</span>
+                            </div>
+                        </div>
+                        <form method="post" action="">
+                            <div class="input-reg-container">
+                                <div>
+                                    <input type="text" placeholder="Имя*" class="user-input login-input invalid-input">
+                                    <small class="validation-mess">*поле не должно быть пустым</small>
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="E-mail" class="user-input login-input">
+                                </div>
+                                <div>
+                                    <input type="password" placeholder="Пароль" class="user-input login-input">
+                                </div>
+                                <div>
+                                    <input type="password" placeholder="Повторите пароль" class="user-input login-input">
+                                </div>
+                            </div>
+                            <div class="login-button">
+                                Регестрация
+                            </div>
+                        </form>
+                        {#<form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %} #}
+                    </div>
+                    <div class="if-no-login reg">
+                        <div class="login-with">
+                            Зарегестрироваться с помощью:
+                        </div>
+                        <div class="login-with-container">
+                            <div class="social-container">
+                                <div class="social facebook" data-login-social="{{ path('connectRegister',{'social': 'facebook'}) }}">
+                                    <embed type="image/svg+xml" src="/assets/img/facebook.svg"/>
+                                </div>
+                                <div class="social google" data-login-social="{{ path('connectRegister',{'social': 'google'}) }}">
+                                    <embed type="image/svg+xml" src="/assets/img/google.svg"/>
+                                </div>
+                                <div class="social insta" data-login-social="{{ path('connectRegister',{'social': 'instagram'}) }}">
+                                    <embed type="image/svg+xml" src="/assets/img/instagram-big.svg"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        {% include 'elements/__footer.html.twig' with {'active': false} %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+    </section>
 {% endblock %}
 
 

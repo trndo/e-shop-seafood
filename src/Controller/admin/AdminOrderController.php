@@ -3,8 +3,10 @@
 namespace App\Controller\admin;
 
 use App\Entity\OrderInfo;
+use App\Mapper\OrderMapper;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,20 +26,31 @@ class AdminOrderController extends AbstractController
             'order' => $order
         ]);
     }
+
     /**
      * @Route("/lipadmin/showOrder/{id}/edit" ,name="editOrder")
+     * @param Request $request
      * @param int|null $id
      * @param OrderInfoInterface $orderInfo
      * @return Response
      */
 
-    public function editOrder(?int $id, OrderInfoInterface $orderInfo): Response
+    public function editOrder(Request $request, ?int $id, OrderInfoInterface $orderInfo): Response
     {
         $order = $orderInfo->getOrder($id);
+        $orderModel = OrderMapper::entityToModel($order);
 
+        $form = $this->createForm($orderModel);
+        $form->handleRequest($request);
 
-        return $this->render('admin/order.html.twig',[
-            'order' => $order
+        if ($form->isSubmitted() && $form->isValid())
+        {
+                dd($form->getData());
+        }
+
+        return $this->render('admin/order_edit.html.twig',[
+            'order' => $order,
+            'form' => $form->createView()
         ]);
     }
 }

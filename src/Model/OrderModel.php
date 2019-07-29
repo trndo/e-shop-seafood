@@ -6,6 +6,7 @@ namespace App\Model;
 
 use App\Entity\OrderDetail;
 use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 
 class OrderModel
 {
@@ -78,10 +79,11 @@ class OrderModel
     }
 
     /**
-     * @param array|null $orderDetails
+     *
+     * @param Collection|null $orderDetails
      * @return OrderModel
      */
-    public function setOrderDetails(?array $orderDetails): self
+    public function setOrderDetails(?Collection $orderDetails): self
     {
         $this->orderDetails = $orderDetails;
 

@@ -30,8 +30,8 @@ final class OrderMapper
 
         return $model->setOrderDate($info->getOrderDate())
                 ->setOrderTime($info->getOrderTime())
-                ->setOrderDetails($info->getOrderDetails());
-
+                ->setOrderDetails($info->getOrderDetails())
+                ->setTotalPrice($info->getTotalPrice());
     }
 
     public static function orderModelToEntity(OrderModel $model): OrderInfo

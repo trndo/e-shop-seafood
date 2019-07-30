@@ -34,6 +34,20 @@ final class OrderMapper
                 ->setTotalPrice($info->getTotalPrice());
     }
 
+    public static function modelToEntity(OrderModel $model, OrderInfo $info): OrderInfo
+    {
+        $info->setOrderDate($model->getOrderDate())
+            ->setOrderTime($model->getOrderTime())
+            ->setTotalPrice($model->getTotalPrice());
+        $orderDetails = $model->getOrderDetails();
+
+        foreach ($orderDetails as $orderDetail) {
+            $info->addOrderDetail($orderDetail);
+        }
+
+        return $info;
+    }
+
     public static function orderModelToEntity(OrderModel $model): OrderInfo
     {
         $entity = new OrderInfo();
@@ -50,6 +64,5 @@ final class OrderMapper
             ->setCoordinates($model->getCoordinates());
 
         return $entity;
-
     }
 }

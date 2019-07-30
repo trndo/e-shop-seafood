@@ -147,6 +147,11 @@ class Product
      */
     private $orderDetail;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="product")
+     */
+    private $reservations;
+
 
     public function __construct()
     {
@@ -158,6 +163,7 @@ class Product
         $this->products = new ArrayCollection();
         $this->receiptSales = new ArrayCollection();
         $this->specialPropositions = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -595,6 +601,37 @@ class Product
         $newProduct = $orderDetail === null ? null : $this;
         if ($newProduct !== $orderDetail->getProduct()) {
             $orderDetail->setProduct($newProduct);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getProduct() === $this) {
+                $reservation->setProduct(null);
+            }
         }
 
         return $this;

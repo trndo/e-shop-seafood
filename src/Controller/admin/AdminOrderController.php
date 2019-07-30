@@ -48,7 +48,11 @@ class AdminOrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-                dd($form->getData());
+            OrderMapper::modelToEntity($orderModel, $order);
+
+            return $this->redirectToRoute('admin_show_order',[
+                'id' => $id
+            ]);
         }
 
         return $this->render('admin/order_edit.html.twig',[
@@ -57,14 +61,4 @@ class AdminOrderController extends AbstractController
         ]);
     }
 
-    private function isReceipt(OrderModel $model)
-    {
-        $items = $model->getOrderDetails();
-        foreach ($items as $item) {
-            if ($item instanceof Receipt)
-                return $option = true;
-            else
-                return false;
-        }
-    }
 }

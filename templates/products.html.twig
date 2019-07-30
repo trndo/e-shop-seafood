@@ -16,11 +16,7 @@
                                     <h4>{{ item.name }}</h4>
                                     <p>{{ item.description }}</p>
                                     <span class="price">₴ {{ item.price }}</span>
-                                    {% if item.getType == 'product' %}
-                                        <div class="in_basket" data-product-location="{{ path('product',{'slug': item.slug}) }}">Подробнее</div>
-                                    {% else %}
-                                        <div class="in_basket" data-product-location="{{ path('receipt',{'slug': item.slug}) }}">Подробнее</div>
-                                    {% endif %}
+                                        <div class="in_basket" data-product-location="{{ path('category_show',{'slug': item.slug}) }}">Подробнее</div>
                                 </div>
                             </div>
                         {% endfor %}

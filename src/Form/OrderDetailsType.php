@@ -7,36 +7,59 @@ namespace App\Form;
 use App\Entity\OrderDetail;
 use App\Entity\Product;
 use App\Entity\Receipt;
+use App\Form\ItemType\ProductOrderType;
+use App\Form\ItemType\ReceiptOrderType;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function GuzzleHttp\Psr7\parse_header;
+
 
 class OrderDetailsType extends AbstractType
 {
+    /**
+     * @var ProductServiceInterface
+     */
+    private $productService;
+
+    public function __construct(ProductServiceInterface $productService)
+    {
+        $this->productService = $productService;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('quantity', NumberType::class, [
+        $builder->add('quantity', NumberType::class,[
             'label' => false
         ]);
 
-        $builder->add('receipt', EntityType::class, [
-            'disabled' => true
-        ])
-            ->add('productReceipt', EntityType::class, [
-                'class' => Receipt::class,
-                'choice_label' => function ($receipt) {
-                    /** @var Receipt $receipt */
-                    return $receipt->getProducts();
-                }
-            ]);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var OrderDetail $orderDetail*/
+            $orderDetail = $event->getData();
+            $form = $event->getForm();
 
-        $builder->add('product', EntityType::class, [
-            'disabled' => true
-        ]);
-
+            if (null !== $orderDetail->getReceipt()) {
+                $form->add('receipt',ReceiptOrderType::class, [
+                    'label' => false,
+                    'disabled' => true
+                ])
+                    ->add('product',ProductOrderType::class, [
+                    'label' => false,
+                    'disabled' => true
+                ]);
+            } else {
+                $form->add('product',ProductOrderType::class, [
+                    'label' => false,
+                    'disabled' => true
+                ]);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)

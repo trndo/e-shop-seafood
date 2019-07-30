@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Receipt;
 use App\Form\OrderType;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
@@ -27,7 +28,6 @@ class OrderController extends AbstractController
     public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
     {
         $user = $this->getUser();
-
         if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
             $orderModel = OrderMapper::entityUserToOrderModel($user);
         else

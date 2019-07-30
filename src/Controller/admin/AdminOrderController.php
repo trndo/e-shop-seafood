@@ -3,7 +3,10 @@
 namespace App\Controller\admin;
 
 use App\Entity\OrderInfo;
+use App\Entity\Receipt;
+use App\Form\OrderInfoType;
 use App\Mapper\OrderMapper;
+use App\Model\OrderModel;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +43,7 @@ class AdminOrderController extends AbstractController
         $order = $orderInfo->getOrder($id);
         $orderModel = OrderMapper::entityToModel($order);
 
-        $form = $this->createForm($orderModel);
+        $form = $this->createForm(OrderInfoType::class,$orderModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -52,5 +55,16 @@ class AdminOrderController extends AbstractController
             'order' => $order,
             'form' => $form->createView()
         ]);
+    }
+
+    private function isReceipt(OrderModel $model)
+    {
+        $items = $model->getOrderDetails();
+        foreach ($items as $item) {
+            if ($item instanceof Receipt)
+                return $option = true;
+            else
+                return false;
+        }
     }
 }

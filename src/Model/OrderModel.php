@@ -66,14 +66,14 @@ class OrderModel
     private $coordinates;
 
     /**
-     * @var OrderDetail[]|null
+     * @var Collection|null
      */
     private $orderDetails;
 
     /**
-     * @return OrderDetail[]|null
+     * @return Collection|null
      */
-    public function getOrderDetails(): ?array
+    public function getOrderDetails(): ?Collection
     {
         return $this->orderDetails;
     }

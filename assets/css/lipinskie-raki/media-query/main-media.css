@@ -1,13 +1,3 @@
-@media (max-device-height: 768px) and (min-width: 992px) {
-    footer{
-        position: relative;
-        top: unset;
-    }
-    .container-inside{
-        top:0;
-        padding-top: 39px;
-    }
-}
 @media (max-width: 991px) and (min-width: 768px){
 
     .container{
@@ -21,6 +11,9 @@
         top: 0 !important;
     }
     #desktop{
+        display: none;
+    }
+    .mini{
         display: none;
     }
 
@@ -68,7 +61,7 @@
     }
 
     .footer-row{
-        margin-top: 40px;
+        padding-top: 37px;
     }
 
     .footer-nav{
@@ -102,7 +95,9 @@
     #desktop{
         display: none;
     }
-
+    .mini{
+        display: none;
+    }
     #mobile{
         display: block;
         position: relative;
@@ -202,6 +197,9 @@
         top: 0 !important;
     }
     #desktop{
+        display: none;
+    }
+    .mini{
         display: none;
     }
 
@@ -306,4 +304,22 @@
         font-size: 13px;
     }
 
+}
+
+@media (max-device-height: 1024px) and (min-width: 768px) {
+    footer{
+        position: absolute;
+        top: unset;
+    }
+    .container-inside{
+        top:0;
+
+    }
+    .footer-row{
+        padding-top: 29px;
+    }
+}
+
+@media  {
+    
 }

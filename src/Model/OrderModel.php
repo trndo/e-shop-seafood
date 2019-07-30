@@ -4,7 +4,9 @@
 namespace App\Model;
 
 
+use App\Entity\OrderDetail;
 use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 
 class OrderModel
 {
@@ -62,6 +64,33 @@ class OrderModel
      * @var string|null
      */
     private $coordinates;
+
+    /**
+     * @var OrderDetail[]|null
+     */
+    private $orderDetails;
+
+    /**
+     * @return OrderDetail[]|null
+     */
+    public function getOrderDetails(): ?array
+    {
+        return $this->orderDetails;
+    }
+
+    /**
+     *
+     * @param Collection|null $orderDetails
+     * @return OrderModel
+     */
+    public function setOrderDetails(?Collection $orderDetails): self
+    {
+        $this->orderDetails = $orderDetails;
+
+        return $this;
+    }
+
+
 
     /**
      * @return string|null

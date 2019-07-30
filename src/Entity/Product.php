@@ -84,11 +84,6 @@ class Product
     private $titlePhoto;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetails", mappedBy="product", cascade={"persist", "remove"})
-     */
-    private $orderDetails;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", mappedBy="products")
      */
     private $receipts;
@@ -118,7 +113,6 @@ class Product
      */
     private $weightPerUnit;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="products")
      */
@@ -147,6 +141,11 @@ class Product
      * @ORM\OneToOne(targetEntity="App\Entity\SpecialProposition", mappedBy="gift", cascade={"persist", "remove"})
      */
     private $gift;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $orderDetail;
 
 
     public function __construct()
@@ -325,24 +324,6 @@ class Product
     public function setTitlePhoto(?string $titlePhoto): self
     {
         $this->titlePhoto = $titlePhoto;
-
-        return $this;
-    }
-
-    public function getOrderDetails(): ?OrderDetails
-    {
-        return $this->orderDetails;
-    }
-
-    public function setOrderDetails(?OrderDetails $orderDetails): self
-    {
-        $this->orderDetails = $orderDetails;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newProduct = $orderDetails === null ? null : $this;
-        if ($newProduct !== $orderDetails->getProduct()) {
-            $orderDetails->setProduct($newProduct);
-        }
 
         return $this;
     }
@@ -596,6 +577,24 @@ class Product
         $newGift = $specialProposition === null ? null : $this;
         if ($newGift !== $specialProposition->getGift()) {
             $specialProposition->setGift($newGift);
+        }
+
+        return $this;
+    }
+
+    public function getOrderDetail(): ?OrderDetail
+    {
+        return $this->orderDetail;
+    }
+
+    public function setOrderDetail(?OrderDetail $orderDetail): self
+    {
+        $this->orderDetail = $orderDetail;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProduct = $orderDetail === null ? null : $this;
+        if ($newProduct !== $orderDetail->getProduct()) {
+            $orderDetail->setProduct($newProduct);
         }
 
         return $this;

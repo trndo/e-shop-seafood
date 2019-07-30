@@ -19,32 +19,20 @@ class OrderInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderInfo::class);
     }
 
-    // /**
-    //  * @return OrderInfo[] Returns an array of OrderInfo objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?OrderInfo
+    /**
+     * @param int $id
+     * @return OrderInfo
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getOrderById(int $id): OrderInfo
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
+            ->innerJoin('o.orderDetails','od')
+            ->addSelect('od')
+            ->andWhere('o.id = :id')
+            ->setParameter('id',$id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

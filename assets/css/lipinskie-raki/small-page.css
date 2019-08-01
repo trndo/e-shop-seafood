@@ -745,6 +745,7 @@ input[type=number] {
     background: #F13A3A;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     margin-bottom: 73px;
+    position: relative;
 }
 
 #pizza{
@@ -772,8 +773,66 @@ input[type=number] {
     color: white;
     z-index: 10;
     position: relative;
+    line-height: 2px;
 }
 
 .pt-10{
-    padding-top: 100px;
+    padding-top: 110px;
+}
+
+.promotion-title{
+    width: 381px;
+    height: 66px;
+    margin: 0 auto;
+    text-align: left;
+    padding-top: 15px;
+    display: block;
+}
+.bonuses-in-attention{
+    width: 103px;
+    height: 24px;
+    position: absolute;
+    text-align: right;
+    top: 18px;
+    right: 80px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+.bonuses-in-attention:after{
+    content: url("../../img/gold.svg");
+    position: absolute;
+    right: -27px;
+    top: -2px;
+}
+
+.bonus-bold{
+    font-weight: bold;
+}
+
+.scale{
+    display: flex;
+    justify-content: space-between;
+    height: 12px;
+    width: 622.06px;
+    margin: 0 auto;
+    margin-top: 17px;
+}
+.scale-section{
+    background: #C92C2C;
+    border-radius: 2px;
+    height: 12px;
+    width: 74.06px;
+}
+.scale-section:first-child{
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.scale-section:last-child{
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }

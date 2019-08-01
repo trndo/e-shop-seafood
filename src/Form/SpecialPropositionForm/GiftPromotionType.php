@@ -28,15 +28,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GiftPromotionType extends AbstractType
 {
     use PromotionTrait;
-    /**
-     * @var EntityManagerInterface
-     */
-
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

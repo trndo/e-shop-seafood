@@ -57,4 +57,6 @@ interface ProductServiceInterface
      * @return Product
      */
     public function getProduct(?string $slug): Product ;
+
+    public function getProductById(?int $id): Product;
 }

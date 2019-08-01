@@ -3,7 +3,10 @@
 namespace App\Controller\admin;
 
 use App\Entity\OrderInfo;
+use App\Entity\Receipt;
+use App\Form\OrderInfoType;
 use App\Mapper\OrderMapper;
+use App\Model\OrderModel;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,12 +43,16 @@ class AdminOrderController extends AbstractController
         $order = $orderInfo->getOrder($id);
         $orderModel = OrderMapper::entityToModel($order);
 
-        $form = $this->createForm($orderModel);
+        $form = $this->createForm(OrderInfoType::class,$orderModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-                dd($form->getData());
+            OrderMapper::modelToEntity($orderModel, $order);
+
+            return $this->redirectToRoute('admin_show_order',[
+                'id' => $id
+            ]);
         }
 
         return $this->render('admin/order_edit.html.twig',[
@@ -53,4 +60,5 @@ class AdminOrderController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 }

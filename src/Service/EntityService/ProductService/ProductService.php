@@ -221,4 +221,11 @@ class ProductService implements ProductServiceInterface
     {
         return $this->productRepository->findProductBySlug($slug);
     }
+
+    public function getProductById(?int $id): Product
+    {
+        return $this->productRepository->find($id);
+    }
+
+
 }

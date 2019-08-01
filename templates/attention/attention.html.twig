@@ -3,7 +3,58 @@
 {% block title %}
 
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+    <style>
+        .slick-slide {
+            margin: 0 13px;
+            width: 150px;
+        }
+        /* the parent */
+        .slick-list {
+            margin: 0;
+        }
+        .slick-track{
+
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    Check MAIL!
+    <section class="wrapper">
+        <div class="container">
+            <div class="container-inside">
+                {% include 'elements/__header.html.twig' with {'active': false} %}
+                <main>
+                    <div class="additional-nav">
+                        <div class="additional-nav-container">
+                            <div class="additional-nav-item">
+                                Живые раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Вареные раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Жареные раки
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-red-content text-center pt-10 attention-height">
+                        <embed id="pizza" type="image/svg+xml" src="/assets/img/pizza.svg"/>
+                        <span class="attention-subtitle">Привет Тебе!</span><br>
+                        <span class="attention-title">Спасибо за регистрацию</span>
+                    </div>
+                    <div class="attention-promotion">
+
+                    </div>
+                </main>
+            </div>
+        </div>
+        {% include 'elements/__footer.html.twig' with {'active': false} %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+    </section>
 {% endblock %}

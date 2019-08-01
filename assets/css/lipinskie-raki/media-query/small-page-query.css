@@ -241,6 +241,21 @@
     .checkout-order{
         margin-top: 34px;
     }
+
+    .attention-promotion{
+        width: 286px;
+    }
+
+    .attention-title{
+        font-size: 18px;
+    }
+
+    .attention-subtitle{
+        font-size: 14px;
+    }
+    .attention-height{
+        height: 299px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 375px) {
@@ -432,4 +447,21 @@
     .checkout-order{
         margin-top: 34px;
     }
+
+    .attention-promotion{
+        width: 286px;
+    }
+
+    .attention-title{
+        font-size: 18px;
+    }
+
+    .attention-subtitle{
+        font-size: 14px;
+    }
+
+    .attention-height{
+        height: 299px;
+    }
+
 }

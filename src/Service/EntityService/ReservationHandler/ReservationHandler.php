@@ -6,7 +6,9 @@ namespace App\Service\EntityService\ReservationHandler;
 
 use App\Entity\Reservation;
 use App\Repository\ReservationRepository;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ReservationHandler implements ReservationInterface
 {
@@ -18,41 +20,81 @@ class ReservationHandler implements ReservationInterface
      * @var ReservationRepository
      */
     private $reservationRepository;
+    /**
+     * @var ProductServiceInterface
+     */
+    private $productService;
+    /**
+     * @var SessionInterface
+     */
+    private $session;
 
     /**
      * ReservationHandler constructor.
      * @param EntityManagerInterface $entityManager
      * @param ReservationRepository $reservationRepository
+     * @param ProductServiceInterface $productService
+     * @param SessionInterface $session
      */
-    public function __construct(EntityManagerInterface $entityManager, ReservationRepository $reservationRepository)
+    public function __construct(EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, ProductServiceInterface $productService, SessionInterface $session)
     {
         $this->entityManager = $entityManager;
         $this->reservationRepository = $reservationRepository;
+        $this->productService = $productService;
+        $this->session = $session;
     }
 
 
-    /**
-     * @param string $productId
-     * @param bool $orderType
-     * @param float $quantity
-     * @return mixed
-     */
-    public function reserve(string $productId, bool $orderType, float $quantity): void
+    public function reserve(string $productId, bool $orderType, float $quantity): int
     {
         $explodedId = $this->explodeProductId($productId);
-        $reservation = $this->reservationRepository->findOneBy(['product' => $productId]);
+        $uniqId = $this->session->get('reservationId');
+        $product = $this->productService->getProductById($explodedId);
+        $reservation = $this->getReservation($explodedId);
 
-        if ($reservation instanceof Reservation) {
+        if ($reservation) {
+            $supply = $reservation->getProduct()->getSupply();
+            $reservationQuantity = $reservation->getReservationQuantity();
+            $diff = $this->updateSupply($quantity,$reservationQuantity);
+
+            $supply->setQuantity($supply + $diff);
+
+        } elseif (!$orderType && !$reservation) {
+            $reservation = new Reservation();
+
+            $reservation->setReservationQuantity($quantity)
+                ->setProduct($product)
+                ->setReservationTime(new \DateTime());
+            if (!$uniqId){
+                $reservation->setUniqId(
+                    $this->generateUniqueReservation(
+                        $reservation->getReservationTime()->format('Y-m-d H:i'),5
+                    ));
+                $this->session->set('reservationId',$reservation->getUniqId());
+            } else {
+                $reservation->setUniqId($uniqId);
+            }
+
+            $this->entityManager->persist($reservation);
         }
+
+        $this->entityManager->flush();
+
+        return $reservation->getUniqId();
     }
 
     /**
      * @param string $productId
      * @return Reservation
      */
-    public function getReservation(string $productId): Reservation
+    public function getReservation(?string $productId): ?Reservation
     {
-        // TODO: Implement getReservation() method.
+        $reservationId = $this->session->get('reservationId');
+        if (!$reservationId){
+            return null;
+        }
+
+        return $this->reservationRepository->findOneBy(['uniqId' => $reservationId,'product' => $productId]);
     }
 
     /**
@@ -61,7 +103,8 @@ class ReservationHandler implements ReservationInterface
      */
     public function deleteReservation(string $productId): void
     {
-        // TODO: Implement deleteReservation() method.
+        $reservation = $this->getReservation($productId);
+        $this->entityManager->remove($reservation);
     }
 
     private function explodeProductId(string $productId)
@@ -82,4 +125,10 @@ class ReservationHandler implements ReservationInterface
 
         return $difference;
     }
+
+    private function generateUniqueReservation(string $reservationTime,int $length): string
+    {
+        return \substr(\md5(\uniqid($reservationTime,true)),0,$length);
+    }
+
 }

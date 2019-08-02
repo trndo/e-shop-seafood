@@ -306,7 +306,7 @@
 
 }
 
-@media (max-device-height: 1024px) and (min-width: 768px) {
+@media (max-device-height: 1024px) and (max-width: 991px) {
     footer{
         position: absolute;
         top: unset;

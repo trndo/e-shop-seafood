@@ -241,6 +241,48 @@
     .checkout-order{
         margin-top: 34px;
     }
+
+    .attention-promotion{
+        width: 286px;
+    }
+
+    .attention-title{
+        font-size: 18px;
+    }
+
+    .attention-subtitle{
+        font-size: 14px;
+    }
+    .attention-height{
+        height: 299px;
+    }
+
+    .promotion-title{
+        width: 260px;
+        padding-top: 36px;
+    }
+
+    .bonuses-in-attention{
+        width: 134px;
+        height: 24px;
+        font-size: 24px;
+        top: 12px;
+        right: 40px;
+    }
+
+    .bonuses-in-attention:after{
+        right: -26px;
+        top: 0;
+    }
+
+    .scale{
+        width: 255px;
+        margin-top: 24px;
+    }
+    .scale-section{
+        width: 30.36px;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 375px) {
@@ -431,5 +473,46 @@
 
     .checkout-order{
         margin-top: 34px;
+    }
+
+    .attention-promotion{
+        width: 286px;
+    }
+
+    .attention-title{
+        font-size: 18px;
+    }
+
+    .attention-subtitle{
+        font-size: 14px;
+    }
+
+    .attention-height{
+        height: 299px;
+    }
+
+    .promotion-title{
+        width: 260px;
+        padding-top: 36px;
+    }
+
+    .bonuses-in-attention{
+        width: 134px;
+        height: 24px;
+        font-size: 24px;
+        top: 12px;
+        right: 40px;
+    }
+
+    .bonuses-in-attention:after{
+        right: -26px;
+        top: 0;
+    }
+    .scale{
+        width: 255px;
+        margin-top: 24px;
+    }
+    .scale-section{
+        width: 30.36px;
     }
 }

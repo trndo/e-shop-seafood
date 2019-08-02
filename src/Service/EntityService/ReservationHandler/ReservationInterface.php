@@ -4,6 +4,7 @@
 namespace App\Service\EntityService\ReservationHandler;
 
 
+use App\Collection\ReservationCollection;
 use App\Entity\Reservation;
 
 interface ReservationInterface
@@ -14,7 +15,7 @@ interface ReservationInterface
      * @param float $quantity
      * @return mixed
      */
-    public function reserve(string $productId, bool $orderType, float $quantity): int;
+    public function reserve(string $productId, bool $orderType, float $quantity): void ;
 
     /**
      * @param string $productId
@@ -23,8 +24,11 @@ interface ReservationInterface
     public function getReservation(?string $productId): ?Reservation;
 
     /**
-     * @param string $productId
+     * @param array $cart
+     * @param string $key
      * @return mixed
      */
-    public function deleteReservation(string $productId): void ;
+    public function deleteReservation(array $cart,string $key): void ;
+
+    public function getReservations(): ReservationCollection;
 }

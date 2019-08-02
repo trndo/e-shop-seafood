@@ -7,6 +7,7 @@ namespace App\Service\CartHandler;
 use App\Entity\Receipt;
 use App\Repository\ProductRepository;
 use App\Repository\ReceiptRepository;
+use App\Service\EntityService\ReservationHandler\ReservationInterface;
 use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -25,11 +26,16 @@ class CartHandler implements CartHandlerInterface
      * @var SupplyServiceInterface
      */
     private $supplyService;
+    /**
+     * @var ReservationInterface
+     */
+    private $reservation;
 
-    public function __construct(ReceiptRepository $receiptRepository, ProductRepository $productRepository)
+    public function __construct(ReceiptRepository $receiptRepository, ProductRepository $productRepository, ReservationInterface $reservation)
     {
         $this->receiptRepository = $receiptRepository;
         $this->productRepository = $productRepository;
+        $this->reservation = $reservation;
     }
 
     /**
@@ -62,21 +68,24 @@ class CartHandler implements CartHandlerInterface
         $productWithSize = $post->get('size');
         $shoppingCart = $session->get('cart',[]);
         $orderType = $session->get('chooseOrder',true);
+        $quantity = $post->get('quantity',1);
 
         if($this->checkReceiptRelation($id, $productWithSize)) {
-            $result = $this->checkItemQuantity($productWithSize, $post->get('quantity',1), $orderType);
+            $result = $this->checkItemQuantity($productWithSize, $quantity, $orderType);
             if ($result['status']){
                 $shoppingCart[$id] = [
-                    $productWithSize => $post->get('quantity',1)
+                    $productWithSize => $quantity
                 ];
+                $this->reservation->reserve($productWithSize, $orderType, $quantity);
             } else {
                 return $result;
             }
         }
         if ($this->checkIsValidId($id)) {
-            $result = $this->checkItemQuantity($id, $post->get('quantity',1), $orderType);
+            $result = $this->checkItemQuantity($id, $quantity, $orderType);
             if ($result['status']){
-                $shoppingCart[$id] = $post->get('quantity', 1);
+                $shoppingCart[$id] = $quantity;
+                $this->reservation->reserve($id, $orderType, $quantity);
             } else {
                 return $result;
             }
@@ -97,7 +106,9 @@ class CartHandler implements CartHandlerInterface
         $cart = $session->get('cart');
         $key = $request->request->get('id');
 
+
         if (isset($cart[$key])) {
+            $this->reservation->deleteReservation($cart,$key);
             unset($cart[$key]);
             $session->set('cart',$cart);
         }
@@ -126,20 +137,23 @@ class CartHandler implements CartHandlerInterface
                 $keys = array_keys($cart[$id]);
                 $result = $this->checkItemQuantity($keys[0], $quantity, $orderType);
 
-                if ($result['status'])
+                if ($result['status']) {
                     $cart[$id][$keys[0]] = $quantity;
-                else
+                    $this->reservation->reserve($keys[0], $quantity, $orderType);
+                } else
                     return $result;
             }
             else{
                 $result =$this->checkItemQuantity($id, $quantity, $orderType);
 
-                if ($result['status'])
-                    $cart[$id] = $quantity ;
+                if ($result['status']) {
+                    $cart[$id] = $quantity;
+                    $this->reservation->reserve($id, $quantity, $orderType);
+                }
                 else
                     return $result;
-
             }
+
             $session->set('cart',$cart);
             $this->countTotalSum($session);
         }

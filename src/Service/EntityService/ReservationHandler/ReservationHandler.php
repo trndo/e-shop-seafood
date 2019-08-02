@@ -4,6 +4,7 @@
 namespace App\Service\EntityService\ReservationHandler;
 
 
+use App\Collection\ReservationCollection;
 use App\Entity\Reservation;
 use App\Repository\ReservationRepository;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
@@ -29,6 +30,7 @@ class ReservationHandler implements ReservationInterface
      */
     private $session;
 
+
     /**
      * ReservationHandler constructor.
      * @param EntityManagerInterface $entityManager
@@ -45,7 +47,7 @@ class ReservationHandler implements ReservationInterface
     }
 
 
-    public function reserve(string $productId, bool $orderType, float $quantity): int
+    public function reserve(string $productId, bool $orderType, float $quantity): void
     {
         $explodedId = $this->explodeProductId($productId);
         $uniqId = $this->session->get('reservationId');
@@ -56,10 +58,10 @@ class ReservationHandler implements ReservationInterface
             $supply = $reservation->getProduct()->getSupply();
             $reservationQuantity = $reservation->getReservationQuantity();
             $diff = $this->updateSupply($quantity,$reservationQuantity);
+            $supply->setQuantity($supply->getQuantity() + $diff);
+            $reservation->setReservationQuantity($quantity);
 
-            $supply->setQuantity($supply + $diff);
-
-        } elseif (!$orderType && !$reservation) {
+        } elseif ($orderType) {
             $reservation = new Reservation();
 
             $reservation->setReservationQuantity($quantity)
@@ -80,7 +82,6 @@ class ReservationHandler implements ReservationInterface
 
         $this->entityManager->flush();
 
-        return $reservation->getUniqId();
     }
 
     /**
@@ -94,22 +95,35 @@ class ReservationHandler implements ReservationInterface
             return null;
         }
 
-        return $this->reservationRepository->findOneBy(['uniqId' => $reservationId,'product' => $productId]);
+        return $this->reservationRepository->findOneBy([
+            'uniqId' => $reservationId,
+            'product' => $productId
+        ]);
     }
 
     /**
-     * @param string $productId
-     * @return mixed
+     *
+     * @param array $cart
+     * @param string $key
+     * @return void
      */
-    public function deleteReservation(string $productId): void
+    public function deleteReservation(array $cart,string $key): void
     {
+        if (is_array($cart[$key])) {
+            $keys = array_keys($cart[$key]);
+            $productId = $this->explodeProductId($keys[0]);
+        } else {
+            $productId = $this->explodeProductId($key);
+        }
         $reservation = $this->getReservation($productId);
         $this->entityManager->remove($reservation);
+
+        $this->entityManager->flush();
     }
 
     private function explodeProductId(string $productId)
     {
-        return (int)explode('-',$productId)[0];
+        return (int)explode('-',$productId)[1];
     }
 
     private function updateSupply(float $newQuantity, float $oldQuantity): float
@@ -130,5 +144,11 @@ class ReservationHandler implements ReservationInterface
     {
         return \substr(\md5(\uniqid($reservationTime,true)),0,$length);
     }
+
+    public function getReservations(): ReservationCollection
+    {
+        return new ReservationCollection($this->reservationRepository->findAll());
+    }
+
 
 }

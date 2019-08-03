@@ -47,6 +47,12 @@
         background: #F13A3A;
         cursor: pointer;
     }
+
+    .nav-item-grey{
+        background: #706E6E;
+        width: 159px;
+    }
+
 }
 
 @media (min-width: 375px) and (max-width: 767px){
@@ -121,6 +127,13 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .nav-item-grey{
+        background: #706E6E;
+        width: 159px;
+        font-size: 16px;
+    }
+
 
     .login-input{
         width: 200px;
@@ -313,6 +326,12 @@
         color: #FFFFFF;
         background: #F13A3A;
         cursor: pointer;
+    }
+
+    .nav-item-grey{
+        background: #706E6E;
+        width: 159px;
+        font-size: 16px;
     }
 
     .small-red-content{

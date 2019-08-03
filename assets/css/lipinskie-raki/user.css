@@ -65,3 +65,22 @@
     height: 211px;
     margin-top: 9px;
 }
+.save-button-user{
+    width: 289px;
+    height: 38px;
+    background: #FF9797;
+    box-shadow: 0 4px 10px #CB2828;
+    border-radius: 50px;
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 auto;
+    cursor: pointer;
+    user-select: none;
+    line-height: 38px;
+    position: relative;
+    z-index: 30;
+}

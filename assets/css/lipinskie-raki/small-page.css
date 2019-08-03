@@ -609,6 +609,8 @@ input[type=number] {
     cursor: pointer;
     user-select: none;
     line-height: 38px;
+    position: relative;
+    z-index: 30;
 }
 
 

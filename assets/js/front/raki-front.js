@@ -2,6 +2,7 @@ import '../../css/lipinskie-raki/main.css';
 import '../../css/lipinskie-raki/small-page.css'
 import '../../css/lipinskie-raki/products.css'
 import '../../css/lipinskie-raki/product.css';
+import '../../css/lipinskie-raki/user.css';
 import '../../css/lipinskie-raki/media-query/main-media.css';
 import '../../css/lipinskie-raki/media-query/small-page-query.css';
 import 'simplebar/dist/simplebar.css';

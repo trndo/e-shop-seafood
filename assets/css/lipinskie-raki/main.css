@@ -43,7 +43,7 @@ header{
     display: none;
 }
 
-#fast-order{
+.fast-order{
     position: absolute;
     top: 5px;
     left: 0;
@@ -59,7 +59,7 @@ header{
     color: white;
     cursor: pointer;
 }
-#fast-order span{
+.fast-order span{
     position: relative;
     left: 37px;
     user-select: none;
@@ -757,4 +757,10 @@ footer{
 
 .additional-nav{
     display: none;
+}
+
+.fast-order-in-mini-header{
+    right: 200px;
+    top: 40px;
+    left: unset;
 }

@@ -1,6 +1,6 @@
 <header id="desktop">
     <div class="button-row">
-        <div id="fast-order">
+        <div class="fast-order">
             <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
             <span>Быстрый заказ</span>
         </div>
@@ -26,7 +26,7 @@
     <div class="row nav-row">
         <nav>
             <ul>{% set mob_active = active %}
-                <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главаня</li>
+                <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главная</li>
                 <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
                 <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
                 <li {% if active == 'not exist yet' %} {% set active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>

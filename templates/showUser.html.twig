@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        {% set sum = app.session.get('totalSum') %}
+        {% include 'elements/small_header.html.twig' %}
+        <main>
+            <div class="additional-nav">
+                <div class="additional-nav-container">
+                    <div class="additional-nav-item">
+                        Живые раки
+                    </div>
+                    <div class="additional-nav-item">
+                        Вареные раки
+                    </div>
+                    <div class="additional-nav-item">
+                        Жареные раки
+                    </div>
+                </div>
+            </div>
+            <div class="user-tabs">
+                <div class="user-tab user-tab-active">Личные данные</div>
+                <div class="user-tab">История заказов</div>
+                <div class="user-tab user-tab-last">Поменять пароль</div>
+            </div>
+            <div class="user-red-content">
+                <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>
+                <div class="user-title">
+                    <span class="attention-subtitle">Персональные данные</span><br>
+                    <span class="attention-title">Один раз заполнил - заказывай всё время!</span>
+                </div>
+                <form>
+                    <div class="input-user-container">
+                        <div>
+                            <input type="text" placeholder="Имя" class="user-input login-input invalid-input">
+                            <small class="validation-mess">*поле не должно быть пустым</small>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Фамилия" class="user-input login-input">
+                        </div>
+                        <div>
+                            <input type="password" placeholder="+38(095)0000000" class="user-input login-input">
+                        </div>
+                    </div>
+                    <div class="input-user-container mt-1 mb-4">
+                        <div>
+                            <input type="text" placeholder="Адрес" class="user-input login-input">
+                        </div>
+                        <div id="user-map"></div>
+                    </div>
+                    <div class="login-button">
+                        Сохранить
+                    </div>
+                </form>
+            </div>
+            <div class="attention-promotion">
+                <div class="bonuses-in-attention">
+                    100/<span class="bonus-bold">2000</span>
+                </div>
+                <div class="promotion-title">
+                    <span class="attention-subtitle">Купи товаров на 2000 грн за всё время</span>
+                    <span class="attention-title">Получи Рыбу в подарок</span>
+                </div>
+                <div class="scale">
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    {% include 'elements/__footer.html.twig' with { 'active': false } %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5CSb-iMy9DtAHF2u-LGV_j2dZ0UQFTCE&libraries=places&callback=initMap"
+            async defer></script>
+    {% set coordinates = '50.1231233 12.394583' %}
+    <script>
+        let coordinates = '{{ coordinates }}'{# '{{ user.coordinates }}' #};
+        console.log(coordinates);
+        let map;
+        let position = { lat: Number(coordinates.substr(0,coordinates.indexOf(' '))), lng: Number(coordinates.substr(coordinates.indexOf(' ')+1))};
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('user-map'), {
+                center: position,
+                zoom: 15
+            });
+            let marker = new google.maps.Marker({position: position, map: map});
+        }
+    </script>
+{% endblock %}

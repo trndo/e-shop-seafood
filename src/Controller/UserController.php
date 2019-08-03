@@ -107,6 +107,14 @@ class UserController extends AbstractController
         return $this->render('new_password.html.twig',[
             'form' => $form->createView()
         ]);
+    }
 
+    /**
+     * @Route("/user")
+     * @return Response
+     */
+    public function showUser(): Response
+    {
+        return $this->render('showUser.html.twig');
     }
 }

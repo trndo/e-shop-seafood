@@ -6,11 +6,16 @@ namespace App\Service\EntityService\CategoryService;
 
 use App\Collection\CategoryCollection;
 use App\Entity\Category;
+use App\Mapper\CategoryMapper;
+use App\Model\CategoryModel;
 use App\Repository\CategoryRepository;
+use App\Service\FileSystemService\UploadFileInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CategoryService implements CategoryServiceInterface
 {
+    private const CATEGORY_IMAGE_FOLDER = 'categories/';
     /**
      * @var CategoryRepository
      */
@@ -19,16 +24,22 @@ class CategoryService implements CategoryServiceInterface
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var UploadFileInterface
+     */
+    private $uploadFile;
 
     /**
      * CategoryService constructor.
      * @param CategoryRepository $repository
      * @param EntityManagerInterface $em
+     * @param UploadFileInterface $uploadFile
      */
-    public function __construct(CategoryRepository $repository,EntityManagerInterface $em)
+    public function __construct(CategoryRepository $repository,EntityManagerInterface $em, UploadFileInterface $uploadFile)
     {
         $this->repository = $repository;
         $this->em = $em;
+        $this->uploadFile = $uploadFile;
     }
 
     /**
@@ -40,13 +51,20 @@ class CategoryService implements CategoryServiceInterface
     }
 
     /**
-     * @param $data
+     * @param CategoryModel $categoryModel
      */
-    public function addCategory(Category $data): void
+    public function addCategory(CategoryModel $categoryModel): void
     {
-        if ($data instanceof Category) {
-           $this->repository->save($data);
+        $category = new Category();
+
+        CategoryMapper::modelToEntity($categoryModel, $category);
+        $modelTitlePhoto = $categoryModel->getTitlePhoto();
+        if ($modelTitlePhoto instanceof UploadedFile) {
+            $titlePhoto = $this->uploadFile->uploadFile($modelTitlePhoto, self::CATEGORY_IMAGE_FOLDER);
+            $category->setTitlePhoto($titlePhoto);
         }
+
+        $this->repository->save($category);
     }
 
     public function deleteCategory(Category $category): void
@@ -65,4 +83,19 @@ class CategoryService implements CategoryServiceInterface
     {
         return new CategoryCollection($this->repository->getCategoriesForRender());
     }
+
+    public function updateCategory(Category $category, CategoryModel $categoryModel): void
+    {
+        $category = CategoryMapper::modelToEntity($categoryModel,$category);
+        $modelTitlePhoto = $categoryModel->getTitlePhoto();
+        if ($modelTitlePhoto instanceof UploadedFile) {
+            $titlePhoto = $this->uploadFile->uploadFile($modelTitlePhoto, self::CATEGORY_IMAGE_FOLDER,$category->getTitlePhoto());
+            $category->setTitlePhoto($titlePhoto);
+        }
+
+        $this->em->flush();
+    }
+
+
+
 }

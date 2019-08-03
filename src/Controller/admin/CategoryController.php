@@ -4,10 +4,10 @@
 namespace App\Controller\admin;
 
 
-use App\Form\CategoryForm\CategoryCreateType;
 use App\Entity\Category;
-use App\Form\CategoryForm\CategoryUpdateType;
+use App\Form\CategoryType;
 use App\Mapper\CategoryMapper;
+use App\Model\CategoryModel;
 use App\Repository\CategoryRepository;
 use App\Service\EntityService\CategoryService\CategoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,14 +27,14 @@ class CategoryController extends AbstractController
      */
     public function createCategory(Request $request, CategoryServiceInterface $categoryService): Response
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryCreateType::class,$category);
+        $categoryModel = new CategoryModel();
+        $form = $this->createForm(CategoryType::class,$categoryModel);
 
         $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
 
+                $data = $form->getData();
                 $categoryService->addCategory($data);
 
                 return $this->redirectToRoute('category');
@@ -65,28 +65,27 @@ class CategoryController extends AbstractController
      *
      * @param Request $request
      * @param Category $category
-     * @param EntityManagerInterface $entityManager
+     * @param CategoryServiceInterface $categoryService
      * @return Response
      */
-    public function editCategory(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    public function editCategory(Request $request, Category $category, CategoryServiceInterface $categoryService): Response
     {
         $model = CategoryMapper::entityToModel($category);
 
-        $form = $this->createForm(CategoryUpdateType::class,$model);
+        $form = $this->createForm(CategoryType::class,$model);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            CategoryMapper::modelToEntity($model,$category);
-
-            $entityManager->flush();
+            $categoryService->updateCategory($category,$model);
 
             return $this->redirectToRoute('category');
         }
 
-        return $this->render('admin/category/create_category.html.twig',[
-            'form' => $form->createView()
+        return $this->render('admin/category/edit_category.html.twig',[
+            'form' => $form->createView(),
+            'category' => $category
         ]);
     }
 

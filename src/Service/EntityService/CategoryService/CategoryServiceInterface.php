@@ -6,6 +6,9 @@ namespace App\Service\EntityService\CategoryService;
 
 use App\Collection\CategoryCollection;
 use App\Entity\Category;
+use App\Model\CategoryModel;
+use App\Service\FileSystemService\UploadFileInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface CategoryServiceInterface
 {
@@ -17,11 +20,10 @@ interface CategoryServiceInterface
     public function getAllCategories(): CategoryCollection;
 
     /**
-     * @param Category $data
-     *
-     * Add Category in DB
+     * Add CategoryInfo in DB
+     * @param CategoryModel $categoryModel
      */
-    public function addCategory(Category $data);
+    public function addCategory(CategoryModel $categoryModel): void ;
 
     /**
      * @param Category $category
@@ -41,4 +43,12 @@ interface CategoryServiceInterface
      * @return CategoryCollection|null
      */
     public function getCategoryForHeader(): ?CategoryCollection;
+
+    /**
+     * @param Category $category
+     * @param CategoryModel $categoryModel
+     */
+    public function updateCategory(Category $category, CategoryModel $categoryModel): void ;
+
+
 }

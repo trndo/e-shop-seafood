@@ -5,6 +5,7 @@ import '../../css/lipinskie-raki/product.css';
 import '../../css/lipinskie-raki/user.css';
 import '../../css/lipinskie-raki/media-query/main-media.css';
 import '../../css/lipinskie-raki/media-query/small-page-query.css';
+import '../../css/lipinskie-raki/media-query/user-media.css';
 import 'simplebar/dist/simplebar.css';
 import $ from 'jquery';
 import SimpleBar from 'simplebar';

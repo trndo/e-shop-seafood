@@ -14,11 +14,6 @@ class UserModel
     /**
      * @var string|null
      */
-    private $surname;
-
-    /**
-     * @var string|null
-     */
     private $phone;
 
     /**

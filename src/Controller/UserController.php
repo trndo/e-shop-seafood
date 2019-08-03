@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ResetPasswordType;
+use App\Form\UserInfoUpdateType;
+use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,11 +112,27 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user")
+     * @Route("/user-{id}")
+     * @param User $user
+     * @param Request $request
+     * @param UserServiceInterface $service
      * @return Response
      */
-    public function showUser(): Response
+    public function updateUser(User $user,Request $request, UserServiceInterface $service): Response
     {
-        return $this->render('showUser.html.twig');
+        $user = $this->getUser();
+        $userInfoModel = UserMapper::entityToUserModel($user);
+        $form = $this->createForm(UserInfoUpdateType::class, $userInfoModel);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            UserMapper::userModelToEntity($userInfoModel,$user);
+            $service->updateUserInfo();
+        }
+
+        return $this->render('showUser.html.twig',[
+           'form' => $form->createView()
+        ]);
+
     }
 }

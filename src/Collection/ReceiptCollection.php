@@ -2,6 +2,8 @@
 
 namespace App\Collection;
 
+use App\Entity\Receipt;
+
 /**
  * Class ReceiptCollection
  * @package App\Collection
@@ -9,7 +11,7 @@ namespace App\Collection;
 class ReceiptCollection implements \IteratorAggregate
 {
     /**
-     * @var array
+     * @var Receipt[]
      */
     private $receipts;
 

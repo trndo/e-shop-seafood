@@ -56,7 +56,8 @@ class CategoryRepository extends ServiceEntityRepository
     public function getCategoriesForRender(): ?array
     {
         return $this->createQueryBuilder('c')
-            ->select('c.name','c.slug')
+            ->leftJoin('c.products','products')
+            ->addSelect('c.name','c.slug')
             ->andWhere('c.name != :name1')
             ->andWhere('c.name != :name2')
             ->andWhere('c.name != :name3')

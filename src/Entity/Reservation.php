@@ -36,6 +36,11 @@ class Reservation
      */
     private $orderDate;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $uniqId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Reservation
     public function setOrderDate(?\DateTimeInterface $orderDate): self
     {
         $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    public function getUniqId(): ?string
+    {
+        return $this->uniqId;
+    }
+
+    public function setUniqId(?string $uniqId): self
+    {
+        $this->uniqId = $uniqId;
 
         return $this;
     }

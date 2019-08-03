@@ -58,5 +58,9 @@ interface ProductServiceInterface
      */
     public function getProduct(?string $slug): Product ;
 
+    /**
+     * @param int|null $id
+     * @return Product
+     */
     public function getProductById(?int $id): Product;
 }

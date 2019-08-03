@@ -157,13 +157,13 @@ class Product
     {
         $this->photos = new ArrayCollection();
         $this->receipts = new ArrayCollection();
-        $this->rating = 0;
-        $this->status = 0;
         $this->additionalProduct = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->receiptSales = new ArrayCollection();
         $this->specialPropositions = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->rating = 0;
+        $this->status = 0;
     }
 
     public function getId(): ?int

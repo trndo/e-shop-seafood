@@ -23,7 +23,7 @@ class SupplyCollection implements \IteratorAggregate
         $this->supplies = $supplies;
     }
 
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new \ArrayIterator($this->supplies);
     }

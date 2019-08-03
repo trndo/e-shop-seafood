@@ -36,7 +36,9 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
     public function findForRating(): ?array
     {
         return $this->createQueryBuilder('r')
-            ->select('r')
+            ->leftJoin('r.category','category')
+            ->leftJoin('r.orderDetail','orderDetail')
+            ->addSelect('r, category, orderDetail')
             ->andWhere('r.rating != 0')
             ->setMaxResults(9)
             ->getQuery()

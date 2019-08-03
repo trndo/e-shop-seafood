@@ -22,7 +22,7 @@ class SpecialPropositionCollection implements \IteratorAggregate
         $this->specialPropositions = $specialPropositions;
     }
 
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new \ArrayIterator($this->specialPropositions);
     }

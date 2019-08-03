@@ -47,7 +47,11 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
     public function findForRating(): ?array
     {
         return $this->createQueryBuilder('p')
-            ->select('p')
+            ->leftJoin('p.supply','supply')
+            ->leftJoin('p.category','category')
+            ->leftJoin('p.gift','gift')
+            ->leftJoin('p.specialPropositions','specialPropositions')
+            ->addSelect('p, supply, category, specialPropositions, gift')
             ->andWhere('p.rating != 0')
             ->setMaxResults(9)
             ->getQuery()

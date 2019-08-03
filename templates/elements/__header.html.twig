@@ -5,7 +5,7 @@
             <span>Быстрый заказ</span>
         </div>
         <div class="user_basket">
-            {% set sum = app.session.get('totalSum')%}
+            {% set sum = app.session.get('totalSum') %}
             <div id="basket-container">
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>

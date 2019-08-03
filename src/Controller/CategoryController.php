@@ -34,6 +34,7 @@ class CategoryController extends AbstractController
         $categories = $categoryService->getCategoryForHeader();
 
         return $this->render('elements/category_list.html.twig',[
-            'categories' => $categories]);
+            'categories' => $categories]
+        );
     }
 }

@@ -19,7 +19,6 @@ final class UserMapper
              ->setEmail($user->getEmail());
 
         return $model;
-
     }
 
 }

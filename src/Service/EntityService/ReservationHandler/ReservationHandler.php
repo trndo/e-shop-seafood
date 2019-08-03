@@ -116,6 +116,8 @@ class ReservationHandler implements ReservationInterface
             $productId = $this->explodeProductId($key);
         }
         $reservation = $this->getReservation($productId);
+        $supply = $reservation->getProduct()->getSupply();
+        $supply->setQuantity($supply->getQuantity() + $reservation->getReservationQuantity());
         $this->entityManager->remove($reservation);
 
         $this->entityManager->flush();

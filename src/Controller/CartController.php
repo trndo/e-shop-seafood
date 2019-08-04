@@ -41,8 +41,7 @@ class CartController extends AbstractController
      */
     public function addToCart(Request $request,CartHandlerInterface $cartHandler): JsonResponse
     {
-        $response = $cartHandler->addItemToCart($request);
-
+        $response = $cartHandler->addItemToCart($request->request);
         return new JsonResponse($response,200);
     }
 
@@ -55,8 +54,7 @@ class CartController extends AbstractController
      */
     public function showCart(Request $request,CartHandlerInterface $cartHandler): Response
     {
-        $items = $cartHandler->getItems($request);
-
+        $items = $cartHandler->getItems();
         return $this->render('cart.html.twig',[
             'items' => $items
         ]);
@@ -70,11 +68,8 @@ class CartController extends AbstractController
      */
     public function removeFromCart(Request $request, CartHandlerInterface $handler): JsonResponse
     {
-        $handler->removeFromCart($request);
-
+        $handler->removeFromCart($request->request);
         $totalSum = $request->getSession()->get('totalSum');
-
-
         return new JsonResponse([
             'status' => true,
             'totalSum' => $totalSum
@@ -91,7 +86,7 @@ class CartController extends AbstractController
      */
     public function changeQuantity(Request $request, CartHandlerInterface $handler): JsonResponse
     {
-        $response = $handler->changeItemQuantity($request);
+        $response = $handler->changeItemQuantity($request->request);
         return new JsonResponse($response);
     }
 }

@@ -14,7 +14,7 @@ $(document).on('click','.cart-plus',function () {
         },
         success: function (res) {
             if (res.status === false) {
-                alert('Ostalos-'+res.rest+' '+res.unit);
+                alert(res.message);
             }
             else {
                 input.val(val + 0.5);
@@ -76,7 +76,7 @@ $(document).on('keyup','.cart-res > input',function (e) {
         },
         success: function (res) {
             if (res.status === false) {
-                alert('Ostalos-'+res.rest+' '+res.unit);
+                alert(res.message);
                 input.val(res.rest)
             }
             else {
@@ -104,7 +104,7 @@ $(document).on('blur','.cart-res > input',function (e) {
             },
             success: function (res) {
                 if (res.status === false) {
-                    alert('ostalos '+res.rest);
+                    alert(res.message);
                     input.val(res.rest)
                 }
                 else {

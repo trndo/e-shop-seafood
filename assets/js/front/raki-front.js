@@ -46,8 +46,7 @@ $(document).ready(function () {
             type: 'POST',
             url: '/addToCart',
             data: {
-                size: checked,
-                id: size ? type+'-'+id+'-'+size : type+'-'+id,
+                id: checked ? type+'-'+id+'-'+checked : type+'-'+id,
                 quantity: quantity
             },
             success: function (res) {
@@ -56,7 +55,7 @@ $(document).ready(function () {
                     console.log(res);
                 } else {
                     console.log('ne-ok');
-                    alert('Ostalos-'+res.rest+''+res.unit);
+                    alert(res.message);
                     $('.item-res > input').val(res.rest);
                 }
 
@@ -132,7 +131,6 @@ $(document).ready(function () {
             input.val(1);
     });
 
-    let size = null;
     let related = $('.receipt-name').data('related');
     let checked = related ? related : null;
     $(document).on('click','.size-block',function (e) {
@@ -141,7 +139,6 @@ $(document).ready(function () {
         });
         $(this).addClass('size-block-checked');
         checked = $(this).data('name') ;
-        size = $(this).data('size');
     });
 
     $('.show-modal').on('click', function () {

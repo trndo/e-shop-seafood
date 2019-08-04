@@ -1,34 +1,36 @@
 <?php
 
-
 namespace App\Service\EntityService\ReservationHandler;
 
-
 use App\Collection\ReservationCollection;
+use App\Entity\Product;
 use App\Entity\Reservation;
+use App\Service\CartHandler\Item;
 
 interface ReservationInterface
 {
     /**
-     * @param string $productId
+     * @param Product $product
      * @param bool $orderType
      * @param float $quantity
      * @return mixed
      */
-    public function reserve(string $productId, bool $orderType, float $quantity): void ;
+    public function reserve(Product $product, bool $orderType, float $quantity): void ;
 
     /**
-     * @param string $productId
+     * @param int $productId
      * @return Reservation
      */
-    public function getReservation(?string $productId): ?Reservation;
+    public function getReservation(int $productId): ?Reservation;
 
     /**
-     * @param array $cart
-     * @param string $key
+     * @param Item $item
      * @return mixed
      */
-    public function deleteReservation(array $cart,string $key): void ;
+    public function deleteReservation(Item $item): void ;
 
+    /**
+     * @return ReservationCollection
+     */
     public function getReservations(): ReservationCollection;
 }

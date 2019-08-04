@@ -179,7 +179,7 @@ class CartHandler implements CartHandlerInterface
 
     private function makeItem(string $key): ?Item
     {
-        if(!preg_match('/^(product|receipt)\-\d+(\-d+)?$/',$key))
+        if(!preg_match('/^(product|receipt)\-\d+(\-\d+)?$/',$key))
             return null;
 
         $info = $this->explodeKey($key);

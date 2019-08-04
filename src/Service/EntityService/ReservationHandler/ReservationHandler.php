@@ -54,9 +54,9 @@ class ReservationHandler implements ReservationInterface
     public function reserve(Product $product, bool $orderType, float $quantity): void
     {
         $reservation = $this->getReservation($product->getId());
+        $supply = $product->getSupply();
 
         if ($reservation) {
-            $supply = $product->getSupply();
             $reservationQuantity = $reservation->getReservationQuantity();
             $diff = $this->recognizeDiff($quantity,$reservationQuantity);
             $supply->setQuantity($supply->getQuantity() + $diff);
@@ -79,6 +79,7 @@ class ReservationHandler implements ReservationInterface
             }
 
             $this->entityManager->persist($reservation);
+            $supply->setQuantity($supply->getQuantity() - $quantity);
         }
         $this->entityManager->flush();
     }
@@ -133,7 +134,7 @@ class ReservationHandler implements ReservationInterface
         }
 
         if ($newQuantity < $oldQuantity) {
-            $difference = $newQuantity - $oldQuantity;
+            $difference = $oldQuantity - $newQuantity;
         }
 
         return $difference;

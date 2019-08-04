@@ -170,7 +170,7 @@ class Item
     /**
      * @return float
      */
-    public function getRest(): float
+    public function getRest(): ?float
     {
         return $this->rest;
     }

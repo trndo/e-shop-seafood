@@ -48,7 +48,7 @@ class AdminOrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            OrderMapper::modelToEntity($orderModel, $order);
+            $orderInfo->updateOrder($orderModel,$order);
 
             return $this->redirectToRoute('admin_show_order',[
                 'id' => $id

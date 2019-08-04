@@ -81,4 +81,11 @@ class OrderInfoHandler implements OrderInfoInterface
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
     }
 
+    public function updateOrder(OrderModel $model,OrderInfo $orderInfo): void
+    {
+       $info = OrderMapper::modelToEntity($model, $orderInfo);
+       $this->entityManager->flush();
+    }
+
+
 }

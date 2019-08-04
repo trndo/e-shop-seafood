@@ -22,6 +22,9 @@
                         <li class="breadcrumb-item active" aria-current="page">Заказ №{{ order.id }}</li>
                     </ol>
                 </nav>
+                <h1>
+                    Сумма: {{ order.totalPrice }}
+                </h1>
                 <div class="row relative justify-content-center mt-3">
                     <div class="col-12">
                         <div class="card">
@@ -51,7 +54,8 @@
                                         <ul class="list-group">
                                             {% for item in order.orderDetails %}
                                                 <li class="list-group-item"><span class="badge badge-dark">{{ loop.index }}</span>
-                                                    {{  item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }} - {{ item.quantity }} {{ item.product.unit }}
+                                                    {{  item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }} - {{ item.quantity }} {{ item.product.unit }} |
+                                                    <span style="color: red">В наличии: {{ item.product.supply.quantity }} {{ item.product.unit }}</span>
                                                 </li>
                                             {% endfor %}
                                         </ul>
@@ -60,10 +64,10 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-4 text-center text-primary h4">
-                                        На какую дату: {{ order.orderDate|date  }}
+                                        На какую дату: {{ order.orderDate|date('d.m.Y')  }}
                                     </div>
                                     <div class="col-4 text-center text-primary h4">
-                                        На какое время: {{ order.orderTime|date  }}
+                                        На какое время: {{ order.orderTime|date('H:i')  }}
                                     </div>
                                     <div class="col-4 text-center text-primary h4">
                                         Тип Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}

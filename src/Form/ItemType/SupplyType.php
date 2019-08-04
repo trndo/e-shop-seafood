@@ -4,27 +4,26 @@
 namespace App\Form\ItemType;
 
 
-use App\Entity\OrderDetail;
-use App\Entity\Product;
-use App\Entity\Receipt;
-use App\Model\ProductModel;
+use App\Entity\Supply;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductOrderType extends AbstractItemType
+class SupplyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-        $builder->add('supply',SupplyType::class);
+        $builder->add('quantity',NumberType::class);
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class
+           'data_class' => Supply::class
         ]);
     }
+
+
 
 }

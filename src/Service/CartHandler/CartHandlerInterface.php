@@ -5,47 +5,41 @@ namespace App\Service\CartHandler;
 
 
 use App\Service\EntityService\SupplyService\SupplyServiceInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 interface CartHandlerInterface
 {
-    /**
-     * Get product or receipt
-     *
-     * @param string $id
-     */
-    public function getItem(string $id);
 
     /**
      * Add receipt or product to cart
      *
-     * @param Request $request
+     * @param ParameterBag $bag
      * @return array
      */
-    public function addItemToCart(Request $request): array ;
+    public function addItemToCart(ParameterBag $bag): array ;
 
     /**
      * Remove product or receipt from cart by key
      *
-     * @param Request $request
+     * @param ParameterBag $bag
      */
-    public function removeFromCart(Request $request): void ;
+    public function removeFromCart(ParameterBag $bag): void;
 
     /**
      * Add item's quantity by key
      *
-     * @param Request $request
+     * @param ParameterBag $bag
      * @return array
      */
-    public function changeItemQuantity(Request $request): array;
+    public function changeItemQuantity(ParameterBag $bag): array;
 
 
     /**
      * Return cart items
      *
-     * @param Request $request
      * @return array
      */
-    public function getItems(Request $request): array ;
+    public function getItems(): array ;
 }

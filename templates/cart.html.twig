@@ -26,7 +26,7 @@
                         <div class="order">
                             <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
                             <div class="order-product-name item-name" data-name="{{ cartItem.item.type == 'receipt'
-                            ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.ProductSize : 'receipt-' ~ cartItem.item.id
+                            ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id : 'receipt-' ~ cartItem.item.id
                             : 'product-' ~ cartItem.item.id }}">
                                 {{ cartItem.item.name }}&nbsp;{{ cartItem.item.type == 'receipt' ?  cartItem.product.ProductSize : ''}}
                             </div>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <img class="delete-from-cart" data-name="{{ cartItem.item.type == 'receipt'
-                        ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.ProductSize : 'receipt-' ~ cartItem.item.id
+                        ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id : 'receipt-' ~ cartItem.item.id
                         : 'product-' ~ cartItem.item.id }}" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/>
                     </div>
                 {% endfor %}

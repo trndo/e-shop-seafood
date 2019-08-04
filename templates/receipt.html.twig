@@ -8,7 +8,7 @@
                 <div class="receipt-container">
                     <img src="{{ item.getTitlePhotoPath }}" alt="">
                     <div class="receipt-info">
-                        <div class="receipt-name" {% if item.products.count == 1 and item.products[0].ProductSize is null %} data-related="product-{{ item.products[0].id }}"{% endif %}>
+                        <div class="receipt-name" {% if item.products.count == 1 and item.products[0].ProductSize is null %} data-related="{{ item.products[0].id }}"{% endif %}>
                             {{ item.name }}
                         </div>
                         <div class="description">
@@ -21,7 +21,7 @@
                             </h4>
                             <div class="receipt-sizes-container">
                                 {% for relatedProduct in item.products %}
-                                <div class="size-block" data-name="product-{{ relatedProduct.id }}" data-size="{{ relatedProduct.ProductSize  }}">
+                                <div class="size-block" data-name="{{ relatedProduct.id }}">
                                     {{ relatedProduct.ProductSize }}
                                 </div>
                                 {% endfor %}

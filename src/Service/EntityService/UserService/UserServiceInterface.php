@@ -100,6 +100,11 @@ interface UserServiceInterface
      */
     public function setEmptyPropertiesOfUser(User $user, OrderModel $model): User;
 
+    /**
+     * @return void
+     */
+    public function updateUserInfo(): void ;
+
 
 
 

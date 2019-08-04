@@ -1,18 +1,20 @@
 <?php
 
 
-namespace App\Form\CategoryForm;
+namespace App\Form;
 
 
+use App\Model\CategoryModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoryInfoType extends AbstractType
+class CategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -52,6 +54,13 @@ class CategoryInfoType extends AbstractType
             ],
             'required' => false
         ])
+        ->add('titlePhoto',FileType::class,[
+            'label' => 'Фото категории',
+            'attr' => [
+                'class' => 'form-control'
+            ],
+            'required' => false
+        ])
         ->add('save',SubmitType::class,[
             'label' => 'Добавить категорию!',
             'attr' => [
@@ -63,7 +72,7 @@ class CategoryInfoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'inherit_data' => true
+            'data_class' => CategoryModel::class
         ]);
     }
 }

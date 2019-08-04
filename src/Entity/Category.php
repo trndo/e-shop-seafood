@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -69,6 +70,11 @@ class Category
      * @ORM\Column(type="string", length=191, nullable=true)
      */
     private $displayType;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titlePhoto;
 
     public function __construct()
     {
@@ -223,6 +229,22 @@ class Category
     public function setDisplayType(?string $displayType): self
     {
         $this->displayType = $displayType;
+
+        return $this;
+    }
+
+    public function getTitlePhoto(): ?string
+    {
+        return $this->titlePhoto;
+    }
+
+    /**
+     * @param UploadedFile|string $titlePhoto
+     * @return Category
+     */
+    public function setTitlePhoto(?string $titlePhoto): self
+    {
+        $this->titlePhoto = $titlePhoto;
 
         return $this;
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CategoryModel
@@ -31,6 +32,30 @@ class CategoryModel
      * @var string|null $displayType
      */
     private $displayType = 'simple';
+
+    /**
+     * @var UploadedFile|null
+     */
+    private $titlePhoto;
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getTitlePhoto(): ?UploadedFile
+    {
+        return $this->titlePhoto;
+    }
+
+    /**
+     * @param UploadedFile|null $titlePhoto
+     * @return CategoryModel
+     */
+    public function setTitlePhoto(?UploadedFile $titlePhoto): self
+    {
+        $this->titlePhoto = $titlePhoto;
+
+        return $this;
+    }
 
     /**
      * @return string|null

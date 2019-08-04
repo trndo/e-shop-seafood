@@ -48,29 +48,37 @@
                     <span class="attention-subtitle">Персональные данные</span><br>
                     <span class="attention-title">Один раз заполнил - заказывай всё время!</span>
                 </div>
-                <form>
+{#                <form>#}
+                {{ form_start(form) }}
                     <div class="input-user-container">
                         <div>
-                            <input type="text" placeholder="Имя" class="user-input login-input invalid-input">
+                            {{ form_widget(form.name,{'attr':{'class': 'user-input login-input invalid-input',
+                                                              'placeholder': 'Имя'}}) }}
                             <small class="validation-mess">*поле не должно быть пустым</small>
                         </div>
                         <div>
-                            <input type="text" placeholder="Фамилия" class="user-input login-input">
+                            {{ form_widget(form.email,{'attr':{'class': 'user-input login-input',
+                                                         'placeholder': 'Email'}}) }}
                         </div>
                         <div>
-                            <input type="password" placeholder="+38(095)0000000" class="user-input login-input">
+                            {{ form_widget(form.phone,{'attr':{'class': 'user-input login-input',
+                                'placeholder': '+38(095)0000000'}}) }}
                         </div>
                     </div>
                     <div class="input-user-container mt-1 mb-4">
                         <div>
-                            <input type="text" placeholder="Адрес" class="user-input login-input">
+                            {{ form_widget(form.address,{'attr':{'class': 'user-input login-input',
+                                'placeholder': 'Адрес'}}) }}
                         </div>
                         <div id="user-map"></div>
                     </div>
-                    <div class="save-button-user">
-                        Сохранить
-                    </div>
-                </form>
+                            {{ form_widget(form.coordinates) }}
+                            {{ form_widget(form.save, {'attr':{'class': 'login-button'}}) }}
+{#                    <div class="login-button">#}
+{#                        Сохранить#}
+{#                    </div>#}
+{#                </form>#}
+                {{ form_end(form) }}
             </div>
             <div class="attention-promotion">
                 <div class="bonuses-in-attention">

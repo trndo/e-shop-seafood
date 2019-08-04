@@ -192,4 +192,9 @@ class UserService implements UserServiceInterface
 
         return $user;
     }
+
+    public function updateUserInfo(): void
+    {
+        $this->entityManager->flush();
+    }
 }

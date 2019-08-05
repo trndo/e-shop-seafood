@@ -47,35 +47,60 @@
 {#                                    </div>#}
 {#                                {% endif %}#}
                                 <div class="row justify-content-center">
-                                    <div class="col-11 col-md-11 col-sm-12">
+                                    <div class="col-8 col-md-8 col-sm-10">
                                         <ul class="list-group">
-                                            {{ form_start(form) }}
+                                            {{ form_start(form,{'attr':{'class': 'text-primary h5'}}) }}
                                             {% for orderDetail in form.orderDetails %}
-                                                <li class="listg-roup-item"><span class="badge badge-dark">{{ loop.index }}
+                                                <li class="list-group-item"><span class="badge badge-dark">{{ loop.index }}</span>
                                                     {% if orderDetail.receipt is defined %}
-                                                        {{ form_row(orderDetail.receipt.name) }}
-                                                        {{ form_row(orderDetail.product.name) }}
+                                                        {{ form_row(orderDetail.receipt.name,{'label': 'Рецепт',
+                                                            'attr':{'class': 'text-center'}}
+                                                        ) }}
+                                                        {{ form_row(orderDetail.product.name,
+                                                            {'label': 'Продукт',
+                                                            'attr':{'class': 'text-center'}}
+                                                        ) }}
+                                                        {{ form_row(orderDetail.product.supply.quantity,
+                                                            {'label': 'В наличии кг/шт/л/грамм: ','attr': {
+                                                                'class': 'text-center',
+                                                                'style': 'color:red'}
+                                                        }) }}
                                                     {% else %}
-                                                        {{ form_row(orderDetail.product.name) }}
+                                                        {{ form_row(orderDetail.product.name,
+                                                            {'label': 'Продукт',
+                                                            'attr':
+                                                                {'class': 'text-center'}
+                                                        }) }}
                                                     {% endif %}
-                                                        {{ form_row(orderDetail.quantity) }}
-
+                                                        {{ form_row(orderDetail.product.supply.quantity,
+                                                            {'label': 'В наличии кг/шт/л/грамм: ',
+                                                            'attr':
+                                                                {'class': 'text-center',
+                                                                'style': 'color:red'}
+                                                        }) }}
+                                                        {{ form_row(orderDetail.quantity,{'label': 'Ко-лво в заказе: '}) }}
                                                 </li>
                                             {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     <div class="col-4 text-center text-primary h4">
-                                        На какую дату: {{ form_widget(form.orderTime) }}
+                                        На какую дату: {{ form_widget(form.orderDate) }}
                                     </div>
                                     <div class="col-4 text-center text-primary h4">
                                         На какое время: {{ form_widget(form.orderTime) }}
                                     </div>
-{#                                    <div class="col-4 text-center text-primary h4">#}
+                                    <div class="col-4 text-center text-primary h4">
+                                        Cумма: {{ form_widget(form.totalPrice) }}
+                                    </div>
+{#                                    <div class="col-4 text-center text-center text-primary h4text-primary h4">#}
 {#                                        Тип Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}#}
 {#                                    </div>#}
+                                </div>
+                                <div class="col-4">
+                                     {{ form_widget(form.submit) }}
                                 </div>
                                 {{ form_end(form) }}
 {#                                <div class="row mt-5">#}

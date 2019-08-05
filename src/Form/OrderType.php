@@ -48,7 +48,13 @@ class OrderType extends AbstractType
             ->add('deliveryType',TextType::class,[
                 'label' => false
             ])
-            ->add('coordinates',HiddenType::class);
+            ->add('coordinates',HiddenType::class)
+            ->add('save',SubmitType::class,[
+                'attr' => [
+                    'class' => 'checkout-order',
+                ],
+                'label' => 'Оформить'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

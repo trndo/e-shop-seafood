@@ -19,21 +19,22 @@ class OrderInfoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('orderDate',DateType::class)
-                ->add('orderTime',TimeType::class)
+        $builder->add('orderDate',DateType::class,[
+                    'label' => false
+                ])
+                ->add('orderTime',TimeType::class,[
+                    'label' => false
+                ])
                 ->add('orderDetails',CollectionType::class, [
-
                     'entry_type' => OrderDetailsType::class,
-                    'entry_options' => [
-                        'label' => 'huy'
-                    ],
-                    'label' => 'huy',
                     'by_reference' => false,
                     'prototype' => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                 ])
-                ->add('totalPrice',NumberType::class)
+                ->add('totalPrice',NumberType::class,[
+                    'label' => 'Cумма'
+                ])
                  ->add('submit', SubmitType::class,[
                      'label' => 'Update'
                  ]);

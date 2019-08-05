@@ -9,6 +9,9 @@ use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Form\ItemType\ProductOrderType;
 use App\Form\ItemType\ReceiptOrderType;
+use App\Form\ItemType\SupplyType;
+use App\Model\OrderDetailModel;
+use App\Model\OrderModel;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,16 +49,16 @@ class OrderDetailsType extends AbstractType
 
             if (null !== $orderDetail->getReceipt()) {
                 $form->add('receipt',ReceiptOrderType::class, [
-                    'label' => false,
+                    'label' => 'Рецепт',
                     'disabled' => true
                 ])
                     ->add('product',ProductOrderType::class, [
-                    'label' => false,
+                    'label' => 'Продукт',
                     'disabled' => true
                 ]);
             } else {
                 $form->add('product',ProductOrderType::class, [
-                    'label' => false,
+                    'label' => 'Продукт',
                     'disabled' => true
                 ]);
             }

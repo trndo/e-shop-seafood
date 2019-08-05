@@ -29,7 +29,7 @@ $('#basket-container').click(function () {
 });
 
 $('.checkout').click(function () {
-   window.location.href = '/makeOrder'
+   window.location.href = '/cart/makeOrder'
 });
 
 $('.login-button').click(function () {

@@ -42,9 +42,7 @@
                         </div>
                         {{ form_widget(form.coordinates) }}
                         <div id="map-block-inform"></div>
-                        <button type="submit" class="checkout-order" id="order_save" name="order[save]">
-                            Оформить
-                        </button>
+                        {{ form_widget(form.save) }}
                     {{ form_end(form) }}
 {#                    <form action="" class="order-form">#}
 {#                        <input type="text" class="order-input" placeholder="Имя*">#}

@@ -32,4 +32,7 @@ interface OrderInfoInterface
      * @return OrderInfo
      */
     public function getOrder(int $id): OrderInfo;
+
+    public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void ;
+
 }

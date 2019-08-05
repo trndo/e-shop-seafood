@@ -43,8 +43,7 @@ class CheckReservationCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Check reservation of a products')
-        ;
+            ->setDescription('Check reservation of a products');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

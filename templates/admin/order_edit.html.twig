@@ -65,20 +65,28 @@
                                                                 'class': 'text-center',
                                                                 'style': 'color:red'}
                                                         }) }}
+                                                        {{ form_row(orderDetail.receipt.price) }}
+                                                        {{ form_row(orderDetail.product.price,{'attr':
+                                                            {'class': 'receipt_product'}
+                                                        }) }}
                                                     {% else %}
                                                         {{ form_row(orderDetail.product.name,
                                                             {'label': 'Продукт',
                                                             'attr':
                                                                 {'class': 'text-center'}
                                                         }) }}
-                                                    {% endif %}
                                                         {{ form_row(orderDetail.product.supply.quantity,
                                                             {'label': 'В наличии кг/шт/л/грамм: ',
-                                                            'attr':
+                                                                'attr':
                                                                 {'class': 'text-center',
-                                                                'style': 'color:red'}
-                                                        }) }}
-                                                        {{ form_row(orderDetail.quantity,{'label': 'Ко-лво в заказе: '}) }}
+                                                                    'style': 'color:red'}
+                                                            }) }}
+                                                        {{ form_row(orderDetail.product.price) }}
+                                                    {% endif %}
+                                                        {{ form_row(orderDetail.quantity,{'label': 'Ко-лво в заказе: ','attr': {
+                                                            'min' : 1,
+                                                            'max' : orderDetail.vars.value.product.supply.quantity,
+                                                        },'type': 'number'}) }}
                                                 </li>
                                             {% endfor %}
                                         </ul>

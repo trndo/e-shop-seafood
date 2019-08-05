@@ -33,6 +33,14 @@ interface OrderInfoInterface
      */
     public function getOrder(int $id): OrderInfo;
 
+    /**
+     * @param OrderModel $model
+     * @param OrderInfo $orderInfo
+     */
     public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void ;
 
+    /**
+     * @param int $id
+     */
+    public function deleteOrder(int $id): void ;
 }

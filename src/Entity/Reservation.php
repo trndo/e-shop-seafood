@@ -41,6 +41,11 @@ class Reservation
      */
     private $uniqId;
 
+    /**
+     * @ORM\Column(type="string", length=191, nullable=true)
+     */
+    private $positionKey;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Reservation
     public function setUniqId(?string $uniqId): self
     {
         $this->uniqId = $uniqId;
+
+        return $this;
+    }
+
+    public function getPositionKey(): ?string
+    {
+        return $this->positionKey;
+    }
+
+    public function setPositionKey(?string $positionKey): self
+    {
+        $this->positionKey = $positionKey;
 
         return $this;
     }

@@ -233,14 +233,23 @@ class CartHandler implements CartHandlerInterface
     {
         $productQuantity = $product->getSupply()->getQuantity();
 
-        if ($item->getQuantity() > $productQuantity && $this->todayValidation) {
+        if ($item->getQuantity() > $productQuantity + $this->getReservedQuantity($item->getUniqueIndex()) && $this->todayValidation) {
             $item->setValid(false)
                  ->setInvalidMessage('Извините в наличие осталось: '.$productQuantity.' '.$product->getUnit().' продукта')
                  ->setRest($productQuantity);
         }
         else {
             $item->setValid(true);
-            $this->reservation->reserve($product,$this->todayValidation,$item->getQuantity());
+            $this->reservation->reserve($product,$item);
         }
+    }
+
+    private function getReservedQuantity(string $key): float
+    {
+       $reservation = $this->session->get('reservation',[]);
+       if(isset($reservation[$key])){
+           return $reservation[$key];
+       }
+       return 0;
     }
 }

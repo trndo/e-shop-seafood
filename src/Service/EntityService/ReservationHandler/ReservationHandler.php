@@ -51,22 +51,24 @@ class ReservationHandler implements ReservationInterface
     }
 
 
-    public function reserve(Product $product, bool $orderType, float $quantity): void
+    public function reserve(Product $product,Item $item): void
     {
-        $reservation = $this->getReservation($product->getId());
+        $reservation = $this->getReservation($item->getUniqueIndex());
         $supply = $product->getSupply();
+        $quantity = $item->getQuantity();
 
         if ($reservation) {
             $reservationQuantity = $reservation->getReservationQuantity();
             $diff = $this->recognizeDiff($quantity,$reservationQuantity);
             $supply->setQuantity($supply->getQuantity() + $diff);
             $reservation->setReservationQuantity($quantity);
-
-        } elseif ($orderType) {
+            $this->addToSessionReserve($item);
+        } elseif ($this->session->get('chooseOrder',true)) {
             $reservation = new Reservation();
             $reservation->setReservationQuantity($quantity)
                 ->setProduct($product)
-                ->setReservationTime(new \DateTime());
+                ->setReservationTime(new \DateTime())
+                ->setPositionKey($item->getUniqueIndex());
 
             if (!$this->reservationId){
                 $reservation->setUniqId(
@@ -80,22 +82,23 @@ class ReservationHandler implements ReservationInterface
 
             $this->entityManager->persist($reservation);
             $supply->setQuantity($supply->getQuantity() - $quantity);
+            $this->addToSessionReserve($item);
         }
         $this->entityManager->flush();
     }
 
     /**
-     * @param int $productId
+     * @param string $key
      * @return Reservation
      */
-    public function getReservation(int $productId): ?Reservation
+    public function getReservation(string $key): ?Reservation
     {
         if (!$this->reservationId){
             return null;
         }
         $reservation = $this->reservationRepository->findOneBy([
             'uniqId' => $this->reservationId,
-            'product' => $productId
+            'positionKey' => $key
         ]);
         return $reservation instanceof Reservation ? $reservation : null;
     }
@@ -108,9 +111,9 @@ class ReservationHandler implements ReservationInterface
     public function deleteReservation(Item $item): void
     {
         if ($item->getItemType() == 'product') {
-            $reservation = $this->getReservation($item->getId());
+            $reservation = $this->getReservation($item->getUniqueIndex());
         } elseif($item->getItemType() == 'receipt') {
-            $reservation = $this->getReservation($item->getRelatedProductId());
+            $reservation = $this->getReservation($item->getUniqueIndex());
         }
         else $reservation = null;
         if($reservation instanceof Reservation) {
@@ -150,5 +153,10 @@ class ReservationHandler implements ReservationInterface
         return new ReservationCollection($this->reservationRepository->findAll());
     }
 
-
+    private function addToSessionReserve(Item $item): void
+    {
+        $reserve = $this->session->get('reservation',[]);
+        $reserve[$item->getUniqueIndex()] = $item->getQuantity();
+        $this->session->set('reservation',$reserve);
+    }
 }

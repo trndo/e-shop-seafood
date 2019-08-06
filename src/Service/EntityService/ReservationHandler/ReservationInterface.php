@@ -11,17 +11,16 @@ interface ReservationInterface
 {
     /**
      * @param Product $product
-     * @param bool $orderType
-     * @param float $quantity
+     * @param Item $item
      * @return mixed
      */
-    public function reserve(Product $product, bool $orderType, float $quantity): void ;
+    public function reserve(Product $product, Item $item): void ;
 
     /**
-     * @param int $productId
+     * @param string $key
      * @return Reservation
      */
-    public function getReservation(int $productId): ?Reservation;
+    public function getReservation(string $key): ?Reservation;
 
     /**
      * @param Item $item

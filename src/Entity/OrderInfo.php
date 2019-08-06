@@ -69,7 +69,7 @@ class OrderInfo
     private $coordinates;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetail", mappedBy="orderInfo")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderDetail", mappedBy="orderInfo", cascade={"persist", "remove"})
      */
     private $orderDetails;
 

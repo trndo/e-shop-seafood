@@ -51,8 +51,8 @@ class OrderInfoHandler implements OrderInfoInterface
             if ($item['item'] instanceof Receipt) {
                 $orderDetails->setReceipt($item['item'])
                     ->setProduct($item['product']);
-                $bonuses = ($item['item']->getPrice()*ceil($item['quantity']) + $item['product']->getPrice()*$item['quantity'])*0.1 + $bonuses;
-        }
+                $bonuses = ($item['item']->getPrice() * ceil($item['quantity']) + $item['product']->getPrice() * $item['quantity']) * 0.1 + $bonuses;
+            }
             if ($item['item'] instanceof Product) {
                 $orderDetails->setProduct($item['item']);
             }
@@ -73,7 +73,7 @@ class OrderInfoHandler implements OrderInfoInterface
 
     public function getOrders(): OrdersCollection
     {
-        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->findBy([],['id' => 'DESC']));
+        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->findBy([], ['id' => 'DESC']));
     }
 
     public function getOrder(int $id): OrderInfo
@@ -81,11 +81,22 @@ class OrderInfoHandler implements OrderInfoInterface
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
     }
 
-    public function updateOrder(OrderModel $model,OrderInfo $orderInfo): void
+    public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void
     {
-       $info = OrderMapper::modelToEntity($model, $orderInfo);
-       $this->entityManager->flush();
+        OrderMapper::modelToEntity($model, $orderInfo);
+        $this->entityManager->flush();
     }
+
+    public function deleteOrder(int $id): void
+    {
+        $order = $this->getOrder($id);
+
+        if ($order) {
+            $this->entityManager->remove($order);
+            $this->entityManager->flush();
+        }
+    }
+
 
 
 }

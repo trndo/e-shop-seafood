@@ -61,4 +61,17 @@ class AdminOrderController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/lipadmin/showOrder/{id}/delete" ,name="deleteOrder")
+     * @param int|null $id
+     * @param OrderInfoInterface $orderInfo
+     * @return Response
+     */
+    public function deleteOrder(?int $id, OrderInfoInterface $orderInfo): Response
+    {
+        $orderInfo->deleteOrder($id);
+
+        return $this->redirectToRoute('admin');
+    }
+
 }

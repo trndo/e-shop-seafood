@@ -2,37 +2,79 @@ require('../css/sb-admin-2.css');
 const jQuery = require('jquery');
 require('bootstrap');
 import bsCustomFileInput from 'bs-custom-file-input';
+import './plugins/jquery.abacus.min';
+
+let totalSum = $('#order_info_totalPrice').val();
 
 
-(function($) {
-    "use strict"; // Start of use strict
+
+(function ($) {
+    "use strict"; // Start of use stri
+
+
 
     $(document).ready(function () {
         bsCustomFileInput.init()
+
+
     });
 
+    $('input[type=number]').change(function () {
+
+        let totalPrice = $('#order_info_totalPrice');
+        let sum = 0;
+
+        $('input[type=number]').each(function () {
+            let product = $(this).parent().prev();
+            let quantity = Number($(this).val());
+            let productPrice = Number(product.val());
+            let receiptPrice = Number(product.prev().val());
+
+            if (receiptPrice !== null && product.hasClass('receipt_product') === true){
+
+                console.log(receiptPrice,productPrice);
+                sum += (Math.ceil(quantity) * receiptPrice) + (quantity * productPrice);
+                console.log(sum)
+            }
+            else {
+                sum += quantity * productPrice;
+                console.log('a'+sum)
+            }
+
+
+        });
+        console.log(sum);
+        totalSum = totalPrice.val(sum);
+        totalPrice.abacus(totalSum.val());
+    });
+
+
+
+
     $('.search-name').click(function () {
-       $(this).parents('form').submit();
+        $(this).parents('form').submit();
     });
 
     // Toggle the side navigation
-    $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
+    $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
         $("body").toggleClass("sidebar-toggled");
         $(".sidebar").toggleClass("toggled");
         if ($(".sidebar").hasClass("toggled")) {
             $('.sidebar .collapse').collapse('hide');
-        };
+        }
+        ;
     });
 
     // Close any open menu accordions when window is resized below 768px
-    $(window).resize(function() {
+    $(window).resize(function () {
         if ($(window).width() < 768) {
             $('.sidebar .collapse').collapse('hide');
-        };
+        }
+        ;
     });
 
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
-    $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
+    $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {
         if ($(window).width() > 768) {
             var e0 = e.originalEvent,
                 delta = e0.wheelDelta || -e0.detail;
@@ -42,7 +84,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
     });
 
     // Scroll to top button appear
-    $(document).on('scroll', function() {
+    $(document).on('scroll', function () {
         var scrollDistance = $(this).scrollTop();
         if (scrollDistance > 100) {
             $('.scroll-to-top').fadeIn();
@@ -52,7 +94,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
     });
 
     // Smooth scrolling using jQuery easing
-    $(document).on('click', 'a.scroll-to-top', function(e) {
+    $(document).on('click', 'a.scroll-to-top', function (e) {
         var $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top)

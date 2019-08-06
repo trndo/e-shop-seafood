@@ -103,6 +103,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $order = $this->getOrder($id);
 
         if ($order) {
+            $order->getOrderDetails()->
             $this->entityManager->remove($order);
             $this->entityManager->flush();
         }

@@ -98,7 +98,7 @@ class AdminOrderController extends AbstractController
      * @Route("/lipadmin/showOrder/{id}/changeStatus" ,name="changeStatus")
      * @param int|null $id
      * @param OrderInfoInterface $orderInfo
-     * @return Response
+     * @return RedirectResponse
      */
     public function changeStatus(?int $id, OrderInfoInterface $orderInfo): RedirectResponse
     {

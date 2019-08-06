@@ -26,6 +26,11 @@ class Supply
      */
     private $quantity;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $reservationQuantity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Supply
     public function setQuantity(?float $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getReservationQuantity(): ?float
+    {
+        return $this->reservationQuantity;
+    }
+
+    public function setReservationQuantity(?float $reservationQuantity): self
+    {
+        $this->reservationQuantity = $reservationQuantity;
 
         return $this;
     }

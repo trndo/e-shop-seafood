@@ -29,7 +29,8 @@ class SupplyService implements SupplyServiceInterface
         $supply = $repository->find($jsonData['id']);
 
         if (isset($supply)) {
-            $supply->setQuantity($jsonData['quantity']);
+            $supply->setQuantity($jsonData['quantity'])
+                   ->setReservationQuantity($jsonData['quantity']);
 
             $this->entityManager->flush();
         }

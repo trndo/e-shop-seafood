@@ -60,7 +60,7 @@ class ReservationHandler implements ReservationInterface
         if ($reservation) {
             $reservationQuantity = $reservation->getReservationQuantity();
             $diff = $this->recognizeDiff($quantity,$reservationQuantity);
-            $supply->setQuantity($supply->getQuantity() + $diff);
+            $supply->setReservationQuantity($supply->getReservationQuantity() + $diff);
             $reservation->setReservationQuantity($quantity);
             $this->addToSessionReserve($item);
         } elseif ($this->session->get('chooseOrder',true)) {
@@ -81,7 +81,7 @@ class ReservationHandler implements ReservationInterface
             }
 
             $this->entityManager->persist($reservation);
-            $supply->setQuantity($supply->getQuantity() - $quantity);
+            $supply->setReservationQuantity($supply->getReservationQuantity() - $quantity);
             $this->addToSessionReserve($item);
         }
         $this->entityManager->flush();
@@ -118,7 +118,7 @@ class ReservationHandler implements ReservationInterface
         else $reservation = null;
         if($reservation instanceof Reservation) {
             $supply = $reservation->getProduct()->getSupply();
-            $supply->setQuantity($supply->getQuantity() + $reservation->getReservationQuantity());
+            $supply->setReservationQuantity($supply->getReservationQuantity() + $reservation->getReservationQuantity());
             $this->entityManager->remove($reservation);
             $this->entityManager->flush();
         }

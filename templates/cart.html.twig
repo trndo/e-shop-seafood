@@ -17,7 +17,7 @@
             </div>
             <div class="cart-container cartItems">
                 {% set session = app.session.get('cart') %}
-                {% dump(session) %}{% dump(sum) %}
+{#                {% dump(session) %}{% dump(sum) %}#}
                 {% if session == null %}
                     <h3 style="color: white">Ваша корзина пустая!</h3>
                 {% endif %}

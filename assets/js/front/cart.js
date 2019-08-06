@@ -77,7 +77,8 @@ $(document).on('keyup','.cart-res > input',function (e) {
         success: function (res) {
             if (res.status === false) {
                 alert(res.message);
-                input.val(res.rest)
+                if(res.rest != 0)
+                    input.val(res.rest);
             }
             else {
                 input.val(val);
@@ -105,7 +106,8 @@ $(document).on('blur','.cart-res > input',function (e) {
             success: function (res) {
                 if (res.status === false) {
                     alert(res.message);
-                    input.val(res.rest)
+                    if(res.rest != 0)
+                        input.val(res.rest);
                 }
                 else {
                     input.val(1);

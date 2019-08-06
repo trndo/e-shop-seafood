@@ -56,7 +56,10 @@ $(document).ready(function () {
                 } else {
                     console.log('ne-ok');
                     alert(res.message);
-                    $('.item-res > input').val(res.rest);
+                    if(res.rest != 0)
+                        $('.item-res > input').val(res.rest);
+                    else
+                        $('.item-res > input').val(1);
                 }
 
 

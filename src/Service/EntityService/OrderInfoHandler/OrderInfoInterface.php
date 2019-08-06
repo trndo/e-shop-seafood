@@ -31,7 +31,7 @@ interface OrderInfoInterface
      * @param int $id
      * @return OrderInfo
      */
-    public function getOrder(int $id): OrderInfo;
+    public function getOrder(int $id): ?OrderInfo;
 
     /**
      * @param OrderModel $model
@@ -43,4 +43,17 @@ interface OrderInfoInterface
      * @param int $id
      */
     public function deleteOrder(int $id): void ;
+
+
+    /**
+     * @param int $id
+     * @return float
+     */
+    public function deleteOrderDetail(int $id): ?float ;
+
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function updateOrderInfoStatus(int $id): void ;
 }

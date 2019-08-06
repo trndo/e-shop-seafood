@@ -25,7 +25,7 @@ class OrderInfoRepository extends ServiceEntityRepository
      * @return OrderInfo
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getOrderById(int $id): OrderInfo
+    public function getOrderById(?int $id): ?OrderInfo
     {
         return $this->createQueryBuilder('o')
             ->innerJoin('o.orderDetails','od')

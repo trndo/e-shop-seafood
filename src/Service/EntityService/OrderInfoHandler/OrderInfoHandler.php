@@ -11,12 +11,17 @@ use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
+use App\Repository\OrderDetailRepository;
 use App\Service\CartHandler\CartHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderInfoHandler implements OrderInfoInterface
 {
+    private const STATUS_NEW = 'new';
+    private const STATUS_CONFIRMED = 'confirmed';
+    private const STATUS_PAYED = 'payed';
+    private const STATUS_DONE = 'done';
     /**
      * @var EntityManagerInterface
      */
@@ -25,17 +30,23 @@ class OrderInfoHandler implements OrderInfoInterface
      * @var CartHandler
      */
     private $cartHandler;
+    /**
+     * @var OrderDetailRepository
+     */
+    private $orderDetailRepository;
 
 
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
      * @param CartHandler $cartHandler
+     * @param OrderDetailRepository $orderDetailRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler)
+    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository)
     {
         $this->entityManager = $entityManager;
         $this->cartHandler = $cartHandler;
+        $this->orderDetailRepository = $orderDetailRepository;
     }
 
     public function addOrder(OrderModel $orderModel, Request $request): void
@@ -76,7 +87,7 @@ class OrderInfoHandler implements OrderInfoInterface
         return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->findBy([], ['id' => 'DESC']));
     }
 
-    public function getOrder(int $id): OrderInfo
+    public function getOrder(int $id): ?OrderInfo
     {
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
     }
@@ -97,6 +108,53 @@ class OrderInfoHandler implements OrderInfoInterface
         }
     }
 
+    public function deleteOrderDetail(int $id): ?float
+    {
+        $orderDetail = $this->orderDetailRepository->find($id);
+
+        if ($orderDetail) {
+            $orderInfo = $orderDetail->getOrderInfo();
+            $totalPrice = $orderInfo->getTotalPrice();
+            $receipt = $orderDetail->getReceipt();
+            $product = $orderDetail->getProduct();
+            $quantity = $orderDetail->getQuantity();
+            $orderDetailPrice = 0;
+
+            $receipt !== null
+                ? $orderDetailPrice = $receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity
+                : $orderDetailPrice = $product->getPrice() * $quantity;
+
+            $orderInfo->setTotalPrice($totalPrice - $orderDetailPrice);
+
+            $this->entityManager->remove($orderDetail);
+            $this->entityManager->flush();
+
+            return $orderInfo->getTotalPrice();
+        }
+        return null;
+    }
+
+    public function updateOrderInfoStatus(int $id): void
+    {
+        $order = $this->getOrder($id);
+        if ($order) {
+            $orderStatus = $order->getStatus();
+
+            switch ($orderStatus){
+                case self::STATUS_NEW :
+                    $order->setStatus(self::STATUS_CONFIRMED);
+                    break;
+                case self::STATUS_PAYED:
+                    $order->setStatus(self::STATUS_DONE);
+                    break;
+                default:
+                    $order->setStatus(self::STATUS_NEW);
+            }
+
+            $this->entityManager->flush();
+        }
+
+    }
 
 
 }

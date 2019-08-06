@@ -6,16 +6,10 @@ import './plugins/jquery.abacus.min';
 
 let totalSum = $('#order_info_totalPrice').val();
 
-
-
 (function ($) {
-    "use strict"; // Start of use stri
-
-
-
+    "use strict"; // Start of use strict
     $(document).ready(function () {
         bsCustomFileInput.init()
-
 
     });
 
@@ -40,16 +34,28 @@ let totalSum = $('#order_info_totalPrice').val();
                 sum += quantity * productPrice;
                 console.log('a'+sum)
             }
-
-
         });
         console.log(sum);
         totalSum = totalPrice.val(sum);
         totalPrice.abacus(totalSum.val());
     });
 
+    $('.fa-trash-alt').click(function () {
+        let id = $(this).data('id');
+        let trash = $(this);
+
+        $.ajax({
+            type: "DELETE",
+            url: "/lipadmin/deleteOrderDetail/"+id,
+            success: function (res) {
+                $('.orderTotalPrice').text('Cумма: '+res.totalPrice);
+                console.log(res.totalPrice);
+                trash.parent().remove();
 
 
+            }
+        })
+    });
 
     $('.search-name').click(function () {
         $(this).parents('form').submit();

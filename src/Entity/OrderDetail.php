@@ -32,7 +32,7 @@ class OrderDetail
     private $receipt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\OrderInfo", inversedBy="orderDetails", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\OrderInfo", inversedBy="orderDetails", cascade={"persist"})
      */
     private $orderInfo;
 

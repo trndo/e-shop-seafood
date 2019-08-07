@@ -113,6 +113,7 @@ class ProductService implements ProductServiceInterface
         $supply = new Supply();
 
         $supply->setQuantity(0)
+            ->setReservationQuantity(0)
             ->setProduct($product);
 
         return $supply;

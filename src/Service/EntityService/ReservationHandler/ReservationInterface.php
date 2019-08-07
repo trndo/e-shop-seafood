@@ -31,5 +31,10 @@ interface ReservationInterface
     /**
      * @return ReservationCollection
      */
-    public function getReservations(): ReservationCollection;
+    public function getReservations(): ReservationCollection ;
+
+    /**
+     * @param int|null $id
+     */
+    public function deleteReservationsById(?int $id): void ;
 }

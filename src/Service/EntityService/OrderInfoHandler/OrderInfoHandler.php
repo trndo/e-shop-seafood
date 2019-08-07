@@ -12,7 +12,9 @@ use App\Entity\Receipt;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
 use App\Repository\OrderDetailRepository;
+use App\Repository\ReservationRepository;
 use App\Service\CartHandler\CartHandler;
+use App\Service\EntityService\ReservationHandler\ReservationInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,48 +37,58 @@ class OrderInfoHandler implements OrderInfoInterface
      */
     private $orderDetailRepository;
 
+    /**
+     * @var ReservationInterface
+     */
+    private $reservation;
+
 
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
      * @param CartHandler $cartHandler
      * @param OrderDetailRepository $orderDetailRepository
+     * @param ReservationInterface $reservation
      */
-    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository)
+    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository,  ReservationInterface $reservation)
     {
         $this->entityManager = $entityManager;
         $this->cartHandler = $cartHandler;
         $this->orderDetailRepository = $orderDetailRepository;
+        $this->reservation = $reservation;
     }
 
     public function addOrder(OrderModel $orderModel, Request $request): void
     {
         $orderInfo = OrderMapper::orderModelToEntity($orderModel);
         $bonuses = $orderInfo->getUser()->getBonuses();
-
-        $totalSum = $request->getSession()->get('totalSum');
-        $items = $this->cartHandler->getItems($request);
+        $session = $request->getSession();
+        $totalSum = $session->get('totalSum');
+        $reservationId = (int) $session->get('reservationId');
+        $items = $this->cartHandler->getItems();
 
         foreach ($items as $item) {
-            $orderDetails = new OrderDetail();
+            $orderDetail = new OrderDetail();
             if ($item['item'] instanceof Receipt) {
-                $orderDetails->setReceipt($item['item'])
+                $orderDetail->setReceipt($item['item'])
                     ->setProduct($item['product']);
                 $bonuses = ($item['item']->getPrice() * ceil($item['quantity']) + $item['product']->getPrice() * $item['quantity']) * 0.1 + $bonuses;
             }
             if ($item['item'] instanceof Product) {
-                $orderDetails->setProduct($item['item']);
+                $orderDetail->setProduct($item['item']);
             }
-            $orderDetails->setQuantity($item['quantity']);
-            $orderDetails->setOrderInfo($orderInfo);
+            $orderDetail->setQuantity($item['quantity']);
+            $orderDetail->setOrderInfo($orderInfo);
 
-            $this->entityManager->persist($orderDetails);
+            $this->entityManager->persist($orderDetail);
         }
 
         $orderInfo->setTotalPrice($totalSum);
         $orderInfo->getUser()->setBonuses($bonuses);
 
         $this->entityManager->persist($orderInfo);
+
+        $this->reservation->deleteReservationsById($reservationId);
         $this->entityManager->flush();
 
 
@@ -103,7 +115,14 @@ class OrderInfoHandler implements OrderInfoInterface
         $order = $this->getOrder($id);
 
         if ($order) {
-            $order->getOrderDetails()->
+            $orderDetails = $order->getOrderDetails();
+            foreach ($orderDetails as $orderDetail) {
+                $product = $orderDetail->getProduct();
+                $productSupply = $product->getSupply();
+                $productSupply->setReservationQuantity(
+                    $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
+                );
+            }
             $this->entityManager->remove($order);
             $this->entityManager->flush();
         }
@@ -120,6 +139,9 @@ class OrderInfoHandler implements OrderInfoInterface
             $product = $orderDetail->getProduct();
             $quantity = $orderDetail->getQuantity();
             $orderDetailPrice = 0;
+
+            $supply = $product->getSupply();
+            $supply->setReservationQuantity($supply->getReservationQuantity() + $orderDetail->getQuantity());
 
             $receipt !== null
                 ? $orderDetailPrice = $receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity
@@ -141,7 +163,7 @@ class OrderInfoHandler implements OrderInfoInterface
         if ($order) {
             $orderStatus = $order->getStatus();
 
-            switch ($orderStatus){
+            switch ($orderStatus) {
                 case self::STATUS_NEW :
                     $order->setStatus(self::STATUS_CONFIRMED);
                     break;
@@ -156,6 +178,24 @@ class OrderInfoHandler implements OrderInfoInterface
         }
 
     }
+
+    public function buyItems(int $id): void
+    {
+        $order = $this->getOrder($id);
+
+        if ($order) {
+            $orderDetails = $order->getOrderDetails();
+            foreach ($orderDetails as $orderDetail) {
+                $orderQuantity = $orderDetail->getQuantity();
+                $supply = $orderDetail->getProduct()->getSupply();
+                $supplyQuantity = $supply->getQuantity();
+
+                $supply->setQuantity($supplyQuantity - $orderQuantity);
+            }
+            $this->entityManager->flush();
+        }
+    }
+
 
 
 }

@@ -30,9 +30,6 @@ class UserInfoUpdateType extends AbstractType
             ])
             ->add('coordinates',HiddenType::class, [
                 'label' => false
-            ])
-            ->add('save',SubmitType::class, [
-                'label' => false
             ]);
     }
 

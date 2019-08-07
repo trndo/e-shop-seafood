@@ -106,6 +106,7 @@
                     marker.setMap(null);
                     marker = null;
                 }
+                document.getElementById('adress-order').value = '';
                 map.addListener('click', function(e) {
                     placeMarker(e.latLng, map);
                 });
@@ -122,43 +123,32 @@
                         position: position,
                         map: map
                     });
-                    let latLng = {
-                        lat: marker.getPosition().lat(),
-                        lng: marker.getPosition().lng()
-                    };
-                    geocoder.geocode({
-                        'location' : latLng,
-                    },function (results, status) {
-                        if (status === 'OK'){
-                            if (results[0]){
-                                document.getElementById('adress-order').value = results[0].formatted_address ;
-                            } else {
-                                document.getElementById('adress-order').value = '';
-                            }
-                        };
-                    });
-                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
+                    geocodePosition(marker);
                     map.panTo(position);
                 } else {
-                    let latLng = {
-                        lat: marker.getPosition().lat(),
-                        lng: marker.getPosition().lng()
-                    };
-                    geocoder.geocode({
-                        'location' : latLng,
-                    },function (results, status) {
-                        if (status === 'OK'){
-                            if (results[0]){
-                                document.getElementById('adress-order').value = results[0].formatted_address ;
-                            } else {
-                                document.getElementById('adress-order').value = '';
-                            }
-                        };
-                    });
+                    geocodePosition(marker);
                     marker.setPosition(position);
-                    document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
                     map.panTo(position);
                 }
+            }
+
+            function geocodePosition(marker) {
+                let latLng = {
+                    lat: marker.getPosition().lat(),
+                    lng: marker.getPosition().lng()
+                };
+                geocoder.geocode({
+                    'location' : latLng,
+                },function (results, status) {
+                    if (status === 'OK'){
+                        if (results[0]){
+                            document.getElementById('adress-order').value = results[0].formatted_address ;
+                        } else {
+                            document.getElementById('adress-order').value = '';
+                        }
+                    }
+                });
+                document.getElementById('order_coordinates').value = latLng.lat+' '+latLng.lng;
             }
 
             // Create the search box and link it to the UI element.

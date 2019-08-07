@@ -611,6 +611,8 @@ input[type=number] {
     line-height: 38px;
     position: relative;
     z-index: 30;
+    display: block;
+    padding: 0 0 0 0;
 }
 
 

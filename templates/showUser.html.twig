@@ -73,7 +73,7 @@
                         <div id="user-map"></div>
                     </div>
                             {{ form_widget(form.coordinates) }}
-                            {{ form_widget(form.save, {'attr':{'class': 'login-button'}}) }}
+                            <button type="submit" id="user_info_update_save" name="user_info_update[save]" class="login-button btn">Сохранить</button>
 {#                    <div class="login-button">#}
 {#                        Сохранить#}
 {#                    </div>#}
@@ -112,15 +112,83 @@
     <script>
         let coordinates = '{{ coordinates }}'{# '{{ user.coordinates }}' #};
         console.log(coordinates);
-        let map;
         let position = { lat: Number(coordinates.substr(0,coordinates.indexOf(' '))), lng: Number(coordinates.substr(coordinates.indexOf(' ')+1))};
 
         function initMap() {
-            map = new google.maps.Map(document.getElementById('user-map'), {
+            let map = new google.maps.Map(document.getElementById('user-map'), {
                 center: position,
                 zoom: 15
             });
             let marker = new google.maps.Marker({position: position, map: map});
+            let geocoder =  new google.maps.Geocoder;
+            let listener = map.addListener('click', function(e) {
+                placeMarker(e.latLng, map);
+            });
+            function placeMarker(position, map) {
+                if (marker == null) {
+                    marker = new google.maps.Marker({
+                        position: position,
+                        map: map
+                    });
+                    geocodePosition(marker);
+                    map.panTo(position);
+                } else {
+                    geocodePosition(marker);
+                    marker.setPosition(position);
+                    map.panTo(position);
+                }
+            }
+
+            function geocodePosition(marker) {
+                let latLng = {
+                    lat: marker.getPosition().lat(),
+                    lng: marker.getPosition().lng()
+                };
+                geocoder.geocode({
+                    'location' : latLng,
+                },function (results, status) {
+                    if (status === 'OK'){
+                        if (results[0]){
+                            document.getElementById('user_info_update_address').value = results[0].formatted_address ;
+                        } else {
+                            document.getElementById('user_info_update_address').value = '';
+                        }
+                    }
+                });
+                document.getElementById('user_info_update_coordinates').value = latLng.lat+' '+latLng.lng;
+            }
+
+            var input = document.getElementById('user_info_update_address');
+            var searchBox = new google.maps.places.Autocomplete(input);
+            searchBox.setComponentRestrictions({'country': ['ua']});
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener('place_changed', function() {
+                var place = searchBox.getPlace();
+                if (place.length == 0) {
+                    return;
+                }
+                marker.setMap(null);
+                var bounds = new google.maps.LatLngBounds();
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                marker = new google.maps.Marker({
+                    map: map,
+                    title: place.name,
+                    position: place.geometry.location
+                });
+                document.getElementById('user_info_update_coordinates').value = place.geometry.location.lat() + ' ' + place.geometry.location.lng();
+                if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+                map.fitBounds(bounds);
+            });
         }
     </script>
 {% endblock %}

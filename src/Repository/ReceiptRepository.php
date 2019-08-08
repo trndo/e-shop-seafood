@@ -39,7 +39,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.category','category')
             ->leftJoin('r.orderDetail','orderDetail')
             ->addSelect('r, category, orderDetail')
-            ->andWhere('r.rating != 0')
+            ->andWhere('r.rating != 0 and r.status = true')
             ->setMaxResults(9)
             ->getQuery()
             ->getResult();
@@ -64,5 +64,22 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
     public function findReceiptBySlug(string $slug): Receipt
     {
         return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
+     * @param int $categoryId
+     * @return Receipt[]|null
+     */
+    public function getReceiptsFromCategory(int $categoryId): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->addSelect('c','od')
+            ->leftJoin('r.category','c')
+            ->leftJoin('r.orderDetail','od')
+            ->andWhere('r.status = true AND c.id = :categoryId')
+            ->setParameter('categoryId',$categoryId)
+            ->getQuery()
+            ->execute()
+            ;
     }
 }

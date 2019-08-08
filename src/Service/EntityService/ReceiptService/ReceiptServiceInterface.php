@@ -3,6 +3,7 @@
 namespace App\Service\EntityService\ReceiptService;
 
 use App\Collection\ReceiptCollection;
+use App\Entity\Category;
 use App\Entity\Receipt;
 use App\Model\ReceiptModel;
 use Doctrine\Common\Annotations\Annotation\Target;
@@ -47,4 +48,10 @@ interface ReceiptServiceInterface
      * @return Receipt
      */
     public function getReceipt(?string $slug): Receipt;
+
+    /**
+     * @param Category $category
+     * @return ReceiptCollection|null
+     */
+    public function getReceiptsByCategory(Category $category): ?ReceiptCollection ;
 }

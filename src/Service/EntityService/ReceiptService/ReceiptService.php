@@ -3,6 +3,7 @@
 namespace App\Service\EntityService\ReceiptService;
 
 use App\Collection\ReceiptCollection;
+use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Product;
 use App\Entity\Receipt;
@@ -222,5 +223,11 @@ class ReceiptService implements ReceiptServiceInterface
     public function getReceipt(?string $slug): Receipt
     {
        return $this->receiptRepository->findReceiptBySlug($slug);
+    }
+
+    public function getReceiptsByCategory(Category $category): ?ReceiptCollection
+    {
+
+        return new ReceiptCollection($this->receiptRepository->getReceiptsFromCategory($category->getId()));
     }
 }

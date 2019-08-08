@@ -6,6 +6,8 @@ namespace App\Service\RatingService;
 
 use App\Entity\Product;
 use App\Entity\Receipt;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class RatingService implements RatingServiceInterface
@@ -14,14 +16,26 @@ class RatingService implements RatingServiceInterface
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var ReceiptServiceInterface
+     */
+    private $receiptService;
+    /**
+     * @var ProductServiceInterface
+     */
+    private $productService;
 
     /**
      * RatingService constructor.
      * @param EntityManagerInterface $entityManager
+     * @param ReceiptServiceInterface $receiptService
+     * @param ProductServiceInterface $productService
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, ReceiptServiceInterface $receiptService, ProductServiceInterface $productService)
     {
         $this->em = $entityManager;
+        $this->receiptService = $receiptService;
+        $this->productService = $productService;
     }
 
     /**
@@ -52,6 +66,19 @@ class RatingService implements RatingServiceInterface
             $good->setRating(0);
             $this->em->flush();
         }
+    }
+
+    public function getItems(): ?array
+    {
+        $items = array_merge($this->productService->getProductsForRating(),$this->receiptService->getReceiptsForRating());
+
+        usort( $items, function ($product, $receipt){
+            if($product->getRating() == $receipt->getRating())
+                return null;
+            return ($product->getRating() < $receipt->getRating()) ? -1 : 1;
+        });
+
+        return $items;
     }
 
 }

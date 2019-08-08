@@ -5,6 +5,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import './plugins/jquery.abacus.min';
 
 let totalSum = $('#order_info_totalPrice').val();
+$('#order_info_totalPrice').abacus(totalSum);
 
 (function ($) {
     "use strict"; // Start of use strict
@@ -24,15 +25,14 @@ let totalSum = $('#order_info_totalPrice').val();
             let productPrice = Number(product.val());
             let receiptPrice = Number(product.prev().val());
 
-            if (receiptPrice !== null && product.hasClass('receipt_product') === true){
+            if (receiptPrice !== null && product.hasClass('receipt_product') === true) {
 
-                console.log(receiptPrice,productPrice);
+                console.log(receiptPrice, productPrice);
                 sum += (Math.ceil(quantity) * receiptPrice) + (quantity * productPrice);
                 console.log(sum)
-            }
-            else {
+            } else {
                 sum += quantity * productPrice;
-                console.log('a'+sum)
+                console.log('a' + sum)
             }
         });
         console.log(sum);
@@ -46,9 +46,9 @@ let totalSum = $('#order_info_totalPrice').val();
 
         $.ajax({
             type: "DELETE",
-            url: "/lipadmin/deleteOrderDetail/"+id,
+            url: "/lipadmin/deleteOrderDetail/" + id,
             success: function (res) {
-                $('.orderTotalPrice').text('Cумма: '+res.totalPrice);
+                $('.orderTotalPrice').text('Cумма: ' + res.totalPrice);
                 console.log(res.totalPrice);
                 trash.parent().remove();
 

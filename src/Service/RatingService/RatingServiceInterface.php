@@ -7,12 +7,6 @@ use Doctrine\ORM\EntityManagerInterface;
 interface RatingServiceInterface
 {
     /**
-     * RatingServiceInterface constructor.
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager);
-
-    /**
      * @param array $rating
      */
     public function updateRating(array $rating): void;

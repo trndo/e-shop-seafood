@@ -54,7 +54,7 @@
                             </li>
                         </ul>
                         <hr>
-                        <div class="row liveSearch">
+                        <div class="row ">
                             {% for supply in supplies %}
                             <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
                                 <div class="card" style="width: 20rem;">
@@ -67,7 +67,7 @@
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">{{ supply.product.unit }}</div>
                                                     </div>
-                                                    <input id="quantity-{{ supply.id }}" type="text" class="form-control" id="inlineFormInputGroupUsername" value="{{ supply.quantity }}"><i id="success-{{ supply.id }}" class="far fa-check-circle" style="display: none;  font-size: 36px; color: #31b405;"></i>
+                                                    <input id="quantity-{{ supply.id }}" type="number" min="1" step="0.5" class="form-control"  value="{{ supply.quantity }}"><i id="success-{{ supply.id }}" class="far fa-check-circle" style="display: none;  font-size: 36px; color: #31b405;"></i>
                                                 </div>
                                             </div>
                                         </div>

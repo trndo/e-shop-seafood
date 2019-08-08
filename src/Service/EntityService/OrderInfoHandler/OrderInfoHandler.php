@@ -50,7 +50,7 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param OrderDetailRepository $orderDetailRepository
      * @param ReservationInterface $reservation
      */
-    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository,  ReservationInterface $reservation)
+    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository, ReservationInterface $reservation)
     {
         $this->entityManager = $entityManager;
         $this->cartHandler = $cartHandler;
@@ -64,7 +64,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $bonuses = $orderInfo->getUser()->getBonuses();
         $session = $request->getSession();
         $totalSum = $session->get('totalSum');
-        $reservationId = (int) $session->get('reservationId');
+        $reservationId = (int)$session->get('reservationId');
         $items = $this->cartHandler->getItems();
 
         foreach ($items as $item) {
@@ -115,18 +115,14 @@ class OrderInfoHandler implements OrderInfoInterface
         $order = $this->getOrder($id);
 
         if ($order) {
-            $orderDetails = $order->getOrderDetails();
-            foreach ($orderDetails as $orderDetail) {
-                $product = $orderDetail->getProduct();
-                $productSupply = $product->getSupply();
-                $productSupply->setReservationQuantity(
-                    $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
-                );
-            }
+            $this->deleteOrderWithStatus($order);
+
             $this->entityManager->remove($order);
             $this->entityManager->flush();
         }
     }
+
+
 
     public function deleteOrderDetail(int $id): ?float
     {
@@ -165,6 +161,7 @@ class OrderInfoHandler implements OrderInfoInterface
 
             switch ($orderStatus) {
                 case self::STATUS_NEW :
+                    $this->deleteFromSupply($order);
                     $order->setStatus(self::STATUS_CONFIRMED);
                     break;
                 case self::STATUS_PAYED:
@@ -179,23 +176,44 @@ class OrderInfoHandler implements OrderInfoInterface
 
     }
 
-    public function buyItems(int $id): void
+
+    private function deleteFromSupply(OrderInfo $orderInfo): void
     {
-        $order = $this->getOrder($id);
-
-        if ($order) {
-            $orderDetails = $order->getOrderDetails();
-            foreach ($orderDetails as $orderDetail) {
-                $orderQuantity = $orderDetail->getQuantity();
-                $supply = $orderDetail->getProduct()->getSupply();
-                $supplyQuantity = $supply->getQuantity();
-
+        $orderDetails = $orderInfo->getOrderDetails();
+        foreach ($orderDetails as $orderDetail) {
+            $orderQuantity = $orderDetail->getQuantity();
+            $supply = $orderDetail->getProduct()->getSupply();
+            $supplyQuantity = $supply->getQuantity();
+            if ($supplyQuantity >= $orderQuantity)
                 $supply->setQuantity($supplyQuantity - $orderQuantity);
-            }
-            $this->entityManager->flush();
+            else
+                throw new \Exception('Вы хотите подтвердить ' . $orderQuantity . ' едениц товара. На складе доступно - ' . $supplyQuantity . ' !!!');
         }
     }
 
+    private function deleteOrderWithStatus(OrderInfo $order): void
+    {
+        $orderDetails = $order->getOrderDetails();
+
+        if ($order->getStatus() == self::STATUS_CONFIRMED) {
+            foreach ($orderDetails as $orderDetail) {
+                $product = $orderDetail->getProduct();
+                $productSupply = $product->getSupply();
+                $productSupply->setReservationQuantity(
+                    $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
+                )
+                    ->setQuantity($productSupply->getQuantity() + $orderDetail->getQuantity());
+            }
+        } else {
+            foreach ($orderDetails as $orderDetail) {
+                $product = $orderDetail->getProduct();
+                $productSupply = $product->getSupply();
+                $productSupply->setReservationQuantity(
+                    $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
+                );
+            }
+        }
+    }
 
 
 }

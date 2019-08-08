@@ -4,6 +4,7 @@
 namespace App\Service\EntityService\ProductService;
 
 use App\Collection\ProductCollection;
+use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Product;
 use App\Entity\Supply;
@@ -225,6 +226,12 @@ class ProductService implements ProductServiceInterface
     public function getProductById(?int $id): Product
     {
         return $this->productRepository->find($id);
+    }
+
+    public function getProductsByCategory(Category $category): ?array
+    {
+       return $this->productRepository->getProductsFromCategory($category->getId());
+
     }
 
 

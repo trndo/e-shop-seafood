@@ -3,14 +3,19 @@
         display: none;
     }
     #lobster{
-        left: -83px;
-        transform: rotate(-40deg);
+        left: -70px;
+        transform: rotate(-45deg);
+        top: -90px;
     }
 }
 
 @media (min-width: 375px) and (max-width: 767px){
     #lobster{
-        display: none;
+        left: -50px;
+        transform: rotate(-45deg);
+        top: -60px;
+        width: 247px;
+        height: 234px;
     }
 
     .user-red-content{
@@ -54,7 +59,11 @@
 
 @media (min-width: 320px) and (max-width: 374px){
     #lobster{
-        display: none;
+        left: -50px;
+        transform: rotate(-45deg);
+        top: -60px;
+        width: 247px;
+        height: 234px;
     }
 
     .user-red-content{

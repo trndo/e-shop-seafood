@@ -135,4 +135,15 @@ class UserController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/user-{id}/orders", name="user_orders")
+     *
+     * @param User $user
+     * @return Response
+     */
+    public function history(User $user): Response
+    {
+        return $this->render('history.html.twig');
+    }
 }

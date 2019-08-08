@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+    <style>
+        .slick-slide {
+            margin: 0 13px;
+            width: 150px;
+        }
+        /* the parent */
+        .slick-list {
+            margin: 0;
+        }
+        .slick-track{
+
+        }
+    </style>
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% set sum = app.session.get('totalSum') %}
+        {% include 'elements/small_header.html.twig' %}
+        <main>
+            <div class="additional-nav">
+                <div class="additional-nav-container">
+                    <div class="additional-nav-item nav-item-grey">
+                        Личные данные
+                    </div>
+                    <div class="additional-nav-item nav-item-grey">
+                        История заказов
+                    </div>
+                    <div class="additional-nav-item nav-item-grey">
+                        Поменять пароль
+                    </div>
+                </div>
+            </div>
+            <div class="user-tabs">
+                <div class="user-tab">Личные данные</div>
+                <div class="user-tab user-tab-active">История заказов</div>
+                <div class="user-tab user-tab-last">Поменять пароль</div>
+            </div>
+            <div class="user-red-content">
+                <embed id="steamed-fish" type="image/svg+xml" src="/assets/img/steamed-fish.svg"/>
+                <div class="user-title">
+                    <span class="attention-subtitle">Не помнишь что заказал и когда? </span><br>
+                    <span class="attention-title">Или хочешь повторить заказ</span>
+                </div>
+                <div class="history-container">
+                    <div class="history-item item-in-process">
+                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">
+                        <div class="history-item-info">
+                            <div class="order-id-date-status">
+                                <span class="order-id">№0166610</span>
+                                <!-- order-cook order-delivery order-proc -->
+                                <span class="date-status">Готовится <span class="order-stat order-cook"></span></span>
+                            </div>
+                            <div class="order-total">
+                                5500 <span class="hryvna">₴</span>
+                            </div>
+                            <div class="history-actions">
+                                <div class="history-btn history-more">
+                                    Подробнее
+                                </div>
+                                <div class="history-btn">Оплатить</div>
+                                <div class="history-btn">Отменить</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">
+                        <div class="history-item-info">
+                            <div class="order-id-date-status">
+                                <span class="order-id">№0166610</span>
+                                <span class="date-status">26/06/2019</span>
+                            </div>
+                            <div class="order-total">
+                                5500 <span class="hryvna">₴</span>
+                            </div>
+                            <div class="history-actions">
+                                <div class="history-btn history-more">
+                                    Подробнее
+                                </div>
+                                <div class="history-btn">Оплатить</div>
+                                <div class="history-btn">Отменить</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">
+                        <div class="history-item-info">
+                            <div class="order-id-date-status">
+                                <span class="order-id">№0166610</span>
+                                <span class="date-status">26/06/2019</span>
+                            </div>
+                            <div class="order-total">
+                                5500 <span class="hryvna">₴</span>
+                            </div>
+                            <div class="history-actions">
+                                <div class="history-btn history-more">
+                                    Подробнее
+                                </div>
+                                <div class="history-btn">Оплатить</div>
+                                <div class="history-btn">Отменить</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="attention-promotion">
+                <div class="bonuses-in-attention">
+                    100/<span class="bonus-bold">2000</span>
+                </div>
+                <div class="promotion-title">
+                    <span class="attention-subtitle">Купи товаров на 2000 грн за всё время</span>
+                    <span class="attention-title">Получи Рыбу в подарок</span>
+                </div>
+                <div class="scale">
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                    <div class="scale-section"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    {% include 'elements/__footer.html.twig' with { 'active': false } %}
+    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}
+{% endblock %}

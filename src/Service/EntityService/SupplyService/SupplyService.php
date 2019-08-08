@@ -29,8 +29,10 @@ class SupplyService implements SupplyServiceInterface
         $supply = $repository->find($jsonData['id']);
 
         if (isset($supply)) {
-            $supply->setQuantity($jsonData['quantity'])
-                   ->setReservationQuantity($jsonData['quantity']);
+            $newQuantity = $jsonData['quantity'];
+            $quantity = $supply->getQuantity();
+
+            $this->setNewQuantity($newQuantity, $quantity, $supply);
 
             $this->entityManager->flush();
         }
@@ -39,6 +41,22 @@ class SupplyService implements SupplyServiceInterface
     public function getAllSupply(): SupplyCollection
     {
         return new SupplyCollection($this->getSupplyRepository()->findAll());
+    }
+
+    public function setNewQuantity(float $newQuantity, float $quantity, Supply $supply): void
+    {
+        $reservationQuantity = $supply->getReservationQuantity();
+
+        if ($quantity <= $newQuantity) {
+            $diff = $newQuantity - $quantity;
+            $supply->setQuantity($quantity + $diff);
+            $supply->setReservationQuantity($reservationQuantity + $diff);
+        }
+        if ($quantity >= $newQuantity) {
+            $diff = $quantity - $newQuantity;
+            $supply->setQuantity($quantity - $diff);
+            $supply->setReservationQuantity($reservationQuantity - $diff);
+        }
     }
 
     private function getSupplyRepository()

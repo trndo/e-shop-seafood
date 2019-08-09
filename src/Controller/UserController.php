@@ -4,12 +4,16 @@
 namespace App\Controller;
 
 
+use App\Entity\Category;
+use App\Entity\OrderInfo;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Form\UserInfoUpdateType;
 use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
+use App\Service\PaymentService\PaymentHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -144,6 +148,23 @@ class UserController extends AbstractController
      */
     public function history(User $user): Response
     {
-        return $this->render('history.html.twig');
+        return $this->render('history.html.twig',[
+            'orders' => $user->getOrderInfos()
+        ]);
+    }
+
+    /**
+     * @Route("/payment/{id}", name="pay")
+     * @param OrderInfo $order
+     * @param PaymentHandler $handler
+     * @return Response
+     */
+    public function pay(OrderInfo $order, PaymentHandler $handler): Response
+    {
+       $payment = $handler->getFormForPayment($order);
+
+        return $this->render('pay.html.twig',[
+            'payment' => $payment
+        ]);
     }
 }

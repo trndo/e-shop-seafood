@@ -144,6 +144,9 @@
     "league/oauth2-instagram": {
         "version": "2.0.0"
     },
+    "liqpay/liqpay": {
+        "version": "v1.2.3"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

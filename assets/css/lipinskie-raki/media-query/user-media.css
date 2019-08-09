@@ -19,7 +19,7 @@
     }
 
     .user-red-content{
-        width: 285px;
+        width: 100%;
         height: 657px;
     }
 
@@ -28,21 +28,20 @@
     }
 
     .user-title{
-        width: 207px;
+        width: 220px;
         padding-top: 20px;
         text-align: center;
     }
 
     .input-user-container{
-        width: 207px;
+        width: 100%;
+        align-items: center;
         flex-direction: column;
         margin-bottom: 10px;
     }
     #user-map{
-        width: 283px;
+        width: 100%;
         height: 292px;
-        position: relative;
-        right: 38px;
     }
 
     .save-button-user{
@@ -54,6 +53,52 @@
     }
     .item-grey{
         font-size: 15px;
+    }
+
+    .history-container{
+        width: 340px;
+        height: 533px;
+        margin: 0 auto;
+        margin-top: 24px;
+    }
+
+    .history-item{
+        margin-top: 29px;
+        width: 285px;
+        height: 185px;
+        margin-left: 15px;
+    }
+
+    .history-item:nth-child(1){
+        margin-top: 0;
+    }
+    .history-item-img{
+        width: 285px;
+        height: 70px;
+        float: unset;
+        object-fit: cover;
+    }
+    .history-item-info{
+        width: 285px;
+        height: 95px;
+        padding: 15px 16px;
+        float: unset;
+    }
+    .order-id-date-status{
+        margin-top: 0;
+    }
+    .order-total{
+        margin-top: 23px;
+    }
+
+    .item-in-process > .history-item-info{
+        border-left: 4px solid #FFFFFF;
+        border-right: 4px solid #FFFFFF;
+        border-bottom: 4px solid #FFFFFF;
+        box-sizing: border-box;
+        box-shadow: 0 4px 4px #BF2C2C;
+        border-top: none;
+        height: 115px;
     }
 }
 
@@ -67,7 +112,7 @@
     }
 
     .user-red-content{
-        width: 285px;
+        width: 100%;
         height: 657px;
     }
 
@@ -76,21 +121,20 @@
     }
 
     .user-title{
-        width: 207px;
+        width: 220px;
         padding-top: 20px;
         text-align: center;
     }
 
     .input-user-container{
-        width: 207px;
+        width: 100%;
+        align-items: center;
         flex-direction: column;
         margin-bottom: 10px;
     }
     #user-map{
-        width: 283px;
+        width: 100%;
         height: 292px;
-        position: relative;
-        right: 38px;
     }
 
     .save-button-user{
@@ -99,5 +143,51 @@
         background: #FFFFFF;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         color: #F13A3A;
+    }
+
+    .history-container{
+        width: 340px;
+        height: 533px;
+        margin: 0 auto;
+        margin-top: 24px;
+    }
+
+    .history-item{
+        margin-top: 29px;
+        width: 285px;
+        height: 185px;
+        margin-left: 15px;
+    }
+
+    .history-item:nth-child(1){
+        margin-top: 0;
+    }
+    .history-item-img{
+        width: 285px;
+        height: 70px;
+        float: unset;
+        object-fit: cover;
+    }
+    .history-item-info{
+        width: 285px;
+        height: 95px;
+        padding: 15px 16px;
+        float: unset;
+    }
+    .order-id-date-status{
+        margin-top: 0;
+    }
+    .order-total{
+        margin-top: 23px;
+    }
+
+    .item-in-process > .history-item-info{
+        border-left: 4px solid #FFFFFF;
+        border-right: 4px solid #FFFFFF;
+        border-bottom: 4px solid #FFFFFF;
+        box-sizing: border-box;
+        box-shadow: 0 4px 4px #BF2C2C;
+        border-top: none;
+        height: 115px;
     }
 }

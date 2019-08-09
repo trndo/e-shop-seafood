@@ -52,6 +52,9 @@
         background: #706E6E;
         width: 159px;
     }
+    .red{
+        background: #F13A3A;
+    }
 
 }
 
@@ -295,6 +298,9 @@
     .scale-section{
         width: 30.36px;
     }
+    .red{
+        background: #F13A3A;
+    }
 
 }
 
@@ -533,5 +539,9 @@
     }
     .scale-section{
         width: 30.36px;
+    }
+
+    .red{
+        background: #F13A3A;
     }
 }

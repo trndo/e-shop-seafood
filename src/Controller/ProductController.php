@@ -27,7 +27,7 @@ class ProductController extends AbstractController
      * @param ReceiptServiceInterface $receiptService
      * @return Response
      */
-    public function product(Category $category,string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService): Response
+    public function item(Category $category,string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService): Response
     {
         if ($category->getType() == 'products')
             $item = $service->getProduct($slug);
@@ -42,18 +42,4 @@ class ProductController extends AbstractController
                 'active' => $item->getCategory()->getSlug()]);
     }
 
-//    /**
-//     * @Route("/receipts-{category_slug}/{slug}", name="receipt")
-//     * @ParamConverter("category", options={"mapping": {"category_slug": "slug"}})
-//     *
-//     * @param Category $category
-//     * @param Receipt $receipt
-//     * @return Response
-//     */
-//    public function receipt(Category $category,Receipt $receipt): Response
-//    {
-//        return $this->render('receipt.html.twig', [
-//            'product' => $receipt,
-//            'active' => $receipt->getCategory()->getSlug()]);
-//    }
 }

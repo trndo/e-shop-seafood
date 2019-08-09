@@ -51,8 +51,9 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('p.category','category')
             ->leftJoin('p.gift','gift')
             ->leftJoin('p.specialPropositions','specialPropositions')
-            ->addSelect('p, supply, category, specialPropositions, gift')
-            ->andWhere('p.rating != 0')
+            ->leftJoin('p.orderDetail','orderDetail')
+            ->addSelect('p, supply, category, specialPropositions, gift, orderDetail')
+            ->andWhere('p.rating != 0 AND p.status = true')
             ->setMaxResults(9)
             ->getQuery()
             ->getResult();
@@ -77,5 +78,26 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
     public function findProductBySlug(string $slug):Product
     {
         return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
+     * @param int $categoryId
+     * @return array|null
+     */
+    public function getProductsFromCategory(int $categoryId): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('c','od','ap','g','sp','s')
+            ->leftJoin('p.additionalProduct','ap')
+            ->leftJoin('p.gift','g')
+            ->leftJoin('p.specialPropositions','sp')
+            ->leftJoin('p.supply','s')
+            ->leftJoin('p.orderDetail', 'od')
+            ->leftJoin('p.category','c')
+            ->andWhere('p.status = true AND c.id = :categoryId')
+            ->setParameter('categoryId',$categoryId)
+            ->getQuery()
+            ->execute()
+            ;
     }
 }

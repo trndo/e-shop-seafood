@@ -6,42 +6,46 @@
             <main>
                 <div class="sizes-container">
                     <div class="size-row">
-                        {% set items = items.toArray|sortSizes %}
-                        {% if items[0] is defined %}
-                        <div class="size-card">
-                            <div class="size-card-info">
-                                {{ getSize(items[0].ProductSize)|raw  }}
-                                <div class="product-size-info">
+                        {% set items = items|sortSizes %}
+                        {% if items[0] is defined and items[0].status %}
+                            <div class="size-card">
+                                <div class="size-card-info">
+                                    {{ getSize(items[0].ProductSize)|raw }}
+                                    <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[0].weightPerUnit}}.</span>
+                                            <embed id="ruler" type="image/svg+xml"
+                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[0].weightPerUnit }}.</span>
                                         </span>
                                         <span class="size-price">
                                            ₴ {{ items[0].price }}
                                         </span>
+                                    </div>
+                                </div>
+                                <div class="size-button"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'">
+                                    Перейти
                                 </div>
                             </div>
-                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'">
-                                Перейти
-                            </div>
-                        </div>
                         {% endif %}
-                        {% if items[1] is defined %}
-                        <div class="size-card">
-                            <div class="size-card-info">
-                                {{ getSize(items[1].ProductSize)|raw  }}
-                                <div class="product-size-info">
+                        {% if items[1] is defined and items[1].status %}
+                            <div class="size-card">
+                                <div class="size-card-info">
+                                    {{ getSize(items[1].ProductSize)|raw }}
+                                    <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[1].weightPerUnit}}.</span>
+                                            <embed id="ruler" type="image/svg+xml"
+                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[1].weightPerUnit }}.</span>
                                         </span>
-                                    <span class="size-price" >
+                                        <span class="size-price">
                                            ₴ {{ items[1].price }}
                                         </span>
+                                    </div>
+                                </div>
+                                <div class="size-button"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug': items[1].category.slug,'slug': items[1].slug}) }}'">
+                                    Перейти
                                 </div>
                             </div>
-                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug': items[1].category.slug,'slug': items[1].slug}) }}'">
-                                Перейти
-                            </div>
-                        </div>
                         {% endif %}
                         <div class="warn">
                             <h2>
@@ -53,64 +57,70 @@
                         </div>
                     </div>
                     <div class="size-row">
-                        {% if items[2] is defined %}
-                        <div class="size-card">
-                            <div class="size-card-info">
-                                {{ getSize(items[2].ProductSize)|raw  }}
-                                <div class="product-size-info">
+                        {% if items[2] is defined and items[2].status %}
+                            <div class="size-card">
+                                <div class="size-card-info">
+                                    {{ getSize(items[2].ProductSize)|raw }}
+                                    <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[2].weightPerUnit}}.</span>
+                                            <embed id="ruler" type="image/svg+xml"
+                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[2].weightPerUnit }}.</span>
                                         </span>
-                                    <span class="size-price" >
+                                        <span class="size-price">
                                            ₴ {{ items[2].price }}
                                         </span>
+                                    </div>
+                                </div>
+                                <div class="size-button"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[2].category.slug,'slug':items[2].slug}) }}'">
+                                    Перейти
                                 </div>
                             </div>
-                            <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[2].category.slug,'slug':items[2].slug}) }}'">
-                                Перейти
-                            </div>
-                        </div>
                         {% endif %}
-                        {% if items[3] is defined %}
+                        {% if items[3] is defined and items[3].status%}
                         <div class="size-card">
                             <div class="size-card">
                                 <div class="size-card-info">
-                                    {{ getSize(items[3].ProductSize)|raw  }}
+                                    {{ getSize(items[3].ProductSize)|raw }}
                                     <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[3].weightPerUnit}}.</span>
+                                            <embed id="ruler" type="image/svg+xml"
+                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[3].weightPerUnit }}.</span>
                                         </span>
-                                        <span class="size-price" >
+                                        <span class="size-price">
                                            ₴ {{ items[3].price }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'">
+                                <div class="size-button"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'">
                                     Перейти
                                 </div>
                             </div>
-                            {% endif %}
                         </div>
-                        {% if items[4] is defined %}
+                        {% endif %}
+                        {% if items[4] is defined and items[4].status%}
                         <div class="size-card">
                             <div class="size-card">
                                 <div class="size-card-info">
-                                    {{ getSize(items[4].ProductSize)|raw  }}
+                                    {{ getSize(items[4].ProductSize)|raw }}
                                     <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- {{ items[4].weightPerUnit}}.</span>
+                                            <embed id="ruler" type="image/svg+xml"
+                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[4].weightPerUnit }}.</span>
                                         </span>
-                                        <span class="size-price" >
+                                        <span class="size-price">
                                            ₴ {{ items[4].price }}
                                         </span>
                                     </div>
                                 </div>
-                                <div class="size-button" onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'">
+                                <div class="size-button"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'">
                                     Перейти
                                 </div>
                             </div>
-                            {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </main>
@@ -123,8 +133,10 @@
                     <h1>Купи тонну раков, и получи что-то</h1>
                     <p>
                         Импликация, следовательно, контролирует бабувизм, открывая новые горизонты.
-                        Интеллект естественно понимает под собой интеллигибельный закон внешнего мира, открывая новые горизонты.
-                        Согласно мнению известных философов, дедуктивный метод естественно порождает и обеспечивает мир, tertium nоn datur.
+                        Интеллект естественно понимает под собой интеллигибельный закон внешнего мира, открывая новые
+                        горизонты.
+                        Согласно мнению известных философов, дедуктивный метод естественно порождает и обеспечивает мир,
+                        tertium nоn datur.
                     </p>
                 </div>
                 <div class="fast-order-big custom-button">
@@ -133,7 +145,7 @@
             </div>
         </div>
     </div>
-    {% include 'elements/__footer.html.twig' with {'active': active }  %}
+    {% include 'elements/__footer.html.twig' with {'active': active } %}
     <div id="overlay" style="display: none">
         <div class="red-content">
             <div id="shopping-cart">

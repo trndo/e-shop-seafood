@@ -45,7 +45,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function getProductsByCategory($categoryId): ?array
     {
         return $this->createQueryBuilder('c')
-            ->innerJoin('c.products','p')
+            ->leftJoin('c.products','p')
             ->addSelect('p')
             ->andWhere('p.category = :categoryId')
             ->setParameter('categoryId',$categoryId)
@@ -56,17 +56,17 @@ class CategoryRepository extends ServiceEntityRepository
     public function getCategoriesForRender(): ?array
     {
         return $this->createQueryBuilder('c')
-            ->leftJoin('c.products','products')
-            ->addSelect('c.name','c.slug')
             ->andWhere('c.name != :name1')
             ->andWhere('c.name != :name2')
             ->andWhere('c.name != :name3')
+            ->andWhere('c.status = true')
             ->setParameter('name1','Живые Раки')
             ->setParameter('name2','Жареные Раки')
             ->setParameter('name3','Вареные Раки')
             ->getQuery()
             ->getResult();
     }
+
 
 
 }

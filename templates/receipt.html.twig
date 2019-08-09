@@ -38,9 +38,7 @@
                                     </div>
                                     <span class="minus item-minus">-</span>
                                 </div>
-                                {% set session = app.session.get('chooseOrder') %}
                                 {% if session is not null %}
-                                    {% dump(session) %}
                                 <div class="custom-button add-basket" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                     Добавить в козину
                                 </div>

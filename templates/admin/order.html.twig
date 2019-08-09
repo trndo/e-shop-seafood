@@ -30,24 +30,24 @@
                         <div class="card">
                             <div class="card-body" style="padding-top: 60px">
                                 <div class="order-number text-center">
-                                    Заказ №{{ order.id }}  &nbsp;Сделано: <u>{{ order.createdAt|date('Y-m-d H:i') }}</u>
+                                    Заказ №{{ order.id }} &nbsp;Сделано: <u>{{ order.createdAt|date('Y-m-d H:i') }}</u>
                                 </div>
                                 {% if order.status == 'new' %}
-                                <div class="order-status status-new">
-                                    Новый Заказ
-                                </div>
+                                    <div class="order-status status-new">
+                                        Новый Заказ
+                                    </div>
                                 {% elseif order.status == 'confirmed' %}
-                                <div class="order-status status-confirmed">
-                                    Ожидается оплата
-                                </div>
+                                    <div class="order-status status-confirmed">
+                                        Ожидается оплата
+                                    </div>
                                 {% elseif order.status == 'payed' %}
-                                <div class="order-status status-payed">
-                                    Оплачено
-                                </div>
+                                    <div class="order-status status-payed">
+                                        Оплачено
+                                    </div>
                                 {% elseif order.status == 'done' %}
-                                <div class="order-status status-done">
-                                    Готово
-                                </div>
+                                    <div class="order-status status-done">
+                                        Готово
+                                    </div>
                                 {% endif %}
                                 <div class="row justify-content-center">
                                     <div class="col-6 col-md-6 col-sm-12">
@@ -56,16 +56,16 @@
                                                 <li class="list-group-item d-flex justify-content-between">
                                                     <div>
                                                         <span class="badge badge-dark">{{ loop.index }}</span>
-                                                        {{  item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }} - {{ item.quantity }} {{ item.product.unit }} |
+                                                        {{ item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }}
+                                                        - {{ item.quantity }} {{ item.product.unit }} |
                                                         <span style="color: red">В наличии: {{ item.product.supply.quantity }} {{ item.product.unit }}</span>
                                                     </div>
-                                                    {% if order.status != 'done' %}
-                                                        {% if order.orderDetails|length > 1 %}
-                                                            <i class="fas fa-trash-alt" data-id="{{ item.id }}" ></i>
-                                                        {% else %}
-                                                            <i class="fas fa-trash-alt" onclick="if(confirm('Остался один продукт в заказе. Вы хотите удалить закз полностью ?'))window.location.href ='{{ path('deleteOrder', {'id': order.id}) }}'" ></i>
+                                                    {% if order.status == 'new' and order.orderDetails|length > 1%}
+                                                            <i class="fas fa-trash-alt" data-id="{{ item.id }}"></i>
+                                                        {% elseif order.status == 'new'  %}
+                                                            <i class="fas fa-trash-alt"
+                                                               onclick="if(confirm('Остался один продукт в заказе. Вы хотите удалить закз полностью ?'))window.location.href ='{{ path('deleteOrder', {'id': order.id}) }}'"></i>
                                                         {% endif %}
-                                                    {% endif %}
                                                 </li>
                                             {% endfor %}
                                         </ul>
@@ -74,39 +74,52 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-4 text-center text-primary h4">
-                                        На какую дату: {{ order.orderDate|date('d.m.Y')  }}
+                                        На какую дату: {{ order.orderDate|date('d.m.Y') }}
                                     </div>
                                     <div class="col-4 text-center text-primary h4">
-                                        На какое время: {{ order.orderTime|date('H:i')  }}
+                                        На какое время: {{ order.orderTime|date('H:i') }}
                                     </div>
                                     <div class="col-4 text-center text-primary h4">
-                                        Тип Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}
+                                        Тип
+                                        Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}
                                     </div>
                                 </div>
                                 <div class="row mt-5">
-                                     <div class="col-6">
-                                         <div id="map">
+                                    <div class="col-6">
+                                        <div id="map">
 
-                                         </div>
-                                     </div>
+                                        </div>
+                                    </div>
                                     {% set user = order.user %}
                                     <div class="col-6 text-center pt-5">
                                         <p class="h3">{{ user.name ~' '~ user.surname }}</p>
-                                        <p class="h5" >{{ order.orderPhone }}</p>
+                                        <p class="h5">{{ order.orderPhone }}</p>
                                         <p class="h5">{{ order.orderEmail }}</p>
                                         <p class="h5">{{ order.address }}</p>
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">
                                     <div class="col-6 text-center">
-                                        {% if order.status != 'done' %}
-                                            <button class="btn btn-danger mr-2 list-inline-item" onclick="window.location.href='{{ path('deleteOrder',{'id': order.id}) }}'">Удалить заказ</button>
-                                            <button class="btn btn-primary mr-2  list-inline-item" onclick="window.location.href='{{ path('editOrder',{'id': order.id}) }}'">Изменить заказ</button>
+                                        {% if order.status == 'new' or order.status == 'confirmed' %}
+                                            <button class="btn btn-danger mr-2 list-inline-item"
+                                                    onclick="window.location.href='{{ path('deleteOrder',{'id': order.id}) }}'">
+                                                Удалить заказ
+                                            </button>
                                         {% endif %}
                                         {% if order.status == 'new' %}
-                                            <button class="btn btn-success mr-2  list-inline-item" onclick="window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">Подтвердить заказ</button>
+                                            <button class="btn btn-primary mr-2  list-inline-item"
+                                                    onclick="window.location.href='{{ path('editOrder',{'id': order.id}) }}'">
+                                                Изменить заказ
+                                            </button>
+                                            <button class="btn btn-success mr-2  list-inline-item"
+                                                    onclick="window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">
+                                                Подтвердить заказ
+                                            </button>
                                         {% elseif order.status == 'payed' %}
-                                            <button class="btn btn-light mr-2  list-inline-item" onclick="window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">Подтвердить готовность</button>
+                                            <button class="btn btn-light mr-2  list-inline-item"
+                                                    onclick="window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">
+                                                Подтвердить готовность
+                                            </button>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -132,7 +145,8 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -158,7 +172,10 @@
         let coordinates = '{{ order.coordinates }}';
         console.log(coordinates);
         let map;
-        let position = { lat: Number(coordinates.substr(0,coordinates.indexOf(' '))), lng: Number(coordinates.substr(coordinates.indexOf(' ')+1))};
+        let position = {
+            lat: Number(coordinates.substr(0, coordinates.indexOf(' '))),
+            lng: Number(coordinates.substr(coordinates.indexOf(' ') + 1))
+        };
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {

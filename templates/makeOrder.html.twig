@@ -23,8 +23,16 @@
                         {{ form_widget(form.email,{'attr': {'class': 'order-input',
                             'placeholder':'Email*'}}) }}
                         <div class="form-row input-margin-16">
-                            {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
-                                'placeholder':'Дата*'}}) }}
+                            {% set orderChoose = app.session.get('chooseOrder') %}
+                            {% if orderChoose %}
+                                {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
+                                    'value':"now"|date("Y.m.d"),
+                                    'disabled': true}}) }}
+                            {% else %}
+                                {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
+                                    'placeholder':'Дата*'}}) }}
+                            {% endif %}
+
                             {{ form_widget(form.orderTime,{'attr': {'class': 'time-input',
                                 'placeholder':'14:00*'}}) }}
                         </div>

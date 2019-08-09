@@ -5,6 +5,7 @@ namespace App\Service\EntityService\ProductService;
 
 
 use App\Collection\ProductCollection;
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Model\ProductModel;
 
@@ -63,4 +64,10 @@ interface ProductServiceInterface
      * @return Product
      */
     public function getProductById(?int $id): Product;
+
+    /**
+     * @param Category $category
+     * @return ProductCollection|null
+     */
+    public function getProductsByCategory(Category $category): ?array ;
 }

@@ -12,11 +12,9 @@
             <main>
                 <img src="{{ asset('assets/img/plate.png') }}" alt="" id="plate">
                 <div id="promotion">
-                    <div id="promotion-percent">
-                        -5%
-                    </div>
                     <div id="promotion-text">
-                        Скидка на раков сегодня целых 5%
+                        {% set message = random(messages) %}
+                        {{ message.message }}
                     </div>
                     <div id="slider-points">
                         <div class="ellipse ellipse-active"></div>

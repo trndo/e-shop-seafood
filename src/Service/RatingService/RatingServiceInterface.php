@@ -15,4 +15,9 @@ interface RatingServiceInterface
      * @param string|null $rate
      */
     public function removeFromRate(?string $rate): void;
+
+    /**
+     * @return array|null
+     */
+    public function getItems(): ?array ;
 }

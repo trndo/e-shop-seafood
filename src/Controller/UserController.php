@@ -13,6 +13,7 @@ use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,17 +155,31 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/payment/{id}", name="pay")
+     * @Route("/orders/payment/{orderUniqueId}", name="pay")
+     * @param User $user
      * @param OrderInfo $order
      * @param PaymentHandler $handler
      * @return Response
      */
     public function pay(OrderInfo $order, PaymentHandler $handler): Response
     {
-       $payment = $handler->getFormForPayment($order);
+       $payment = $handler->doPayment($order);
 
         return $this->render('pay.html.twig',[
             'payment' => $payment
         ]);
+    }
+
+    /**
+     * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
+     * @param Request $request
+     * @param OrderInfo $orderInfo
+     * @param PaymentHandler $paymentHandler
+     */
+    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler)
+    {
+        $res = json_decode(base64_decode($request->request->get('data')), true);
+        dd($res);
+        $paymentHandler->confirmPayment($orderInfo);
     }
 }

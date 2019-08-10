@@ -73,6 +73,11 @@ class OrderInfo
      */
     private $orderDetails;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $orderUniqueId;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -230,6 +235,18 @@ class OrderInfo
                 $orderDetail->setOrderInfo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrderUniqueId(): ?int
+    {
+        return $this->orderUniqueId;
+    }
+
+    public function setOrderUniqueId(?int $orderUniqueId): self
+    {
+        $this->orderUniqueId = $orderUniqueId;
 
         return $this;
     }

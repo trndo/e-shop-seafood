@@ -1,10 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ payment|raw }}
+    <section class="wrapper">
+        <div class="container">
+            <div class="container-inside">
+                {% include 'elements/__header.html.twig' with {'active': false} %}
+                <main>
+                    <div class="payment">
+                        <span class="attention-subtitle">Последний шаг!</span><br>
+                        <span class="attention-title">Выбери способ оплаты</span>
+                    </div>
+                    <div class="payment-types">
+                        <div class="paymethod">
+
+                        </div>
+                        <div class="paymethod">
+
+                        </div>
+                        {{ payment|raw }}
+                    </div>
+                </main>
+            </div>
+        </div>
+        {% include 'elements/__footer.html.twig' with {'active': false} %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+    </section>
 {% endblock %}
-
-{% block javascripts %}
-
-{% endblock %}
-

@@ -277,6 +277,26 @@
     height: 95px;
 }
 
-#overlay{
-    display: block;
+.payment{
+    width: 770px;
+    height: 90px;
+    margin: 0 auto;
+    margin-top: 45px;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    padding-top: 16px;
+}
+.payment-types{
+    width: 770px;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    margin-top: 21px;
+}
+.paymethod{
+    width: 160px;
+    height: 49px;
+    background: #FFFFFF;
 }

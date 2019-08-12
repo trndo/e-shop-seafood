@@ -165,9 +165,7 @@ class UserController extends AbstractController
      */
     public function pay(OrderInfo $order, PaymentHandler $handler): Response
     {
-
        $payment = $handler->doPayment($order);
-
         return $this->render('pay.html.twig',[
             'payment' => $payment
         ]);

@@ -9,6 +9,7 @@ use App\Entity\OrderDetail;
 use App\Entity\OrderInfo;
 use App\Entity\Product;
 use App\Entity\Receipt;
+use App\Entity\User;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
 use App\Repository\OrderDetailRepository;
@@ -42,7 +43,7 @@ class OrderInfoHandler implements OrderInfoInterface
      */
     private $reservation;
 
-
+//$bonuses = ($item['item']->getPrice() * ceil($item['quantity']) + $item['product']->getPrice() * $item['quantity']) * 0.1 + $bonuses;
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
@@ -61,7 +62,6 @@ class OrderInfoHandler implements OrderInfoInterface
     public function addOrder(OrderModel $orderModel, Request $request): void
     {
         $orderInfo = OrderMapper::orderModelToEntity($orderModel);
-        $bonuses = $orderInfo->getUser()->getBonuses();
         $session = $request->getSession();
         $totalSum = $session->get('totalSum');
         $reservationId = (int)$session->get('reservationId');
@@ -72,7 +72,6 @@ class OrderInfoHandler implements OrderInfoInterface
             if ($item['item'] instanceof Receipt) {
                 $orderDetail->setReceipt($item['item'])
                     ->setProduct($item['product']);
-                $bonuses = ($item['item']->getPrice() * ceil($item['quantity']) + $item['product']->getPrice() * $item['quantity']) * 0.1 + $bonuses;
             }
             if ($item['item'] instanceof Product) {
                 $orderDetail->setProduct($item['item']);
@@ -84,13 +83,19 @@ class OrderInfoHandler implements OrderInfoInterface
         }
 
         $orderInfo->setTotalPrice($totalSum);
-        $orderInfo->getUser()->setBonuses($bonuses);
+//        $orderInfo->getUser()->setBonuses($bonuses);
+        $orderInfo->setOrderUniqueId($this->generateHash($orderInfo,7));
 
         $this->entityManager->persist($orderInfo);
 
         $this->reservation->deleteReservationsById($reservationId);
         $this->entityManager->flush();
 
+        $session->remove('reservationId');
+        $session->remove('cart');
+        $session->remove('totalSum');
+        $session->remove('chooseOrder');
+        $session->remove('reservation');
 
     }
 
@@ -215,5 +220,17 @@ class OrderInfoHandler implements OrderInfoInterface
         }
     }
 
+    private function generateHash(OrderInfo $orderInfo, $len=null)
+    {
+        $str = $orderInfo->getId().(new \DateTime())->getTimestamp();
+
+        $binhash = md5($str, true);
+        $numhash = unpack('N2', $binhash);
+        $hash = $numhash[1] . $numhash[2];
+        if($len && is_int($len)) {
+            $hash = substr($hash, 0, $len);
+        }
+        return $hash;
+    }
 
 }

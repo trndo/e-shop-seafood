@@ -179,7 +179,7 @@ class Item
      * @param float $rest
      * @return Item
      */
-    public function setRest(float $rest): Item
+    public function setRest(?float $rest): Item
     {
         $this->rest = $rest;
         return $this;

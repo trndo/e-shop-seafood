@@ -13,11 +13,14 @@ use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserController extends AbstractController
 {
@@ -154,17 +157,37 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/payment/{id}", name="pay")
+     * @Route("/orders/payment/{orderUniqueId}", name="pay")
+     * @param User $user
      * @param OrderInfo $order
      * @param PaymentHandler $handler
      * @return Response
      */
     public function pay(OrderInfo $order, PaymentHandler $handler): Response
     {
-       $payment = $handler->getFormForPayment($order);
+
+       $payment = $handler->doPayment($order);
 
         return $this->render('pay.html.twig',[
             'payment' => $payment
         ]);
+    }
+
+    /**
+     * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
+        * @param Request $request
+        * @param OrderInfo $orderInfo
+        * @param PaymentHandler $paymentHandler
+        * @return JsonResponse
+        */
+    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler): JsonResponse
+    {
+        $res = json_decode(base64_decode($request->request->get('data')), true);
+
+        $paymentHandler->confirmPayment($orderInfo);
+
+        return new JsonResponse([
+            'status' => true
+        ],200);
     }
 }

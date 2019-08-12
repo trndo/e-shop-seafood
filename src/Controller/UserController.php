@@ -180,7 +180,7 @@ class UserController extends AbstractController
      */
     public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler)
     {
-        dd($res = json_decode(base64_decode($request->request->get('data')), true));
+        $res = json_decode(base64_decode($request->request->get('data')), true);
 
         $paymentHandler->confirmPayment($orderInfo, $res);
     }

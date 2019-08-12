@@ -74,7 +74,7 @@ class PaymentHandler implements PaymentInterface
                 ),
                 'language' => 'ru',
                 'order_id' => $orderInfo->getOrderUniqueId(),
-                'server_id' => $this->generator->generate(
+                'server_url' => $this->generator->generate(
                     'confirmPay',[
                         'orderUniqueId' => $orderInfo->getOrderUniqueId()
                     ], UrlGeneratorInterface::ABSOLUTE_URL)

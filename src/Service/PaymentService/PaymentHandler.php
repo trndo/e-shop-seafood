@@ -72,15 +72,14 @@ class PaymentHandler implements PaymentInterface
         }
     }
 
-    public function confirmPayment(OrderInfo $orderInfo,array $res)
+    public function confirmPayment(OrderInfo $orderInfo)
     {
-//        $liqpay = new \LiqPay($this->publicKey, $this->privateKey);
-//       $res = $liqpay->api("payment/status",[
-//                'version' => 3,
-//                'order_id' => $orderInfo->getOrderUniqueId()
-//            ]);
-    $this->logger->info(json_encode($res));
-
+        $liqpay = new \LiqPay($this->publicKey, $this->privateKey);
+        $res = $liqpay->api("payment/status",[
+                'version' => 3,
+                'order_id' => $orderInfo->getOrderUniqueId()
+            ]);
+        dd($res);
     }
 
 }

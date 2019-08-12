@@ -184,7 +184,7 @@ class UserController extends AbstractController
     {
         $res = json_decode(base64_decode($request->request->get('data')), true);
 
-        $paymentHandler->confirmPayment($orderInfo, $res);
+        $paymentHandler->confirmPayment($orderInfo);
 
         return new JsonResponse([
             'status' => true

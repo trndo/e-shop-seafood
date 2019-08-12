@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserController extends AbstractController
 {
@@ -163,6 +164,7 @@ class UserController extends AbstractController
      */
     public function pay(OrderInfo $order, PaymentHandler $handler): Response
     {
+
        $payment = $handler->doPayment($order);
 
         return $this->render('pay.html.twig',[
@@ -178,8 +180,8 @@ class UserController extends AbstractController
      */
     public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler)
     {
-        $res = json_decode(base64_decode($request->request->get('data')), true);
-        dd($res);
-        $paymentHandler->confirmPayment($orderInfo);
+        dd($res = json_decode(base64_decode($request->request->get('data')), true));
+
+        $paymentHandler->confirmPayment($orderInfo, $res);
     }
 }

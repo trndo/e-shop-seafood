@@ -89,7 +89,7 @@ class PaymentHandler implements PaymentInterface
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $data = json_decode(base64_decode($res, true));
 
-            switch ($data['status']) {
+            switch ($data->status) {
                 case 'success':
                 case 'sandbox':
                     return $this->handleConfirmation($orderInfo, $res);
@@ -107,7 +107,7 @@ class PaymentHandler implements PaymentInterface
 
     private function handleConfirmation(OrderInfo $orderInfo, $res)
     {
-        if ($orderInfo->getTotalPrice() == $res['amount']) {
+        if ($orderInfo->getTotalPrice() == $res->amount) {
             $orderDetails = $orderInfo->getOrderDetails();
             $user = $orderInfo->getUser();
             $userBonuses = $user->getBonuses();

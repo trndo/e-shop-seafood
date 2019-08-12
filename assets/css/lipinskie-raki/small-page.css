@@ -78,13 +78,6 @@
     color: #FFFFFF;
 }
 
-#close-modal{
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    top: 23px;
-    right: 23px;
-}
 .cart-container{
     width: 659px;
     height: 461px;

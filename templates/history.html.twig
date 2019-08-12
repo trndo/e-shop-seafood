@@ -9,11 +9,13 @@
             margin: 0 13px;
             width: 150px;
         }
+
         /* the parent */
         .slick-list {
             margin: 0;
         }
-        .slick-track{
+
+        .slick-track {
 
         }
     </style>
@@ -50,8 +52,9 @@
                 </div>
                 <div class="history-container">
                     {% for order in orders %}
-                        <div class="history-item {{ order.status != 'done' ? 'item-in-process' : ''  }}">
-                            <img src="{{ order.orderDetails.0.product.TitlePhotoPath }}" class="history-item-img" alt="photo">
+                        <div class="history-item {{ order.status != 'done' ? 'item-in-process' : '' }}">
+                            <img src="{{ order.orderDetails.0.product.TitlePhotoPath }}" class="history-item-img"
+                                 alt="photo">
                             <div class="history-item-info">
                                 <div class="order-id-date-status">
                                     <span class="order-id">№{{ order.id }}</span>
@@ -60,8 +63,11 @@
                                         <span class="date-status">В осмотре <span class="order-stat order-proc"></span></span>
                                     {% elseif order.status == 'payed' %}
                                         <span class="date-status">Готовится <span class="order-stat order-cook"></span></span>
-                                    {% elseif order.status == 'payed' %}
-                                        <span class="date-status">В пути к вам <span class="order-stat order-delivery"></span></span>
+                                    {% elseif order.status == 'done' %}
+                                        <span class="date-status">В пути к вам <span
+                                                    class="order-stat order-delivery"></span></span>
+                                    {% else %}
+                                        <span class="date-status">{{ order.orderDate|date('d/m/y') }}</span>
                                     {% endif %}
                                 </div>
                                 <div class="order-total">
@@ -72,48 +78,50 @@
                                         Подробнее
                                     </div>
                                     {% set user = app.user %}
-                                    <div class="history-btn" onclick="window.location.href='{{ path('pay', { 'orderUniqueId': order.orderUniqueId}) }}'">Оплатить</div>
+                                    <div class="history-btn"
+                                         onclick="window.location.href='{{ path('pay', { 'id': order.id }) }}'">Оплатить
+                                    </div>
                                     <div class="history-btn">Отменить</div>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-{#                    <div class="history-item">#}
-{#                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">#}
-{#                        <div class="history-item-info">#}
-{#                            <div class="order-id-date-status">#}
-{#                                <span class="order-id">№0166610</span>#}
-{#                                <span class="date-status">26/06/2019</span>#}
-{#                            </div>#}
-{#                            <div class="order-total">#}
-{#                                5500 <span class="hryvna">₴</span>#}
-{#                            </div>#}
-{#                            <div class="history-actions">#}
-{#                                <div class="history-btn history-more">#}
-{#                                    Подробнее#}
-{#                                </div>#}
-{#                                <div class="history-btn">Заказать</div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="history-item">#}
-{#                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">#}
-{#                        <div class="history-item-info">#}
-{#                            <div class="order-id-date-status">#}
-{#                                <span class="order-id">№0166610</span>#}
-{#                                <span class="date-status">26/06/2019</span>#}
-{#                            </div>#}
-{#                            <div class="order-total">#}
-{#                                5500 <span class="hryvna">₴</span>#}
-{#                            </div>#}
-{#                            <div class="history-actions">#}
-{#                                <div class="history-btn history-more">#}
-{#                                    Подробнее#}
-{#                                </div>#}
-{#                                <div class="history-btn">Заказать</div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
+                    {#                    <div class="history-item">#}
+                    {#                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">#}
+                    {#                        <div class="history-item-info">#}
+                    {#                            <div class="order-id-date-status">#}
+                    {#                                <span class="order-id">№0166610</span>#}
+                    {#                                <span class="date-status">26/06/2019</span>#}
+                    {#                            </div>#}
+                    {#                            <div class="order-total">#}
+                    {#                                5500 <span class="hryvna">₴</span>#}
+                    {#                            </div>#}
+                    {#                            <div class="history-actions">#}
+                    {#                                <div class="history-btn history-more">#}
+                    {#                                    Подробнее#}
+                    {#                                </div>#}
+                    {#                                <div class="history-btn">Заказать</div>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {#                    <div class="history-item">#}
+                    {#                        <img src="/assets/img/test.jpg" class="history-item-img" alt="">#}
+                    {#                        <div class="history-item-info">#}
+                    {#                            <div class="order-id-date-status">#}
+                    {#                                <span class="order-id">№0166610</span>#}
+                    {#                                <span class="date-status">26/06/2019</span>#}
+                    {#                            </div>#}
+                    {#                            <div class="order-total">#}
+                    {#                                5500 <span class="hryvna">₴</span>#}
+                    {#                            </div>#}
+                    {#                            <div class="history-actions">#}
+                    {#                                <div class="history-btn history-more">#}
+                    {#                                    Подробнее#}
+                    {#                                </div>#}
+                    {#                                <div class="history-btn">Заказать</div>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                 </div>
             </div>
             <div class="attention-promotion">
@@ -141,7 +149,34 @@
     {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}
     <div id="overlay">
         <div class="order-more">
-
+            <img src="{{ asset('assets/img/test.jpg') }}" class="order-more-img">
+            <div class="order-more-info">
+                <div class="order-id-date-status">
+                    <span class="order-id">№0166610</span>
+                    <span class="date-status">26/06/2019</span>
+                </div>
+                <div class="order-total">
+                    5500 <span class="hryvna">₴</span>
+                </div>
+                <ul class="order-more-list">
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                    <li>* Виталик хуй - 100грн</li>
+                </ul>
+                <div class="history-actions">
+                    <div class="history-btn history-more">
+                        Закрыть
+                    </div>
+                    <div class="history-btn">Заказать</div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

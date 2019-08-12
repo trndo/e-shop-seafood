@@ -237,3 +237,46 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.order-more{
+    margin: 18% auto;
+    width: 496px;
+    height: 219px;
+    background: #F85B5B;
+    border-radius: 2px;
+}
+
+.order-more-img{
+    width: 220px;
+    height: 219px;
+    border-radius: 0 0 0 2px;
+    display: block;
+    float: left;
+}
+
+.order-more-info{
+    width: 276px;
+    height: 116px;
+    padding-right: 11px;
+    padding-left: 18px;
+    display: block;
+    float: left;
+}
+
+.order-more-list{
+    padding-top: 13px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    text-align: left;
+    color: #651313;
+    list-style-type: none;
+    padding-left: 0;
+    overflow-y: scroll;
+    height: 95px;
+}
+
+#overlay{
+    display: block;
+}

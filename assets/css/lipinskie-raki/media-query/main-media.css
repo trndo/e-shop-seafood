@@ -80,6 +80,7 @@
     .contact{
         margin-left: 0;
     }
+
 }
 
 @media (min-width: 375px) and (max-width: 767px) {
@@ -183,6 +184,18 @@
 
     .contact-social{
         margin-top: 58px;
+    }
+
+    .modal-window{
+        width: 286px;
+        height: 320px;
+    }
+
+    .choose-type-container{
+        flex-direction: column;
+        width: 200px;
+        height: 90px;
+        align-items: center;
     }
 }
 
@@ -303,7 +316,17 @@
     #contact-email{
         font-size: 13px;
     }
+    .modal-window{
+        width: 286px;
+        height: 320px;
+    }
 
+    .choose-type-container{
+        flex-direction: column;
+        width: 200px;
+        height: 90px;
+        align-items: center;
+    }
 }
 
 @media (max-device-height: 1024px) and (max-width: 991px) {
@@ -318,8 +341,4 @@
     .footer-row{
         padding-top: 29px;
     }
-}
-
-@media  {
-    
 }

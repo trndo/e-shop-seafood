@@ -16,6 +16,7 @@ use App\Service\PaymentService\PaymentHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -174,14 +175,19 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
-     * @param Request $request
-     * @param OrderInfo $orderInfo
-     * @param PaymentHandler $paymentHandler
-     */
-    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler)
+        * @param Request $request
+        * @param OrderInfo $orderInfo
+        * @param PaymentHandler $paymentHandler
+        * @return JsonResponse
+        */
+    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler): JsonResponse
     {
         $res = json_decode(base64_decode($request->request->get('data')), true);
 
         $paymentHandler->confirmPayment($orderInfo, $res);
+
+        return new JsonResponse([
+            'status' => true
+        ],200);
     }
 }

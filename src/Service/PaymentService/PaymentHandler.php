@@ -70,7 +70,7 @@ class PaymentHandler implements PaymentInterface
                 'amount' => $orderInfo->getTotalPrice(),
                 'description' => 'Оплата заказа № '.$orderInfo->getOrderUniqueId(),
                 'result_url' => $this->generator->generate(
-                    'home', UrlGeneratorInterface::ABSOLUTE_URL
+                    'home',[], UrlGeneratorInterface::ABSOLUTE_URL
                 ),
                 'language' => 'ru',
                 'order_id' => $orderInfo->getOrderUniqueId(),

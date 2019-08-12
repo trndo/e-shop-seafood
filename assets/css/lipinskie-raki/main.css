@@ -595,7 +595,7 @@ footer{
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 20;
+    z-index: 100;
     cursor: pointer;
     display: none;
 }
@@ -763,4 +763,30 @@ footer{
     right: 200px;
     top: 40px;
     left: unset;
+}
+
+.modal-window{
+    position: relative;
+    width: 770px;
+    height: 299px;
+    margin: 20% auto;
+    background: #F13A3A;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#close-modal{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 13px;
+    right: 13px;
+}
+
+.choose-type-container{
+    display: flex;
+    width: 400px;
+    margin: 4px auto;
+    justify-content: space-between;
+    z-index: 200;
+    position: relative;
 }

@@ -106,18 +106,21 @@
     </div>
     {% include 'elements/__footer.html.twig' with {'active': active } %}
     <div id="overlay">
-        <div class="red-content">
-            <div id="shopping-cart">
-                <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
-            </div>
-            <div class="check-shopping">
-                 <div class="custom-button choose-type" data-order="today">
-                     Сегодня
-                 </div>
-                 <div class="custom-button choose-type" data-order="tomorrow">
-                    Другой день
+        <div id="overlay">
+            <div class="modal-window pt-10 text-center">
+                <embed id="pizza" type="image/svg+xml" src="/assets/img/pizza.svg"/>
+                <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+                <span class="attention-title">Выбери на когда тебе нужны раки!</span><br>
+                <span class="attention-subtitle">Что бы мы знали точно , есть ли они на складе</span>
+                <div class="choose-type-container">
+                    <div class="custom-button choose-type" data-order="today">
+                        Сегодня
+                    </div>
+                    <div class="custom-button choose-type" data-order="tomorrow">
+                        Другой день
+                    </div>
                 </div>
-            <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
+            </div>
         </div>
     </div>
 {% endblock %}

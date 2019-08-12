@@ -69,10 +69,15 @@ class PaymentHandler implements PaymentInterface
                 'currency' => 'UAH',
                 'amount' => $orderInfo->getTotalPrice(),
                 'description' => 'Оплата заказа № '.$orderInfo->getOrderUniqueId(),
-                'result_url' => $this->generator->generate('confirmPay',['orderUniqueId' => $orderInfo->getOrderUniqueId()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'result_url' => $this->generator->generate(
+                    'home', UrlGeneratorInterface::ABSOLUTE_URL
+                ),
                 'language' => 'ru',
                 'order_id' => $orderInfo->getOrderUniqueId(),
-                'server_id' => $this->generator->generate('confirmPay',['orderUniqueId' => $orderInfo->getOrderUniqueId()], UrlGeneratorInterface::ABSOLUTE_URL)
+                'server_id' => $this->generator->generate(
+                    'confirmPay',[
+                        'orderUniqueId' => $orderInfo->getOrderUniqueId()
+                    ], UrlGeneratorInterface::ABSOLUTE_URL)
             ]);
 
             return $form;
@@ -82,7 +87,7 @@ class PaymentHandler implements PaymentInterface
     public function confirmPayment(OrderInfo $orderInfo, string $res)
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
-            $data = json_decode(base64_decode($res, true);
+            $data = json_decode(base64_decode($res, true));
 
             switch ($data['status']) {
                 case 'success':

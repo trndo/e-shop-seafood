@@ -13,9 +13,8 @@ use Psr\Log\LoggerTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PaymentHandler implements PaymentInterface, LoggerAwareInterface
+class PaymentHandler implements PaymentInterface
 {
-    use LoggerAwareTrait;
     /**
      * @var OrderInfoInterface
      */
@@ -28,18 +27,24 @@ class PaymentHandler implements PaymentInterface, LoggerAwareInterface
      * @var UrlGeneratorInterface
      */
     private $generator;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * PaymentHandler constructor.
      * @param OrderInfoInterface $orderInfo
      * @param UrlGeneratorInterface $generator
+     * @param LoggerInterface $logger
      */
-    public function __construct(OrderInfoInterface $orderInfo, UrlGeneratorInterface $generator)
+    public function __construct(OrderInfoInterface $orderInfo, UrlGeneratorInterface $generator, LoggerInterface $logger)
     {
         $this->orderInfo = $orderInfo;
         $this->publicKey = getenv('PUBLIC_KEY');
         $this->privateKey = getenv('PRIVATE_KEY');
         $this->generator = $generator;
+        $this->logger = $logger;
     }
 
     /**

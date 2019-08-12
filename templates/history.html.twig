@@ -79,7 +79,7 @@
                                     </div>
                                     {% set user = app.user %}
                                     <div class="history-btn"
-                                         onclick="window.location.href='{{ path('pay', { 'id': order.id }) }}'">Оплатить
+                                         onclick="window.location.href='{{ path('pay', { 'id': order.orderUniqueId }) }}'">Оплатить
                                     </div>
                                     <div class="history-btn">Отменить</div>
                                 </div>

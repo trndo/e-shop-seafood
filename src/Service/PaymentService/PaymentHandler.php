@@ -70,8 +70,9 @@ class PaymentHandler implements PaymentInterface
                 'amount' => $orderInfo->getTotalPrice(),
                 'description' => 'Оплата заказа № '.$orderInfo->getOrderUniqueId(),
                 'result_url' => $this->generator->generate(
-                    'home',[], UrlGeneratorInterface::ABSOLUTE_URL
-                ),
+                    'confirmPay',[
+                    'orderUniqueId' => $orderInfo->getOrderUniqueId()
+                ], UrlGeneratorInterface::ABSOLUTE_URL),
                 'language' => 'ru',
                 'order_id' => $orderInfo->getOrderUniqueId(),
                 'server_url' => $this->generator->generate(
@@ -107,6 +108,7 @@ class PaymentHandler implements PaymentInterface
 
     private function handleConfirmation(OrderInfo $orderInfo, $res)
     {
+        dd($orderInfo->getTotalPrice() , $res->amount);
         if ($orderInfo->getTotalPrice() == $res->amount) {
             $orderDetails = $orderInfo->getOrderDetails();
             $user = $orderInfo->getUser();

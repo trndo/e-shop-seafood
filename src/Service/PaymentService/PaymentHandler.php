@@ -6,6 +6,7 @@ namespace App\Service\PaymentService;
 
 use App\Entity\OrderInfo;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -31,20 +32,26 @@ class PaymentHandler implements PaymentInterface
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * PaymentHandler constructor.
      * @param OrderInfoInterface $orderInfo
      * @param UrlGeneratorInterface $generator
      * @param LoggerInterface $logger
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(OrderInfoInterface $orderInfo, UrlGeneratorInterface $generator, LoggerInterface $logger)
+    public function __construct(OrderInfoInterface $orderInfo, UrlGeneratorInterface $generator, LoggerInterface $logger, EntityManagerInterface $entityManager)
     {
         $this->orderInfo = $orderInfo;
         $this->publicKey = getenv('PUBLIC_KEY');
         $this->privateKey = getenv('PRIVATE_KEY');
         $this->generator = $generator;
         $this->logger = $logger;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -72,14 +79,50 @@ class PaymentHandler implements PaymentInterface
         }
     }
 
-    public function confirmPayment(OrderInfo $orderInfo)
+    public function confirmPayment(OrderInfo $orderInfo, string $res)
     {
-        $liqpay = new \LiqPay($this->publicKey, $this->privateKey);
-        $res = $liqpay->api("payment/status",[
-                'version' => 3,
-                'order_id' => $orderInfo->getOrderUniqueId()
-            ]);
-        dd($res);
+        if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
+            $data = json_decode(base64_decode($res, true);
+
+            switch ($data['status']) {
+                case 'success':
+                case 'sandbox':
+                    return $this->handleConfirmation($orderInfo, $res);
+                case 'failure':
+                case 'error':
+                case '3ds_verify':
+                case 'wait_secure':
+                case 'wait_accept':
+                case 'processing':
+                    break;
+
+            }
+        }
+    }
+
+    private function handleConfirmation(OrderInfo $orderInfo, $res)
+    {
+        if ($orderInfo->getTotalPrice() == $res['amount']) {
+            $orderDetails = $orderInfo->getOrderDetails();
+            $user = $orderInfo->getUser();
+            $userBonuses = $user->getBonuses();
+
+            foreach ($orderDetails as $orderDetail) {
+                $receipt = $orderDetail->getReceipt();
+                $product = $orderDetail->getProduct();
+                $quantity = $orderDetail->getQuantity();
+
+                if ($orderDetail->getReceipt() !== null){
+                    $userBonuses = ($receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity) * 0.1 + $userBonuses;
+                }
+            }
+
+            $orderInfo->setStatus('payed');
+            $user->setBonuses($userBonuses);
+
+            $this->entityManager->flush();
+        }
+        $this->logger->info('Oops wrong sum');
     }
 
 }

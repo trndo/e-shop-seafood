@@ -90,7 +90,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user-{slug}/resetPassword")
+     * @Route("/user-{id}/resetPassword")
      * @param Request $request
      * @param UserServiceInterface $userService
      * @param User $user

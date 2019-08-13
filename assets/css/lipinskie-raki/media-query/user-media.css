@@ -137,6 +137,10 @@
         width: 285px;
         height: 87px;
     }
+
+    .small-height{
+        height: max-content;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 374px){
@@ -241,6 +245,28 @@
         width: 300px;
         padding: 15px 16px;
         float: unset;
+        height: max-content;
+    }
+    .payment{
+        width: 285px;
+        height: 103px;
+        margin-top: 15px;
+        padding-top: 24px;
+    }
+
+    .payment-types{
+        width: 285px;
+        height: 260px;
+        flex-direction: column;
+        margin-top: 15px;
+        justify-content: space-between;
+    }
+
+    .paymethod{
+        width: 285px;
+        height: 87px;
+    }
+    .small-height{
         height: max-content;
     }
 }

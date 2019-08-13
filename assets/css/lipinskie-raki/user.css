@@ -26,7 +26,7 @@
 }
 .user-tab-last{
     position: relative;
-    left: 289px;
+    left: 284px;
 }
 #lobster{
     position: absolute;
@@ -301,3 +301,27 @@
     background: #FFFFFF;
 }
 
+.resetpass-container{
+    margin: 0 auto;
+    position: relative;
+    z-index: 50;
+    width: 289px;
+    height: max-content;
+}
+
+.reset-input{
+    width: 289px;
+    margin-top: 5px;
+}
+
+.newpass{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+
+    color: #FFFFFF;
+    width: 100%;
+    margin-top: 18px;
+}

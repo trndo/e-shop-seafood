@@ -13,4 +13,11 @@ interface PaymentInterface
      * @return string
      */
     public function doPayment(OrderInfo $orderInfo): string ;
+
+    /**
+     * @param OrderInfo $orderInfo
+     * @param string $res
+     * @return bool
+     */
+    public function confirmPayment(OrderInfo $orderInfo, string $res): bool ;
 }

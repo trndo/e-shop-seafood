@@ -7,6 +7,7 @@ namespace App\Service\PaymentService;
 use App\Entity\OrderInfo;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use mysql_xdevapi\Exception;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -68,24 +69,22 @@ class PaymentHandler implements PaymentInterface
                 'action' => 'pay',
                 'currency' => 'UAH',
                 'amount' => $orderInfo->getTotalPrice(),
-                'description' => 'Оплата заказа № '.$orderInfo->getOrderUniqueId(),
+                'description' => 'Оплата заказа № ' . $orderInfo->getOrderUniqueId(),
                 'result_url' => $this->generator->generate(
-                    'confirmPay',[
-                    'orderUniqueId' => $orderInfo->getOrderUniqueId()
-                ], UrlGeneratorInterface::ABSOLUTE_URL),
+                    'home', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'language' => 'ru',
                 'order_id' => $orderInfo->getOrderUniqueId(),
                 'server_url' => $this->generator->generate(
-                    'confirmPay',[
-                        'orderUniqueId' => $orderInfo->getOrderUniqueId()
-                    ], UrlGeneratorInterface::ABSOLUTE_URL)
+                    'confirmPay', [
+                    'orderUniqueId' => $orderInfo->getOrderUniqueId()
+                ], UrlGeneratorInterface::ABSOLUTE_URL)
             ]);
 
             return $form;
         }
     }
 
-    public function confirmPayment(OrderInfo $orderInfo, string $res)
+    public function confirmPayment(OrderInfo $orderInfo, string $res): bool
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $data = json_decode(base64_decode($res, true));
@@ -93,7 +92,7 @@ class PaymentHandler implements PaymentInterface
             switch ($data->status) {
                 case 'success':
                 case 'sandbox':
-                    return $this->handleConfirmation($orderInfo, $res);
+                    return $this->handleConfirmation($orderInfo, $data) == true ?: null;
                 case 'failure':
                 case 'error':
                 case '3ds_verify':
@@ -101,14 +100,15 @@ class PaymentHandler implements PaymentInterface
                 case 'wait_accept':
                 case 'processing':
                     break;
-
             }
+            return true;
         }
+
+        return false;
     }
 
-    private function handleConfirmation(OrderInfo $orderInfo, $res)
+    private function handleConfirmation(OrderInfo $orderInfo, object $res): bool
     {
-        dd($orderInfo->getTotalPrice() , $res->amount);
         if ($orderInfo->getTotalPrice() == $res->amount) {
             $orderDetails = $orderInfo->getOrderDetails();
             $user = $orderInfo->getUser();
@@ -119,7 +119,7 @@ class PaymentHandler implements PaymentInterface
                 $product = $orderDetail->getProduct();
                 $quantity = $orderDetail->getQuantity();
 
-                if ($orderDetail->getReceipt() !== null){
+                if ($orderDetail->getReceipt() !== null) {
                     $userBonuses = ($receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity) * 0.1 + $userBonuses;
                 }
             }
@@ -128,8 +128,11 @@ class PaymentHandler implements PaymentInterface
             $user->setBonuses($userBonuses);
 
             $this->entityManager->flush();
+
+            return true;
         }
-        $this->logger->info('Oops wrong sum');
+
+        return false;
     }
 
 }

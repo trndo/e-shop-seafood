@@ -13,6 +13,7 @@ use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
+use App\Service\PaymentService\PaymentInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,7 @@ class UserController extends AbstractController
     {
         $emailModel = new ResetPasswordModel();
         $options['email'] = true;
-        $form = $this->createForm(ResetPasswordType::class,$emailModel,$options);
+        $form = $this->createForm(ResetPasswordType::class, $emailModel, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,12 +49,12 @@ class UserController extends AbstractController
             if (!$user->getRegistrationStatus()) {
                 return $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
             }
-            if(!$user){
-                return $this->createNotFoundException('Такая почта '.$email.' не найдена!');
+            if (!$user) {
+                return $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
             }
             return $this->redirectToRoute('home');
         }
-        return $this->render('enter_email.html.twig',[
+        return $this->render('enter_email.html.twig', [
             'form' => $form->createView()
         ]);
 
@@ -70,19 +71,19 @@ class UserController extends AbstractController
     {
         $newPasswordModel = new ResetPasswordModel();
         $options['forgotPassword'] = true;
-        $form = $this->createForm(ResetPasswordType::class,$newPasswordModel,$options);
+        $form = $this->createForm(ResetPasswordType::class, $newPasswordModel, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var ResetPasswordModel $email */
             $password = $form->getData()->getPassword();
             $user = $userService->getUserByPassToken($user->getPassToken());
-            $userService->addNewPassword($user,$password);
+            $userService->addNewPassword($user, $password);
 
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('forgot_password.html.twig',[
+        return $this->render('forgot_password.html.twig', [
             'form' => $form->createView()
         ]);
 
@@ -95,12 +96,12 @@ class UserController extends AbstractController
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function resetPassword(Request $request,UserServiceInterface $userService, User $user)
+    public function resetPassword(Request $request, UserServiceInterface $userService, User $user)
     {
         $resetPasswordModel = new ResetPasswordModel();
         $options['forgotPassword'] = true;
         $options['oldPassword'] = true;
-        $form = $this->createForm(ResetPasswordType::class,$resetPasswordModel,$options);
+        $form = $this->createForm(ResetPasswordType::class, $resetPasswordModel, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -108,12 +109,12 @@ class UserController extends AbstractController
             $data = $form->getData();
             $oldPassword = $data->getOldPassword();
             $newPassword = $data->getPassword();
-            $userService->resetOldPassword($user,$newPassword,$oldPassword);
+            $userService->resetOldPassword($user, $newPassword, $oldPassword);
 
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('new_password.html.twig',[
+        return $this->render('new_password.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -125,7 +126,7 @@ class UserController extends AbstractController
      * @param UserServiceInterface $service
      * @return Response
      */
-    public function updateUser(User $user,Request $request, UserServiceInterface $service): Response
+    public function updateUser(User $user, Request $request, UserServiceInterface $service): Response
     {
         $user = $this->getUser();
         $userInfoModel = UserMapper::entityToUserModel($user);
@@ -133,12 +134,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            UserMapper::userModelToEntity($userInfoModel,$user);
+            UserMapper::userModelToEntity($userInfoModel, $user);
             $service->updateUserInfo();
         }
 
-        return $this->render('showUser.html.twig',[
-           'form' => $form->createView()
+        return $this->render('showUser.html.twig', [
+            'form' => $form->createView()
         ]);
 
     }
@@ -151,41 +152,46 @@ class UserController extends AbstractController
      */
     public function history(User $user): Response
     {
-        return $this->render('history.html.twig',[
+        return $this->render('history.html.twig', [
             'orders' => $user->getOrderInfos()
         ]);
     }
 
     /**
      * @Route("/orders/payment/{orderUniqueId}", name="pay")
-     * @param User $user
      * @param OrderInfo $order
-     * @param PaymentHandler $handler
+     * @param PaymentInterface $handler
      * @return Response
      */
-    public function pay(OrderInfo $order, PaymentHandler $handler): Response
+    public function pay(OrderInfo $order, PaymentInterface $handler): Response
     {
-       $payment = $handler->doPayment($order);
-        return $this->render('pay.html.twig',[
+        $payment = $handler->doPayment($order);
+        return $this->render('pay.html.twig', [
             'payment' => $payment
         ]);
     }
 
     /**
      * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
-        * @param Request $request
-        * @param OrderInfo $orderInfo
-        * @param PaymentHandler $paymentHandler
-        * @return JsonResponse
-        */
-    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentHandler $paymentHandler): JsonResponse
+     * @param Request $request
+     * @param OrderInfo $orderInfo
+     * @param PaymentInterface $paymentHandler
+     * @return JsonResponse
+     */
+    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
     {
         $res = $request->request->get('data');
-        $data = json_decode(base64_decode($res, true));
-        $paymentHandler->confirmPayment($orderInfo,$res);
 
-        return new JsonResponse([
-            'status' => true
-        ],200);
+        $status = $paymentHandler->confirmPayment($orderInfo, $res);
+
+        if (!$status) {
+            return new JsonResponse([
+                'status' => $status
+            ], 400);
+        } else {
+            return new JsonResponse([
+                'status' => $status
+            ], 200);
+        }
     }
 }

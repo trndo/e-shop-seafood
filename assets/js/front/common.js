@@ -53,7 +53,7 @@ $('.social').click(function () {
 });
 
 let counter = 9;
-$(document).on('click', '.down', function (e) {
+$(document).on('click', '#down', function (e) {
     let category = $('#category').data('category');
     $.ajax({
         'type': "GET",

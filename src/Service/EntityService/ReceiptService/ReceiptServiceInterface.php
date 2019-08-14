@@ -54,4 +54,11 @@ interface ReceiptServiceInterface
      * @return ReceiptCollection|null
      */
     public function getReceiptsByCategory(Category $category): ?ReceiptCollection ;
+
+    /**
+     * @param Category $category
+     * @param int $count
+     * @return ReceiptCollection|null
+     */
+    public function loadMoreReceipts(Category $category, int $count): ?ReceiptCollection ;
 }

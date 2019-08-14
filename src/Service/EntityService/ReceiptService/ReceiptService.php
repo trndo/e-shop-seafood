@@ -227,7 +227,17 @@ class ReceiptService implements ReceiptServiceInterface
 
     public function getReceiptsByCategory(Category $category): ?ReceiptCollection
     {
-
         return new ReceiptCollection($this->receiptRepository->getReceiptsFromCategory($category->getId()));
+    }
+
+    public function loadMoreReceipts(Category $category, int $count): ?ReceiptCollection
+    {
+        if ($category && $count !== null) {
+            return new ReceiptCollection(
+                $this->receiptRepository->getReceiptsForLoading($category->getId(), $count)
+            );
+        }
+
+        return null;
     }
 }

@@ -27,12 +27,13 @@ class ProductController extends AbstractController
      * @param ReceiptServiceInterface $receiptService
      * @return Response
      */
-    public function item(Category $category,string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService): Response
+    public function item(Category $category,?string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService): Response
     {
         if ($category->getType() == 'products')
             $item = $service->getProduct($slug);
         else
            $item = $receiptService->getReceipt($slug);
+
         return $item->getType() == 'product'
             ? $this->render('product.html.twig', [
                 'item' => $item,

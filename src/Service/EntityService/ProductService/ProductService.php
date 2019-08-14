@@ -71,12 +71,12 @@ class ProductService implements ProductServiceInterface
         return $this->fileUploader->uploadFile($file, $folder, $hash);
     }
 
-    private function uploadProductPhotos(array $photos,Product $product): void
+    private function uploadProductPhotos(array $photos, Product $product): void
     {
         foreach ($photos as $photo) {
             if ($photo instanceof UploadedFile) {
                 $productPhoto = new Photo();
-                $newPhoto = $this->upload($photo,self::PRODUCT_IMAGE_FOLDER);
+                $newPhoto = $this->upload($photo, self::PRODUCT_IMAGE_FOLDER);
                 $productPhoto->setHash($newPhoto)
                     ->setProduct($product);
 
@@ -102,7 +102,7 @@ class ProductService implements ProductServiceInterface
             ->setCategory($model->getCategory());
 
         if ($model->getTitlePhoto() instanceof UploadedFile) {
-            $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::PRODUCT_IMAGE_FOLDER);
+            $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER);
             $product->setTitlePhoto($newTitlePhoto);
         }
 
@@ -135,7 +135,7 @@ class ProductService implements ProductServiceInterface
      */
     public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection
     {
-        return new ProductCollection($this->productRepository->findBy($this->hydrateQuery($criteria),$orderBy));
+        return new ProductCollection($this->productRepository->findBy($this->hydrateQuery($criteria), $orderBy));
     }
 
     public function updateProduct(Product $product, ProductModel $model): void
@@ -152,7 +152,7 @@ class ProductService implements ProductServiceInterface
             ->setCategory($model->getCategory());
 
         if ($model->getTitlePhoto() instanceof UploadedFile) {
-            $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::PRODUCT_IMAGE_FOLDER, $product->getTitlePhoto());
+            $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER, $product->getTitlePhoto());
             $product->setTitlePhoto($newTitlePhoto);
         }
 
@@ -164,13 +164,13 @@ class ProductService implements ProductServiceInterface
      */
     public function deleteProduct(Product $product): void
     {
-        $titlePhoto = $this->fileUploader->getUploadDir().self::PRODUCT_IMAGE_FOLDER.$product->getTitlePhoto();
-        if(file_exists($titlePhoto) && is_file($titlePhoto))
+        $titlePhoto = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $product->getTitlePhoto();
+        if (file_exists($titlePhoto) && is_file($titlePhoto))
             unlink($titlePhoto);
 
-        foreach ($product->getPhotos() as $photo){
-            $photoHash = $this->fileUploader->getUploadDir().self::PRODUCT_IMAGE_FOLDER.$photo->getHash();
-            if(file_exists($photoHash) && is_file($photoHash))
+        foreach ($product->getPhotos() as $photo) {
+            $photoHash = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $photo->getHash();
+            if (file_exists($photoHash) && is_file($photoHash))
                 unlink($photoHash);
             $this->entityManager->remove($photo);
         }
@@ -184,22 +184,22 @@ class ProductService implements ProductServiceInterface
      */
     public function activateProduct(?int $id): void
     {
-       $product = $this->productRepository->find($id);
+        $product = $this->productRepository->find($id);
 
-       if($product){
-           if($product->getStatus())
-               $product->setStatus(false);
-           else
-               $product->setStatus(true);
+        if ($product) {
+            if ($product->getStatus())
+                $product->setStatus(false);
+            else
+                $product->setStatus(true);
 
-           $this->entityManager->flush();
-       }
+            $this->entityManager->flush();
+        }
     }
 
     private function hydrateQuery(array $query): array
     {
-        foreach ($query as $key => $param){
-            if(!in_array($key,$this->allowedGetParameters))
+        foreach ($query as $key => $param) {
+            if (!in_array($key, $this->allowedGetParameters))
                 unset($query[$key]);
         }
 
@@ -211,7 +211,7 @@ class ProductService implements ProductServiceInterface
      */
     public function getProductsForRating(): ?array
     {
-       return $this->productRepository->findForRating();
+        return $this->productRepository->findForRating();
     }
 
     /**
@@ -230,8 +230,18 @@ class ProductService implements ProductServiceInterface
 
     public function getProductsByCategory(Category $category): ?array
     {
-       return $this->productRepository->getProductsFromCategory($category->getId());
+        return $this->productRepository->getProductsFromCategory($category->getId());
+    }
 
+    public function loadMoreProducts(Category $category, int $count): ?ProductCollection
+    {
+        if ($category && $count !== null) {
+            return new ProductCollection(
+                $this->productRepository->getProductsForLoading($category->getId(), $count)
+            );
+        }
+
+        return null;
     }
 
 

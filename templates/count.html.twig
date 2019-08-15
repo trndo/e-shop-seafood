@@ -1,18 +1,18 @@
 {% for item in items %}
-    {% if item.status %}
-        <div class="product-card">
-            <img src="{{ item.titlePhotoPath }}" alt="">
-            <div class="card-content">
-                <h4>{{ item.name }}</h4>
-                <p>{{ item.description }}</p>
-                <span class="price">₴ {{ item.price }}</span>
-                <div class="in_basket" data-product-location="{{ path('category_show',{'slug': item.slug}) }}">Подробнее</div>
+        {% if item.status %}
+            <div class="product-card">
+                <img src="{{ item.titlePhotoPath }}" alt="">
+                <div class="card-content">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.description }}</p>
+                    <span class="price">₴ {{ item.price }}</span>
+                    <div class="in_basket" data-product-location="{{ path('category_show',{'slug': item.slug}) }}">Подробнее</div>
+                </div>
             </div>
-        </div>
-    {% endif %}
-    {% if items|length >= 9 %}
-        <img id="down" src="{{ asset('assets/img/donw.svg') }}" alt="">
-    {% endif %}
-{% endfor %}
+        {% endif %}
+    {% endfor %}
+{% if items|length == 9 %}
+    <img id="down" src="{{ asset('assets/img/donw.svg') }}" alt="chlen">
+{% endif %}
 
 

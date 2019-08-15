@@ -85,7 +85,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function getProductsFromCategory(int $categoryId): ?array
     {
-        return $this->createQueryBuilder('p')
+        $dd = $this->createQueryBuilder('p')
             ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
             ->leftJoin('p.additionalProduct', 'ap')
             ->leftJoin('p.gift', 'g')
@@ -95,43 +95,32 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('p.category', 'c')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
+            ->orderBy('p.category', 'ASC')
             ->setMaxResults(8)
             ->getQuery()
             ->execute();
+
+        return $dd;
     }
 
-    public function getProductsForLoading(int $categoryId, int $count,int $offset = 9): ?array
+    public function getProductsForLoading(int $categoryId, int $count, int $offset = 9): ?array
     {
-//        $maxRes = $count + $offset;
-//        $query = $this->entityManager->createQuery('
-//            SELECT
-//            FROM product p2 , ca
-//            LEFT JOIN
-//            WHERE status = true AND category_id = :categoryId
-//
-//        ');
-       // SELECT p, c, od, ap, g, sp, s FROM App\Entity\Product p LEFT JOIN p.additionalProduct ap LEFT JOIN p.gift g LEFT JOIN p.specialPropositions sp LEFT JOIN p.suppl
-//        $qb = $this->createQueryBuilder('p')
-//            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
-//            ->leftJoin('p.additionalProduct', 'ap')
-//            ->leftJoin('p.gift', 'g')
-//            ->leftJoin('p.specialPropositions', 'sp')
-//            ->leftJoin('p.supply', 's')
-//            ->leftJoin('p.orderDetail', 'od')
-//            ->leftJoin('p.category', 'c')
-//            ->andWhere('p.status = true AND c.id = :categoryId')
-//            ->setParameter('categoryId', $categoryId);
-//        dd($qb->getQuery());
-//
-//        $query = $qb->setMaxResults($maxRes)
-//            ->setFirstResult($count)
-//            ;
-//
-//        $paginator = new Paginator($query);
-//
-//        dd($paginator->get()->getResult());
-//
-//        return $paginator;
+        $query = $this->createQueryBuilder('p')
+            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
+            ->leftJoin('p.additionalProduct', 'ap')
+            ->leftJoin('p.gift', 'g')
+            ->leftJoin('p.specialPropositions', 'sp')
+            ->leftJoin('p.supply', 's')
+            ->leftJoin('p.orderDetail', 'od')
+            ->leftJoin('p.category', 'c')
+            ->andWhere('p.status = true AND c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('p.category', 'ASC')
+            ->setFirstResult($count)
+            ->setMaxResults($offset)
+            ->getQuery()
+            ->getResult();
 
+        return $query;
     }
 }

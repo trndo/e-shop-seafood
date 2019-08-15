@@ -6,6 +6,7 @@ use App\Entity\Receipt;
 use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -70,29 +71,38 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function getReceiptsFromCategory(int $categoryId): ?array
     {
-        return $this->createQueryBuilder('r')
+        $dd = $this->createQueryBuilder('r')
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
             ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->setMaxResults(9)
+            ->orderBy('r.category', 'ASC')
+            ->setMaxResults(8)
             ->getQuery()
-            ->execute();
+            ->getResult();
+
+
+        return $dd;
     }
 
 
     public function getReceiptsForLoading(int $categoryId, int $count, $offset = 9): ?array
     {
-        return  $this->createQueryBuilder('r')
+
+        $query =  $this->createQueryBuilder('r')
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
             ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
+            ->orderBy('r.category', 'ASC')
             ->setFirstResult($count)
-            ->setMaxResults($count + $offset)
+            ->setMaxResults($offset)
             ->getQuery()
-            ->execute();
+            ->getResult();
+
+
+        return $query;
     }
 }

@@ -182,11 +182,10 @@ $(document).ready(function () {
         $('#overlay').toggle();
     });
 
-    let counter = 9;
+    let counter = 8;
+
     $(document).on('click', '#down', function () {
-        console.log('chlen');
         let category = $('.category').data('category');
-        console.log(category);
         $.ajax({
             'type': "GET",
             'url': "/category-" + category + "/loadMore",
@@ -194,6 +193,7 @@ $(document).ready(function () {
                 counter: counter,
             },
             success: function (res) {
+                $('#down').remove();
                 $('.products-row').append(res);
                 counter += 9;
                 console.log(counter);

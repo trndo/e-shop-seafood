@@ -1,6 +1,5 @@
 import $ from 'jquery';
 
-let counter = 9;
 
 $('li').click(function () {
     if ($(this).data('location'))
@@ -54,19 +53,3 @@ $('.social').click(function () {
     window.location.href = $(this).data('login-social');
 });
 
-
-
-// $(document).on('click', '#down', function () {
-//
-//     let category = $('#category').data('category');
-//     $.ajax({
-//         'type': "GET",
-//         'url': "/category-"+category+"/loadMore",
-//         'data': {
-//             counter: counter,
-//         },
-//         success: function (res) {
-//             $('.products-row').append(res);
-//             counter += 9
-//         }
-//     });

@@ -10,7 +10,7 @@
                             Выбери рецепт по которому Мы приготовим для тебя раков
                         </div>
                         {% for item in items %}
-                                <div id="category" class="product-card" data-category="{{ item.category.id }}">
+                                <div class="product-card category" data-category="{{ item.category.slug }}">
                                     <img src="{{ item.titlePhotoPath }}" alt="">
                                     <div class="card-content">
                                         <h4>{{ item.name }}</h4>
@@ -24,9 +24,9 @@
                                 </div>
                         {% endfor %}
                     </div>
-                    {% if items|length == 8 %}
+{#                    {% if items|length == 8 %}#}
                         <img id="down" src="{{ asset('assets/img/donw.svg') }}" alt="">
-                    {% endif %}
+{#                    {% endif %}#}
                 </div>
             </main>
         </div>

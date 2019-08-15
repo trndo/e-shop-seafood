@@ -7,6 +7,7 @@ use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -99,21 +100,38 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->execute();
     }
 
-    public function getProductsForLoading(int $categoryId, int $count, $offset = 9): ?array
+    public function getProductsForLoading(int $categoryId, int $count,int $offset = 9): ?array
     {
-        return $this->createQueryBuilder('p')
-            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
-            ->leftJoin('p.additionalProduct', 'ap')
-            ->leftJoin('p.gift', 'g')
-            ->leftJoin('p.specialPropositions', 'sp')
-            ->leftJoin('p.supply', 's')
-            ->leftJoin('p.orderDetail', 'od')
-            ->leftJoin('p.category', 'c')
-            ->andWhere('p.status = true AND c.id = :categoryId')
-            ->setParameter('categoryId', $categoryId)
-            ->setFirstResult($count)
-            ->setMaxResults($count + $offset)
-            ->getQuery()
-            ->execute();
+//        $maxRes = $count + $offset;
+//        $query = $this->entityManager->createQuery('
+//            SELECT
+//            FROM product p2 , ca
+//            LEFT JOIN
+//            WHERE status = true AND category_id = :categoryId
+//
+//        ');
+       // SELECT p, c, od, ap, g, sp, s FROM App\Entity\Product p LEFT JOIN p.additionalProduct ap LEFT JOIN p.gift g LEFT JOIN p.specialPropositions sp LEFT JOIN p.suppl
+//        $qb = $this->createQueryBuilder('p')
+//            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
+//            ->leftJoin('p.additionalProduct', 'ap')
+//            ->leftJoin('p.gift', 'g')
+//            ->leftJoin('p.specialPropositions', 'sp')
+//            ->leftJoin('p.supply', 's')
+//            ->leftJoin('p.orderDetail', 'od')
+//            ->leftJoin('p.category', 'c')
+//            ->andWhere('p.status = true AND c.id = :categoryId')
+//            ->setParameter('categoryId', $categoryId);
+//        dd($qb->getQuery());
+//
+//        $query = $qb->setMaxResults($maxRes)
+//            ->setFirstResult($count)
+//            ;
+//
+//        $paginator = new Paginator($query);
+//
+//        dd($paginator->get()->getResult());
+//
+//        return $paginator;
+
     }
 }

@@ -235,6 +235,7 @@ class ProductService implements ProductServiceInterface
 
     public function loadMoreProducts(Category $category, int $count): ?ProductCollection
     {
+
         if ($category && $count !== null) {
             return new ProductCollection(
                 $this->productRepository->getProductsForLoading($category->getId(), $count)

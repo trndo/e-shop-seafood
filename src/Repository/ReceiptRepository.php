@@ -76,7 +76,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->setMaxResults(10)
+            ->setMaxResults(9)
             ->getQuery()
             ->execute();
     }

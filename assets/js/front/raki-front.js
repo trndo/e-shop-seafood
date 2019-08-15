@@ -12,17 +12,20 @@ import SimpleBar from 'simplebar';
 import 'slick-carousel';
 
 $(document).ready(function () {
-    if($('.cart-container').length)
-        new SimpleBar($('.cart-container')[0],{
-          autoHide: false});
+    if ($('.cart-container').length)
+        new SimpleBar($('.cart-container')[0], {
+            autoHide: false
+        });
 
-    if($('.menu-nav > ul').length)
-        new SimpleBar($('.menu-nav > ul')[0],{
-            autoHide: false});
-    if($('.history-container').length)
-        new SimpleBar($('.history-container')[0],{
-            autoHide: false});
-    if(window.screen.width < 500) {
+    if ($('.menu-nav > ul').length)
+        new SimpleBar($('.menu-nav > ul')[0], {
+            autoHide: false
+        });
+    if ($('.history-container').length)
+        new SimpleBar($('.history-container')[0], {
+            autoHide: false
+        });
+    if (window.screen.width < 500) {
         $('.additional-nav-container').slick({
             infinite: false,
             slidesToShow: 2,
@@ -34,13 +37,13 @@ $(document).ready(function () {
     }
 
 
-    $(document).on('click','.add-basket',function () {
+    $(document).on('click', '.add-basket', function () {
         let type = $(this).data('type');
-        let id = $(this).data('name') ;
+        let id = $(this).data('name');
 
         if (checked == null && type === 'receipt') {
             alert('Vyberi razmer!');
-            return ;
+            return;
         }
 
         let quantity = $('.item-res > input').val();
@@ -49,17 +52,17 @@ $(document).ready(function () {
             type: 'POST',
             url: '/addToCart',
             data: {
-                id: checked ? type+'-'+id+'-'+checked : type+'-'+id,
+                id: checked ? type + '-' + id + '-' + checked : type + '-' + id,
                 quantity: quantity
             },
             success: function (res) {
-                if (res.status){
-                    $('.sum').text(res.totalSum+' ₴');
+                if (res.status) {
+                    $('.sum').text(res.totalSum + ' ₴');
                     console.log(res);
                 } else {
                     console.log('ne-ok');
                     alert(res.message);
-                    if(res.rest != 0)
+                    if (res.rest != 0)
                         $('.item-res > input').val(res.rest);
                     else
                         $('.item-res > input').val(1);
@@ -92,8 +95,7 @@ $(document).ready(function () {
     // });
 
 
-
-    $(document).on('click','.item-plus',function () {
+    $(document).on('click', '.item-plus', function () {
 
         let input = $(this).siblings('.item-res').children();
         let val = Number(input.val());
@@ -101,19 +103,19 @@ $(document).ready(function () {
         input.val(val + 0.5);
     });
 
-    $(document).on('click','.item-minus',function () {
+    $(document).on('click', '.item-minus', function () {
         let input = $(this).siblings('.item-res').children();
 
-        if(input.val() == 1)
+        if (input.val() == 1)
             return;
         let val = Number(input.val());
         input.val(val - 0.5);
     });
-    $(document).on('keyup','.item-res > input',function (e) {
+    $(document).on('keyup', '.item-res > input', function (e) {
         let input = $(this);
         let val = Number(input.val());
 
-        if( val == '')
+        if (val == '')
             return;
 
         // if (val > 10) {
@@ -122,29 +124,29 @@ $(document).ready(function () {
         //     val = 10;
         // }
 
-        if(val < 0) {
+        if (val < 0) {
             input.val(1);
         }
     });
-    $('.item-res > input').bind('cut copy paste',function (e) {
+    $('.item-res > input').bind('cut copy paste', function (e) {
         e.preventDefault();
     });
 
-    $(document).on('blur','.item-res > input',function (e) {
+    $(document).on('blur', '.item-res > input', function (e) {
         let input = $(this);
         let val = Number(input.val());
-        if(val == '')
+        if (val == '')
             input.val(1);
     });
 
     let related = $('.receipt-name').data('related');
     let checked = related ? related : null;
-    $(document).on('click','.size-block',function (e) {
+    $(document).on('click', '.size-block', function (e) {
         $('.size-block-checked').each(function () {
-           $(this).removeClass('size-block-checked');
+            $(this).removeClass('size-block-checked');
         });
         $(this).addClass('size-block-checked');
-        checked = $(this).data('name') ;
+        checked = $(this).data('name');
     });
 
     $('.show-modal').on('click', function () {
@@ -152,7 +154,7 @@ $(document).ready(function () {
         let name = $(this).data('name');
         let type = $(this).data('type');
         $('#overlay').toggle();
-        replaceButton = ' <div class="custom-button add-basket" data-name="'+name+'" data-type="'+type+'">Добавить в козину</div>';
+        replaceButton = ' <div class="custom-button add-basket" data-name="' + name + '" data-type="' + type + '">Добавить в козину</div>';
     });
 
     let replaceButton = '';
@@ -178,6 +180,25 @@ $(document).ready(function () {
         });
         console.log('i am in ajax');
         $('#overlay').toggle();
+    });
+
+    let counter = 9;
+    $(document).on('click', '#down', function () {
+        console.log('chlen');
+        let category = $('.category').data('category');
+        console.log(category);
+        $.ajax({
+            'type': "GET",
+            'url': "/category-" + category + "/loadMore",
+            'data': {
+                counter: counter,
+            },
+            success: function (res) {
+                $('.products-row').append(res);
+                counter += 9;
+                console.log(counter);
+            }
+        });
     });
 
 });

@@ -59,8 +59,7 @@ class CategoryController extends AbstractController
      */
     public function loadMore(Request $request, Category $category, ReceiptServiceInterface $receiptService, ProductServiceInterface $productService): Response
     {
-        $count = $request->request->get('counter');
-
+        $count = (int)$request->query->get('counter');
         $items = $category->getType() == 'products' ? $productService->loadMoreProducts($category,$count) : $receiptService->loadMoreReceipts($category,$count);
 
         return $this->render('count.html.twig',[

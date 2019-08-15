@@ -193,10 +193,15 @@ $(document).ready(function () {
                 counter: counter,
             },
             success: function (res) {
-                $('#down').remove();
+                // $('#down').remove();
+                let elements = $(res).filter('.loading').length;
                 $('.products-row').append(res);
                 counter += 9;
-                console.log(counter);
+                console.log('chlen');
+
+                if (elements !== 9) {
+                    $('#down').remove();
+                }
             }
         });
     });

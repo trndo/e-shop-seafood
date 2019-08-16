@@ -7,6 +7,7 @@ use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -85,14 +86,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function getProductsFromCategory(int $categoryId): ?array
     {
-        $dd = $this->createQueryBuilder('p')
-            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
-            ->leftJoin('p.additionalProduct', 'ap')
-            ->leftJoin('p.gift', 'g')
-            ->leftJoin('p.specialPropositions', 'sp')
-            ->leftJoin('p.supply', 's')
-            ->leftJoin('p.orderDetail', 'od')
-            ->leftJoin('p.category', 'c')
+        $dd = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('p.category', 'ASC')
@@ -105,14 +99,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
 
     public function getProductsForLoading(int $categoryId, int $count, int $offset = 9): ?array
     {
-        $query = $this->createQueryBuilder('p')
-            ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
-            ->leftJoin('p.additionalProduct', 'ap')
-            ->leftJoin('p.gift', 'g')
-            ->leftJoin('p.specialPropositions', 'sp')
-            ->leftJoin('p.supply', 's')
-            ->leftJoin('p.orderDetail', 'od')
-            ->leftJoin('p.category', 'c')
+        $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('p.category', 'ASC')
@@ -122,5 +109,28 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->getResult();
 
         return $query;
+    }
+
+//    public function findById(int $id): ?Product
+//    {
+//        return $this->createQueryBuilderForProduct('p')
+//            ->andWhere('p.status = true AND p.id = :id')
+//            ->setParameter('id',$id)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
+
+    private function createQueryBuilderForProduct(string $alias): QueryBuilder
+    {
+        if ($alias) {
+            return $this->createQueryBuilder($alias)
+                ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
+                ->leftJoin($alias.'.additionalProduct', 'ap')
+                ->leftJoin($alias.'.gift', 'g')
+                ->leftJoin($alias.'.specialPropositions', 'sp')
+                ->leftJoin($alias.'.supply', 's')
+                ->leftJoin($alias.'.orderDetail', 'od')
+                ->leftJoin($alias.'.category', 'c');
+        }
     }
 }

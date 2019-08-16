@@ -17,7 +17,7 @@
                                         <p>{{ item.description }}</p>
                                         <span class="price">₴ {{ item.price }}</span>
                                         <div class="in_basket"
-                                             data-product-location="{{ path('category_show',{'slug': item.slug}) }}">
+                                             data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">
                                             Подробнее
                                         </div>
                                     </div>

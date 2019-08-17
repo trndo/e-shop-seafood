@@ -70,4 +70,11 @@ interface ProductServiceInterface
      * @return ProductCollection|null
      */
     public function getProductsByCategory(Category $category): ?array ;
+
+    /**
+     * @param Category $category
+     * @param int $count
+     * @return ProductCollection|null
+     */
+    public function loadMoreProducts(Category $category, int $count): ?ProductCollection ;
 }

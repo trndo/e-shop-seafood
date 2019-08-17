@@ -7,6 +7,8 @@ use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -37,21 +39,20 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('p')
             ->select('p.name')
             ->andWhere('p.name LIKE :productName')
-            ->setParameter('productName', '%'.$productName.'%')
+            ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getArrayResult()
-            ;
+            ->getArrayResult();
     }
 
     public function findForRating(): ?array
     {
         return $this->createQueryBuilder('p')
-            ->leftJoin('p.supply','supply')
-            ->leftJoin('p.category','category')
-            ->leftJoin('p.gift','gift')
-            ->leftJoin('p.specialPropositions','specialPropositions')
-            ->leftJoin('p.orderDetail','orderDetail')
+            ->leftJoin('p.supply', 'supply')
+            ->leftJoin('p.category', 'category')
+            ->leftJoin('p.gift', 'gift')
+            ->leftJoin('p.specialPropositions', 'specialPropositions')
+            ->leftJoin('p.orderDetail', 'orderDetail')
             ->addSelect('p, supply, category, specialPropositions, gift, orderDetail')
             ->andWhere('p.rating != 0 AND p.status = true')
             ->setMaxResults(9)
@@ -68,14 +69,13 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('p')
             ->addSelect('p')
             ->andWhere('p.name LIKE :productName ')
-            ->setParameter('productName', '%'.$productName.'%')
+            ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-    public function findProductBySlug(string $slug):Product
+    public function findProductBySlug(string $slug): Product
     {
         return $this->findOneBy(['slug' => $slug]);
     }
@@ -86,18 +86,51 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function getProductsFromCategory(int $categoryId): ?array
     {
-        return $this->createQueryBuilder('p')
-            ->addSelect('c','od','ap','g','sp','s')
-            ->leftJoin('p.additionalProduct','ap')
-            ->leftJoin('p.gift','g')
-            ->leftJoin('p.specialPropositions','sp')
-            ->leftJoin('p.supply','s')
-            ->leftJoin('p.orderDetail', 'od')
-            ->leftJoin('p.category','c')
+        $dd = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
-            ->setParameter('categoryId',$categoryId)
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('p.category', 'ASC')
+            ->setMaxResults(8)
             ->getQuery()
-            ->execute()
-            ;
+            ->execute();
+
+        return $dd;
+    }
+
+    public function getProductsForLoading(int $categoryId, int $count, int $offset = 9): ?array
+    {
+        $query = $this->createQueryBuilderForProduct('p')
+            ->andWhere('p.status = true AND c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('p.category', 'ASC')
+            ->setFirstResult($count)
+            ->setMaxResults($offset)
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
+//    public function findById(int $id): ?Product
+//    {
+//        return $this->createQueryBuilderForProduct('p')
+//            ->andWhere('p.status = true AND p.id = :id')
+//            ->setParameter('id',$id)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
+
+    private function createQueryBuilderForProduct(string $alias): QueryBuilder
+    {
+        if ($alias) {
+            return $this->createQueryBuilder($alias)
+                ->addSelect('c', 'od', 'ap', 'g', 'sp', 's')
+                ->leftJoin($alias.'.additionalProduct', 'ap')
+                ->leftJoin($alias.'.gift', 'g')
+                ->leftJoin($alias.'.specialPropositions', 'sp')
+                ->leftJoin($alias.'.supply', 's')
+                ->leftJoin($alias.'.orderDetail', 'od')
+                ->leftJoin($alias.'.category', 'c');
+        }
     }
 }

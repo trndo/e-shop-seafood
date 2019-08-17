@@ -56,4 +56,10 @@ interface OrderInfoInterface
      * @return void
      */
     public function updateOrderInfoStatus(int $id): void ;
+
+    /**
+     * @param int $userId
+     * @return OrdersCollection
+     */
+    public function getUserOrders(int $userId): OrdersCollection;
 }

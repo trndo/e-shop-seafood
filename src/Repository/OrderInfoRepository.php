@@ -28,11 +28,23 @@ class OrderInfoRepository extends ServiceEntityRepository
     public function getOrderById(?int $id): ?OrderInfo
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.orderDetails','od')
+            ->innerJoin('o.orderDetails', 'od')
             ->addSelect('od')
             ->andWhere('o.id = :id')
-            ->setParameter('id',$id)
+            ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getOrdersByUserId(int $userId): ?array
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.orderDetails', 'od')
+            ->leftJoin('o.user', 'u')
+            ->addSelect('od', 'u')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
     }
 }

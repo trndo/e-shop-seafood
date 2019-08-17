@@ -7,6 +7,8 @@ use App\Service\EntityService\CategoryService\CategoryServiceInterface;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,5 +47,23 @@ class CategoryController extends AbstractController
         return $this->render('elements/category_list.html.twig',[
             'categories' => $categories]
         );
+    }
+
+    /**
+     * @Route("/category-{slug}/loadMore", name="loadMore")
+     * @param Request $request
+     * @param Category $category
+     * @param ReceiptServiceInterface $receiptService
+     * @param ProductServiceInterface $productService
+     * @return JsonResponse
+     */
+    public function loadMore(Request $request, Category $category, ReceiptServiceInterface $receiptService, ProductServiceInterface $productService): Response
+    {
+        $count = (int)$request->query->get('counter');
+        $items = $category->getType() == 'products' ? $productService->loadMoreProducts($category,$count) : $receiptService->loadMoreReceipts($category,$count);
+
+        return $this->render('count.html.twig',[
+            'items' => $items
+        ]);
     }
 }

@@ -11,6 +11,7 @@ use App\Form\ResetPasswordType;
 use App\Form\UserInfoUpdateType;
 use App\Mapper\UserMapper;
 use App\Model\ResetPasswordModel;
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
 use App\Service\PaymentService\PaymentInterface;
@@ -90,7 +91,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user-{slug}/resetPassword")
+     * @Route("/user-{id}/resetPassword")
      * @param Request $request
      * @param UserServiceInterface $userService
      * @param User $user
@@ -148,12 +149,13 @@ class UserController extends AbstractController
      * @Route("/user-{id}/orders", name="user_orders")
      *
      * @param User $user
+     * @param OrderInfoInterface $orderInfo
      * @return Response
      */
-    public function history(User $user): Response
+    public function history(User $user, OrderInfoInterface $orderInfo): Response
     {
         return $this->render('history.html.twig', [
-            'orders' => $user->getOrderInfos()
+            'orders' => $orderInfo->getUserOrders($user->getId())
         ]);
     }
 

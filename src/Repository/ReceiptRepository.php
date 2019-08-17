@@ -6,6 +6,7 @@ use App\Entity\Receipt;
 use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -26,18 +27,17 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('r')
             ->select('r.name')
             ->andWhere('r.name LIKE :receiptName')
-            ->setParameter('receiptName', '%'.$receiptName.'%')
+            ->setParameter('receiptName', '%' . $receiptName . '%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getArrayResult()
-            ;
+            ->getArrayResult();
     }
 
     public function findForRating(): ?array
     {
         return $this->createQueryBuilder('r')
-            ->leftJoin('r.category','category')
-            ->leftJoin('r.orderDetail','orderDetail')
+            ->leftJoin('r.category', 'category')
+            ->leftJoin('r.orderDetail', 'orderDetail')
             ->addSelect('r, category, orderDetail')
             ->andWhere('r.rating != 0 and r.status = true')
             ->setMaxResults(9)
@@ -54,11 +54,10 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('r')
             ->addSelect('r')
             ->andWhere('r.name LIKE :productName ')
-            ->setParameter('productName', '%'.$productName.'%')
+            ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function findReceiptBySlug(string $slug): Receipt
@@ -72,14 +71,36 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
      */
     public function getReceiptsFromCategory(int $categoryId): ?array
     {
-        return $this->createQueryBuilder('r')
-            ->addSelect('c','od')
-            ->leftJoin('r.category','c')
-            ->leftJoin('r.orderDetail','od')
+        $dd = $this->createQueryBuilder('r')
+            ->addSelect('c', 'od')
+            ->leftJoin('r.category', 'c')
+            ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId')
-            ->setParameter('categoryId',$categoryId)
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('r.category', 'ASC')
+            ->setMaxResults(8)
             ->getQuery()
-            ->execute()
-            ;
+            ->getResult();
+
+
+        return $dd;
+    }
+
+
+    public function getReceiptsForLoading(int $categoryId, int $count, $offset = 9): ?array
+    {
+        $query =  $this->createQueryBuilder('r')
+            ->addSelect('c', 'od')
+            ->leftJoin('r.category', 'c')
+            ->leftJoin('r.orderDetail', 'od')
+            ->andWhere('r.status = true AND c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('r.category', 'ASC')
+            ->setFirstResult($count)
+            ->setMaxResults($offset)
+            ->getQuery()
+            ->getResult();
+
+        return $query;
     }
 }

@@ -43,7 +43,7 @@ class OrderInfoHandler implements OrderInfoInterface
      */
     private $reservation;
 
-//$bonuses = ($item['item']->getPrice() * ceil($item['quantity']) + $item['product']->getPrice() * $item['quantity']) * 0.1 + $bonuses;
+
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
@@ -51,7 +51,12 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param OrderDetailRepository $orderDetailRepository
      * @param ReservationInterface $reservation
      */
-    public function __construct(EntityManagerInterface $entityManager, CartHandler $cartHandler, OrderDetailRepository $orderDetailRepository, ReservationInterface $reservation)
+    public function __construct
+    (EntityManagerInterface $entityManager,
+     CartHandler $cartHandler,
+     OrderDetailRepository $orderDetailRepository,
+     ReservationInterface $reservation
+    )
     {
         $this->entityManager = $entityManager;
         $this->cartHandler = $cartHandler;
@@ -83,8 +88,7 @@ class OrderInfoHandler implements OrderInfoInterface
         }
 
         $orderInfo->setTotalPrice($totalSum);
-//        $orderInfo->getUser()->setBonuses($bonuses);
-        $orderInfo->setOrderUniqueId($this->generateHash($orderInfo,7));
+        $orderInfo->setOrderUniqueId($this->generateHash($orderInfo, 7));
 
         $this->entityManager->persist($orderInfo);
 
@@ -126,7 +130,6 @@ class OrderInfoHandler implements OrderInfoInterface
             $this->entityManager->flush();
         }
     }
-
 
 
     public function deleteOrderDetail(int $id): ?float
@@ -181,6 +184,15 @@ class OrderInfoHandler implements OrderInfoInterface
 
     }
 
+    public function getUserOrders(int $userId): OrdersCollection
+    {
+        return new OrdersCollection(
+            $this->entityManager->getRepository(
+                OrderInfo::class
+            )->getOrdersByUserId($userId)
+        );
+    }
+
 
     private function deleteFromSupply(OrderInfo $orderInfo): void
     {
@@ -220,14 +232,14 @@ class OrderInfoHandler implements OrderInfoInterface
         }
     }
 
-    private function generateHash(OrderInfo $orderInfo, $len=null)
+    private function generateHash(OrderInfo $orderInfo, $len = null)
     {
-        $str = $orderInfo->getId().(new \DateTime())->getTimestamp();
+        $str = $orderInfo->getId() . (new \DateTime())->getTimestamp();
 
         $binhash = md5($str, true);
         $numhash = unpack('N2', $binhash);
         $hash = $numhash[1] . $numhash[2];
-        if($len && is_int($len)) {
+        if ($len && is_int($len)) {
             $hash = substr($hash, 0, $len);
         }
         return $hash;

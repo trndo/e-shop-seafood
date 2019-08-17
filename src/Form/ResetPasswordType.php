@@ -19,24 +19,31 @@ class ResetPasswordType extends AbstractType
     {
         if ($options['email'])
         $builder->add('email',EmailType::class,[
-            'label' => false
+            'label' => false,
+            'attr' => [
+                'placeholder' => '*Email'
+            ]
         ]);
         if ($options['oldPassword'])
             $builder->add('oldPassword', PasswordType::class, [
-                'label' => false
+                'label' => false,
+                'attr' => [
+                    'placeholder' => '*Cтарый Пароль'
+                ]
             ]);
         if ($options['forgotPassword'])
             $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Пароли не совпадают!',
-                'first_options' => ['label' => false],
-                'second_options' => ['label' => false]
+                'first_options' => ['label' => false,
+                    'attr' => [
+                        'placeholder' => '*Введите пароль'
+                    ]],
+                'second_options' => ['label' => false,
+                    'attr' => [
+                        'placeholder' => '*Повторите пароль'
+                    ]]
             ]);
-
-        $builder->add('save',SubmitType::class,[
-                'label' => 'Отправить'
-            ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

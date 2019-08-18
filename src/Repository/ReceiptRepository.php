@@ -89,7 +89,6 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
 
     public function getReceiptsForLoading(int $categoryId, int $count, $offset = 9): ?array
     {
-
         $query =  $this->createQueryBuilder('r')
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
@@ -101,7 +100,6 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->setMaxResults($offset)
             ->getQuery()
             ->getResult();
-
 
         return $query;
     }

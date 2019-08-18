@@ -50,10 +50,10 @@
 .check-shopping{
     position: relative;
     display: block;
-    left: 156px;
     width: 526px;
     height: 130px;
-    top: 0;
+    margin: 0 auto;
+    text-align: left;
     padding-top: 42px;
     padding-bottom: 20px;
     z-index: 5;
@@ -187,7 +187,7 @@
 .order-price{
     width: 123px;
     height: 70px;
-    font-family: Raleway;
+    font-family: Raleway ,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -195,16 +195,24 @@
     color: #FFFFFF;
     text-align: center;
     display: inline-block;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .delete-from-cart{
-    width: 34px;
-    height: 34px;
     right: 23px;
     top: 17px;
     position: absolute;
     cursor: pointer;
+}
+.delete-from-cart svg{
+    width: 34px;
+    height: 34px;
+}
+
+.delete-from-cart:hover svg path{
+    fill: #FFFFFF;
 }
 
 .order-container{
@@ -219,29 +227,32 @@
     height: 62px;
     background: #D52B2B;
     position: relative;
-    bottom: 0;
+    padding-left: 56px;
+    padding-right: 56px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .final{
-    width: 240px;
+    width: max-content;
+    max-width: 400px;
     height: 62px;
-    position: absolute;
-    left: 80px;
+    position: relative;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 36px;
-    line-height: 100%;
+    line-height: 62px;
     color: #FFFFFF;
-    padding-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .checkout{
     background: #FFFFFF;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 50px;
-    position: absolute;
-    top: 12px;
     right: 50px;
     width: 207px;
     height: 38px;
@@ -253,6 +264,7 @@
     text-align: center;
     color: #F13A3A;
     cursor: pointer;
+    align-self: center;
 }
 
 .hryvnas{
@@ -261,14 +273,12 @@
     font-weight: 300;
     font-size: 14px;
     line-height: 100%;
-    display: block;
-    position: absolute;
-    top: 26px;
-    right: 16px;
+    display: inline-block;
     align-items: center;
     text-align: center;
     text-transform: lowercase;
     color: #FFFFFF;
+    vertical-align: middle;
 }
 
 #van{

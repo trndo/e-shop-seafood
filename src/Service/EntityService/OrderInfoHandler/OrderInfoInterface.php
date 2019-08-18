@@ -23,9 +23,10 @@ interface OrderInfoInterface
     /**
      * Return orders collection
      *
+     * @param string $status
      * @return OrdersCollection
      */
-    public function getOrders(): OrdersCollection;
+    public function getOrders(string $status): OrdersCollection ;
 
     /**
      * @param int $id
@@ -62,4 +63,9 @@ interface OrderInfoInterface
      * @return OrdersCollection
      */
     public function getUserOrders(int $userId): OrdersCollection;
+
+    /**
+     * @return array
+     */
+    public function getCountOfOrders(): array ;
 }

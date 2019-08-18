@@ -19,7 +19,6 @@ class OrderInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderInfo::class);
     }
 
-
     /**
      * @param int $id
      * @return OrderInfo

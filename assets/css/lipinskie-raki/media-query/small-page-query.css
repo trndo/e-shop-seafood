@@ -302,9 +302,115 @@
         background: #F13A3A;
     }
 
+    .check-shopping{
+        width: 340px;
+        text-align: center;
+        padding-top: 50px;
+        padding-bottom: 10px;
+        height: 90px;
+    }
+
+    .check-shopping p{
+        display: none;
+    }
+
+    .cart-container{
+        width: 370px;
+        left: 0;
+        height: 400px;
+        padding-left: 0;
+        padding-right: 32px;
+    }
+
+    .order-container{
+        right: 0;
+        top: 0;
+    }
+    .order {
+        width: 285px;
+        height: 140px;
+        margin-top: 35px;
+        float: right;
+    }
+    .order-container:nth-child(1) .order{
+        margin-top: 0;
+    }
+
+    .delete-from-cart{
+        float: right;
+        position: relative;
+        top: 90px;
+        z-index: 10;
+        right: 10px;
+    }
+
+    .order-container:nth-child(1) .delete-from-cart{
+        top: 50px;
+    }
+
+    .delete-from-cart svg{
+        width: 35px;
+        height: 35px;
+    }
+    .delete-from-cart svg path{
+        fill: #991A1A;
+    }
+    .order img{
+        display: block;
+        object-fit: cover;
+        width: 100%;
+        float: none;
+        filter: brightness(80%);
+    }
+
+    .order-product-name{
+        position: absolute;
+        top: 0;
+        float: none;
+        display: block;
+        padding-top: 25px;
+        padding-left: 31px;
+        width: 240px;
+        font-weight: 900;
+        white-space: nowrap; /* Запрещаем перенос строк */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .quantity{
+        margin-left: 17px;
+        width: 152px;
+    }
+    .plus ,.minus{
+        font-size: 52px;
+    }
+    .minus{
+        top: 12px;
+    }
+    .quantity-res{
+        border: none;
+    }
+    .quantity-res input{
+        background: #FFFFFF;
+        color: #681616;
+    }
+    .order-price{
+        width: 115px;
+    }
+    .final{
+        width: 160px;
+        font-size: 24px;
+    }
+    .summary{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .checkout{
+        width: 171px;
+    }
+
 }
 
-@media (min-width: 320px) and (max-width: 375px) {
+@media (min-width: 320px) and (max-width: 374px) {
     .additional-nav{
         display: block;
         height: 69px;
@@ -543,5 +649,111 @@
 
     .red{
         background: #F13A3A;
+    }
+
+    .check-shopping{
+        width: 320px;
+        text-align: center;
+        padding-top: 50px;
+        padding-bottom: 10px;
+        height: 90px;
+    }
+
+    .check-shopping p{
+        display: none;
+    }
+
+    .cart-container{
+        width: 320px;
+        left: 0;
+        height: 400px;
+        padding-left: 0;
+        padding-right: 12px;
+    }
+
+    .order-container{
+        right: 0;
+        top: 0;
+    }
+    .order {
+        width: 270px;
+        height: 140px;
+        margin-top: 35px;
+        float: right;
+    }
+    .order-container:nth-child(1) .order{
+        margin-top: 0;
+    }
+
+    .delete-from-cart{
+        float: right;
+        position: relative;
+        top: 90px;
+        z-index: 10;
+        right: 7px;
+    }
+
+    .order-container:nth-child(1) .delete-from-cart{
+        top: 50px;
+    }
+
+    .delete-from-cart svg{
+        width: 25px;
+        height: 25px;
+    }
+    .delete-from-cart svg path{
+        fill: #991A1A;
+    }
+    .order img{
+        display: block;
+        object-fit: cover;
+        width: 100%;
+        float: none;
+        filter: brightness(80%);
+    }
+
+    .order-product-name{
+        position: absolute;
+        top: 0;
+        float: none;
+        display: block;
+        padding-top: 25px;
+        padding-left: 31px;
+        width: 240px;
+        font-weight: 900;
+        white-space: nowrap; /* Запрещаем перенос строк */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .quantity{
+        margin-left: 17px;
+        width: 152px;
+    }
+    .plus ,.minus{
+        font-size: 52px;
+    }
+    .minus{
+        top: 12px;
+    }
+    .quantity-res{
+        border: none;
+    }
+    .quantity-res input{
+        background: #FFFFFF;
+        color: #681616;
+    }
+    .order-price{
+        width: 101px;
+    }
+    .final{
+        width: 160px;
+        font-size: 24px;
+    }
+    .summary{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .checkout{
+        width: 171px;
     }
 }

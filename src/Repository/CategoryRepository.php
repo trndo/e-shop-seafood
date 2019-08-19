@@ -53,6 +53,21 @@ class CategoryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getCategories(string $item): ?array
+    {
+         $query = $this->createQueryBuilder('c')
+             ->addSelect('c');
+            $item == 'product'
+            ? $query->andWhere('c.type = :products')
+                ->setParameter('products','products')
+            : $query->andWhere('c.type = :receipts')
+                ->setParameter('receipts','receipts');
+
+            return $query->orderBy('c.id','ASC')
+                ->getQuery()
+                ->getResult();
+    }
+
     public function getCategoriesForRender(): ?array
     {
         return $this->createQueryBuilder('c')

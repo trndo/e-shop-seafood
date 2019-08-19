@@ -2,6 +2,7 @@
 
 namespace App\Service\EntityService\ReceiptService;
 
+use App\Collection\CategoryCollection;
 use App\Collection\ReceiptCollection;
 use App\Entity\Category;
 use App\Entity\Receipt;
@@ -61,4 +62,30 @@ interface ReceiptServiceInterface
      * @return ReceiptCollection|null
      */
     public function loadMoreReceipts(Category $category, int $count): ?ReceiptCollection ;
+
+    /**
+     * @return CategoryCollection|null
+     */
+    public function getReceiptsCategories(): ?CategoryCollection ;
+
+    /**
+     * @param string $name
+     * @param int $category
+     * @return ReceiptCollection
+     */
+    public function getReceiptsByCriteria(?string $name, ?int $category): ?ReceiptCollection ;
+
+    /**
+     * @param array $products
+     * @param Receipt|null $receipt
+     */
+    public function addProductsInReceipt(array $products, ?Receipt $receipt): void ;
+
+    /**
+     * @param array $products
+     * @param Receipt|null $receipt
+     */
+    public function addSalesInReceipt(array $products, ?Receipt $receipt): void ;
+
+
 }

@@ -20,36 +20,38 @@ class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class,[
+        $builder->add('name', TextType::class, [
             'label' => false
         ])
-            ->add('surname',TextType::class,[
+            ->add('surname', TextType::class, [
                 'label' => false
             ])
-            ->add('email',EmailType::class,[
+            ->add('email', EmailType::class, [
                 'label' => false
             ])
-            ->add('phoneNumber',TextType::class,[
+            ->add('phoneNumber', TextType::class, [
                 'label' => false
             ])
-            ->add('orderDate',DateType::class,[
+            ->add('orderDate', DateType::class, [
                 'label' => false,
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
-                'html5' => false
+                'html5' => false,
+                'attr' => $options['chooseOrder']
+                    ? ['value' => (new \DateTime())->format('d.m.Y'), 'readonly' => true]
+                    : [],
             ])
-            ->add('orderTime',TimeType::class,[
+            ->add('orderTime', TimeType::class, [
                 'label' => false,
-                'input'  => 'datetime',
+                'input' => 'datetime',
                 'widget' => 'single_text',
                 'html5' => false,
-
             ])
-            ->add('deliveryType',TextType::class,[
+            ->add('deliveryType', TextType::class, [
                 'label' => false
             ])
-            ->add('coordinates',HiddenType::class)
-            ->add('save',SubmitType::class,[
+            ->add('coordinates', HiddenType::class)
+            ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'checkout-order',
                 ],
@@ -60,7 +62,8 @@ class OrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => OrderModel::class
+            'data_class' => OrderModel::class,
+            'chooseOrder' => false
         ]);
     }
 

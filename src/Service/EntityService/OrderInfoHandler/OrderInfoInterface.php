@@ -18,15 +18,16 @@ interface OrderInfoInterface
      * @param Request $request
      * @return void
      */
-    public function addOrder(OrderModel $orderModel, Request $request): void ;
+    public function addOrder(OrderModel $orderModel, Request $request): void;
 
     /**
      * Return orders collection
      *
+     * @param string $date
      * @param string $status
      * @return OrdersCollection
      */
-    public function getOrders(string $status): OrdersCollection ;
+    public function getOrders(string $date, string $status): OrdersCollection;
 
     /**
      * @param int $id
@@ -38,25 +39,25 @@ interface OrderInfoInterface
      * @param OrderModel $model
      * @param OrderInfo $orderInfo
      */
-    public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void ;
+    public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void;
 
     /**
      * @param int $id
      */
-    public function deleteOrder(int $id): void ;
+    public function deleteOrder(int $id): void;
 
 
     /**
      * @param int $id
      * @return float
      */
-    public function deleteOrderDetail(int $id): ?float ;
+    public function deleteOrderDetail(int $id): ?float;
 
     /**
      * @param int $id
      * @return void
      */
-    public function updateOrderInfoStatus(int $id): void ;
+    public function updateOrderInfoStatus(int $id): void;
 
     /**
      * @param int $userId
@@ -67,5 +68,5 @@ interface OrderInfoInterface
     /**
      * @return array
      */
-    public function getCountOfOrders(): array ;
+    public function getCountOfOrders(): array;
 }

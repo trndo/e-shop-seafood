@@ -111,6 +111,24 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         return $query;
     }
 
+    public function findProductsBy(string $name = null, int $category = null): ?array
+    {
+         $query = $this->createQueryBuilderForProduct('p');
+         if ($name != null){
+             $query->andWhere('p.name = :name')
+                ->setParameter('name', $name);
+         }
+        if ($category != null){
+            $query->andWhere('p.category = :category')
+                ->setParameter('category', $category);
+        }
+         return $query->orderBy('p.status','ASC')
+             ->getQuery()
+             ->getResult();
+    }
+
+
+
 //    public function findById(int $id): ?Product
 //    {
 //        return $this->createQueryBuilderForProduct('p')

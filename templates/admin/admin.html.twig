@@ -108,6 +108,11 @@
                 <div class="reset text-center" onclick="window.location.href=''">
                     <div class="reset-link" rel="nofollow noopener"><i class="fas fa-redo"></i> Обновить заказы</div>
                 </div>
+                <ul class="list-inline text-center mt-5 h4">
+                    {% set active = date  %}
+                    <li class="list-inline-item underline  {{ active == "now"|date('Y-m-d') ? 'underline-selected': '' }}" onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': "now"|date('Y-m-d')})) }}'">Сегодня</li>
+                    <li class="list-inline-item underline {{ active == "other_days" ? 'underline-selected': '' }} " onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': 'other_days'})) }}'">Другой день</li>
+                </ul>
                 {% for order in orders %}
                     <div class="row relative justify-content-center mt-3">
                         <div class="col-12">

@@ -6,6 +6,7 @@ use App\Entity\OrderInfo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -29,9 +30,7 @@ class OrderInfoRepository extends ServiceEntityRepository
      */
     public function getOrderById(?int $id): ?OrderInfo
     {
-        return $this->createQueryBuilder('o')
-            ->innerJoin('o.orderDetails', 'od')
-            ->addSelect('od')
+        return $this->createQueryBuilderForOrderInfo('o')
             ->andWhere('o.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -54,23 +53,24 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param string $status
-     * @return OrderInfo[]|null
-     */
-    public function getOrders(string $status = 'new'): ?array
+
+    public function getOrders(string $date, string $status = 'new'): ?array
     {
-        return $this->createQueryBuilder('o')
-            ->leftJoin('o.orderDetails', 'od')
-            ->leftJoin('od.receipt','r')
-            ->leftJoin('od.product','p')
-            ->leftJoin('p.supply','s')
-            ->leftJoin('p.gift','g')
-            ->leftJoin('o.user', 'u')
-            ->addSelect( 'u','od','r','p','s','g')
-            ->andWhere('o.status = :status')
-            ->setParameter('status', $status)
-            ->orderBy('o.id', 'DESC')
+        $query = $this->createQueryBuilderForOrderInfo('o');
+        if ($date == (new \DateTime())->format('Y-m-d')) {
+            $query->andWhere('o.status = :status AND o.orderDate = :date')
+                ->setParameters([
+                    'status' => $status,
+                    'date' => $date
+                ]);
+        } else {
+            $query->andWhere('o.status = :status AND o.orderDate != :date')
+                ->setParameters([
+                    'status' => $status,
+                    'date' => (new \DateTime())->format('Y-m-d')
+                ]);
+        }
+        return $query->orderBy('o.orderDate', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -80,11 +80,23 @@ class OrderInfoRepository extends ServiceEntityRepository
      */
     public function getOrderStatusCount(): ?array
     {
-        return $this->createQueryBuilder('o','o.status')
-            ->select('o','count(o.status)')
+        return $this->createQueryBuilder('o', 'o.status')
+            ->addSelect('count(o.status)')
             ->groupBy('o.status')
-            ->orderBy('o.id','ASC')
+            ->orderBy('o.id', 'ASC')
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
+    }
+
+    private function createQueryBuilderForOrderInfo(string $alias): QueryBuilder
+    {
+        return $this->createQueryBuilder($alias)
+            ->leftJoin($alias . '.orderDetails', 'od')
+            ->leftJoin('od.receipt', 'r')
+            ->leftJoin('od.product', 'p')
+            ->leftJoin('p.supply', 's')
+            ->leftJoin('p.gift', 'g')
+            ->leftJoin($alias . '.user', 'u')
+            ->addSelect('u', 'od', 'r', 'p', 's', 'g');
     }
 }

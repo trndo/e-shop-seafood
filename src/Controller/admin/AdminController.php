@@ -18,23 +18,24 @@ class AdminController extends AbstractController
 {
     /**
      * @Route(path="/lipadmin", name="admin")
-     *
      * @param Request $request
      * @param OrderInfoInterface $orderInfo
      * @return Response
+     * @throws \Exception
      */
     public function homeAdmin(Request $request, OrderInfoInterface $orderInfo): Response
     {
-        $status = $request->query->get('status','new');
-        $orders = $orderInfo->getOrders($status);
+        $status = $request->query->get('status', 'new');
+        $date = $request->query->get('date', (new \DateTime())->format('Y-m-d'));
+        $orders = $orderInfo->getOrders($date, $status);
         $statusCount = $orderInfo->getCountOfOrders();
 
-        return $this->render('admin/admin.html.twig',[
+        return $this->render('admin/admin.html.twig', [
             'orders' => $orders,
-            'statusCount' => $statusCount
+            'statusCount' => $statusCount,
+            'date' => $date
         ]);
     }
-
 
 
 }

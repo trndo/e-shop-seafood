@@ -66,10 +66,4 @@ final class OrderMapper
         return $entity;
     }
 
-    public static function orderUpdateModelToEntity(OrderModel $model, OrderInfo $entity): OrderInfo
-    {
-
-
-        return $entity;
-    }
 }

@@ -48,16 +48,20 @@ class ReceiptController extends AbstractController
     /**
      * @Route("/lipadmin/receipts/", name="receipts")
      *
-     * @param ReceiptService $service
+     * @param ReceiptServiceInterface $service
      * @param Request $request
      * @return Response
      */
-    public function receipts(ReceiptService $service, Request $request): Response
+    public function receipts(ReceiptServiceInterface $service, Request $request): Response
     {
-        $receipts = $service->getReceiptsByCriteria($request->query->all(),['status' => 'ASC']);
+        $name = $request->query->get('name',null);
+        $category = $request->query->getInt('category',null);
+        $receipts = $service->getReceiptsByCriteria($name, $category);
+        $categories = $service->getReceiptsCategories();
 
         return $this->render('admin/receipt/receipts.html.twig',[
-            'receipts' => $receipts
+            'receipts' => $receipts,
+            'categories' => $categories
         ]);
     }
 

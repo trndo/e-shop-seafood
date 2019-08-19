@@ -6,6 +6,7 @@ use App\Entity\Receipt;
 use App\Repository\RepositoryInterface\FinderInterface;
 use App\Repository\RepositoryInterface\RatingInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -38,7 +39,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('r')
             ->leftJoin('r.category', 'category')
             ->leftJoin('r.orderDetail', 'orderDetail')
-            ->addSelect('r, category, orderDetail')
+            ->addSelect('category, orderDetail')
             ->andWhere('r.rating != 0 and r.status = true')
             ->setMaxResults(9)
             ->getQuery()
@@ -102,5 +103,29 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->getResult();
 
         return $query;
+    }
+
+    public function findReceiptsBy(string $name = null, int $category = null): ?array
+    {
+        $query = $this->createQueryBuilderForReceipt('r');
+        if ($name != null){
+            $query->andWhere('r.name = :name')
+                ->setParameter('name', $name);
+        }
+        if ($category != null){
+            $query->andWhere('r.category = :category')
+                ->setParameter('category', $category);
+        }
+        return $query->orderBy('r.status','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function createQueryBuilderForReceipt(string $alias): QueryBuilder
+    {
+        return $this->createQueryBuilder($alias)
+            ->addSelect('c', 'od')
+            ->leftJoin($alias.'.category', 'c')
+            ->leftJoin($alias.'.orderDetail', 'od');
     }
 }

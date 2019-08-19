@@ -12959,8 +12959,8 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .status-done {
-  background-color: #ff613e;
-  color: white;
+    background-color: #ff613e;
+    color: white;
 }
 
 @keyframes glow {
@@ -12975,4 +12975,43 @@ body.sidebar-toggled footer.sticky-footer {
 #map {
     width: 100%;
     height: 300px;
+}
+
+.status-order {
+    cursor: pointer;
+}
+
+.reset-link {
+    cursor: pointer;
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ed3330;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+}
+
+.reset-link:hover {
+    cursor: pointer;
+    background: #434343;
+    letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+    transition: all 0.4s ease 0s;
+}
+
+.underline {
+    cursor: pointer;
+}
+
+.underline:hover {
+    border-bottom: solid 3px blue;
+}
+
+.underline-selected {
+    border-bottom: solid 3px blue;
 }

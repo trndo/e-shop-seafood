@@ -27,20 +27,20 @@ class OrderController extends AbstractController
      */
     public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
     {
+        $chooseOrder['chooseOrder'] = $request->getSession()->get('chooseOrder');
         $user = $this->getUser();
         if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
             $orderModel = OrderMapper::entityUserToOrderModel($user);
         else
             $orderModel = new OrderModel();
 
-        $form = $this->createForm(OrderType::class,$orderModel);
+        $form = $this->createForm(OrderType::class,$orderModel,$chooseOrder);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
             if ($user) {
                 $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
                 $orderModel = $orderModel->setUser($user);
-
             } else {
                 $user = $registerUser->registerUnknownUser($orderModel);
                 $orderModel = $orderModel->setUser($user);

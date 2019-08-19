@@ -19,21 +19,42 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Липадмин</h1>
-{#                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
+                    {#                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
                 </div>
                 <!-- Content Row -->
                 <div class="row">
-                    <!-- Earnings (Monthly) Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body status-order"
+                                 onclick="window.location.href='{{ path('admin',{'status':'new'}) }}'">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                        <div class="text font-weight-bold text-success text-uppercase mb-2">Новые
+                                            заказы
+                                        </div>
+                                        <div class="h3 mb-0 font-weight-bold text-gray-800">{{ statusCount.new.1 is defined ?: 0 }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        <i class="fas fa-concierge-bell fa-2x text-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body status-order"
+                                 onclick="window.location.href='{{ path('admin',{'status':'confirmed'}) }}'">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text font-weight-bold text-warning text-uppercase mb-1">Ожидается
+                                            оплата
+                                        </div>
+                                        <div class="h3 mb-0 font-weight-bold text-gray-800">{{ statusCount.confirmed.1 is defined ?: 0 }}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-spinner fa-2x text-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -42,128 +63,126 @@
 
                     <!-- Earnings (Monthly) Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body status-order"
+                                 onclick="window.location.href='{{ path('admin',{'status':'payed'}) }}'">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                        <div class="text- font-weight-bold text-primary text-uppercase mb-1">Оплачено
+                                        </div>
+                                        <div class="h3 mb-0 font-weight-bold text-gray-800">{{ statusCount.payed.1 is defined ?: 0 }}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        <i class="fas fa-dollar-sign fa-2x text-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Earnings (Monthly) Card Example -->
+
                     <!-- Earnings (Monthly) Card Example -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body status-order"
+                                 onclick="window.location.href='{{ path('admin',{'status':'done'}) }}'">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                                        <div class="text font-weight-bold text-danger text-uppercase mb-1">Готово</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
+                                                <div class="h3 mb-0 mr-3 font-weight-bold text-gray-800">{{ statusCount.done.1 is defined ?: 0 }}</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <i class="fas fa-clipboard-check fa-2x text-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Pending Requests Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <div class="reset text-center" onclick="window.location.href=''">
+                    <div class="reset-link" rel="nofollow noopener"><i class="fas fa-redo"></i> Обновить заказы</div>
+                </div>
+                <ul class="list-inline text-center mt-5 h4">
+                    {% set active = date  %}
+                    <li class="list-inline-item underline  {{ active == "now"|date('Y-m-d') ? 'underline-selected': '' }}" onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': "now"|date('Y-m-d')})) }}'">Сегодня</li>
+                    <li class="list-inline-item underline {{ active == "other_days" ? 'underline-selected': '' }} " onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': 'other_days'})) }}'">Другой день</li>
+                </ul>
                 {% for order in orders %}
-                <div class="row relative justify-content-center mt-3">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body" style="padding-top: 60px">
-                                <div class="order-number text-center">
-                                    Заказ №{{ order.id }} &nbsp;Cделан : <u>{{ order.createdAt|date('Y.m.d H:i') }}</u>
-                                </div>
-                                {% if order.status == 'new' %}
-                                    <div class="order-status status-new">
-                                        Новый Заказ
+                    <div class="row relative justify-content-center mt-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-top: 60px">
+                                    <div class="order-number text-center">
+                                        Заказ №{{ order.id }} &nbsp;Cделан :
+                                        <u>{{ order.createdAt|date('Y.m.d H:i') }}</u>
                                     </div>
-                                {% elseif order.status == 'confirmed' %}
-                                    <div class="order-status status-confirmed">
-                                        Ожидается оплата
+                                    {% if order.status == 'new' %}
+                                        <div class="order-status status-new">
+                                            Новый Заказ
+                                        </div>
+                                    {% elseif order.status == 'confirmed' %}
+                                        <div class="order-status status-confirmed">
+                                            Ожидается оплата
+                                        </div>
+                                    {% elseif order.status == 'payed' %}
+                                        <div class="order-status status-payed">
+                                            Оплачено
+                                        </div>
+                                    {% elseif order.status == 'done' %}
+                                        <div class="order-status status-done">
+                                            Готово
+                                        </div>
+                                    {% endif %}
+                                    <div class="row justify-content-center">
+                                        <div class="col-11 col-md-11 col-sm-12">
+                                            <ul class="list-group">
+                                                {% for item in order.orderDetails %}
+                                                    <li class="list-group-item"><span
+                                                                class="badge badge-dark">{{ loop.index }}</span>
+                                                        {{ item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }}
+                                                        - {{ item.quantity }} {{ item.product.unit }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
                                     </div>
-                                {% elseif order.status == 'payed' %}
-                                    <div class="order-status status-payed">
-                                        Оплачено
-                                    </div>
-                                {% elseif order.status == 'done' %}
-                                    <div class="order-status status-done">
-                                        Готово
-                                    </div>
-                                {% endif %}
-                                <div class="row justify-content-center">
-                                    <div class="col-11 col-md-11 col-sm-12">
-                                        <ul class="list-group">
-                                            {% for item in order.orderDetails %}
-                                                <li class="list-group-item"><span class="badge badge-dark">{{ loop.index }}</span>
-                                                    {{  item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }} - {{ item.quantity }} {{ item.product.unit }}
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-4 text-center text-primary h4">
-                                        На какую дату: {{ order.orderDate|date('d.m.Y') }}
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <button class="btn btn-primary  btn-lg" onclick="window.location.href = '{{ path('admin_show_order',{'id': order.id}) }}'">
-                                            Осмотерть заказ
-                                        </button>
-                                    </div>
-                                    <div class="col-4 text-center text-primary h4">
-                                        На какое время: {{ order.orderTime|date('H:i') }}
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-4 text-center text-primary h4">
+                                            На какую дату: {{ order.orderDate|date('d.m.Y') }}
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn btn-primary  btn-lg"
+                                                    onclick="window.location.href = '{{ path('admin_show_order',{'id': order.id}) }}'">
+                                                Осмотерть заказ
+                                            </button>
+                                        </div>
+                                        <div class="col-4 text-center text-primary h4">
+                                            На какое время: {{ order.orderTime|date('H:i') }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 {% endfor %}
-                </div>
-
             </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-        <!-- Footer -->
 
-        <!-- End of Footer -->
+        </div>
+        <!-- /.container-fluid -->
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Main Content -->
+    <!-- Footer -->
+
+    <!-- End of Footer -->
+</div>
+<!-- End of Content Wrapper -->
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
@@ -172,7 +191,8 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

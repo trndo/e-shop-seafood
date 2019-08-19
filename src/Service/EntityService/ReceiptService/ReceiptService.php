@@ -2,12 +2,14 @@
 
 namespace App\Service\EntityService\ReceiptService;
 
+use App\Collection\CategoryCollection;
 use App\Collection\ReceiptCollection;
 use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Model\ReceiptModel;
+use App\Repository\CategoryRepository;
 use App\Repository\ReceiptRepository;
 use App\Service\FileSystemService\FileUploader;
 use App\Service\FileSystemService\UploadFileInterface;
@@ -35,14 +37,20 @@ class ReceiptService implements ReceiptServiceInterface
      * @var ReceiptRepository
      */
     private $receiptRepository;
+    /**
+     * @var CategoryRepository
+     */
+    private $repositoryCategory;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 FileUploader $fileUploader,
-                                ReceiptRepository $receiptRepository)
+                                ReceiptRepository $receiptRepository,
+                                CategoryRepository $repositoryCategory)
     {
         $this->entityManager = $entityManager;
         $this->fileUploader = $fileUploader;
         $this->receiptRepository = $receiptRepository;
+        $this->repositoryCategory = $repositoryCategory;
     }
 
     private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
@@ -151,13 +159,13 @@ class ReceiptService implements ReceiptServiceInterface
     }
 
     /**
-     * @param array $criteria
-     * @param array $orderBy
+     * @param string $name
+     * @param int $category
      * @return ReceiptCollection
      */
-    public function getReceiptsByCriteria(array $criteria, array $orderBy = []): ReceiptCollection
+    public function getReceiptsByCriteria(?string $name, ?int $category): ?ReceiptCollection
     {
-        return new ReceiptCollection($this->receiptRepository->findBy($this->hydrateQuery($criteria),$orderBy));
+        return new ReceiptCollection($this->receiptRepository->findReceiptsBy($name, $category));
     }
 
     private function hydrateQuery(array $query): array
@@ -239,5 +247,10 @@ class ReceiptService implements ReceiptServiceInterface
         }
 
         return null;
+    }
+
+    public function getReceiptsCategories(): ?CategoryCollection
+    {
+        return new CategoryCollection($this->repositoryCategory->getCategories('receipt'));
     }
 }

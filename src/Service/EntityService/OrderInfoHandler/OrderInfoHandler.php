@@ -103,9 +103,14 @@ class OrderInfoHandler implements OrderInfoInterface
 
     }
 
-    public function getOrders(): OrdersCollection
+    public function getOrders(string $date,string $status): OrdersCollection
     {
-        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->findBy([], ['id' => 'DESC']));
+        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrders($date,$status));
+    }
+
+    public function getCountOfOrders(): array
+    {
+        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount();
     }
 
     public function getOrder(int $id): ?OrderInfo

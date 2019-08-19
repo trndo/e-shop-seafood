@@ -4,6 +4,7 @@
 namespace App\Service\EntityService\ProductService;
 
 
+use App\Collection\CategoryCollection;
 use App\Collection\ProductCollection;
 use App\Entity\Category;
 use App\Entity\Product;
@@ -38,11 +39,16 @@ interface ProductServiceInterface
     public function activateProduct(?int $id): void;
 
     /**
-     * @param array $criteria
-     * @param array $orderBy
+     * @param string $name
+     * @param int $category
      * @return ProductCollection
      */
-    public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection;
+    public function getProductsByCriteria(?string $name,?int $category): ?ProductCollection ;
+
+    /**
+     * @return CategoryCollection|null
+     */
+    public function getProductsCategories(): ?CategoryCollection ;
 
     /**
      * Get products for rating

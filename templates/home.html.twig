@@ -12,7 +12,7 @@
             <main>
                 <img src="{{ asset('assets/img/plate.png') }}" alt="" id="plate">
                 <div id="promotion">
-                    <div id="promotion-text">
+                    <div class="promotion-text">
                         {% set message = random(messages) %}
                         {{ message.message }}
                     </div>
@@ -24,13 +24,33 @@
                         <div class="ellipse"></div>
                     </div>
                 </div>
+                <div class="additional-special">
+                    <div class="additional-cart">5502 ₴</div>
+                    <div class="additional-fo">
+                        Быстрый заказ
+                        <div></div>
+                    </div>
+                </div>
+                <div class="additional-nav">
+                    <div class="additional-nav-container">
+                        <div class="additional-nav-item">
+                            Живые раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Вареные раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Жареные раки
+                        </div>
+                    </div>
+                </div>
                 <div class="rating">
                     <h2>На этой недели покупают:</h2>
-                    {% for item in items %}
-                    {% if loop.index0 is divisible by(3) %}
-                    <div class="row">
+                    <div class="row row-rating">
+                    {% for item in items %} {#
+                    {{% if loop.index0 is divisible by(3) %}
+                    <div class="row row-rating">
                     {% endif %}
-                        <div class="col-4">
                             <div class="product-card">
                                 <img src="{{ item.TitlePhotoPath }}" alt="">
                                 <div class="card-content">
@@ -40,11 +60,22 @@
                                     <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">Подробнее</div>
                                 </div>
                             </div>
-                        </div>
                     {% if loop.index is divisible by(3) or loop.last %}
                     </div>
-                    {% endif %}
+                    {% endif %}#}
+                        <div class="product-card">
+                            <img src="{{ item.TitlePhotoPath }}" alt="">
+                            <div class="card-content">
+                                <h4>{{ item.name }}</h4>
+                                <p>{{ item.description }}</p>
+                                <div class="main-info">
+                                    <span class="price">{{ item.price }} ₴</span>
+                                    <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">Подробнее</div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
+                    </div>
                 </div>
             </main>
         </div>
@@ -67,30 +98,8 @@
         </div>
     </div>
     {% include 'elements/__footer.html.twig' with {'active': 'home'} %}
+    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
 </section>
-<div id="overlay" style="display: none">
-    <div class="red-content">
-        <div id="shopping-cart">
-            <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
-        </div>
-        <div class="check-shopping">
-            <p>
-                Точно всё выбрал?
-            </p>
-            <h4>
-                Проверяй и оформляй
-            </h4>
-        </div>
-        <div class="cart-container cartItems">
-            <div class="order">
-                <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                <div class="order-product-name">
-                </div>
-            </div>
-        </div>
-        <embed id="close-modal" type="image/svg+xml" src="/assets/img/close-modal.svg"/>
-     </div>
-</div>
 {% endblock %}
 
 

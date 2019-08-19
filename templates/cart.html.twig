@@ -72,6 +72,7 @@
         </div>
     </div>
    {% include 'elements/__footer.html.twig' with { 'active': false } %}
+   {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

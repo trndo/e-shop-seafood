@@ -61,7 +61,7 @@ header{
 }
 .fast-order span{
     position: relative;
-    left: 37px;
+    left: 32px;
     user-select: none;
     z-index: 2;
 }
@@ -80,6 +80,7 @@ header{
     position: absolute;
     right: 0;
     top: -3px;
+    cursor: pointer;
 }
 #basket-container{
     position: absolute;
@@ -233,25 +234,25 @@ main{
 #promotion{
     position: relative;
     top: -66px;
-    width: 94%;
+    width: 770px;
     height: 178px;
     z-index: 2;
     margin: 0 auto;
     background: #F13A3A;
 }
 
-#promotion-text{
-    position: absolute;
+.promotion-text{
+    position: relative;
+    margin: 0 auto;
     width: 446px;
     height: 178px;
     font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
-    line-height: 100%;
+    line-height: 178px;
     color: #520B0B;
-    padding-top: 60px;
-    right: 50px;
+    text-align: center;
 }
 
 #promotion-percent{
@@ -295,10 +296,8 @@ main{
     font-style: normal;
     font-weight: 600;
     margin: 0 auto;
-    width: 513px;
+    width: 411px;
     position: relative;
-    padding-left: 10px;
-    padding-right: 10px;
     color: white;
     border-bottom: 3px solid #F13A3A;
     text-align: center;
@@ -307,17 +306,18 @@ main{
     width: 690px;
     position: relative;
     margin: 0 auto;
-    margin-bottom: 100px;
-}
-.rating .row{
-    margin-top: 20px;
+    margin-bottom: 82px;
 }
 
 .product-card{
     width: 210px;
     height: 299px;
     background: #3C3C3C;
+    margin-right: 30px;
     margin-top: 29px;
+}
+.product-card:nth-child(3n+3){
+    margin-right: 0;
 }
 
 .product-card img{
@@ -329,10 +329,11 @@ main{
     position: relative;
     height: 113px;
     width: 210px;
-    padding: 10px 16px 0 16px;
+    padding: 10px 11px 0 16px;
 }
 
 .product-card h4{
+    width: 200px;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -343,6 +344,8 @@ main{
 }
 
 .product-card p{
+    width: 173px;
+    height: 32px;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
@@ -350,40 +353,46 @@ main{
     line-height: 100%;
     text-align: justify;
     margin-top: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     position: relative;
     color: #FFFFFF;
+    overflow: hidden;
 }
 
 .in_basket{
-    position: absolute;
-    width: 94.54px;
-    height: 22.29px;
+    position: relative;
+    width: 95px;
+    height: 22px;
     background: #F13A3A;
     border-radius: 50px;
-    bottom: 13px;
-    right: 15px;
     font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
-    line-height: 100%;
-    align-items: center;
-    padding: 4px 10px 0 10px;
+    line-height: 22px;
     color: #FFFFFF;
     cursor: pointer;
+    text-align: center;
 }
 
 .price{
-    position: absolute;
+    position: relative;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 100%;
-    bottom: 15px;
-    left: 16px;
     color: #FFFFFF;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.main-info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 25px;
 }
 
 .inbasket-continer{
@@ -394,7 +403,8 @@ main{
 .page-text{
     position: relative;
     width: 100%;
-    margin-top: 60px;
+    height: 506px;
+    display: flex;
 }
 
 #main-photo{
@@ -402,20 +412,19 @@ main{
     background-size: cover;
     width: 495px;
     height: 506px;
-    display: inline-block;
-    float: left;
+    display: block;
 }
 
 #main-text{
     width: 497px;
     height: 506px;
     background: #F13A3A;
-    display: inline-block;
-    padding: 109px 45px 25px 45px;
+    display: block;
+    padding: 109px 51px 114px 39px;
 }
 #main-text-container{
     width: 407px;
-    height: 200px;
+    height: 246px;
 }
 
 #main-text-container h1{
@@ -436,7 +445,6 @@ main{
     font-size: 18px;
     line-height: 100%;
     text-align: justify;
-
     color: #FFFFFF;
 }
 
@@ -458,9 +466,7 @@ main{
 }
 
 .fast-order-big{
-    position: absolute;
-    bottom: 100px;
-    right: 155px;
+    margin: 0 auto;
 }
 
 footer{
@@ -802,4 +808,64 @@ footer{
     top: -90px;
     width: 300px;
     height: 300px;
+}
+
+.row-rating{
+    justify-content: normal !important;
+}
+
+.additional-special{
+    display: none;
+    height: 104px;
+    padding-bottom: 24px;
+    padding-top: 29px;
+    width: 676px;
+    margin: 0 auto;
+}
+
+.additional-cart{
+    width: 113px;
+    height: 39px;
+    border: 3px solid #F13A3A;
+    box-sizing: border-box;
+    border-radius: 50px;
+    background-color: rgba(18, 18, 18, 0.6);
+    background-image: url("../../img/online-shopping-cart.svg");
+    background-position: 12px 10px;
+    background-repeat: no-repeat;
+    padding-left: 31px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 33px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.additional-fo{
+    height: 49px;
+    width: 215px;
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 18px;
+    text-align: center;
+    color: #FFFFFF;
+    line-height: 49px;
+    cursor: pointer;
+}
+
+.additional-fo div{
+    width: 49px;
+    height: 49px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #F13A3A;
+    box-shadow: 0 4px 4px rgba(104, 22, 22, 0.15);
+    border-radius: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../img/fish-bone-rotated.svg");
 }

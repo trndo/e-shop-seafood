@@ -121,7 +121,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user-{id}")
+     * @Route("/user-{id}" , name="user")
      * @param User $user
      * @param Request $request
      * @param UserServiceInterface $service

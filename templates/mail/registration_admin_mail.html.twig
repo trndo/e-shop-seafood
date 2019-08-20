@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pereydi po ssylohcke {{ url('confirmAdmin',{'token': user.token}) }}</h1>
+    Перейдите по ссылке для подтверждение - {{ url('confirmAdmin',{'token': user.token}) }}
 {% endblock %}

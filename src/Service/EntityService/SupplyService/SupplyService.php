@@ -5,6 +5,7 @@ namespace App\Service\EntityService\SupplyService;
 
 use App\Collection\SupplyCollection;
 use App\Entity\Supply;
+use App\Repository\SupplyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SupplyService implements SupplyServiceInterface
@@ -13,20 +14,25 @@ class SupplyService implements SupplyServiceInterface
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var SupplyRepository
+     */
+    private $supplyRepository;
 
     /**
      * SupplyService constructor.
      * @param EntityManagerInterface $entityManager
+     * @param SupplyRepository $supplyRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, SupplyRepository $supplyRepository)
     {
         $this->entityManager = $entityManager;
+        $this->supplyRepository = $supplyRepository;
     }
 
     public function editSupply(array $jsonData): void
     {
-        $repository = $this->getSupplyRepository();
-        $supply = $repository->find($jsonData['id']);
+        $supply = $this->supplyRepository->find($jsonData['id']);
 
         if (isset($supply)) {
             $newQuantity = $jsonData['quantity'];
@@ -38,9 +44,9 @@ class SupplyService implements SupplyServiceInterface
         }
     }
 
-    public function getAllSupply(): SupplyCollection
+    public function getAllSupply(): ?SupplyCollection
     {
-        return new SupplyCollection($this->getSupplyRepository()->findAll());
+        return new SupplyCollection($this->supplyRepository->findAllSupplies());
     }
 
     public function setNewQuantity(float $newQuantity, float $quantity, Supply $supply): void
@@ -59,8 +65,11 @@ class SupplyService implements SupplyServiceInterface
         }
     }
 
-    private function getSupplyRepository()
+    public function findByCriteria(?int $category): ?SupplyCollection
     {
-        return $this->entityManager->getRepository(Supply::class);
+        return new SupplyCollection($this->supplyRepository->findSuppliesBy($category));
     }
+
+
+
 }

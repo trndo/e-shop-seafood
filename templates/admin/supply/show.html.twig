@@ -1,6 +1,5 @@
 {% extends 'admin_base.html.twig' %}
 {% block body %}
-<body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
@@ -26,43 +25,42 @@
                     <div class="card-body">
                         <ul class="nav nav-pills ">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Все</a>
+                                <a class="nav-link" href="{{ path('supply') }}">Все</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="#">Раки</a>
+                                <a class="nav-link " href="{{ path('supply',{'category': 1 }) }}">Раки</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">По категориям</a>
                                 <div class="dropdown-menu ">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item" href="#">Separated link</a>
+                                    {% for category in categories %}
+                                        <a class="dropdown-item" href="{{ path('supply',{'category': category.id}) }}">{{ category.name }}</a>
+                                    {% endfor %}
                                 </div>
                             </li>
                             <li class="nav-item">
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="supply">
                                     <div class="input-group">
-                                        <input id="searchItem" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" name="q">
+                                        <input id="searchItem" type="text" class="form-control bg-light border-0 small" placeholder="Введите имя продукта" aria-label="Search" aria-describedby="basic-addon2" name="q">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
+                                            <div class="btn btn-light go" >
                                                 <i class="fas fa-search fa-sm"></i>
-                                            </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
                             </li>
                         </ul>
                         <hr>
-                        <div class="row ">
+                        <div class="row liveSearch">
                             {% for supply in supplies %}
                             <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="margin-bottom: 10px;">
                                 <div class="card" style="width: 20rem;">
-                                    <img src="{{ supply.product.titlePhotoPath }}" style="object-fit: contain" class="card-img-top" alt="main-photo">
+                                    <img src="{{ supply.product.titlePhotoPath }}" style="object-fit: cover" class="card-img-top" alt="main-photo">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ supply.product.name }}</h5>
                                         <div class="row justify-content-center">
-                                            <div class="col-6">
+                                            <div class="col-10">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">{{ supply.product.unit }}</div>
@@ -72,8 +70,8 @@
                                             </div>
                                         </div>
                                         <div class="row justify-content-center" style="margin-top: 20px">
-                                            <div class="col-6">
-                                                <button data-id="{{ supply.id }}" class="btn btn-primary editSupply" style="width:100%;">Обновить поставку</button>
+                                            <div class="col-8">
+                                                <button data-id="{{ supply.id }}" class="btn btn-primary editSupply" style="width:100%;">Обновить Количество</button>
                                             </div>
                                         </div>
                                     </div>

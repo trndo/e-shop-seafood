@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pereydi po ssylohcke {{ url('confirmation',{'token': user.token}) }}</h1>
+    Ураа! Вы успешно зарегестрировались, перейдите по ссылке для подтверждения - {{ url('confirmation',{'token': user.token}) }}
 {% endblock %}

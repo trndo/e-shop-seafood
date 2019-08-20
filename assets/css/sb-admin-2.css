@@ -5177,6 +5177,7 @@ input[type="button"].btn-block {
     width: 100%;
     border-top-left-radius: calc(0.35rem - 1px);
     border-top-right-radius: calc(0.35rem - 1px);
+    height: 250px;
 }
 
 .card-img-bottom {

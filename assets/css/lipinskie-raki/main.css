@@ -239,18 +239,20 @@ main{
     z-index: 2;
     margin: 0 auto;
     background: #F13A3A;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
 }
 
 .promotion-text{
     position: relative;
     margin: 0 auto;
     width: 446px;
-    height: 178px;
+    height: max-content;
     font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
-    line-height: 178px;
     color: #520B0B;
     text-align: center;
 }
@@ -812,6 +814,7 @@ footer{
 
 .row-rating{
     justify-content: normal !important;
+    margin-left: 0 !important;
 }
 
 .additional-special{
@@ -824,6 +827,7 @@ footer{
 }
 
 .additional-cart{
+    display: none;
     width: 113px;
     height: 39px;
     border: 3px solid #F13A3A;
@@ -846,11 +850,11 @@ footer{
 
 .additional-fo{
     height: 49px;
-    width: 215px;
+    width: 160px;
     font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center;
     color: #FFFFFF;
     line-height: 49px;
@@ -868,4 +872,16 @@ footer{
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("../../img/fish-bone-rotated.svg");
+}
+
+.slick-slide {
+    margin: 0 13px;
+    width: 150px;
+}
+/* the parent */
+.slick-list {
+    margin: 0;
+}
+.slick-track{
+
 }

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Supply;
 use App\Repository\RepositoryInterface\FinderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -26,9 +27,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
      */
     public function findForRender(string $productName): ?array
     {
-        return $this->createQueryBuilder('s')
-            ->innerJoin('s.product','p')
-            ->addSelect('p')
+        return $this->createQueryBuilderForSuppliesProducts('s')
             ->andWhere('p.name LIKE :productName ')
             ->setParameter('productName', '%'.$productName.'%')
             ->setMaxResults(10)
@@ -37,8 +36,40 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
             ;
     }
 
+    public function findAllSupplies(): ?array
+    {
+        return $this->createQueryBuilderForSuppliesProducts('s')
+            ->addOrderBy('s.quantity','DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findSuppliesBy(int $category = null): ?array
+    {
+        $query = $this->createQueryBuilderForSuppliesProducts('s');
+        if ($category != null){
+            $query->andWhere('p.category = :category')
+                ->setParameter('category', $category);
+        }
+
+        return $query->orderBy('p.status','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByName(string $name): ?array
     {
         // TODO: Implement findByName() method.
     }
+    private function createQueryBuilderForSuppliesProducts(string $alias): QueryBuilder
+    {
+        return $this->createQueryBuilder($alias)
+            ->leftJoin($alias.'.product','p')
+            ->leftJoin('p.gift','g')
+            ->leftJoin('p.category','c')
+            ->leftJoin('p.orderDetail','od')
+            ->addSelect('p','g','c','od');
+    }
+
 }

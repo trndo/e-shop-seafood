@@ -34,6 +34,7 @@ class CategoryModel
     private $displayType = 'simple';
 
     /**
+     *@Assert\NotBlank(message="Выберите файл")
      * @var UploadedFile|null
      */
     private $titlePhoto;

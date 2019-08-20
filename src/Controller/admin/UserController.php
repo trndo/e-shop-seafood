@@ -85,7 +85,7 @@ class UserController extends AbstractController
      */
     public function confirmAdmin(Request $request, RegisterUserInterface $registerUser, User $user): Response
     {
-        $model = UserMapper::entityToAdminModel($user);
+        $model = UserMapper::entityToConfirmationAdminModel($user);
 
         $form  = $this->createForm(AdminRegistrationType::class, $model);
 
@@ -97,9 +97,7 @@ class UserController extends AbstractController
 
             $registerUser->confirmUser($admin);
 
-            return $this->redirectToRoute('login',[
-                'email' => $admin->getEmail()
-            ]);
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/admin_registration.html.twig',[

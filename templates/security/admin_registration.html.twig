@@ -34,10 +34,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                               {{ form_row(form.email) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(form.phone) }}
+                                {{ form_row(form.phone,{'attr':{
+                                    'class' : 'phone'
+                                }}) }}
                             </div>
                             <div class="form-group">
                                 {{ form_row(form.password) }}
@@ -49,6 +48,6 @@
         </div>
     </div>
 </div>
-{{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
 </body>
 </html>

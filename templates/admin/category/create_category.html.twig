@@ -16,9 +16,21 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-6">
+                    <div class="col-8">
+                        <h2>Создайте категорию</h2>
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.type) }}
+                            {{ form_row(form.displayType) }}
+                        <div class="row">
+                            <div class="col-12">
+                                <img src="{{ asset('/images/simple.png') }}" width="450px">
+                                <img src="{{ asset('/images/size.png') }}" width="450px">
+                            </div>
+                        </div>
+                            {{ form_row(form.titlePhoto) }}
+                            {{ form_row(form.seoDescription) }}
+                            {{ form_row(form.seoTitle) }}
                         {{ form_end(form) }}
                     </div>
                 </div>

@@ -16,57 +16,58 @@ class AdminCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class,[
+        $builder->add('name', TextType::class, [
             'label' => 'Имя',
             'attr' => [
                 'class' => 'form-control'
             ]
         ])
-        ->add('surname',TextType::class,[
-            'label' => 'Фамилия',
-            'attr' => [
-                'class' => 'form-control'
-            ]
-        ])
-        ->add('email',EmailType::class, [
-            'label' => 'Email',
-            'attr' => [
-                'class' => 'form-control'
-            ]
-        ])
-        ->add('phone',TextType::class,[
-            'label' => 'Телефон',
-            'attr' => [
-                'class' => 'form-control'
-            ]
-        ])
-        ->add('role',ChoiceType::class, [
-            'choices' => [
-                'Админ' => 'ROLE_ADMIN',
-                'Смотрящий' => 'ROLE_ADMIN_VIEWER',
-                'Поставщик' => 'ROLE_ADMIN_SUPPLIER'
-            ],
-            'label' => 'Роль',
-            'attr' => [
-                'class' => 'form-control'
-            ]
-        ])
-        ->add('password',PasswordType::class,[
-            'label' => 'Password',
-            'attr' => [
-                'class' => 'form-control'
-            ]
-        ])
-        ->add('save',SubmitType::class,[
-            'label' => 'Добавить и отправить приглашение на почту!',
-            'attr' => [
-                'class' => 'btn btn-primary btn-in-form'
-            ]
-        ]);
+            ->add('surname', TextType::class, [
+                'label' => 'Фамилия',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('phone', TextType::class, [
+                'label' => 'Телефон',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'Админ' => 'ROLE_ADMIN',
+                    'Смотрящий' => 'ROLE_ADMIN_VIEWER',
+                    'Поставщик' => 'ROLE_ADMIN_SUPPLIER'
+                ],
+                'placeholder' => 'Выбрать роль',
+                'label' => 'Роль',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => 'Password',
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Добавить и отправить приглашение на почту!',
+                'attr' => [
+                    'class' => 'btn btn-primary btn-in-form'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class',AdminModel::class);
+        $resolver->setDefault('data_class', AdminModel::class);
     }
 }

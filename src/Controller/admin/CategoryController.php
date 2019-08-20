@@ -46,7 +46,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/lipadmin/category/", name="category")
+     * @Route("/lipadmin/category", name="category")
      *
      * @param CategoryServiceInterface $categoryService
      * @return Response

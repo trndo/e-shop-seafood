@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Collection\ProductCollection;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Model\ProductModel;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,10 +19,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -39,19 +54,24 @@ class ProductType extends AbstractType
                     'литр' => 'литр',
                     'шт' => 'шт'
                 ],
+                'placeholder' => 'Единицы измерения',
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Еденица измирения',
             ])
             ->add('category',EntityType::class,[
                 'class' => Category::class,
-                'choice_label' => 'name',
+                'choice_label' => function ($category) {
+                            /**@var Category $category */
+                    return $category->getName().' - '.($category->getDisplayType() == 'size' ? 'Отображается размерами' : 'Обычное отображение');
+                },
                 'query_builder' => function(EntityRepository $er){
                     return $er->createQueryBuilder('c')
                                 ->where('c.type = :type')
                                 ->setParameter('type','products');
                 },
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Категория'
+                'label' => 'Категория',
+                'placeholder' => 'Выберите категорию'
             ])
             ->add('description',TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
@@ -65,7 +85,7 @@ class ProductType extends AbstractType
             $builder->add('photo',FileType::class,[
                 'multiple' => true,
                 'attr' => ['class' => 'form-control-file'],
-                'label' => 'Доп. фотографии',
+                'label' => 'Дополнитильные фотографии',
                 'required' => false,
             ]);
             $builder->add('productSize',ChoiceType::class, [
@@ -79,32 +99,58 @@ class ProductType extends AbstractType
                     'XXL' => 'XXL'
                 ],
                 'required' => false,
-                'placeholder' => 'Выбирете размер'
+                'placeholder' => 'Выбирете размер(без размера)'
             ])
             ->add('amountPerUnit',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Количесвто шт в кг(если есть)',
+                'label' => 'Количесвто шт/кг (не обязательно)',
                 'required' => false
             ])
             ->add('weightPerUnit',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Вес 1 шт. (если есть)',
+                'label' => 'Вес за 1 шт. (не обязательно)',
                 'required' => false
             ])
             ->add('seoTitle',TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'required' => false
+                'required' => false ,
+                'label' => 'Сео тайтл',
             ])
             ->add('seoDescription',TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
-                'label' => 'Seo Description ',
+                'label' => 'Сео дескрипшн',
                 'required' => false
             ])
             ->add('save',SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Сохранить!'
-            ])
-        ;
+            ]);
+
+                $builder->addEventListener(
+                    FormEvents::SUBMIT,
+                    function (FormEvent $event) use ($options) {
+                        /** @var Product $product */
+                   $product = $event->getForm()->getData();
+                   $choosenCategory = $product->getCategory();
+                   $choosenSize = $product->getProductSize();
+
+
+                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize == null) {
+                       $error = new FormError('Вы выбрали категорию для продуктов - с размером(S,M,L..) ! Выберите другую категорию или выберите размер продукта!' );
+                       $event->getForm()->get('category')->addError($error);
+                   }
+
+                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize !== null && !$options['update']) {
+                      $this->findExistedSize($choosenSize,$choosenCategory, $options);
+                   }
+
+//                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize !== null && !$options['update']) {
+//                       $errorSize =
+//                       $event->getForm()->get('productSize')->addError($errorSize);
+//                   }
+
+            });
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -114,4 +160,27 @@ class ProductType extends AbstractType
             'update' => false
         ]);
     }
+
+    private function findExistedSize(string $choosenSize, Category $choosenCategory, array $options): ?FormError
+    {
+        $productsFromCategory = $this->productRepository->findProductsBy(null, $choosenCategory->getId());
+        $sizes = ['S','M','L','XL','XXL'];
+        $categorySizes = [];
+        foreach ($productsFromCategory as $categoryProduct) {
+            /** @var Product $categoryProduct */
+            $categorySizes[] = $categoryProduct->getProductSize();
+        }
+        if (in_array($choosenSize,$categorySizes)) {
+            if (!$options['update']){
+                return new FormError(
+                    'Продукт с размерностью - '.$choosenSize.' уже существует в категории - '.$choosenCategory->getName().'! 
+                    Доступные размеры: '.implode(',',array_diff($sizes,$categorySizes)).'!'
+                );
+
+            }
+
+        }
+
+    }
+
 }

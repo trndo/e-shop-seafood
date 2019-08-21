@@ -155,10 +155,13 @@ class ProductService implements ProductServiceInterface
             ->setDescription($model->getDescription())
             ->setSeoDescription($model->getSeoDescription())
             ->setSeoTitle($model->getSeoTitle())
-            ->setProductSize($model->getProductSize())
             ->setAmountPerUnit($model->getAmountPerUnit())
             ->setWeightPerUnit($model->getWeightPerUnit())
             ->setCategory($model->getCategory());
+
+        if($product->getProductSize() !== $model->getProductSize()) {
+            $product->setProductSize($model->getProductSize());
+        }
 
         if ($model->getTitlePhoto() instanceof UploadedFile) {
             $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER, $product->getTitlePhoto());

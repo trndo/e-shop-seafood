@@ -39,15 +39,15 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class,[
+            ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Названия продукта'
             ])
-            ->add('price',IntegerType::class, [
+            ->add('price', IntegerType::class, [
                 'attr' => ['class' => 'form-control', 'min' => 0],
                 'label' => 'Цена',
             ])
-            ->add('unit',ChoiceType::class,[
+            ->add('unit', ChoiceType::class, [
                 'choices' => [
                     'кг' => 'кг',
                     'грамм' => 'грамм',
@@ -58,100 +58,106 @@ class ProductType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Еденица измирения',
             ])
-            ->add('category',EntityType::class,[
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => function ($category) {
-                            /**@var Category $category */
-                    return $category->getName().' - '.($category->getDisplayType() == 'size' ? 'Отображается размерами' : 'Обычное отображение');
+                    /**@var Category $category */
+                    return $category->getName() . ' - ' . ($category->getDisplayType() == 'size' ? 'Отображается размерами' : 'Обычное отображение');
                 },
-                'query_builder' => function(EntityRepository $er){
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
-                                ->where('c.type = :type')
-                                ->setParameter('type','products');
+                        ->where('c.type = :type')
+                        ->setParameter('type', 'products');
                 },
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Категория',
                 'placeholder' => 'Выберите категорию'
             ])
-            ->add('description',TextareaType::class, [
+            ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Описание продукта'
             ])
-            ->add('titlePhoto',FileType::class,[
+            ->add('titlePhoto', FileType::class, [
                 'attr' => ['class' => 'form-control-file'],
                 'label' => 'Фото Обложки'
             ]);
-            if(!$options['update'])
-            $builder->add('photo',FileType::class,[
+        if (!$options['update'])
+            $builder->add('photo', FileType::class, [
                 'multiple' => true,
                 'attr' => ['class' => 'form-control-file'],
                 'label' => 'Дополнитильные фотографии',
                 'required' => false,
             ]);
-            $builder->add('productSize',ChoiceType::class, [
-                'attr' => ['class' => 'form-control'],
-                'label' => 'Размер продукта(если есть)',
-                'choices' => [
-                    'S' => 'S',
-                    'M' => 'M',
-                    'L' => 'L',
-                    'XL' => 'XL',
-                    'XXL' => 'XXL'
-                ],
-                'required' => false,
-                'placeholder' => 'Выбирете размер(без размера)'
-            ])
-            ->add('amountPerUnit',TextType::class, [
+        $builder->add('productSize', ChoiceType::class, [
+            'attr' => ['class' => 'form-control'],
+            'label' => 'Размер продукта(если есть)',
+            'choices' => [
+                'S' => 'S',
+                'M' => 'M',
+                'L' => 'L',
+                'XL' => 'XL',
+                'XXL' => 'XXL'
+            ],
+            'required' => false,
+            'placeholder' => 'Выбирете размер(без размера)'
+        ])
+            ->add('amountPerUnit', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Количесвто шт/кг (не обязательно)',
                 'required' => false
             ])
-            ->add('weightPerUnit',TextType::class, [
+            ->add('weightPerUnit', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Вес за 1 шт. (не обязательно)',
                 'required' => false
             ])
-            ->add('seoTitle',TextType::class, [
+            ->add('seoTitle', TextType::class, [
                 'attr' => ['class' => 'form-control'],
-                'required' => false ,
+                'required' => false,
                 'label' => 'Сео тайтл',
             ])
-            ->add('seoDescription',TextareaType::class, [
+            ->add('seoDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Сео дескрипшн',
                 'required' => false
             ])
-            ->add('save',SubmitType::class, [
+            ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],
                 'label' => 'Сохранить!'
             ]);
 
-                $builder->addEventListener(
-                    FormEvents::SUBMIT,
-                    function (FormEvent $event) use ($options) {
-                        /** @var Product $product */
-                   $product = $event->getForm()->getData();
-                   $choosenCategory = $product->getCategory();
-                   $choosenSize = $product->getProductSize();
 
+        $productSize = $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            [$this, 'onPostSetData']
+        );
 
-                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize == null) {
-                       $error = new FormError('Вы выбрали категорию для продуктов - с размером(S,M,L..) ! Выберите другую категорию или выберите размер продукта!' );
-                       $event->getForm()->get('category')->addError($error);
-                   }
+        $primarySize = $productSize->getData()->getProductSize();
 
-                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize !== null && !$options['update']) {
-                      $this->findExistedSize($choosenSize,$choosenCategory, $options);
-                   }
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) use ($primarySize) {
+                /** @var Product $product */
+                $product = $event->getForm()->getData();
+                $chosenCategory = $product->getCategory();
+                $chosenSize = $product->getProductSize();
+                $options = $event->getForm()->getConfig()->getOptions();
 
-//                   if ($choosenCategory->getDisplayType() == 'size' && $choosenSize !== null && !$options['update']) {
-//                       $errorSize =
-//                       $event->getForm()->get('productSize')->addError($errorSize);
-//                   }
+                if ($chosenCategory->getDisplayType() == 'size' && $chosenSize == null) {
+                    $error = new FormError('Вы выбрали категорию для продуктов - с размером(S,M,L..) ! Выберите другую категорию или выберите размер продукта!');
+                    $event->getForm()->get('category')->addError($error);
+                }
 
+                if ($chosenCategory->getDisplayType() == 'size' && $chosenSize !== null) {
+                    $errorSize = $this->findExistedSize($chosenSize, $chosenCategory, $options,$primarySize);
+                    if ($errorSize !== null) {
+                        $event->getForm()->get('productSize')->addError($errorSize);
+                    }
+                }
             });
 
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -161,25 +167,38 @@ class ProductType extends AbstractType
         ]);
     }
 
-    private function findExistedSize(string $choosenSize, Category $choosenCategory, array $options): ?FormError
+    public function onPostSetData(FormEvent $event)
     {
-        $productsFromCategory = $this->productRepository->findProductsBy(null, $choosenCategory->getId());
-        $sizes = ['S','M','L','XL','XXL'];
+        /** @var Product $product */
+        return  $event->getData();
+    }
+
+    private function findExistedSize(string $chosenSize, Category $chosenCategory, array $options, string $primarySize): ?FormError
+    {
+        $productsFromCategory = $this->productRepository->findProductsBy(null, $chosenCategory->getId());
+        $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
         $categorySizes = [];
+
         foreach ($productsFromCategory as $categoryProduct) {
             /** @var Product $categoryProduct */
             $categorySizes[] = $categoryProduct->getProductSize();
         }
-        if (in_array($choosenSize,$categorySizes)) {
-            if (!$options['update']){
+
+        if (in_array($chosenSize, $categorySizes)) {
+            if ($options['update']) {
+//                dd($categorySizes,$chosenSize,$primarySize);
+                if ($primarySize !== $chosenSize){
+                    return new FormError('Продукт с размерностью - ' . $chosenSize . ' уже существует в категории - ' . $chosenCategory->getName() . '! 
+                    Доступные размеры: ' . implode(',', array_diff($sizes, $categorySizes)));
+                }
+            } else {
                 return new FormError(
-                    'Продукт с размерностью - '.$choosenSize.' уже существует в категории - '.$choosenCategory->getName().'! 
-                    Доступные размеры: '.implode(',',array_diff($sizes,$categorySizes)).'!'
+                    'Продукт с размерностью - ' . $chosenSize . ' уже существует в категории - ' . $chosenCategory->getName() . '! 
+                    Доступные размеры: ' . implode(',', array_diff($sizes, $categorySizes))
                 );
-
             }
-
         }
+        return null;
 
     }
 

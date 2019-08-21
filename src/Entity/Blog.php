@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogRepository")
@@ -17,6 +18,7 @@ class Blog
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Поле не должно быть пустым!")
      * @ORM\Column(type="text", nullable=true)
      */
     private $message;

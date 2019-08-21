@@ -4,7 +4,6 @@
     {{ encore_entry_link_tags('autocomplete') }}
 {% endblock %}
 {% block body %}
-<body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
@@ -30,22 +29,22 @@
                     <div class="card-body">
                         <ul class="nav nav-pills ">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Все</a>
+                                <a class="nav-link" href="{{ path('products') }}">Все Продукты</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">По категориям</a>
                                 <div class="dropdown-menu ">
+                                    {% for category in categories %}
+                                        <a class="dropdown-item" href="{{ path('products',{'category': category.id}) }}">{{ category.name }}</a>
+                                    {% endfor %}
                                     <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
                             </li>
                             <li class="nav-item">
                                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="products">
                                     <div class="input-group">
                                         <div class="ui-widget">
-                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Имя продукта..." aria-label="Search" name="name" aria-describedby="basic-addon2">
                                         </div>
                                             <div class="input-group-append">
                                             <button class="btn btn-primary search-name" type="button">

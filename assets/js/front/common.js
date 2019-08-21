@@ -53,3 +53,6 @@ $('.social').click(function () {
     window.location.href = $(this).data('login-social');
 });
 
+$('#user').click(function () {
+   window.location.href = $(this).data('user');
+});

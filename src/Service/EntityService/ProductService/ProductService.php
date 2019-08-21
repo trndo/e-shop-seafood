@@ -3,13 +3,16 @@
 
 namespace App\Service\EntityService\ProductService;
 
+use App\Collection\CategoryCollection;
 use App\Collection\ProductCollection;
 use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Product;
 use App\Entity\Supply;
 use App\Model\ProductModel;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use App\Service\EntityService\CategoryService\CategoryServiceInterface;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\FileSystemService\UploadFileInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,14 +39,20 @@ class ProductService implements ProductServiceInterface
      * @var ProductRepository $productRepository
      */
     private $productRepository;
+    /**
+     * @var CategoryServiceInterface
+     */
+    private $categoryService;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 UploadFileInterface $fileUploader,
-                                ProductRepository $productRepository)
+                                ProductRepository $productRepository,
+                                CategoryRepository $categoryService)
     {
         $this->entityManager = $entityManager;
         $this->fileUploader = $fileUploader;
         $this->productRepository = $productRepository;
+        $this->categoryService = $categoryService;
     }
 
     public function saveProduct(ProductModel $model): void
@@ -129,13 +138,13 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * @param array $criteria
-     * @param array $orderBy
+     * @param string $name
+     * @param int $category
      * @return ProductCollection
      */
-    public function getProductsByCriteria(array $criteria, array $orderBy = []): ProductCollection
+    public function getProductsByCriteria(?string $name,?int $category): ?ProductCollection
     {
-        return new ProductCollection($this->productRepository->findBy($this->hydrateQuery($criteria), $orderBy));
+        return new ProductCollection($this->productRepository->findProductsBy($name, $category));
     }
 
     public function updateProduct(Product $product, ProductModel $model): void
@@ -146,10 +155,13 @@ class ProductService implements ProductServiceInterface
             ->setDescription($model->getDescription())
             ->setSeoDescription($model->getSeoDescription())
             ->setSeoTitle($model->getSeoTitle())
-            ->setProductSize($model->getProductSize())
             ->setAmountPerUnit($model->getAmountPerUnit())
             ->setWeightPerUnit($model->getWeightPerUnit())
             ->setCategory($model->getCategory());
+
+        if($product->getProductSize() !== $model->getProductSize()) {
+            $product->setProductSize($model->getProductSize());
+        }
 
         if ($model->getTitlePhoto() instanceof UploadedFile) {
             $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER, $product->getTitlePhoto());
@@ -243,6 +255,11 @@ class ProductService implements ProductServiceInterface
         }
 
         return null;
+    }
+
+    public function getProductsCategories(): ?CategoryCollection
+    {
+        return new CategoryCollection($this->categoryService->getCategories('product'));
     }
 
 

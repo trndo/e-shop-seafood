@@ -5,15 +5,25 @@ namespace App\Mapper;
 
 use App\Entity\User;
 use App\Model\AdminModel;
+use App\Model\ConfirmationModelAdmin;
 use App\Model\UserModel;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class UserMapper
 {
+    public static function entityToConfirmationAdminModel(User $user): ConfirmationModelAdmin
+    {
+        $model = new ConfirmationModelAdmin();
+        $model->setName($user->getName())
+            ->setSurname($user->getSurname())
+            ->setPhone($user->getPhone());
+
+        return $model;
+    }
+
     public static function entityToAdminModel(User $user): AdminModel
     {
         $model = new AdminModel();
-
         $model->setName($user->getName())
              ->setSurname($user->getSurname())
              ->setPhone($user->getPhone())

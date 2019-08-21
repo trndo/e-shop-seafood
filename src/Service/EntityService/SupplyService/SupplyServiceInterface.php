@@ -16,5 +16,11 @@ interface SupplyServiceInterface
     /**
      * @return SupplyCollection
      */
-    public function getAllSupply(): SupplyCollection ;
+    public function getAllSupply(): ?SupplyCollection ;
+
+    /**
+     * @param int|null $category
+     * @return SupplyCollection|null
+     */
+    public function findByCriteria(?int $category): ?SupplyCollection;
 }

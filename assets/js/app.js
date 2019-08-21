@@ -3,6 +3,7 @@ const jQuery = require('jquery');
 require('bootstrap');
 import bsCustomFileInput from 'bs-custom-file-input';
 import './plugins/jquery.abacus.min';
+import 'jquery-mask-plugin';
 
 let totalSum = $('#order_info_totalPrice').val();
 $('#order_info_totalPrice').abacus(totalSum);
@@ -108,4 +109,5 @@ $('#order_info_totalPrice').abacus(totalSum);
         e.preventDefault();
     });
 
+    $('.phone').mask('+38(000)000-00-00', {placeholder: "+38(___)___-__-__"});
 })(jQuery); // End of use strict

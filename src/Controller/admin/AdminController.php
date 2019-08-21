@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,18 +18,24 @@ class AdminController extends AbstractController
 {
     /**
      * @Route(path="/lipadmin", name="admin")
-     *
+     * @param Request $request
+     * @param OrderInfoInterface $orderInfo
      * @return Response
+     * @throws \Exception
      */
-    public function homeAdmin(OrderInfoInterface $orderInfo): Response
+    public function homeAdmin(Request $request, OrderInfoInterface $orderInfo): Response
     {
-        $orders = $orderInfo->getOrders();
+        $status = $request->query->get('status', 'new');
+        $date = $request->query->get('date', (new \DateTime())->format('Y-m-d'));
+        $orders = $orderInfo->getOrders($date, $status);
+        $statusCount = $orderInfo->getCountOfOrders();
 
-        return $this->render('admin/admin.html.twig',[
-            'orders' => $orders
+        return $this->render('admin/admin.html.twig', [
+            'orders' => $orders,
+            'statusCount' => $statusCount,
+            'date' => $date
         ]);
     }
-
 
 
 }

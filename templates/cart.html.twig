@@ -4,6 +4,7 @@
         {% set sum = app.session.get('totalSum') %}
         {% include 'elements/small_header.html.twig' %}
         <div class="red-content">
+            <img id="close-modal" src="/assets/img/close-modal.svg"/>
             <div id="shopping-cart">
                 <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
             </div>
@@ -41,9 +42,24 @@
                                 {{ cartItem.item.price }} <span class="hryvnas">₴</span>
                             </div>
                         </div>
-                        <img class="delete-from-cart" data-name="{{ cartItem.item.type == 'receipt'
+                        <div  class="delete-from-cart" data-name="{{ cartItem.item.type == 'receipt'
                         ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id : 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id
-                        : 'product-' ~ cartItem.item.id }}" type="image/svg+xml" src="{{ asset('assets/img/delete.svg') }}"/>
+                        : 'product-' ~ cartItem.item.id }}" >
+                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0)">
+                                    <path d="M23.4797 11.7226L20.8182 11.625L20.2412 27.3821L22.9027 27.4794L23.4797 11.7226Z" fill="#D52B2B"/>
+                                    <path d="M18.3321 11.6736H15.6689V27.4308H18.3321V11.6736Z" fill="#D52B2B"/>
+                                    <path d="M13.7589 27.3817L13.1819 11.6245L10.5205 11.7222L11.0976 27.4793L13.7589 27.3817Z" fill="#D52B2B"/>
+                                    <path d="M1.1543 5.10449V7.76765H3.92935L6.13085 32.7852C6.19121 33.4727 6.76695 34 7.45711 34H26.4984C27.1887 34 27.7648 33.4723 27.8247 32.7847L30.0263 7.76765H32.8462V5.10449H1.1543ZM25.2788 31.3369H8.67647L6.60273 7.76765H27.353L25.2788 31.3369Z" fill="#D52B2B"/>
+                                    <path d="M21.3497 0H12.65C11.4262 0 10.4307 0.995562 10.4307 2.2193V6.43603H13.0938V2.66316H20.9059V6.43603H23.569V2.2193C23.569 0.995562 22.5734 0 21.3497 0Z" fill="#D52B2B"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0">
+                                        <rect width="34" height="34" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
@@ -51,11 +67,12 @@
                 <div class="final">
                     Итог: <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
                 </div>
-                <div class="checkout">Оформить заказ</div>
+                <div class="checkout">Оформить</div>
             </div>
         </div>
     </div>
    {% include 'elements/__footer.html.twig' with { 'active': false } %}
+   {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

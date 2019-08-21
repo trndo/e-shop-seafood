@@ -4,6 +4,8 @@
 namespace App\Model;
 
 
+use App\Validator\UniqueUser;
+
 class UserModel
 {
     /**
@@ -18,6 +20,7 @@ class UserModel
 
     /**
      * @var string|null
+     * @UniqueUser()
      */
     private $email;
 

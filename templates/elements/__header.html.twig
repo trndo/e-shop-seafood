@@ -9,7 +9,7 @@
             <div id="basket-container">
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>
-            <embed id="user" type="image/svg+xml" src="/assets/img/avatar.svg"/>
+            <img id="user" src="/assets/img/avatar.svg" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"/>
         </div>
     </div>
     <div class="row">

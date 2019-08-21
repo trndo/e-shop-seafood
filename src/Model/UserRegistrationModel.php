@@ -12,8 +12,7 @@ class UserRegistrationModel
     /**
      * @Assert\NotBlank(message="Пожалуйста, введите email!")
      * @Assert\Email()
-     *
-     *
+     * @UniqueUser()
      */
     private $email;
 

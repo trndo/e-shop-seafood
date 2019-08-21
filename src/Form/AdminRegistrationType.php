@@ -4,9 +4,11 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,42 +28,31 @@ class AdminRegistrationType extends AbstractType
                     'class' => 'form-control form-control-user'
                 ]
             ])
-            ->add('email',EmailType::class, [
-                'label' => 'Ваш Email',
-                'attr' => [
-                    'class' => 'form-control form-control-user'
-                ]
-            ])
-            ->add('phone',TextType::class,[
+            ->add('phone',TelType::class,[
                 'label' => 'Ваш телефон',
                 'attr' => [
                     'class' => 'form-control form-control-user'
                 ],
                 'required' => false
             ])
-            ->add('password',PasswordType::class,[
-                'label' => 'Password',
-                'attr' => [
-                    'class' => 'form-control form-control-user'
-                ]
-            ])
             ->add('password',RepeatedType::class,[
                 'type' => PasswordType::class,
                 'first_options'  => [
-                    'label' => 'Password',
+                    'label' => 'Пароль',
                     'attr' => [
                         'class' => 'form-control form-control-user'
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
+                    'label' => 'Повторите пароль',
                     'attr' => [
                         'class' => 'form-control form-control-user'
                     ]
                 ],
+                'invalid_message' => 'Пароли не совпадают!'
             ])
             ->add('save',SubmitType::class,[
-                'label' => 'Зарегестрироваться!',
+                'label' => 'Подтвердить регистрацию!',
                 'attr' => [
                     'class' => 'btn btn-primary btn-user btn-block'
                 ]

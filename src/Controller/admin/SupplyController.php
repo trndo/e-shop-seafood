@@ -2,7 +2,9 @@
 
 namespace App\Controller\admin;
 
+use App\Repository\CategoryRepository;
 use App\Repository\SupplyRepository;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use App\Service\SearchService\SearcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,27 +24,32 @@ class SupplyController extends AbstractController
      */
     public function editProductSupply(Request $request, SupplyServiceInterface $supplyService): JsonResponse
     {
-       $data = $request->getContent();
-       $supplyService->editSupply(json_decode($data,true));
+        $data = $request->getContent();
+        $supplyService->editSupply(json_decode($data, true));
 
-       return new JsonResponse([
-           'status' => true
-            ], 200
-       );
+        return new JsonResponse([
+            'status' => true
+        ], 200
+        );
     }
 
     /**
      * @Route("/lipadmin/supply", name="supply")
      *
+     * @param Request $request
      * @param SupplyServiceInterface $supplyService
+     * @param ProductServiceInterface $productService
      * @return Response
      */
-    public function showSupplies(SupplyServiceInterface $supplyService): Response
+    public function showSupplies(Request $request, SupplyServiceInterface $supplyService, ProductServiceInterface $productService): Response
     {
-        $supplies = $supplyService->getAllSupply();
+        $category = $request->query->getInt('category', null);
+        $supplies = $supplyService->findByCriteria($category);
+        $categories = $productService->getProductsCategories();
 
-        return $this->render('admin/supply/show.html.twig',[
-            'supplies' => $supplies
+        return $this->render('admin/supply/show.html.twig', [
+            'supplies' => $supplies,
+            'categories' => $categories
         ]);
     }
 
@@ -61,8 +68,9 @@ class SupplyController extends AbstractController
 
         $supplies = $searcher->searchByNameForRender($name, $repository);
 
-        return $this->render('elements/supply_card.html.twig',[
+        return $this->render('elements/supply_card.html.twig', [
             'supplies' => $supplies
         ]);
     }
+
 }

@@ -4,14 +4,17 @@ import 'jquery-ui/themes/base/sortable.css';
 const $ = require('jquery');
 import 'jquery-ui/ui/core';
 import 'jquery-ui/ui/widgets/sortable.js';
+import 'jquery-ui-touch-punch'
 
 
 $(document).ready(function () {
+
 
     $('#sortable').sortable({
         containment: "parent",
         cursor: "move",
         update: function (event,ui) {
+            $('#sortable' ).draggable;
             $('#sortable').sortable("refreshPositions");
             updateIndex();
             console.log( $('#sortable').sortable("toArray",{"attribute":"data-id"}));
@@ -50,6 +53,7 @@ $(document).on('click', '.addToRating',function () {
     let data = type+'_'+id;
 
     if(validateRating(data)) {
+        $('#sortable' ).draggable;
         $('#sortable').append('<li class="list-group-item ui-state-default" data-id="' + data + '"><span class="badge badge-pill badge-primary">'+newIndex()+'</span>' + name + '<i class="fas fa-times delFromRate"></i></li>');
         $('#sortable').sortable("refresh");
         $('#sortable').sortable("refreshPositions");
@@ -59,6 +63,7 @@ $(document).on('click', '.addToRating',function () {
 
 $(document).on('click','.delFromRate',function () {
     $(this).parent().remove();
+    $('#sortable' ).draggable;
     $('#sortable').sortable("refresh");
     $('#sortable').sortable("refreshPositions");
     updateIndex();
@@ -80,10 +85,12 @@ function validateRating(data) {
 }
 
 function newIndex() {
+    $('#sortable' ).draggable;
     let list = $('#sortable').sortable("toArray",{"attribute":"data-id"});
     return list.length + 1;
 }
 function updateIndex(){
+    $('#sortable' ).draggable;
     let list = $('#sortable').sortable("toArray",{"attribute":"data-id"});
     $('#sortable').children().each(function () {
         $(this).find('span').text(list.indexOf($(this).data('id')) + 1);

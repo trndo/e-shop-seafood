@@ -19,6 +19,7 @@
         "jquery": "^3.4.1",
         "jquery-mask-plugin": "^1.14.16",
         "jquery-ui": "^1.12.1",
+        "jquery-ui-touch-punch": "^0.2.3",
         "pickerjs": "^1.2.1",
         "popper.js": "^1.15.0",
         "simplebar": "^4.0.0",

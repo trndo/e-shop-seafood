@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserInfoUpdateType extends AbstractType
@@ -26,17 +27,20 @@ class UserInfoUpdateType extends AbstractType
                 'label' => false
             ])
             ->add('address',TextType::class, [
-                'label' => false
+                'label' => false,
             ])
             ->add('coordinates',HiddenType::class, [
                 'label' => false
+            ])
+            ->add('save',SubmitType::class,[
+                'label' => 'Сохранить'
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UserModel::class
+            'data_class' => UserModel::class,
         ]);
     }
 }

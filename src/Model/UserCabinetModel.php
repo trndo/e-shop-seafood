@@ -4,10 +4,7 @@
 namespace App\Model;
 
 
-use App\Validator\UniqueUser;
-use Symfony\Component\Validator\Constraints as Assert;
-
-class UserModel
+class UserCabinetModel
 {
     /**
      * @Assert\NotBlank(message="*Поле не должно быть пустым")
@@ -24,7 +21,6 @@ class UserModel
     /**
      * @Assert\NotBlank(message="*Поле не должно быть пустым")
      * @var string|null
-     * @UniqueUser()
      */
     private $email;
 
@@ -48,7 +44,7 @@ class UserModel
 
     /**
      * @param string|null $name
-     * @return UserModel
+     * @return UserCabinetModel
      */
     public function setName(?string $name): self
     {
@@ -67,7 +63,7 @@ class UserModel
 
     /**
      * @param string|null $phone
-     * @return UserModel
+     * @return UserCabinetModel
      */
     public function setPhone(?string $phone): self
     {
@@ -86,7 +82,7 @@ class UserModel
 
     /**
      * @param string|null $email
-     * @return UserModel
+     * @return UserCabinetModel
      */
     public function setEmail(?string $email): self
     {
@@ -106,7 +102,7 @@ class UserModel
 
     /**
      * @param string|null $address
-     * @return UserModel
+     * @return UserCabinetModel
      */
     public function setAddress(?string $address): self
     {
@@ -126,7 +122,7 @@ class UserModel
 
     /**
      * @param string|null $coordinates
-     * @return UserModel
+     * @return UserCabinetModel
      */
     public function setCoordinates(?string $coordinates): self
     {
@@ -134,6 +130,4 @@ class UserModel
 
         return $this;
     }
-
-
 }

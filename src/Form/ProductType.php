@@ -186,7 +186,6 @@ class ProductType extends AbstractType
 
         if (in_array($chosenSize, $categorySizes)) {
             if ($options['update']) {
-//                dd($categorySizes,$chosenSize,$primarySize);
                 if ($primarySize !== $chosenSize){
                     return new FormError('Продукт с размерностью - ' . $chosenSize . ' уже существует в категории - ' . $chosenCategory->getName() . '! 
                     Доступные размеры: ' . implode(',', array_diff($sizes, $categorySizes)));

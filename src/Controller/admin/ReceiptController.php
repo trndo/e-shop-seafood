@@ -257,7 +257,7 @@ class ReceiptController extends AbstractController
     public function saveSalesForReceipt(Receipt $receipt,Request $request, ReceiptService $receiptService): JsonResponse
     {
         $receiptService->addSalesInReceipt((array)$request->request->get('products'), $receipt);
-        return  new JsonResponse([],200);
+        return new JsonResponse([],200);
     }
 
 }

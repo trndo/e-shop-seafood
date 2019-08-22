@@ -49,10 +49,10 @@
                     <span class="attention-title">Один раз заполнил - заказывай всё время!</span>
                 </div>
 {#                <form>#}
-                {{ form_start(form) }}
+                {{ form_start(form,{'attr':{'class': 'user_info_update'}}) }}
                     <div class="input-user-container">
                         <div>
-                            {{ form_widget(form.name,{'attr':{'class': 'user-input login-input invalid-input',
+                            {{ form_widget(form.name,{'attr':{'class': 'user-input login-input user-name',
                                                               'placeholder': 'Имя'}}) }}
                             <small class="validation-mess">*поле не должно быть пустым</small>
                         </div>
@@ -61,7 +61,7 @@
                                                          'placeholder': 'Email'}}) }}
                         </div>
                         <div>
-                            {{ form_widget(form.phone,{'attr':{'class': 'user-input login-input',
+                            {{ form_widget(form.phone,{'attr':{'class': 'user-input login-input phone',
                                 'placeholder': '+38(095)0000000'}}) }}
                         </div>
                     </div>
@@ -73,7 +73,8 @@
                         <div id="user-map"></div>
                     </div>
                             {{ form_widget(form.coordinates) }}
-                            <button type="submit" id="user_info_update_save" name="user_info_update[save]" class="login-button btn">Сохранить</button>
+                            {{ form_widget(form.save,{'attr':{'class': 'login-button btn'}}) }}
+{#                            <button type="submit" id="user_info_update_save" name="user_info_update[save]" class="login-button btn">Сохранить</button>#}
 {#                    <div class="login-button">#}
 {#                        Сохранить#}
 {#                    </div>#}

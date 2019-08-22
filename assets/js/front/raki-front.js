@@ -10,6 +10,8 @@ import 'simplebar/dist/simplebar.css';
 import $ from 'jquery';
 import SimpleBar from 'simplebar';
 import 'slick-carousel';
+import 'jquery-mask-plugin';
+import 'jquery-validation'
 
 $(document).ready(function () {
     if ($('.cart-container').length)
@@ -36,6 +38,7 @@ $(document).ready(function () {
         })
     }
 
+    $('.phone').mask('+38(000)000-00-00', {placeholder: "+38(___)___-__-__"});
 
     $(document).on('click', '.add-basket', function () {
         let type = $(this).data('type');
@@ -205,6 +208,28 @@ $(document).ready(function () {
             }
         });
     });
+
+    // $.validator.addClassRules('user-name', {
+    //     required: true,
+    //     minlength: 2,
+    //     message: "Andrey huy"
+    // })
+
+    $(".user_info_update").validate({
+        rules: {
+            "user_info_update[name]": {
+                required: true,
+                minlength: 2
+            }
+        },
+        focusInvalid: true,
+        errorClass: "validation-mess",
+        errorElement: 'small',
+        highlight: function(element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        }
+    })
 
 });
 

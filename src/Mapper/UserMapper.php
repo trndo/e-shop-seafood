@@ -6,6 +6,7 @@ namespace App\Mapper;
 use App\Entity\User;
 use App\Model\AdminModel;
 use App\Model\ConfirmationModelAdmin;
+use App\Model\UserCabinetModel;
 use App\Model\UserModel;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -25,16 +26,16 @@ final class UserMapper
     {
         $model = new AdminModel();
         $model->setName($user->getName())
-             ->setSurname($user->getSurname())
-             ->setPhone($user->getPhone())
-             ->setEmail($user->getEmail());
+            ->setSurname($user->getSurname())
+            ->setPhone($user->getPhone())
+            ->setEmail($user->getEmail());
 
         return $model;
     }
 
     public static function entityToUserModel(User $user): UserModel
     {
-        $model = new UserModel() ;
+        $model = new UserModel();
 
         $model->setName($user->getName())
             ->setPhone($user->getPhone())
@@ -56,5 +57,28 @@ final class UserMapper
         return $user;
     }
 
+    public static function entityToUserCabinetModel(User $user): UserCabinetModel
+    {
+        $model = new UserCabinetModel();
+
+        $model->setName($user->getName())
+            ->setPhone($user->getPhone())
+            ->setEmail($user->getEmail())
+            ->setAddress($user->getAddress())
+            ->setCoordinates($user->getCoordinates());
+
+        return $model;
+    }
+
+    public static function userCabinetModelToEntity(UserCabinetModel $model, User $user): User
+    {
+        $user->setName($model->getName())
+            ->setPhone($model->getPhone())
+            ->setEmail($model->getEmail())
+            ->setAddress($model->getAddress())
+            ->setCoordinates($model->getCoordinates());
+
+        return $user;
+    }
 
 }

@@ -4,6 +4,12 @@
         padding-right: 46px;
         margin-bottom: 0;
     }
+    .red-content{
+        width: 768px;
+    }
+    #map-block{
+        width: 368px;
+    }
 
     .small-red-content{
         margin-top: 0;
@@ -320,6 +326,10 @@
         height: 400px;
         padding-left: 0;
         padding-right: 32px;
+    }
+    .cart-container h3{
+        color: white;
+        margin-left: 20px;
     }
 
     .order-container{
@@ -669,6 +679,11 @@
         height: 400px;
         padding-left: 0;
         padding-right: 12px;
+    }
+
+    .cart-container h3{
+        color: white;
+        margin-left: 20px;
     }
 
     .order-container{

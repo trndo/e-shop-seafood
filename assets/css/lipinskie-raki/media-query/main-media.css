@@ -16,11 +16,14 @@
     .mini{
         display: none;
     }
-
+    main{
+        padding-top: 78px;
+    }
 
     #mobile{
         display: block;
-        position: relative;
+        position: fixed;
+        z-index: 100;
         width: 100%;
         height: 78px;
         background: #1F1E1E;
@@ -146,7 +149,7 @@
         height: 335px;
     }
     .additional-special{
-        display: flex;
+        display: none;
         justify-content: flex-end;
         align-items: center;
     }
@@ -168,9 +171,13 @@
     .mini{
         display: none;
     }
+    main{
+        padding-top: 78px;
+    }
     #mobile{
         display: block;
-        position: relative;
+        position: fixed;
+        z-index: 100;
         width: 100%;
         height: 78px;
         background: #1F1E1E;
@@ -268,7 +275,7 @@
     }
 
     #plate{
-        width: 345px;
+        width: 375px;
         height: 228px;
         transform: rotate(-180deg);
     }
@@ -276,7 +283,7 @@
     #promotion{
         width: 345px;
         height: 208px;
-        top: -17px;
+        margin-bottom: 19px;
     }
 
     #slider-points{
@@ -368,11 +375,14 @@
     }
     .additional-special{
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         width: 100%;
         padding-left: 14px;
         padding-right: 14px;
+        bottom: 0;
+        z-index: 100;
+        position: fixed;
     }
     .additional-cart{
         display: block;
@@ -397,9 +407,14 @@
         display: none;
     }
 
+    main{
+        padding-top: 78px;
+    }
+
     #mobile{
         display: block;
-        position: relative;
+        position: fixed;
+        z-index: 100;
         width: 100%;
         height: 78px;
         background: #1F1E1E;
@@ -510,14 +525,14 @@
     }
     #plate{
         width: 320px;
-        height: 228px;
+        height: auto;
         transform: rotate(-180deg);
     }
 
     #promotion{
         width: 320px;
         height: 208px;
-        top: -17px;
+        margin-bottom: 19px;
     }
 
     #slider-points{
@@ -609,11 +624,14 @@
     }
     .additional-special{
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         width: 100%;
         padding-left: 14px;
         padding-right: 14px;
+        bottom: 0;
+        z-index: 100;
+        position: fixed;
     }
     .additional-cart{
         display: block;

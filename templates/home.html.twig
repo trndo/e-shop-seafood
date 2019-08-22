@@ -25,11 +25,11 @@
                     </div>
                 </div>
                 <div class="additional-special">
-                    <div class="additional-cart">5502 ₴</div>
-                    <div class="additional-fo">
+                    <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
+                    <!--<div class="additional-fo">
                         Быстрый заказ
                         <div></div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="additional-nav">
                     <div class="additional-nav-container">
@@ -47,22 +47,7 @@
                 <div class="rating">
                     <h2>На этой недели покупают:</h2>
                     <div class="row row-rating">
-                    {% for item in items %} {#
-                    {{% if loop.index0 is divisible by(3) %}
-                    <div class="row row-rating">
-                    {% endif %}
-                            <div class="product-card">
-                                <img src="{{ item.TitlePhotoPath }}" alt="">
-                                <div class="card-content">
-                                    <h4>{{ item.name }}</h4>
-                                    <p>{{ item.description }}</p>
-                                    <span class="price">{{ item.price }} ₴</span>
-                                    <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">Подробнее</div>
-                                </div>
-                            </div>
-                    {% if loop.index is divisible by(3) or loop.last %}
-                    </div>
-                    {% endif %}#}
+                    {% for item in items %}
                         <div class="product-card">
                             <img src="{{ item.TitlePhotoPath }}" alt="">
                             <div class="card-content">

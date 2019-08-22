@@ -233,7 +233,6 @@ main{
 
 #promotion{
     position: relative;
-    top: -66px;
     width: 770px;
     height: 178px;
     z-index: 2;
@@ -242,6 +241,7 @@ main{
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    margin-bottom: 51px;
 }
 
 .promotion-text{
@@ -686,7 +686,7 @@ footer{
     font-size: 24px;
     line-height: 100%;
     color: #9e9999;
-    overflow-y: scroll;
+    overflow: scroll;
     max-height: 65%;
 
 }

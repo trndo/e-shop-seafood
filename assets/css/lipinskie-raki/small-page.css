@@ -88,6 +88,10 @@
     z-index: 5;
 }
 
+.cart-container h3{
+    color: white;
+}
+
 .order{
     width: 559px;
     height: 70px;
@@ -455,6 +459,7 @@
     color: #F13A3A;
     cursor: pointer;
     display: block;
+    padding: 0 0;
 }
 button:focus{
     outline: none;

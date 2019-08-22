@@ -29,6 +29,10 @@ $('#basket-container').click(function () {
     window.location.href = '/cart';
 });
 
+$('.additional-cart').click(function () {
+    window.location.href = '/cart';
+});
+
 $('.checkout').click(function () {
     window.location.href = '/cart/makeOrder'
 });
@@ -38,9 +42,10 @@ $('.login-button').click(function () {
 });
 
 $('#menu').click(function () {
-    console.log('d');
     let nav = $('.menu-nav');
+    let body = $('body');
     nav.css('display') === 'none' ? nav.fadeIn() : nav.fadeOut();
+    body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
 });
 
 $('.toggle-mobile').click(function () {

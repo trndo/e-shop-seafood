@@ -3,13 +3,14 @@
     {{ parent() }}
     {{ encore_entry_link_tags('rating') }}
     <style>
-        .badge-pill{
+        .badge-pill {
             position: absolute;
             left: 7px;
             top: 15px;
 
         }
-        .delFromRate{
+
+        .delFromRate {
             position: absolute;
             right: 10px;
             top: 15px;
@@ -35,7 +36,8 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <h1 class="h3 mb-2 text-gray-800">Мы рекомендуем</h1>
-                <p class="mb-4">Тут можно составить рэйтинг товаров , которые будут отображаться в секции "Мы Рекомендуем"</p>
+                <p class="mb-4">Тут можно составить рэйтинг товаров , которые будут отображаться в секции "Мы
+                    Рекомендуем"</p>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -50,9 +52,12 @@
                                         <ul class="list-group text-center" id="sortable">
                                             {% if results is not empty %}
                                                 {% for result in results %}
-                                                <li class="list-group-item ui-state-default" data-id="{{ result.getDataForRating() }}"><span class="badge badge-pill badge-primary">{{ result.rating }}</span>{{ result.name }}<i class="fas fa-times delFromRate"></i></li>
+                                                    <li class="list-group-item ui-state-default"
+                                                        data-id="{{ result.getDataForRating() }}"><span
+                                                                class="badge badge-pill badge-primary">{{ result.rating }}</span>{{ result.name }}
+                                                        <i class="fas fa-times delFromRate"></i></li>
                                                 {% endfor %}
-                                            {% else%}
+                                            {% else %}
                                             {% endif %}
                                         </ul>
                                     </div>
@@ -62,10 +67,12 @@
                         <hr>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Продукты</a>
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                   aria-controls="home" aria-selected="true">Продукты</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Рецепты</a>
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                   aria-controls="profile" aria-selected="false">Рецепты</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -73,10 +80,14 @@
                                 <div class="card-body">
                                     <ul class="nav nav-pills ">
                                         <li class="nav-item">
-                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search  live-search-form" data-url="products">
+                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search  live-search-form"
+                                                  data-url="products">
                                                 <div class="input-group">
                                                     <div class="ui-widget">
-                                                        <input type="text" class="form-control bg-light border-0 small searchItem" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                                        <input type="text"
+                                                               class="form-control bg-light border-0 small searchItem"
+                                                               placeholder="Введите имя продукта" aria-label="Search"
+                                                               name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary search-name" type="button">
@@ -110,10 +121,14 @@
                                 <div class="card-body">
                                     <ul class="nav nav-pills ">
                                         <li class="nav-item">
-                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form" data-url="receipts">
+                                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search live-search-form"
+                                                  data-url="receipts">
                                                 <div class="input-group">
                                                     <div class="ui-widget">
-                                                        <input type="text" class="form-control bg-light border-0 small searchItem" placeholder="Search for..." aria-label="Search" name="name" aria-describedby="basic-addon2">
+                                                        <input type="text"
+                                                               class="form-control bg-light border-0 small searchItem"
+                                                               placeholder="Введите имя рецепта" aria-label="Search"
+                                                               name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary search-name" type="button">
@@ -162,7 +177,8 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

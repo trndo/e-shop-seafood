@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model;
+use App\Validator\UniqueUser;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AdminModel
@@ -21,6 +22,7 @@ class AdminModel
      * @Assert\Email(message = "Проверьте правильность написание почты '{{ value }}'")
      * @Assert\NotBlank(message="Это поле должно быть заполнено")
      * @var string $email
+     * @UniqueUser()
      */
     private $email;
 
@@ -31,6 +33,7 @@ class AdminModel
     private $phone;
 
     /**
+     * @Assert\NotBlank(message="Выберите роль администратора")
      * @var mixed
      */
     private $role;

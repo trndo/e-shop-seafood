@@ -5,6 +5,7 @@ namespace App\Service\RegistrationService;
 
 use App\Entity\User;
 use App\Model\AdminModel;
+use App\Model\ConfirmationModelAdmin;
 use App\Model\OrderModel;
 use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
@@ -116,16 +117,16 @@ class RegisterUser implements RegisterUserInterface
         $this->entityManager->flush();
     }
 
-    public function getRegisterAdminData(AdminModel $model, User $admin): User
+    public function getRegisterAdminData(ConfirmationModelAdmin $model, User $admin): User
     {
-        $admin->setEmail($model->getEmail())
-             ->setName($model->getName())
+        $admin->setName($model->getName())
              ->setSurname($model->getSurname())
              ->setPhone($model->getPhone())
              ->setPassword($this->passwordEncoder->encodePassword(
                  $admin,
                  $model->getPassword()
              ));
+
 
             return $admin;
     }

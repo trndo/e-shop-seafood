@@ -45,16 +45,15 @@
             <div class="user-red-content">
                 <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>
                 <div class="user-title">
-                    <span class="attention-subtitle">Персональные данные</span><br>
-                    <span class="attention-title">Один раз заполнил - заказывай всё время!</span>
+                    <span class="attention-title">Один раз заполнил - заказывай всё время!</span><br>
+                    <span class="attention-subtitle">Ваш уникальный номер - {{ app.user.id }}</span><br>
                 </div>
-{#                <form>#}
                 {{ form_start(form,{'attr':{'class': 'user_info_update'}}) }}
                     <div class="input-user-container">
                         <div>
-                            {{ form_widget(form.name,{'attr':{'class': 'user-input login-input user-name',
+                            {{ form_widget(form.name,{'attr':{'class': 'user-input login-input',
                                                               'placeholder': 'Имя'}}) }}
-                            <small class="validation-mess">*поле не должно быть пустым</small>
+{#                            <small class="validation-mess">*поле не должно быть пустым</small>#}
                         </div>
                         <div>
                             {{ form_widget(form.email,{'attr':{'class': 'user-input login-input',
@@ -74,11 +73,6 @@
                     </div>
                             {{ form_widget(form.coordinates) }}
                             {{ form_widget(form.save,{'attr':{'class': 'login-button btn'}}) }}
-{#                            <button type="submit" id="user_info_update_save" name="user_info_update[save]" class="login-button btn">Сохранить</button>#}
-{#                    <div class="login-button">#}
-{#                        Сохранить#}
-{#                    </div>#}
-{#                </form>#}
                 {{ form_end(form) }}
             </div>
             <div class="attention-promotion">

@@ -70,8 +70,6 @@ $(document).ready(function () {
                     else
                         $('.item-res > input').val(1);
                 }
-
-
             }
         });
 
@@ -220,7 +218,31 @@ $(document).ready(function () {
             "user_info_update[name]": {
                 required: true,
                 minlength: 2
+            },
+            "user_info_update[email]": {
+                required: true,
+                email: true
+            },
+            "user_info_update[phone]": {
+                required: true,
+            },
+            "user_info_update[address]": {
+                required: false,
             }
+        },
+        messages:{
+            "user_info_update[name]": {
+                required: 'Заполните поле!',
+                minlength: 'Длина - более 2 символов!'
+            },
+            "user_info_update[email]": {
+                required: 'Заполните поле!',
+                email: 'Неправильный email!'
+            },
+            "user_info_update[phone]": {
+                required: 'Заполните поле!',
+            },
+
         },
         focusInvalid: true,
         errorClass: "validation-mess",
@@ -228,6 +250,9 @@ $(document).ready(function () {
         highlight: function(element, errorClass) {
             $(element).removeClass(errorClass);
             $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
         }
     })
 

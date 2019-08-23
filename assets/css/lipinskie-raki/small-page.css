@@ -727,16 +727,17 @@ input[type=number] {
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 100%;
     text-align: center;
     color: #FFFFFF;
     display: block;
-    padding-top: 1px;
+    padding-top: 2px;
 }
 
 .invalid-input{
-    background-image: url("../../img/validation-mark.svg");
+    background-image: url("../../img/times-solid.svg");
+    background-size: 12px;
     background-position: 140px 9px;
     background-repeat: no-repeat;
     padding-right: 27px;

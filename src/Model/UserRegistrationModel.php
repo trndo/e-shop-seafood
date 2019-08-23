@@ -22,24 +22,12 @@ class UserRegistrationModel
      */
     private $password;
 
-    /**
-     * @Assert\NotBlank(message="Введите ваше имя")
-     */
     private $name;
 
-    /**
-     * @Assert\NotBlank(message="Введите вашу фамилию")
-     */
     private $surname;
 
-    /**
-     * @Assert\NotBlank(message="Укажите ваш адрес")
-     */
     private $address;
 
-    /**
-     * @Assert\NotBlank(message="Укажите ваш телефон")
-     */
     private $phone;
 
 

@@ -12,11 +12,13 @@
             margin: 0 13px;
             width: 150px;
         }
+
         /* the parent */
         .slick-list {
             margin: 0;
         }
-        .slick-track{
+
+        .slick-track {
 
         }
     </style>
@@ -48,44 +50,65 @@
                                 <span id="title">Пора зарегестрироваться</span>
                             </div>
                         </div>
-                        <form method="post" action="">
+                        {{ form_start(form) }}
                             <div class="input-reg-container">
-                                <div>
-                                    <input type="text" placeholder="Имя*" class="user-input login-input invalid-input">
-                                    <small class="validation-mess">*поле не должно быть пустым</small>
-                                </div>
-                                <div>
-                                    <input type="text" placeholder="E-mail" class="user-input login-input">
-                                </div>
-                                <div>
-                                    <input type="password" placeholder="Пароль" class="user-input login-input">
-                                </div>
-                                <div>
-                                    <input type="password" placeholder="Повторите пароль" class="user-input login-input">
-                                </div>
+                                {{ form_widget(form.name,
+                                    {'attr':{'class': 'user-input login-input','placeholder': 'Имя'}
+                                }) }}
+                                {{ form_widget(form.email,
+                                    {'attr':{'class': 'user-input login-input','placeholder': 'E-mail'}
+                                }) }}
+                                {{ form_widget(form.password.first,
+                                    {'attr':{'class': 'user-input login-input'}
+                                }) }}
+                                {{ form_widget(form.password.second,
+                                    {'attr':{'class': 'user-input login-input'}
+                                }) }}
                             </div>
-                            <div class="login-button">
-                                Регестрация
-                            </div>
-                        </form>
+                            {{ form_widget(form.save,
+                                {'attr':{'class': 'user-input login-input login-button'}
+                            }) }}
+                            {{ form_end(form) }}
+                    </div>
+                            {#                                <div>#}
+                            {#                                    <input type="text" placeholder="Имя*" class="user-input login-input invalid-input">#}
+                            {#                                    <small class="validation-mess">*поле не должно быть пустым</small>#}
+                            {#                                </div>#}
+                            {#                                <div>#}
+                            {#                                    <input type="text" placeholder="E-mail" class="user-input login-input">#}
+                            {#                                </div>#}
+                            {#                                <div>#}
+                            {#                                    <input type="password" placeholder="Пароль" class="user-input login-input">#}
+                            {#                                </div>#}
+                            {#                                <div>#}
+                            {#                                    <input type="password" placeholder="Повторите пароль" class="user-input login-input">#}
+                            {#                                </div>#}
+
+{#                        <div class="login-button">#}
+{#                            Зарегистрироватся#}
+{#                        </div>#}
+{#                        </form>#}
                         {#<form method="post">
                             {% if error %}
                                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %} #}
-                    </div>
+
                     <div class="if-no-login reg">
                         <div class="login-with">
                             Зарегестрироваться с помощью:
                         </div>
                         <div class="login-with-container">
                             <div class="social-container">
-                                <div class="social facebook" data-login-social="{{ path('connectRegister',{'social': 'facebook'}) }}">
+                                <div class="social facebook"
+                                     data-login-social="{{ path('connectRegister',{'social': 'facebook'}) }}">
                                     <embed type="image/svg+xml" src="/assets/img/facebook.svg"/>
                                 </div>
-                                <div class="social google" data-login-social="{{ path('connectRegister',{'social': 'google'}) }}">
+                                <div class="social google"
+                                     data-login-social="{{ path('connectRegister',{'social': 'google'}) }}">
                                     <embed type="image/svg+xml" src="/assets/img/google.svg"/>
                                 </div>
-                                <div class="social insta" data-login-social="{{ path('connectRegister',{'social': 'instagram'}) }}">
+                                <div class="social insta"
+                                     data-login-social="{{ path('connectRegister',{'social': 'instagram'}) }}">
                                     <embed type="image/svg+xml" src="/assets/img/instagram-big.svg"/>
                                 </div>
                             </div>
@@ -95,7 +118,7 @@
             </div>
         </div>
         {% include 'elements/__footer.html.twig' with {'active': false} %}
-        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}
     </section>
 {% endblock %}
 

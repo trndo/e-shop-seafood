@@ -75,27 +75,6 @@ $(document).ready(function () {
 
     });
 
-    // $('.to_basket').on('click',function () {
-    //     let type = $(this).data('type');
-    //     let slug = $(this).data('name');
-    //     let quantity = $('.quantity').val();
-    //
-    //     $.ajax({
-    //        type: 'POST',
-    //        url: '/addToCart',
-    //        data: {
-    //            type: type,
-    //            slug: slug,
-    //            quantity: quantity
-    //        },
-    //        success: function (res) {
-    //             console.log(res);
-    //            $('.sum').text(res.totalSum+' ₴');
-    //        }
-    //     });
-    // });
-
-
     $(document).on('click', '.item-plus', function () {
 
         let input = $(this).siblings('.item-res').children();
@@ -118,12 +97,6 @@ $(document).ready(function () {
 
         if (val == '')
             return;
-
-        // if (val > 10) {
-        //     alert('Max 10');
-        //     input.val(10);
-        //     val = 10;
-        // }
 
         if (val < 0) {
             input.val(1);
@@ -207,12 +180,6 @@ $(document).ready(function () {
         });
     });
 
-    // $.validator.addClassRules('user-name', {
-    //     required: true,
-    //     minlength: 2,
-    //     message: "Andrey huy"
-    // })
-
     $(".user_info_update").validate({
         rules: {
             "user_info_update[name]": {
@@ -230,7 +197,7 @@ $(document).ready(function () {
                 required: false,
             }
         },
-        messages:{
+        messages: {
             "user_info_update[name]": {
                 required: 'Заполните поле!',
                 minlength: 'Длина - более 2 символов!'
@@ -247,15 +214,47 @@ $(document).ready(function () {
         focusInvalid: true,
         errorClass: "validation-mess",
         errorElement: 'small',
-        highlight: function(element, errorClass) {
+        highlight: function (element, errorClass) {
             $(element).removeClass(errorClass);
             $(element).addClass('invalid-input');
         },
         unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass('invalid-input');
         }
-    })
+    });
 
+    $(".login-form").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            email: {
+                required: 'Заполните поле!',
+                email: 'Неправильный email!'
+            },
+            password: {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            }
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
 });
 
 

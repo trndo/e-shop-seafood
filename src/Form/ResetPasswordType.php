@@ -35,13 +35,15 @@ class ResetPasswordType extends AbstractType
             $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Пароли не совпадают!',
-                'first_options' => ['label' => false,
+                'first_options' => [
+                    'label' => false,
                     'attr' => [
-                        'placeholder' => '*Введите пароль'
+                        'placeholder' => 'Введите пароль'
                     ]],
-                'second_options' => ['label' => false,
+                'second_options' => [
+                    'label' => false,
                     'attr' => [
-                        'placeholder' => '*Повторите пароль'
+                        'placeholder' => 'Повторите пароль'
                     ]]
             ]);
     }

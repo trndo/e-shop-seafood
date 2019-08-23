@@ -11,6 +11,7 @@ use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\TokenService\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -50,6 +51,7 @@ class RegisterUser implements RegisterUserInterface
     /**
      * @param UserRegistrationModel $model
      * @return User
+     * @throws \Exception
      */
     public function registerUser(UserRegistrationModel $model): User
     {
@@ -67,7 +69,8 @@ class RegisterUser implements RegisterUserInterface
             ->setToken(TokenGenerator::generateToken(
                 $this->entityManager->getRepository(User::class)->findTokens(),20
             ))
-            ->setRegistrationStatus(false);
+            ->setRegistrationStatus(false)
+            ->setUniqueId((Uuid::uuid1())->toString());
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -140,7 +143,8 @@ class RegisterUser implements RegisterUserInterface
             ->setAddress($orderModel->getAddress())
             ->setName($orderModel->getName())
             ->setSurname($orderModel->getSurname())
-            ->setRegistrationStatus(true);
+            ->setRegistrationStatus(true)
+            ->setUniqueId((Uuid::uuid1())->toString());
 
         $userTemporaryPass = $this->createShortPass($orderModel->getEmail(),$orderModel->getName(),6);
         $user->setPassword($this->passwordEncoder->encodePassword(

@@ -255,7 +255,218 @@ $(document).ready(function () {
             $(element).removeClass('invalid-input');
         }
     });
+
+    $(".user-registration").validate({
+        rules: {
+            "user_registration[name]": {
+                required: true,
+            },
+            'user_registration[email]': {
+                required: true,
+                email: true
+            },
+            'user_registration[password][first]': {
+                required: true,
+                minlength: 5
+            },
+            'user_registration[password][second]': {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            'user_registration[name]': {
+                required: 'Заполните поле!',
+            },
+            'user_registration[email]': {
+                required: 'Заполните поле!',
+                email: 'Неправильный email!'
+            },
+            'user_registration[password][first]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            },
+            'user_registration[password][second]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            },
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
+
+    $(".enter-email").validate({
+        rules: {
+            'reset_password[email]': {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            'reset_password[email]': {
+                required: 'Заполните поле!',
+                email: 'Неправильный email!'
+            },
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
+
+    $(".forgot-pass").validate({
+        rules: {
+            'reset_password[password][first]': {
+                required: true,
+                minlength: 5
+            },
+            'reset_password[password][second]': {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            'reset_password[password][first]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            },
+            'reset_password[password][second]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            }
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
+
+    $(".reset-password").validate({
+        rules: {
+            'reset_password[oldPassword]': {
+                required: true
+            },
+            'reset_password[password][first]': {
+                required: true,
+                minlength: 5
+            },
+            'reset_password[password][second]': {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            'reset_password[oldPassword]': {
+                required: 'Заполните поле!'
+            },
+            'reset_password[password][first]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            },
+            'reset_password[password][second]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            }
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
+
+    $(".order-form").validate({
+        rules: {
+            'order[name]': {
+                required: true,
+                minlength: 5
+            },
+            'order[surname]': {
+                required: false
+            },
+            'order[phoneNumber]': {
+                required: true
+            },
+            'order[email]': {
+                required: true,
+                email: true
+            },
+            'order[orderDate]': {
+                required: true,
+            },
+            'order[orderTime]': {
+                required: true,
+            },
+            'order[deliveryType]': {
+                required: true,
+            }
+        },
+        messages: {
+            'order[name]': {
+                required: 'Заполните поле!',
+                minlength: 'Минимальная длина - 5!'
+            },
+            'order[surname]': {
+                required: 'Заполните поле!'
+            },
+            'order[phoneNumber]': {
+                required: 'Заполните поле!'
+            },
+            'order[email]': {
+                required: 'Заполните поле!',
+                email: 'Неправильный email!'
+            },
+            'order[orderDate]': {
+                required: 'Заполните поле!',
+            },
+            'order[orderTime]': {
+                required: 'Заполните поле!',
+            },
+            'order[deliveryType]': {
+                required: 'Заполните поле!',
+            }
+        },
+        focusInvalid: true,
+        errorClass: 'validation-mess',
+        errorElement: 'small',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+            $(element).addClass('invalid-input');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('invalid-input');
+        }
+    });
+
+
 });
+
+
 
 
 

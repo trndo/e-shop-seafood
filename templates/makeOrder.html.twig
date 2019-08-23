@@ -14,19 +14,31 @@
                         Оформление заказа
                     </div>
                     {{ form_start(form,{'attr': {'class': 'order-form'}}) }}
+                    <div>
                         {{ form_widget(form.name,{'attr': {'class': 'order-input',
                             'placeholder':'Имя*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.surname,{'attr': {'class': 'order-input',
                             'placeholder':'Фамилия*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.phoneNumber,{'attr': {'class': 'order-input input-margin-29',
                             'placeholder':'+38(000)___-__-__*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.email,{'attr': {'class': 'order-input',
                             'placeholder':'Email*'}}) }}
+                    </div>
                         <div class="form-row input-margin-16">
+                            <div>
                             {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
                                 'placeholder':'Дата*'}}) }}
+                            </div>
+                            <div>
                             {{ form_widget(form.orderTime,{'attr': {'class': 'time-input',
                                 'placeholder':'14:00*'}}) }}
+                            </div>
                         </div>
                         <div class="delivery-type">
                             <div id="del" class="delivery-active delivery">
@@ -36,7 +48,9 @@
                                 Самовывоз
                             </div>
                         </div>
-                        {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
+                        <div>
+                            {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
+                        </div>
                         <div class="lipinka-street">
                             Улица Сергея Данченка 12, Киев
                         </div>

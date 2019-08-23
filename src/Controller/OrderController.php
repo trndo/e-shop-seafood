@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Receipt;
+use App\Entity\User;
 use App\Form\OrderType;
 use App\Mapper\OrderMapper;
 use App\Model\OrderModel;
@@ -29,35 +30,42 @@ class OrderController extends AbstractController
     {
         $chooseOrder['chooseOrder'] = $request->getSession()->get('chooseOrder');
         $user = $this->getUser();
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
-            $orderModel = OrderMapper::entityUserToOrderModel($user);
-        else
-            $orderModel = new OrderModel();
 
-        $form = $this->createForm(OrderType::class,$orderModel,$chooseOrder);
+        $orderModel = $this->getOrderModel($user);
+        $form = $this->createForm(OrderType::class, $orderModel, $chooseOrder);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($user) {
                 $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
                 $orderModel = $orderModel->setUser($user);
             } else {
                 $user = $registerUser->registerUnknownUser($orderModel);
                 $orderModel = $orderModel->setUser($user);
-                $orderInfo->addOrder($orderModel,$request);
+                $orderInfo->addOrder($orderModel, $request);
 
-                return $this->redirectToRoute('confirmUnknownRegistration',[
+                return $this->redirectToRoute('confirmUnknownRegistration', [
                     'email' => $user->getEmail()
                 ]);
             }
-            $orderInfo->addOrder($orderModel,$request);
+            $orderInfo->addOrder($orderModel, $request);
 
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('makeOrder.html.twig',[
+        return $this->render('makeOrder.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    private function getOrderModel(User $user)
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+            $orderModel = OrderMapper::entityUserToOrderModel($user);
+        else
+            $orderModel = new OrderModel();
+
+        return $orderModel;
     }
 
 

@@ -117,6 +117,11 @@ class User implements UserInterface
      */
     private $coordinates;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $uniqueId;
+
     public function __construct()
     {
         $this->orderInfos = new ArrayCollection();
@@ -383,6 +388,18 @@ class User implements UserInterface
     public function setCoordinates(?string $coordinates): self
     {
         $this->coordinates = $coordinates;
+
+        return $this;
+    }
+
+    public function getUniqueId(): ?string
+    {
+        return $this->uniqueId;
+    }
+
+    public function setUniqueId(?string $uniqueId): self
+    {
+        $this->uniqueId = $uniqueId;
 
         return $this;
     }

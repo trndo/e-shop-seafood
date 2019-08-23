@@ -50,10 +50,12 @@
                             <span class="attention-title">Ведите свою почту</span>
                         </div>
                         <div class="resetpass-container mt-5">
-                            {{ form_start(form) }}
-                            {{ form_widget(form.email, {'attr': {'class':'user-input forgot-pass-input'}}) }}
-                            <button type="submit" class="login-button btn mt-4 mb-3">Отправить</button>
-                            {{ form_end(form) }}
+                            {{ form_start(form, {'attr': {'class':'enter-email'}}) }}
+                                <div>
+                                    {{ form_widget(form.email, {'attr': {'class':'user-input forgot-pass-input'}}) }}
+                                </div>
+                                    <button type="submit" class="login-button btn mt-4 mb-3">Отправить</button>
+                                {{ form_end(form) }}
                         </div>
                     </div>
                 </main>

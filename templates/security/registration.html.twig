@@ -50,49 +50,26 @@
                                 <span id="title">Пора зарегестрироваться</span>
                             </div>
                         </div>
-                        {{ form_start(form) }}
+                        {{ form_start(form,{'attr':{'class': 'user-registration'}}) }}
                             <div class="input-reg-container">
-                                {{ form_widget(form.name,
-                                    {'attr':{'class': 'user-input login-input','placeholder': 'Имя'}
-                                }) }}
-                                {{ form_widget(form.email,
-                                    {'attr':{'class': 'user-input login-input','placeholder': 'E-mail'}
-                                }) }}
-                                {{ form_widget(form.password.first,
-                                    {'attr':{'class': 'user-input login-input'}
-                                }) }}
-                                {{ form_widget(form.password.second,
-                                    {'attr':{'class': 'user-input login-input'}
-                                }) }}
+                                <div>
+                                    {{ form_widget(form.name,{'attr':{'class': 'user-input login-input','placeholder': 'Имя'}}) }}
+                                </div>
+                                <div>
+                                    {{ form_widget(form.email,{'attr':{'class': 'user-input login-input','placeholder': 'E-mail'}}) }}
+                                </div>
+                                <div>
+                                    {{ form_widget(form.password.first,{'attr':{'class': 'user-input login-input'}}) }}
+                                </div>
+                                <div>
+                                    {{ form_widget(form.password.second,{'attr':{'class': 'user-input login-input'}}) }}
+                                </div>
                             </div>
-                            {{ form_widget(form.save,
-                                {'attr':{'class': 'user-input login-input login-button'}
+                        {{ form_widget(form.save,
+                            {'attr':{'class': 'user-input login-input login-button'}
                             }) }}
-                            {{ form_end(form) }}
+                        {{ form_end(form) }}
                     </div>
-                            {#                                <div>#}
-                            {#                                    <input type="text" placeholder="Имя*" class="user-input login-input invalid-input">#}
-                            {#                                    <small class="validation-mess">*поле не должно быть пустым</small>#}
-                            {#                                </div>#}
-                            {#                                <div>#}
-                            {#                                    <input type="text" placeholder="E-mail" class="user-input login-input">#}
-                            {#                                </div>#}
-                            {#                                <div>#}
-                            {#                                    <input type="password" placeholder="Пароль" class="user-input login-input">#}
-                            {#                                </div>#}
-                            {#                                <div>#}
-                            {#                                    <input type="password" placeholder="Повторите пароль" class="user-input login-input">#}
-                            {#                                </div>#}
-
-{#                        <div class="login-button">#}
-{#                            Зарегистрироватся#}
-{#                        </div>#}
-{#                        </form>#}
-                        {#<form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %} #}
-
                     <div class="if-no-login reg">
                         <div class="login-with">
                             Зарегестрироваться с помощью:

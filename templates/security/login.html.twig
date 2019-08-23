@@ -49,8 +49,12 @@
                         </div>
                         <form method="post" class="login-form">
                             <div class="login-input-container">
-                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="user-input login-input" placeholder="Email" required autofocus>
-                                <input type="password" name="password" id="inputPassword" class="user-input login-input" placeholder="Пароль" required>
+                                <div>
+                                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="user-input login-input" placeholder="Email" required autofocus>
+                                </div>
+                                <div>
+                                    <input type="password" name="password" id="inputPassword" class="user-input login-input" placeholder="Пароль" required>
+                                </div>
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             </div>
                             <div class="remeber_me">

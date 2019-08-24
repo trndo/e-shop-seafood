@@ -46,14 +46,13 @@
                 <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>
                 <div class="user-title">
                     <span class="attention-title">Один раз заполнил - заказывай всё время!</span><br>
-                    <span class="attention-subtitle">Ваш уникальный номер - {{ app.user.id }}</span><br>
+                    <span class="attention-subtitle">Ваш уникальный номер - {{ app.user.uniqueId }}</span><br>
                 </div>
                 {{ form_start(form,{'attr':{'class': 'user_info_update'}}) }}
                     <div class="input-user-container">
                         <div>
                             {{ form_widget(form.name,{'attr':{'class': 'user-input login-input',
                                                               'placeholder': 'Имя'}}) }}
-{#                            <small class="validation-mess">*поле не должно быть пустым</small>#}
                         </div>
                         <div>
                             {{ form_widget(form.email,{'attr':{'class': 'user-input login-input',

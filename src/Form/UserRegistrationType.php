@@ -24,6 +24,9 @@ class UserRegistrationType extends AbstractType
             ->add('name',TextType::class,[
                 'label' => false
             ])
+            ->add('friendUniqueId',TextType::class,[
+                'label' => false
+            ])
             ->add('password',RepeatedType::class,[
                 'type' => PasswordType::class,
                 'invalid_message' => 'Пароли не совпадают!',

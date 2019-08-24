@@ -21,11 +21,12 @@ class GoogleRegister implements SocialRegisterInterface
                 ->setName($owner->getName())
                 ->setSurname($owner->getLastName())
                 ->setGoogleId($owner->getId())
-                ->setRegistrationStatus(true);
+                ->setRegistrationStatus(true)
+                ->setUniqueId($user->generateUniqueId(6));
 
             return $user;
         }
-        throw new \InvalidArgumentException('Ty invalid nada googleuser');
+        throw new \InvalidArgumentException('Неправильный Google client');
     }
 
 }

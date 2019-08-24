@@ -22,14 +22,48 @@ class UserRegistrationModel
      */
     private $password;
 
+    /**
+     * @var string|null
+     */
     private $name;
 
+    /**
+     * @var string|null
+     */
     private $surname;
 
+    /**
+     * @var string|null
+     */
     private $address;
 
+    /**
+     * @var string|null
+     */
     private $phone;
 
+    /**
+     * @var string|null
+     */
+    private $friendUniqueId;
+
+    /**
+     * @return string|null
+     */
+    public function getFriendUniqueId(): ?string
+    {
+        return $this->friendUniqueId;
+    }
+
+    /**
+     * @param string|null $friendUniqueId
+     * @return UserRegistrationModel
+     */
+    public function setFriendUniqueId(?string $friendUniqueId): UserRegistrationModel
+    {
+        $this->friendUniqueId = $friendUniqueId;
+        return $this;
+    }
 
     public function getEmail(): ?string
     {

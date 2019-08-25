@@ -42,6 +42,7 @@ class OrderController extends AbstractController
             } else {
                 $user = $registerUser->registerUnknownUser($orderModel);
                 $orderModel = $orderModel->setUser($user);
+
                 $orderInfo->addOrder($orderModel, $request);
 
                 return $this->redirectToRoute('confirmUnknownRegistration', [

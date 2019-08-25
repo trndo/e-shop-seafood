@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -51,6 +52,9 @@ class OrderType extends AbstractType
                 'label' => false
             ])
             ->add('coordinates', HiddenType::class)
+            ->add('comment',TextareaType::class,[
+                'label' => false
+            ])
             ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'checkout-order',

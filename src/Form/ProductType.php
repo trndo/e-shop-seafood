@@ -173,7 +173,7 @@ class ProductType extends AbstractType
         return  $event->getData();
     }
 
-    private function findExistedSize(string $chosenSize, Category $chosenCategory, array $options, string $primarySize): ?FormError
+    private function findExistedSize(string $chosenSize, Category $chosenCategory, array $options, ?string $primarySize): ?FormError
     {
         $productsFromCategory = $this->productRepository->findProductsBy(null, $chosenCategory->getId());
         $sizes = ['S', 'M', 'L', 'XL', 'XXL'];

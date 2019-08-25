@@ -110,4 +110,19 @@ $('#order_info_totalPrice').abacus(totalSum);
     });
 
     $('.phone').mask('+38(000)000-00-00', {placeholder: "+38(___)___-__-__"});
+
+    $(document).on('click', '.category-adjust', function () {
+        let categoryId = $(this).data('id');
+        console.log(categoryId);
+        $.ajax({
+            type: "POST",
+            url: "/orderAdjustment/showItems",
+            data: {
+                categoryId: categoryId
+            }, success(res) {
+                $('tbody').append(res);
+            }
+        })
+    })
+
 })(jQuery); // End of use strict

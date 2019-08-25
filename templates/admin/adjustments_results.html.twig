@@ -1,0 +1,22 @@
+{% for item in items %}
+<tr>
+    <td>{{ item.id }}</td>
+    <td><img src="{{ item.TitlePhotoPath }}" width="200px" height="200px" style="object-fit: cover "></td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.category.name }}</td>
+    <td>{{ item.price }}/{{ item.unit }}</td>
+        <td>
+    {% if item.type == 'receipt' %}
+            {% for product in item.products %}
+
+                <input type="radio" id="radioButton" value="{{ product.productSize }}">
+            {% endfor %}
+    {% else %}
+        {{ item.productSize }}
+    {% endif %}
+        </td>
+    <td>
+        <button type="button" class="btn btn-primary">Добавить</button>
+    </td>
+</tr>
+{% endfor %}

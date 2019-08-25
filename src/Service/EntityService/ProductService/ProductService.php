@@ -259,7 +259,9 @@ class ProductService implements ProductServiceInterface
 
     public function getProductsCategories(): ?CategoryCollection
     {
-        return new CategoryCollection($this->categoryService->getCategories('product'));
+        return new CategoryCollection(
+            $this->categoryService->getCategories('product')
+        );
     }
 
 

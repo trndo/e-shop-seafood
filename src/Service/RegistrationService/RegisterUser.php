@@ -71,7 +71,8 @@ class RegisterUser implements RegisterUserInterface
             ->setRegistrationStatus(false)
             ->setUniqueId($user->generateUniqueId(6));
 
-        if ($model->getFriendUniqueId()) {
+        $friendUniqueId = $model->getFriendUniqueId();
+        if ($friendUniqueId && $this->checkIsFriendIdIsValid($friendUniqueId)) {
             $user->setRegisterWithUniqueId(true);
         }
 
@@ -172,7 +173,13 @@ class RegisterUser implements RegisterUserInterface
         $randomSymbols = str_shuffle($userData);
 
         return \substr(\md5($randomSymbols), 0, $numberOfSymbols);
+    }
 
+    private function checkIsFriendIdIsValid(string $userUniqueId):bool
+    {
+        $user = $this->entityManager->getRepository(User::class)->findUserByUniqueId($userUniqueId);
+
+        return $user ? true : false;
     }
 
 

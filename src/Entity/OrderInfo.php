@@ -78,6 +78,11 @@ class OrderInfo
      */
     private $orderUniqueId;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -247,6 +252,18 @@ class OrderInfo
     public function setOrderUniqueId(?int $orderUniqueId): self
     {
         $this->orderUniqueId = $orderUniqueId;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

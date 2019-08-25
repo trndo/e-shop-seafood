@@ -87,8 +87,11 @@ class OrderInfoHandler implements OrderInfoInterface
             $this->entityManager->persist($orderDetail);
         }
 
-        $orderInfo->setTotalPrice($totalSum);
-        $orderInfo->setOrderUniqueId($this->generateHash($orderInfo, 7));
+
+        $orderInfo->setTotalPrice($totalSum)
+            ->setOrderUniqueId(
+                $this->generateHash($orderInfo, 7)
+            )->setComment($orderModel->getComment());
 
         $this->entityManager->persist($orderInfo);
 

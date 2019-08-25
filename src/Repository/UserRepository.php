@@ -65,4 +65,18 @@ class UserRepository extends ServiceEntityRepository
         $em->persist($user);
         $em->flush();
     }
+
+    /**
+     * @param string|null $uniqueId
+     * @return User|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findUserByUniqueId(?string $uniqueId): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.uniqueId = :uniqueId')
+            ->setParameter('uniqueId',$uniqueId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

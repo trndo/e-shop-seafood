@@ -17,7 +17,8 @@ class FacebookRegister implements SocialRegisterInterface
             $user->setName($owner->getName())
                 ->setSurname($owner->getLastName())
                 ->setFacebookId($owner->getId())
-                ->setRegistrationStatus(true);
+                ->setRegistrationStatus(true)
+                ->setUniqueId($user->generateUniqueId(6));
 
             if ($owner->getEmail() != null) {
                 $user->setEmail($owner->getEmail());
@@ -25,6 +26,6 @@ class FacebookRegister implements SocialRegisterInterface
 
             return $user;
         }
-        throw new \InvalidArgumentException('Ty invalid nada facebookUser');
+        throw new \InvalidArgumentException('Неправильный Facebook client');
     }
 }

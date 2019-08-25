@@ -71,6 +71,12 @@ class OrderModel
     private $orderDetails;
 
     /**
+     * @var string|null
+     */
+    private $comment;
+
+
+    /**
      * @return Collection|null
      */
     public function getOrderDetails(): ?Collection
@@ -89,8 +95,6 @@ class OrderModel
 
         return $this;
     }
-
-
 
     /**
      * @return string|null
@@ -303,13 +307,21 @@ class OrderModel
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
 
-
-
-
-
-
-
+    /**
+     * @param string|null $comment
+     */
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
+    }
 
 
 }

@@ -34,6 +34,11 @@
     display: block;
     margin-bottom: 30px;
 }
+
+.make-order-height{
+    height: 693px;
+}
+
 #shopping-cart{
     position: absolute;
     width: 277px;
@@ -86,6 +91,10 @@
     left: 91px;
     padding-left: 15px;
     z-index: 5;
+}
+
+.cart-container h3{
+    color: white;
 }
 
 .order{
@@ -291,10 +300,13 @@
 
 .order-block{
     width: 400px;
-    height: 626px;
+    height: 693px;
     position: relative;
     display: inline-block;
     float: left;
+}
+.text-area{
+    resize: none;
 }
 
 .order-block #order-title{
@@ -442,7 +454,7 @@
     border-radius: 50px;
     position: relative;
     margin: 0 auto;
-    margin-top: 54px;
+    margin-top: 34px;
     width: 207px;
     height: 38px;
     font-family: Raleway,sans-serif;
@@ -455,13 +467,14 @@
     color: #F13A3A;
     cursor: pointer;
     display: block;
+    padding: 0 0;
 }
 button:focus{
     outline: none;
 }
 #map-block{
     width: 370px;
-    height: 626px;
+    height: 693px;
     position: relative;
     display: inline-block;
 }
@@ -630,7 +643,6 @@ input[type=number] {
     line-height: 100%;
     color: #FFFFFF;
     margin-top: 15px;
-    text-decoration-line: underline;
 }
 
 .forgot-pass a{
@@ -722,17 +734,22 @@ input[type=number] {
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 100%;
     text-align: center;
     color: #FFFFFF;
     display: block;
-    padding-top: 1px;
+    padding-top: 2px;
+    margin: 0 auto;
+}
+.validation-mess-micro{
+    width: 80px;
 }
 
 .invalid-input{
-    background-image: url("../../img/validation-mark.svg");
-    background-position: 140px 9px;
+    background-image: url("../../img/times-solid.svg");
+    background-size: 12px;
+    background-position: 95% 8px;
     background-repeat: no-repeat;
     padding-right: 27px;
 }

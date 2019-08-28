@@ -1,125 +1,150 @@
 {% extends 'admin_base.html.twig' %}
 {% block body %}
     <!-- Page Wrapper -->
-<div id="wrapper">
-    {{ include('elements/admin_nav.html.twig', {'active' : false}) }}
-    <!-- End of Sidebar -->
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-            <!-- Topbar -->
-            {{ include('elements/admin_header.html.twig') }}
-            <!-- End of Topbar -->
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Заказ #123123</h1>
-                <hr class="sidebar-divider">
-                <div class="row relative justify-content-center mt-3">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body" style="padding-top: 60px">
-                                <div class="row justify-content-center">
-                                    <div class="col-8 col-md-8 col-sm-10">
-                                        <ul class="list-group">
-                                            {{ form_start(form,{'attr':{'class': 'text-primary h5'}}) }}
-                                            {% for orderDetail in form.orderDetails %}
-                                                <li class="list-group-item"><span class="badge badge-dark">{{ loop.index }}</span>
-                                                    {% if orderDetail.receipt is defined %}
-                                                        {{ form_row(orderDetail.receipt.name,{'label': 'Рецепт',
-                                                            'attr':{'class': 'text-center'}}
-                                                        ) }}
-                                                        {{ form_row(orderDetail.product.name,
-                                                            {'label': 'Продукт',
-                                                            'attr':{'class': 'text-center'}}
-                                                        ) }}
-                                                        {{ form_row(orderDetail.product.supply.quantity,
-                                                            {'label': 'В наличии кг/шт/л/грамм: ','attr': {
-                                                                'class': 'text-center',
-                                                                'style': 'color:red'}
-                                                        }) }}
-                                                        {{ form_row(orderDetail.receipt.price) }}
-                                                        {{ form_row(orderDetail.product.price,{'attr':
-                                                            {'class': 'receipt_product'}
-                                                        }) }}
-                                                    {% else %}
-                                                        {{ form_row(orderDetail.product.name,
-                                                            {'label': 'Продукт',
-                                                            'attr':
-                                                                {'class': 'text-center'}
-                                                        }) }}
-                                                        {{ form_row(orderDetail.product.supply.quantity,
-                                                            {'label': 'В наличии кг/шт/л/грамм: ',
-                                                                'attr':
-                                                                {'class': 'text-center',
-                                                                    'style': 'color:red'}
-                                                            }) }}
-                                                        {{ form_row(orderDetail.product.price) }}
-                                                    {% endif %}
-                                                        {{ form_row(orderDetail.quantity,{'label': 'Ко-лво в заказе: ','attr': {
-                                                            'min' : 1,
-                                                            'max' : orderDetail.vars.value.product.supply.quantity,
-                                                        },'type': 'number'}) }}
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+    <div id="wrapper">
+        {{ include('elements/admin_nav.html.twig', {'active' : false}) }}
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                {{ include('elements/admin_header.html.twig') }}
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div>Номер заказа: <span id="order-number">{{ order.id }}</span></div>
+                    <h1 class="h3 mb-2 text-gray-800">Изменить заказ</h1>
+                    <hr class="sidebar-divider">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-12">
+                            <button type="button" onclick="window.location.href='{{ path('adjustmentOrder',{'id': order.id}) }}'" class="btn btn-outline-danger btn-lg">Добавить товар</button>
+                        </div>
+                    </div>
+                    <div class="row relative justify-content-center mt-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-top: 60px">
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%"
+                                                       cellspacing="0">
+                                                    <thead>
+
+                                                    <tr>
+                                                        <th>№</th>
+                                                        <th>Обложка</th>
+                                                        <th>Название</th>
+                                                        <th>Категория</th>
+                                                        <th>Цена/к-во</th>
+                                                        <th>Размерность</th>
+                                                        <th>Действие</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for orderDetail in order.orderDetails %}
+                                                        <tr data-detail="{{ orderDetail.id }}">
+                                                            <td>{% if orderDetail.receipt %}
+                                                                    <p data-receipt="{{ orderDetail.receipt.id }}">{{ orderDetail.receipt.id }}</p>
+                                                                {% else %}
+                                                                    <p data-product="{{ orderDetail.product.id }}">{{ orderDetail.product.id }}</p>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ orderDetail.receipt ? orderDetail.receipt.TitlePhotoPath : orderDetail.product.TitlePhotoPath }}"
+                                                                     width="200px"
+                                                                     height="200px" style="object-fit: cover "></td>
+                                                            <td>{{ orderDetail.receipt ? orderDetail.receipt.name~' + '~orderDetail.product.name : orderDetail.product.name }}</td>
+                                                            <td>{{ orderDetail.receipt ? orderDetail.receipt.category.name : orderDetail.product.category.name }}</td>
+                                                            <td>{{ orderDetail.receipt ? orderDetail.receipt.price~'/'~orderDetail.receipt.unit :  orderDetail.product.price~'/'~orderDetail.product.unit }}</td>
+                                                            <td class="prodId" data-item="{{ orderDetail.product.id }}">
+                                                                <span data-item="{{ orderDetail.product.id }}">{{ orderDetail.product.productSize }}</span>
+                                                                <p>Цена продукта: {{ orderDetail.product.price~'/'~ orderDetail.product.unit }}</p>
+                                                                <p style="color: red">Доступно в резерве: {{ orderDetail.product.supply.reservationQuantity~' '~ orderDetail.product.unit }}</p>
+                                                                <p style="color: #ff5605">Доступно на складе: {{ orderDetail.product.supply.reservationQuantity~' '~ orderDetail.product.unit }}</p>
+                                                            </td>
+                                                            <td >
+                                                                <input class="form-control adjust-input w-50 d-inline-block" type="number" value="{{ orderDetail.quantity }}" min="1" step="0.5">
+                                                                <button type="button"
+                                                                        class="btn btn-primary addOrderDetail"
+                                                                        data-item="{{ orderDetail.receipt ? orderDetail.receipt.id : orderDetail.product.id }}">
+                                                                    Добавить
+                                                                </button>
+                                                                <br>
+                                                                {% if order.status == 'new' and order.orderDetails|length > 1 %}
+                                                                    <i class="fas fa-trash-alt"
+                                                                       data-id="{{ orderDetail.id }}"></i> - Удалить
+                                                                {% elseif order.status == 'new' %}
+                                                                    <i class="fas fa-trash-alt"
+                                                                       onclick="if(confirm('Остался один продукт в заказе. Вы хотите удалить закз полностью ?'))window.location.href ='{{ path('cancelOrder', {'id': order.id}) }}'"></i>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <hr>
+                                    {{ form_start(form,{'attr': {'class':'text-center'}}) }}
+                                    <div class="row justify-content-between text-center">
+                                        <div class="text-center text-primary h4">
+                                            На какую дату: {{ form_widget(form.orderDate) }}
+                                        </div>
+                                        <div class="text-center text-primary h4">
+                                            На какое время: {{ form_widget(form.orderTime) }}
+                                        </div>
+                                        <div class=" text-center text-primary h4 ">
+                                            Cумма: {{ form_widget(form.totalPrice) }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-12 text-center">
+                                        {{ form_widget(form.submit) }}
+                                    </div>
+                                    {{ form_end(form) }}
                                 </div>
-                                <hr>
-                                <div class="row justify-content-center">
-                                    <div class="col-4 text-center text-primary h4">
-                                        На какую дату: {{ form_widget(form.orderDate) }}
-                                    </div>
-                                    <div class="col-4 text-center text-primary h4">
-                                        На какое время: {{ form_widget(form.orderTime) }}
-                                    </div>
-                                    <div class="col-4 text-center text-primary h4">
-                                        Cумма: {{ form_widget(form.totalPrice) }}
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                     {{ form_widget(form.submit) }}
-                                </div>
-                                {{ form_end(form) }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            {{ include('elements/admin_footer.html.twig') }}
+            <!-- End of Footer -->
         </div>
-        <!-- End of Main Content -->
-        <!-- Footer -->
-        {{ include('elements/admin_footer.html.twig') }}
-        <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
+
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -129,7 +154,10 @@
         let coordinates = '{{ order.coordinates }}';
         console.log(coordinates);
         let map;
-        let position = { lat: Number(coordinates.substr(0,coordinates.indexOf(' '))), lng: Number(coordinates.substr(coordinates.indexOf(' ')+1))};
+        let position = {
+            lat: Number(coordinates.substr(0, coordinates.indexOf(' '))),
+            lng: Number(coordinates.substr(coordinates.indexOf(' ') + 1))
+        };
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {

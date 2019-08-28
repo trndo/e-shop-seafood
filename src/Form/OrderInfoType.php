@@ -25,18 +25,11 @@ class OrderInfoType extends AbstractType
                 ->add('orderTime',TimeType::class,[
                     'label' => false
                 ])
-                ->add('orderDetails',CollectionType::class, [
-                    'entry_type' => OrderDetailsType::class,
-                    'by_reference' => false,
-                    'prototype' => false,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                ])
                 ->add('totalPrice',NumberType::class,[
                     'label' => 'Cумма'
                 ])
                  ->add('submit', SubmitType::class,[
-                     'label' => 'Update'
+                     'label' => 'Подтвердить'
                  ]);
 
     }

@@ -32,7 +32,7 @@ class UserController extends AbstractController
      * @param UserServiceInterface $userService
      * @return \Symfony\Component\HttpKernel\Exception\NotFoundHttpException|Response
      */
-    public function enterEmail(Request $request, UserServiceInterface $userService)
+    public function enterEmail(Request $request, UserServiceInterface $userService):Response
     {
         $emailModel = new ResetPasswordModel();
         $options['email'] = true;
@@ -48,10 +48,10 @@ class UserController extends AbstractController
                 $userService->resetPassword($user);
             }
             if (!$user->getRegistrationStatus()) {
-                return $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
+                throw $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
             }
             if (!$user) {
-                return $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
+                throw $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
             }
             return $this->redirectToRoute('home');
         }
@@ -81,7 +81,7 @@ class UserController extends AbstractController
             $user = $userService->getUserByPassToken($user->getPassToken());
             $userService->addNewPassword($user, $password);
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('forgot_password.html.twig', [
@@ -91,7 +91,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user-{id}/resetPassword")
+     * @Route("/user-{id}/resetPassword", name="resetPass")
      * @param Request $request
      * @param UserServiceInterface $userService
      * @param User $user

@@ -4,8 +4,36 @@
         <div class="container-inside">
             {% include 'elements/__header.html.twig' with {'active': active } %}
             <main>
+                <div class="warn">
+                    <h2>
+                        Тут ты можешь купить только живых раков!
+                    </h2>
+                    <div class="custom-button warn-button">
+                        Раки по рецепту
+                    </div>
+                </div>
+                <div class="additional-nav">
+                    <div class="additional-nav-container">
+                        <div class="additional-nav-item">
+                            Живые раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Вареные раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Жареные раки
+                        </div>
+                    </div>
+                </div>
+                <div class="additional-special">
+                    <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
+                    <!--<div class="additional-fo">
+                        Быстрый заказ
+                        <div></div>
+                    </div> -->
+                </div>
                 <div class="sizes-container">
-                    <div class="size-row">
+{#                    <div class="size-row">#}
                         {% set items = items|sortSizes %}
                         {% if items[0] is defined and items[0].status %}
                             <div class="size-card">
@@ -47,16 +75,8 @@
                                 </div>
                             </div>
                         {% endif %}
-                        <div class="warn">
-                            <h2>
-                                Тут ты можешь купить только живых раков!
-                            </h2>
-                            <div class="custom-button warn-button">
-                                Раки по рецепту
-                            </div>
-                        </div>
-                    </div>
-                    <div class="size-row">
+{#                    </div>#}
+{#                    <div class="size-row">#}
                         {% if items[2] is defined and items[2].status %}
                             <div class="size-card">
                                 <div class="size-card-info">
@@ -79,7 +99,6 @@
                         {% endif %}
                         {% if items[3] is defined and items[3].status%}
                         <div class="size-card">
-                            <div class="size-card">
                                 <div class="size-card-info">
                                     {{ getSize(items[3].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -96,12 +115,10 @@
                                      onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'">
                                     Перейти
                                 </div>
-                            </div>
                         </div>
                         {% endif %}
                         {% if items[4] is defined and items[4].status%}
                         <div class="size-card">
-                            <div class="size-card">
                                 <div class="size-card-info">
                                     {{ getSize(items[4].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -118,10 +135,9 @@
                                      onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'">
                                     Перейти
                                 </div>
-                            </div>
                         </div>
                         {% endif %}
-                    </div>
+{#                    </div>#}
                 </div>
             </main>
         </div>
@@ -146,6 +162,7 @@
         </div>
     </div>
     {% include 'elements/__footer.html.twig' with {'active': active } %}
+    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
     <div id="overlay" style="display: none">
         <div class="red-content">
             <div id="shopping-cart">

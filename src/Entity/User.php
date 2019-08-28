@@ -117,6 +117,16 @@ class User implements UserInterface
      */
     private $coordinates;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $uniqueId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $registerWithUniqueId;
+
     public function __construct()
     {
         $this->orderInfos = new ArrayCollection();
@@ -386,6 +396,37 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getUniqueId(): ?string
+    {
+        return $this->uniqueId;
+    }
+
+    public function setUniqueId(?string $uniqueId): self
+    {
+        $this->uniqueId = $uniqueId;
+
+        return $this;
+    }
+
+    public function getRegisterWithUniqueId(): ?bool
+    {
+        return $this->registerWithUniqueId;
+    }
+
+    public function setRegisterWithUniqueId(?bool $registerWithUniqueId): self
+    {
+        $this->registerWithUniqueId = $registerWithUniqueId;
+
+        return $this;
+    }
+
+    public function generateUniqueId(int $length): string
+    {
+        return substr(uniqid(md5(new \DateTimeImmutable("now"))),0, $length);
+    }
+
+
 
 
 

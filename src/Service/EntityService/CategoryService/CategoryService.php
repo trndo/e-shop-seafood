@@ -96,6 +96,21 @@ class CategoryService implements CategoryServiceInterface
         $this->em->flush();
     }
 
+    public function getCategoriesByType(?string $type): ?CategoryCollection
+    {
+        return new CategoryCollection(
+            $this->repository->getCategories($type)
+        );
+    }
+
+    public function getCategoryById(?int $id): ?Category
+    {
+        if ($id) {
+           return $this->repository->getCategoryById($id);
+        }
+
+        return null;
+    }
 
 
 }

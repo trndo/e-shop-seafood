@@ -39,7 +39,7 @@ class RegisterUser implements RegisterUserInterface
      * @param MailSenderInterface $mailSender
      * @param SessionInterface $session
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder,EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
@@ -50,24 +50,32 @@ class RegisterUser implements RegisterUserInterface
     /**
      * @param UserRegistrationModel $model
      * @return User
+     * @throws \Exception
      */
     public function registerUser(UserRegistrationModel $model): User
     {
         $user = new User();
 
         $user->setEmail($model->getEmail())
-             ->setPassword($this->passwordEncoder->encodePassword(
+            ->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 $model->getPassword()
-                ))
+            ))
             ->setName($model->getName())
             ->setSurname($model->getSurname())
             ->setAddress($model->getAddress())
             ->setPhone($model->getPhone())
             ->setToken(TokenGenerator::generateToken(
-                $this->entityManager->getRepository(User::class)->findTokens(),20
+                $this->entityManager->getRepository(User::class)->findTokens(), 20
             ))
-            ->setRegistrationStatus(false);
+            ->setRegistrationStatus(false)
+            ->setUniqueId($user->generateUniqueId(6));
+
+        $friendUniqueId = $model->getFriendUniqueId();
+
+        if ($friendUniqueId && $this->checkIsFriendIdIsValid($friendUniqueId)) {
+            $user->setRegisterWithUniqueId($friendUniqueId);
+        }
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -94,16 +102,16 @@ class RegisterUser implements RegisterUserInterface
                 $model->getRole()
             ])
             ->setToken(TokenGenerator::generateToken(
-                $this->entityManager->getRepository(User::class)->findTokens(),60
+                $this->entityManager->getRepository(User::class)->findTokens(), 60
             ))
             ->setRegistrationStatus(false);
 
-            $this->entityManager->persist($admin);
-            $this->entityManager->flush();
+        $this->entityManager->persist($admin);
+        $this->entityManager->flush();
 
-            $this->mailSender->sendAdminMessage($admin);
+        $this->mailSender->sendAdminMessage($admin);
 
-            return $admin;
+        return $admin;
     }
 
     /**
@@ -120,15 +128,15 @@ class RegisterUser implements RegisterUserInterface
     public function getRegisterAdminData(ConfirmationModelAdmin $model, User $admin): User
     {
         $admin->setName($model->getName())
-             ->setSurname($model->getSurname())
-             ->setPhone($model->getPhone())
-             ->setPassword($this->passwordEncoder->encodePassword(
-                 $admin,
-                 $model->getPassword()
-             ));
+            ->setSurname($model->getSurname())
+            ->setPhone($model->getPhone())
+            ->setPassword($this->passwordEncoder->encodePassword(
+                $admin,
+                $model->getPassword()
+            ));
 
 
-            return $admin;
+        return $admin;
     }
 
     public function registerUnknownUser(OrderModel $orderModel): User
@@ -140,32 +148,39 @@ class RegisterUser implements RegisterUserInterface
             ->setAddress($orderModel->getAddress())
             ->setName($orderModel->getName())
             ->setSurname($orderModel->getSurname())
-            ->setRegistrationStatus(true);
+            ->setRegistrationStatus(true)
+            ->setUniqueId($user->generateUniqueId(6));
 
-        $userTemporaryPass = $this->createShortPass($orderModel->getEmail(),$orderModel->getName(),6);
+        $userTemporaryPass = $this->createShortPass($orderModel->getEmail(), $orderModel->getName(), 6);
         $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                $userTemporaryPass
+            $user,
+            $userTemporaryPass
         ));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->mailSender->sendAboutUnknownRegistration($user,$userTemporaryPass);
+        $this->mailSender->sendAboutUnknownRegistration($user, $userTemporaryPass);
 
         $this->session->set('userEmail', $user->getEmail());
-        $this->session->set('userPass',$userTemporaryPass);
+        $this->session->set('userPass', $userTemporaryPass);
 
         return $user;
     }
 
     private function createShortPass(string $email, string $name, int $numberOfSymbols): string
     {
-        $userData = $email.$name;
+        $userData = $email . $name;
         $randomSymbols = str_shuffle($userData);
 
-        return \substr(\md5($randomSymbols),0,$numberOfSymbols);
+        return \substr(\md5($randomSymbols), 0, $numberOfSymbols);
+    }
 
+    private function checkIsFriendIdIsValid(string $userUniqueId):bool
+    {
+        $user = $this->entityManager->getRepository(User::class)->findUserByUniqueId($userUniqueId);
+
+        return $user ? true : false;
     }
 
 

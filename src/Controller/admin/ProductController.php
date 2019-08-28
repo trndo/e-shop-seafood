@@ -173,7 +173,8 @@ class ProductController extends AbstractController
      */
     public function getProductsForReceipts(Request $request,ProductServiceInterface $service): Response
     {
-       $products = $service->getProductsByCriteria(['category' => $request->query->get('category')]);
+        $category = $request->query->get('category');
+        $products = $service->getProductsByCriteria(null, $category);
        return $this->render('elements/products_for_receipts.html.twig', [
            'products' => $products,
            'type' => $request->query->get('type')
@@ -189,7 +190,8 @@ class ProductController extends AbstractController
      */
     public function getProductsByCategory(Request $request, ProductServiceInterface $service): Response
     {
-        $products = $service->getProductsByCriteria(['category' => $request->query->get('category')]);
+        $category = $request->query->get('category');
+        $products = $service->getProductsByCriteria(null, $category);
         return $this->render('elements/all_products_for_receipts.html.twig', [
             'products' => $products,
         ]);

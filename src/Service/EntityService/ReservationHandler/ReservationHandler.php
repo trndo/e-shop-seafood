@@ -114,7 +114,8 @@ class ReservationHandler implements ReservationInterface
             $reservation = $this->getReservation($item->getUniqueIndex());
         } elseif ($item->getItemType() == 'receipt') {
             $reservation = $this->getReservation($item->getUniqueIndex());
-        } else $reservation = null;
+        } else
+            $reservation = null;
         if ($reservation instanceof Reservation) {
             $supply = $reservation->getProduct()->getSupply();
             $supply->setReservationQuantity($supply->getReservationQuantity() + $reservation->getReservationQuantity());

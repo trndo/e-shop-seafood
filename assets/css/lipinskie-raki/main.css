@@ -25,7 +25,7 @@ body{
 }
 
 .container-inside{
-    top: 39px;
+    padding-top: 39px;
     position: relative;
     margin: 0 auto;
     width: 83%;
@@ -233,7 +233,6 @@ main{
 
 #promotion{
     position: relative;
-    top: -66px;
     width: 770px;
     height: 178px;
     z-index: 2;
@@ -242,6 +241,7 @@ main{
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    margin-bottom: 51px;
 }
 
 .promotion-text{
@@ -347,7 +347,7 @@ main{
 
 .product-card p{
     width: 173px;
-    height: 32px;
+    max-height: 40px;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
@@ -355,7 +355,7 @@ main{
     line-height: 100%;
     text-align: justify;
     margin-top: 1px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     position: relative;
     color: #FFFFFF;
     overflow: hidden;
@@ -686,7 +686,7 @@ footer{
     font-size: 24px;
     line-height: 100%;
     color: #9e9999;
-    overflow-y: scroll;
+    overflow: scroll;
     max-height: 65%;
 
 }
@@ -792,9 +792,9 @@ footer{
 
 .choose-type-container{
     display: flex;
-    width: 400px;
-    margin: 4px auto;
-    justify-content: space-between;
+    width: 100%;
+    margin: 25px auto;
+    justify-content: space-around;
     z-index: 200;
     position: relative;
 }
@@ -803,6 +803,7 @@ footer{
     width: 205px;
     margin: 0 auto;
 }
+
 #lobster-2{
     position: absolute;
     left: -70px;

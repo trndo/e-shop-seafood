@@ -3,6 +3,7 @@
     <div class="container">
         {% set sum = app.session.get('totalSum') %}
         {% include 'elements/small_header.html.twig' %}
+        <main>
         <div class="red-content">
             <img id="close-modal" src="/assets/img/close-modal.svg"/>
             <div id="shopping-cart">
@@ -20,7 +21,7 @@
                 {% set session = app.session.get('cart') %}
 {#                {% dump(session) %}{% dump(sum) %}#}
                 {% if session == null %}
-                    <h3 style="color: white">Ваша корзина пустая!</h3>
+                    <h3>Ваша корзина пустая!</h3>
                 {% endif %}
                 {% for cartItem in items %}
                     <div class="order-container">
@@ -70,6 +71,7 @@
                 <div class="checkout">Оформить</div>
             </div>
         </div>
+        </main>
     </div>
    {% include 'elements/__footer.html.twig' with { 'active': false } %}
    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}

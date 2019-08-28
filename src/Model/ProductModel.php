@@ -94,6 +94,51 @@ class ProductModel
      */
     private $photo;
 
+    /**
+     * @var float|null
+     */
+    private $percent;
+
+    /**
+     * @var float|null
+     */
+    private $additionalPrice;
+
+    /**
+     * @return float|null
+     */
+    public function getPercent(): ?float
+    {
+        return $this->percent;
+    }
+
+    /**
+     * @param float|null $percent
+     * @return ProductModel
+     */
+    public function setPercent(?float $percent): ProductModel
+    {
+        $this->percent = $percent;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAdditionalPrice(): ?float
+    {
+        return $this->additionalPrice;
+    }
+
+    /**
+     * @param float|null $additionalPrice
+     * @return ProductModel
+     */
+    public function setAdditionalPrice(?float $additionalPrice): ProductModel
+    {
+        $this->additionalPrice = $additionalPrice;
+        return $this;
+    }
 
     /**
      * @return Category

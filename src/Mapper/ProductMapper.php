@@ -20,7 +20,9 @@ final class ProductMapper
                 ->setSeoTitle($product->getSeoTitle())
                 ->setSeoDescription($product->getSeoDescription())
                 ->setWeightPerUnit($product->getWeightPerUnit())
-                ->setAmountPerUnit($product->getAmountPerUnit());
+                ->setAmountPerUnit($product->getAmountPerUnit())
+                ->setPercent($product->getPercent())
+                ->setAdditionalPrice($product->getAdditionPrice());
 
         return $productDto;
     }

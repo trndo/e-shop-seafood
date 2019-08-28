@@ -18,16 +18,28 @@ class UserRegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email',EmailType::class)
-            ->add('phone',TextType::class)
-            ->add('name',TextType::class)
-            ->add('surname',TextType::class)
-            ->add('address',TextType::class)
+        $builder->add('email',EmailType::class,[
+            'label' => false
+        ])
+            ->add('name',TextType::class,[
+                'label' => false
+            ])
+            ->add('friendUniqueId',TextType::class,[
+                'label' => false
+            ])
             ->add('password',RepeatedType::class,[
                 'type' => PasswordType::class,
                 'invalid_message' => 'Пароли не совпадают!',
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => false,
+                    'attr' => [
+                        'placeholder' => 'Пароль'
+                    ]
+                ],
+                'second_options' => ['label' => false,
+                    'attr' => [
+                        'placeholder' => 'Повторите пароль'
+                    ]
+                ],
             ])
             ->add('save',SubmitType::class,[
                 'label' => 'Зарегистрироватся'

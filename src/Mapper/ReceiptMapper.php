@@ -17,7 +17,10 @@ final class ReceiptMapper
             ->setUnit($receipt->getUnit())
             ->setCategory($receipt->getCategory())
             ->setSeoTitle($receipt->getSeoTitle())
-            ->setSeoDescription($receipt->getSeoDescription());
+            ->setSeoDescription($receipt->getSeoDescription())
+            ->setAdditionalPrice($receipt->getAdditionalPrice())
+            ->setPercent($receipt->getPercent()
+            );
 
         return $receiptDto;
     }

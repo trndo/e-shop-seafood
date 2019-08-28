@@ -82,19 +82,23 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
 
     /**
      * @param int $categoryId
+     * @param bool $setMaxResults
      * @return array|null
      */
-    public function getProductsFromCategory(int $categoryId): ?array
+    public function getProductsFromCategory(int $categoryId, bool $setMaxResults = false): ?array
     {
-        $dd = $this->createQueryBuilderForProduct('p')
+        $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('p.category', 'ASC')
-            ->setMaxResults(8)
-            ->getQuery()
-            ->execute();
+            ->orderBy('p.category', 'ASC');
 
-        return $dd;
+            if ($setMaxResults) {
+                $query->setMaxResults(8);
+            }
+
+        return $query->getQuery()
+                  ->execute();
+
     }
 
     public function getProductsForLoading(int $categoryId, int $count, int $offset = 9): ?array
@@ -150,5 +154,30 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
                 ->leftJoin($alias.'.orderDetail', 'od')
                 ->leftJoin($alias.'.category', 'c');
         }
+    }
+
+    public function findAllAvailableSizes(int $id): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.supply','s')
+            ->leftJoin('p.receipts','r')
+            ->where('p.status != 0')
+            ->andWhere('r.id = :id')
+            ->andWhere('s.quantity > 0')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllSizes(int $id): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.receipts','r')
+            ->andWhere('r.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
     }
 }

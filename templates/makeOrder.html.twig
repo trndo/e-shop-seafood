@@ -7,26 +7,39 @@
         <div class="container">
             {% set sum = app.session.get('totalSum') %}
             {% include 'elements/small_header.html.twig' %}
-            <div class="red-content">
+            <main>
+            <div class="red-content make-order-height">
                 <embed id="van" type="image/svg+xml" src="/assets/img/van.svg"/>
                 <div class="order-block">
                     <div id="order-title">
                         Оформление заказа
                     </div>
                     {{ form_start(form,{'attr': {'class': 'order-form'}}) }}
+                    <div>
                         {{ form_widget(form.name,{'attr': {'class': 'order-input',
                             'placeholder':'Имя*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.surname,{'attr': {'class': 'order-input',
                             'placeholder':'Фамилия*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.phoneNumber,{'attr': {'class': 'order-input input-margin-29',
                             'placeholder':'+38(000)___-__-__*'}}) }}
+                    </div>
+                    <div>
                         {{ form_widget(form.email,{'attr': {'class': 'order-input',
                             'placeholder':'Email*'}}) }}
+                    </div>
                         <div class="form-row input-margin-16">
+                            <div>
                             {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
                                 'placeholder':'Дата*'}}) }}
+                            </div>
+                            <div>
                             {{ form_widget(form.orderTime,{'attr': {'class': 'time-input',
                                 'placeholder':'14:00*'}}) }}
+                            </div>
                         </div>
                         <div class="delivery-type">
                             <div id="del" class="delivery-active delivery">
@@ -36,7 +49,12 @@
                                 Самовывоз
                             </div>
                         </div>
-                        {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
+                        <div>
+                            {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.comment,{'attr':{ 'class': 'order-input text-area','rows': 4,'placeholder':'Комментарий'}}) }}
+                        </div>
                         <div class="lipinka-street">
                             Улица Сергея Данченка 12, Киев
                         </div>
@@ -74,6 +92,7 @@
 
                 </div>
             </div>
+            </main>
         </div>
         {% include 'elements/__footer.html.twig' with { 'active': false } %}
         {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}

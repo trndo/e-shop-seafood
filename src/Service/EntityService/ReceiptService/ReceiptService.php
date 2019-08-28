@@ -53,11 +53,6 @@ class ReceiptService implements ReceiptServiceInterface
         $this->repositoryCategory = $repositoryCategory;
     }
 
-    private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
-    {
-        return $this->fileUploader->uploadFile($file, $folder, $hash);
-    }
-
     public function saveReceipt(ReceiptModel $model): void
     {
         $receipt = $this->setNewReceipt($model);
@@ -70,13 +65,7 @@ class ReceiptService implements ReceiptServiceInterface
     public function setNewReceipt(ReceiptModel $model): Receipt
     {
         $receipt = new Receipt();
-        $receipt->setName($model->getName())
-                ->setCategory($model->getCategory())
-                ->setDescription($model->getDescription())
-                ->setPrice($model->getPrice())
-                ->setSeoDescription($model->getSeoDescription())
-                ->setSeoTitle($model->getSeoTitle())
-                ->setUnit($model->getUnit());
+        $receipt = $this->setReceiptFromModel($receipt, $model);
 
         if ($model->getTitlePhoto() instanceof UploadedFile) {
             $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::RECEIPT_IMAGE_FOLDER);
@@ -86,36 +75,13 @@ class ReceiptService implements ReceiptServiceInterface
         return  $receipt;
     }
 
-    private function uploadReceiptPhotos(array $photos,Receipt $receipt): void
-    {
-        foreach ($photos as $photo) {
-            if ($photo instanceof UploadedFile) {
-                $receiptPhoto = new Photo();
-                $newPhoto = $this->upload($photo,self::RECEIPT_IMAGE_FOLDER);
-                $receiptPhoto->setHash($newPhoto)
-                    ->setReceipt($receipt);
-
-                $this->entityManager->persist($receiptPhoto);
-                $this->entityManager->flush();
-            }
-        }
-    }
-
     public function updateReceipt(Receipt $receipt, ReceiptModel $model): void
     {
-        $receipt->setName($model->getName())
-            ->setUnit($model->getUnit())
-            ->setPrice($model->getPrice())
-            ->setDescription($model->getDescription())
-            ->setSeoDescription($model->getSeoDescription())
-            ->setSeoTitle($model->getSeoTitle())
-            ->setCategory($model->getCategory());
-
+        $receipt = $this->setReceiptFromModel($receipt, $model);
         if ($model->getTitlePhoto() instanceof UploadedFile) {
             $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::RECEIPT_IMAGE_FOLDER, $receipt->getTitlePhoto());
             $receipt->setTitlePhoto($newTitlePhoto);
         }
-
         $this->entityManager->flush();
     }
 
@@ -168,16 +134,6 @@ class ReceiptService implements ReceiptServiceInterface
         return new ReceiptCollection($this->receiptRepository->findReceiptsBy($name, $category));
     }
 
-    private function hydrateQuery(array $query): array
-    {
-        foreach ($query as $key => $param){
-            if(!in_array($key,$this->allowedQueryParams))
-                unset($query[$key]);
-        }
-
-        return $query;
-    }
-
     /**
      * @param array $products
      * @param Receipt|null $receipt
@@ -214,7 +170,6 @@ class ReceiptService implements ReceiptServiceInterface
             $this->entityManager->flush();
         }
 
-
     }
 
     public function getReceiptsForRating(): ?array
@@ -233,9 +188,9 @@ class ReceiptService implements ReceiptServiceInterface
        return $this->receiptRepository->findReceiptBySlug($slug);
     }
 
-    public function getReceiptsByCategory(Category $category): ?ReceiptCollection
+    public function getReceiptsByCategory(Category $category, bool $setMaxResults = false): ?ReceiptCollection
     {
-        return new ReceiptCollection($this->receiptRepository->getReceiptsFromCategory($category->getId()));
+        return new ReceiptCollection($this->receiptRepository->getReceiptsFromCategory($category->getId(),$setMaxResults));
     }
 
     public function loadMoreReceipts(Category $category, int $count): ?ReceiptCollection
@@ -253,4 +208,61 @@ class ReceiptService implements ReceiptServiceInterface
     {
         return new CategoryCollection($this->repositoryCategory->getCategories('receipt'));
     }
+
+    public function getReceiptById(?int $receiptId): ?Receipt
+    {
+        return $this->receiptRepository->findById($receiptId);
+    }
+
+    private function uploadReceiptPhotos(array $photos,Receipt $receipt): void
+    {
+        foreach ($photos as $photo) {
+            if ($photo instanceof UploadedFile) {
+                $receiptPhoto = new Photo();
+                $newPhoto = $this->upload($photo,self::RECEIPT_IMAGE_FOLDER);
+                $receiptPhoto->setHash($newPhoto)
+                    ->setReceipt($receipt);
+
+                $this->entityManager->persist($receiptPhoto);
+                $this->entityManager->flush();
+            }
+        }
+    }
+
+    private function hydrateQuery(array $query): array
+    {
+        foreach ($query as $key => $param){
+            if(!in_array($key,$this->allowedQueryParams))
+                unset($query[$key]);
+        }
+
+        return $query;
+    }
+
+    private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
+    {
+        return $this->fileUploader->uploadFile($file, $folder, $hash);
+    }
+
+    private function setReceiptFromModel(Receipt $receipt, ReceiptModel $model): Receipt
+    {
+        $price = 0;
+        $receipt->setName($model->getName())
+            ->setCategory($model->getCategory())
+            ->setDescription($model->getDescription())
+            ->setPrice($model->getPrice())
+            ->setSeoDescription($model->getSeoDescription())
+            ->setSeoTitle($model->getSeoTitle())
+            ->setUnit($model->getUnit())
+            ->setPercent($model->getPercent())
+            ->setAdditionalPrice($model->getAdditionalPrice());
+
+        $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() + $model->getPrice() : $price += $model->getPrice();
+        $model->getPercent() ? $price += $price * $model->getPercent() : $price += $price;
+
+        $receipt->setPrice(ceil($price));
+        return $receipt;
+    }
+
+
 }

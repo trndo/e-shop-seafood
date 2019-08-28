@@ -44,9 +44,11 @@ class FileUploader implements UploadFileInterface
             return null;
 
         try{
-            if ($hash)
-                $newFileName = $hash;
-            else
+            if ($hash) {
+                $fileName = $this->uploadsDir.$folder.$hash;
+                if (file_exists($fileName))
+                    unlink($fileName);
+            }
                 $newFileName = $this->hashFile($file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
 
             $file->move($this->uploadsDir.$folder,$newFileName);

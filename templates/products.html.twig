@@ -4,8 +4,28 @@
         <div class="container-inside">
             {% include 'elements/__header.html.twig' with {'active': active } %}
             <main>
+                <div class="additional-special">
+                    <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
+                    <!--<div class="additional-fo">
+                        Быстрый заказ
+                        <div></div>
+                    </div> -->
+                </div>
+                <div class="additional-nav">
+                    <div class="additional-nav-container">
+                        <div class="additional-nav-item">
+                            Живые раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Вареные раки
+                        </div>
+                        <div class="additional-nav-item">
+                            Жареные раки
+                        </div>
+                    </div>
+                </div>
                 <div class="products-container">
-                    <div class="row products-row">
+                    <div class="products-row">
                         <div id="special-card">
                             Выбери рецепт по которому Мы приготовим для тебя раков
                         </div>
@@ -15,10 +35,12 @@
                                     <div class="card-content">
                                         <h4>{{ item.name }}</h4>
                                         <p>{{ item.description }}</p>
-                                        <span class="price">₴ {{ item.price }}</span>
-                                        <div class="in_basket"
-                                             data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">
-                                            Подробнее
+                                        <div class="main-info">
+                                            <span class="price">₴ {{ item.price }}</span>
+                                            <div class="in_basket"
+                                                 data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">
+                                                Подробнее
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -31,6 +53,7 @@
             </main>
         </div>
     </div>
+    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
     {% include 'elements/__footer.html.twig' with {'active': active } %}
     <div id="overlay" style="display: none">
         <div class="red-content">

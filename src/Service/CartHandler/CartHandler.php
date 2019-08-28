@@ -8,8 +8,6 @@ use App\Entity\Product;
 use App\Entity\Receipt;
 use App\Repository\ProductRepository;
 use App\Repository\ReceiptRepository;
-use App\Service\EntityService\ReservationHandler\ReservationInterface;
-use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -20,18 +18,11 @@ class CartHandler implements CartHandlerInterface
      * @var ReceiptRepository
      */
     private $receiptRepository;
+
     /**
      * @var ProductRepository
      */
     private $productRepository;
-    /**
-     * @var SupplyServiceInterface
-     */
-    private $supplyService;
-    /**
-     * @var ReservationInterface
-     */
-    private $reservation;
 
     /**
      * @var SessionInterface $session
@@ -45,12 +36,10 @@ class CartHandler implements CartHandlerInterface
 
     public function __construct(ReceiptRepository $receiptRepository,
                                 ProductRepository $productRepository,
-                                ReservationInterface $reservation,
                                 SessionInterface $session)
     {
         $this->receiptRepository = $receiptRepository;
         $this->productRepository = $productRepository;
-        $this->reservation = $reservation;
         $this->session = $session;
         $this->todayValidation = $session->get('chooseOrder', true);
     }
@@ -81,67 +70,20 @@ class CartHandler implements CartHandlerInterface
         return ['status' => true, 'totalSum' => $this->session->get('totalSum')];
     }
 
-    public function removeFromCart(ParameterBag $requestParams): void
+    private function makeItem(string $key): ?Item
     {
-        $cart = $this->session->get('cart');
-        $key = $requestParams->get('id');
+        if (!preg_match('/^(product|receipt)\-\d+(\-\d+)?$/', $key))
+            return null;
 
-        if (isset($cart[$key])) {
-            $this->reservation->deleteReservation($cart[$key]);
-            unset($cart[$key]);
-            $this->session->set('cart', $cart);
-        }
-        $this->countTotalSum();
-    }
+        $info = $this->explodeKey($key);
+        $item = new Item();
+        $item->setItemType($info[0])
+            ->setId($info[1]);
 
-    /**
-     * Add item's quantity by key
-     *
-     * @param ParameterBag $requsetParams
-     * @return array
-     */
-    public function changeItemQuantity(ParameterBag $requsetParams): array
-    {
-        $key = $requsetParams->get('id');
-        $quantity = $requsetParams->get('quantity');
-        $cart = $this->session->get('cart', []);
+        if (isset($info[2]) && $item->getItemType() == 'receipt')
+            $item->setRelatedProductId((int)$info[2]);
 
-        if (isset($cart[$key])) {
-            /** @var Item $item */
-            $item = $cart[$key];
-            $item->setQuantity($quantity);
-            $this->validateItem($item);
-            if ($item->isValid()) {
-                $this->session->set('cart', $cart);
-                $this->countTotalSum();
-            }
-            return array_merge($item->getResponse(), ['totalSum' => $this->session->get('totalSum')]);
-        }
-        return ['status' => true, 'totalSum' => $this->session->get('totalSum')];
-    }
-
-    private function countTotalSum()
-    {
-        $total = 0;
-        $cart = $this->session->get('cart', []);
-
-        foreach ($cart as $key => $item) {
-            /** @var Item $item */
-            if ($item->getItemType() == 'product') {
-                $product = $this->productRepository->find($item->getId());
-                if ($product instanceof Product) {
-                    $total += $product->getPrice() * $item->getQuantity();
-                }
-            } elseif ($item->getItemType() == 'receipt') {
-                $receipt = $this->receiptRepository->find($item->getId());
-                $product = $this->productRepository->find($item->getRelatedProductId());
-                if ($product instanceof Product && $receipt instanceof Receipt) {
-                    $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
-                }
-            } else
-                continue;
-        }
-        $this->session->set('totalSum', $total);
+        return $item;
     }
 
     private function explodeKey(string $key): array
@@ -176,20 +118,96 @@ class CartHandler implements CartHandlerInterface
         }
     }
 
-    private function makeItem(string $key): ?Item
+    private function checkItemQuantityAndReserve(Product $product, Item $item): void
     {
-        if (!preg_match('/^(product|receipt)\-\d+(\-\d+)?$/', $key))
-            return null;
+        $productQuantity = $product->getSupply()->getReservationQuantity();
+        if ($item->getQuantity() > $productQuantity/* + $this->getReservedQuantity($item->getUniqueIndex())*/ && $this->todayValidation) {
+            $item->setValid(false)
+                ->setInvalidMessage('Извините, на складе недостаточное количество этого продукта. Попробуйте выбрать другой размер или товар!');
+        } else {
+            $item->setValid(true);
+            $this->addToSessionReserve($item);
+        }
+    }
 
-        $info = $this->explodeKey($key);
-        $item = new Item();
-        $item->setItemType($info[0])
-            ->setId($info[1]);
+    private function getReservedQuantity(string $key): float
+    {
+        $reservation = $this->session->get('reservation', []);
+        if (isset($reservation[$key])) {
+            return $reservation[$key];
+        }
+        return 0;
+    }
 
-        if (isset($info[2]) && $item->getItemType() == 'receipt')
-            $item->setRelatedProductId((int)$info[2]);
+    private function deleteReservation(string $key): void
+    {
+        $reservation = $this->session->get('reservation', []);
+        if (isset($reservation[$key])) {
+            unset($reservation[$key]);
+        }
+    }
 
-        return $item;
+    private function countTotalSum()
+    {
+        $total = 0;
+        $cart = $this->session->get('cart', []);
+
+        foreach ($cart as $key => $item) {
+            /** @var Item $item */
+            if ($item->getItemType() == 'product') {
+                $product = $this->productRepository->find($item->getId());
+                if ($product instanceof Product) {
+                    $total += $product->getPrice() * $item->getQuantity();
+                }
+            } elseif ($item->getItemType() == 'receipt') {
+                $receipt = $this->receiptRepository->find($item->getId());
+                $product = $this->productRepository->find($item->getRelatedProductId());
+                if ($product instanceof Product && $receipt instanceof Receipt) {
+                    $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
+                }
+            } else
+                continue;
+        }
+        $this->session->set('totalSum', $total);
+    }
+
+    public function removeFromCart(ParameterBag $requestParams): void
+    {
+        $cart = $this->session->get('cart');
+        $key = $requestParams->get('id');
+
+        if (isset($cart[$key])) {
+            $this->deleteReservation($cart[$key]);
+            unset($cart[$key]);
+            $this->session->set('cart', $cart);
+        }
+        $this->countTotalSum();
+    }
+
+    /**
+     * Add item's quantity by key
+     *
+     * @param ParameterBag $requestParams
+     * @return array
+     */
+    public function changeItemQuantity(ParameterBag $requestParams): array
+    {
+        $key = $requestParams->get('id');
+        $quantity = $requestParams->get('quantity');
+        $cart = $this->session->get('cart', []);
+
+        if (isset($cart[$key])) {
+            /** @var Item $item */
+            $item = $cart[$key];
+            $item->setQuantity($quantity);
+            $this->validateItem($item);
+            if ($item->isValid()) {
+                $this->session->set('cart', $cart);
+                $this->countTotalSum();
+            }
+            return array_merge($item->getResponse(), ['totalSum' => $this->session->get('totalSum')]);
+        }
+        return ['status' => true, 'totalSum' => $this->session->get('totalSum')];
     }
 
     /**
@@ -228,26 +246,10 @@ class CartHandler implements CartHandlerInterface
         return $result;
     }
 
-    private function checkItemQuantityAndReserve(Product $product, Item $item): void
+    private function addToSessionReserve(Item $item): void
     {
-        $productQuantity = $product->getSupply()->getReservationQuantity();
-
-        if ($item->getQuantity() > $productQuantity + $this->getReservedQuantity($item->getUniqueIndex()) && $this->todayValidation) {
-            $item->setValid(false)
-                ->setInvalidMessage('Извините в наличие осталось: ' . $productQuantity . ' ' . $product->getUnit() . ' продукта')
-                ->setRest($productQuantity);
-        } else {
-            $item->setValid(true);
-            $this->reservation->reserve($product, $item);
-        }
-    }
-
-    private function getReservedQuantity(string $key): float
-    {
-        $reservation = $this->session->get('reservation', []);
-        if (isset($reservation[$key])) {
-            return $reservation[$key];
-        }
-        return 0;
+        $reserve = $this->session->get('reservation', []);
+        $reserve[$item->getUniqueIndex()] = $item->getQuantity();
+        $this->session->set('reservation', $reserve);
     }
 }

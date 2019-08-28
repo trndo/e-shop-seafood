@@ -5,8 +5,7 @@
     display: flex;
     flex-direction: row;
     margin-top: 40px;
-    padding-left: 30px;
-
+    padding-left: 90px;
 }
 
 .product-photo{
@@ -27,9 +26,13 @@
     min-height: 286px;
     height: max-content;
     background: #F13A3A;
-    position: absolute;
-    z-index: 100;
-    right: -85px;
+    position: relative;
+    padding-left: 28px;
+    padding-right: 2px;
+}
+
+.l-20{
+    left: 20px
 }
 
 .product-size{
@@ -38,22 +41,68 @@
     width: 100%;
     height: 75px;
     flex-direction: row;
+    justify-content: space-between;
+    padding-right: 30px;
 }
 .size-xl-product{
-    padding-left: 21px;
+    /*padding-left: 21px;*/
     padding-top: 12px;
     position: relative;
-    width: 95px;
+    width: 85px;
     text-align: center;
+}
+
+.in-product{
+    width: 100px;
+    align-self: center;
+}
+
+.size-simple-product{
+    padding-top: 12px;
+    position: relative;
+    width: 40px;
+    text-align: left;
+}
+
+.l-0{
+    left: 0;
+}
+
+.today-or-tomorrow{
+   text-align: left;
+   position: relative;
+   width: 100%;
+   margin-top: 5px;
+}
+
+.tor-title{
+    font-family: Raleway,sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+.choose-type{
+    width: 137px;
+    height: 27px;
+    font-size: 14px;
+    line-height: 27px;
+    padding-top: 0;
+}
+
+.transparent-choose-type{
+    background: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    line-height: 23px;
 }
 
 .weight{
     margin-top: 5px;
     padding-left: 4px;
 }
-.in-product{
-    margin-left: 82px;
-}
+
 .percent-promotion{
     position: absolute;
     width: 106px;
@@ -92,7 +141,6 @@
     position: relative;
     margin-top: 20px;
     width: 100%;
-    padding-left: 41px;
     padding-right: 10px;
     font-family: Raleway,sans-serif;
     font-style: normal;
@@ -112,8 +160,7 @@
     font-size: 24px;
     line-height: 100%;
     color: #FFFFFF;
-    padding-left: 41px;
-    padding-top: 15px;
+    margin-bottom: 20px;
 }
 
 .special-price{
@@ -135,14 +182,16 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    /*padding-top: 14px;*/
+    /*padding-bottom: 14px;*/
 }
 
 .additional-products{
     position: relative;
     padding-top: 44px;
     width: 100%;
+    margin-bottom: 34px;
+
 }
 
 .quantity-product{
@@ -160,11 +209,14 @@
     line-height: 48px;
     text-align: center;
     color: #FFFFFF;
-    margin-left: 90px;
+    margin-left: 151px;
 }
 .additional-products-row{
+    display: flex;
+    flex-flow: row nowrap;
     position: relative;
-    margin-left: 75px;
+    width: 690px;
+    margin: 0 auto;
     margin-top: 14px;
 }
 
@@ -174,6 +226,7 @@
     position: relative;
     display: flex;
     padding-top: 27px;
+    padding-left: 31px;
 }
 
 .receipt-container img{
@@ -181,7 +234,6 @@
     height: 510px;
     position: relative;
     display: block;
-    left: 31px;
 }
 
 .container-inside-product{
@@ -205,12 +257,12 @@
     position: relative;
     display: block;
     margin-left: 61px;
+    padding-left: 30px;
 }
 
 .receipt-name{
     height: max-content;
-    width: 210px;
-    padding-left: 41px;
+    width: 285px;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -221,10 +273,9 @@
     margin-top: 25px;
 }
 .receipt-sizes{
-    width: 401px;
+    width: 350px;
     position: relative;
     margin-top: 38px;
-    padding-left: 41px;
 }
 
 .receipt-sizes h4{
@@ -242,7 +293,7 @@
     display: flex;
     height: 50px;
     flex-direction: row;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
 }
 
 .size-block{
@@ -256,6 +307,8 @@
     line-height: 50px;
     text-align: center;
     color: #F13A3A;
+    margin-right: 6px;
+    user-select: none;
 }
 
 .size-block-checked{
@@ -265,9 +318,22 @@
 
 .receipt-price{
     padding-left: 0;
-    margin-top: 69px;
+    margin-top: 33px;
 }
 
 .special-price-receipt{
     left: 0;
+}
+
+.no-allowed-sizes{
+    width: 100%;
+    margin-top: 38px;
+}
+.nas-title{
+    font-family: Raleway, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 19px;
+    color: #FFFFFF;
+    margin-bottom: 5px;
 }

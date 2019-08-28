@@ -17,10 +17,11 @@ class InstagramRegister implements SocialRegisterInterface
             $user = new User();
             $user->setInstagramId($owner->getId())
                 ->setName($owner->getName())
-                ->setRegistrationStatus(true);
+                ->setRegistrationStatus(true)
+                ->setUniqueId($user->generateUniqueId(6));
 
             return $user;
         }
-        throw new \InvalidArgumentException('Ty invalid nada instaUser');
+        throw new \InvalidArgumentException('Неправильный Instagram client');
     }
 }

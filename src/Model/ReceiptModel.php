@@ -47,10 +47,10 @@ class ReceiptModel
 
     /**
      * @Assert\File(
-     *     maxSize = "10m",
-     *     mimeTypes = {"image/jpeg", "image/png"},
+     *     maxSize = "30m",
+     *     mimeTypes = {"image/jpeg", "image/png", "video/mp4", "video/mpeg", "video/webm"},
      *     mimeTypesMessage = "Неправильный тип данных",
-     *     maxSizeMessage="Масмальный размер файла 10мб"
+     *     maxSizeMessage="Масмальный размер файла 30мб"
      * )
      * @var UploadedFile|null $titlePhoto
      */
@@ -79,6 +79,51 @@ class ReceiptModel
      */
     private $photo;
 
+    /**
+     * @var float|null
+     */
+    private $percent;
+
+    /**
+     * @var float|null
+     */
+    private $additionalPrice;
+
+    /**
+     * @return float|null
+     */
+    public function getPercent(): ?float
+    {
+        return $this->percent;
+    }
+
+    /**
+     * @param float|null $percent
+     * @return ReceiptModel
+     */
+    public function setPercent(?float $percent): ReceiptModel
+    {
+        $this->percent = $percent;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAdditionalPrice(): ?float
+    {
+        return $this->additionalPrice;
+    }
+
+    /**
+     * @param float|null $additionalPrice
+     * @return ReceiptModel
+     */
+    public function setAdditionalPrice(?float $additionalPrice): ReceiptModel
+    {
+        $this->additionalPrice = $additionalPrice;
+        return $this;
+    }
 
     /**
      * @return Category
@@ -255,10 +300,9 @@ class ReceiptModel
      */
     public function setPhoto($photo): self
     {
-        if($photo instanceof UploadedFile) {
+        if ($photo instanceof UploadedFile) {
             $this->photo[] = $photo;
-        }
-        else {
+        } else {
             $this->photo = $photo;
         }
         return $this;

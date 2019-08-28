@@ -5,20 +5,24 @@ namespace App\Model;
 
 
 use App\Validator\UniqueUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserModel
 {
     /**
+     * @Assert\NotBlank(message="*Поле не должно быть пустым")
      * @var string|null
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(message="*Поле не должно быть пустым")
      * @var string|null
      */
     private $phone;
 
     /**
+     * @Assert\NotBlank(message="*Поле не должно быть пустым")
      * @var string|null
      * @UniqueUser()
      */
@@ -49,25 +53,6 @@ class UserModel
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    /**
-     * @param string|null $surname
-     * @return UserModel
-     */
-    public function setSurname(?string $surname): self
-    {
-        $this->surname = $surname;
 
         return $this;
     }

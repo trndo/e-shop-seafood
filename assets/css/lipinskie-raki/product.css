@@ -309,6 +309,7 @@
     color: #F13A3A;
     margin-right: 6px;
     user-select: none;
+    cursor: pointer;
 }
 
 .size-block-checked{

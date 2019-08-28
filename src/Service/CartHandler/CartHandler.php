@@ -110,7 +110,8 @@ class CartHandler implements CartHandlerInterface
                     && $relatedProduct instanceof Product
                     && $receipt->getProducts()->contains($relatedProduct)) {
                     $this->checkItemQuantityAndReserve($relatedProduct, $item);
-                } else $item->setValid(false);
+                } else
+                    $item->setValid(false);
                 break;
 
             default:
@@ -156,15 +157,15 @@ class CartHandler implements CartHandlerInterface
             /** @var Item $item */
             if ($item->getItemType() == 'product') {
                 $product = $this->productRepository->find($item->getId());
-                if ($product instanceof Product) {
-                    $total += $product->getPrice() * $item->getQuantity();
-                }
+                    if ($product instanceof Product) {
+                        $total += $product->getPrice() * $item->getQuantity();
+                    }
             } elseif ($item->getItemType() == 'receipt') {
                 $receipt = $this->receiptRepository->find($item->getId());
                 $product = $this->productRepository->find($item->getRelatedProductId());
-                if ($product instanceof Product && $receipt instanceof Receipt) {
-                    $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
-                }
+                    if ($product instanceof Product && $receipt instanceof Receipt) {
+                        $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
+                    }
             } else
                 continue;
         }

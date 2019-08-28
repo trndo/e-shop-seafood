@@ -29,8 +29,7 @@ class SupplyController extends AbstractController
 
         return new JsonResponse([
             'status' => true
-        ], 200
-        );
+        ], 200);
     }
 
     /**

@@ -169,10 +169,11 @@ $('#order_info_totalPrice').abacus(totalSum);
                         alert(res.message);
                     else
                         console.log(res.order);
-                        // window.location.href = res.order
+                         window.location.href = res.order
                 }
             })
         }
+        radio.prop("checked", false);
 
     });
 
@@ -184,15 +185,22 @@ $('#order_info_totalPrice').abacus(totalSum);
         let productDetail = $('p[data-product="' + button + '"]').data('product');
         let orderId = $('#order-number').text();
 
+        if (!productDetail) {
+            productDetail = productId;
+        }
+
         if (receiptDetail === button || productDetail === button) {
             $.ajax({
                 type: "POST",
-                url:"",
+                url:"/orderAdjustment/changeProductQuantity",
                 data: {
                     value: value,
                     receiptId: receiptDetail,
                     productId: productDetail,
                     orderId: orderId
+                }, success (res) {
+                    console.log(res);
+                    $('#order_info_totalPrice').val(res.totalSum);
                 }
             })
         }

@@ -34,6 +34,11 @@
     display: block;
     margin-bottom: 30px;
 }
+
+.make-order-height{
+    height: 693px;
+}
+
 #shopping-cart{
     position: absolute;
     width: 277px;
@@ -295,10 +300,13 @@
 
 .order-block{
     width: 400px;
-    height: 626px;
+    height: 693px;
     position: relative;
     display: inline-block;
     float: left;
+}
+.text-area{
+    resize: none;
 }
 
 .order-block #order-title{
@@ -446,7 +454,7 @@
     border-radius: 50px;
     position: relative;
     margin: 0 auto;
-    margin-top: 54px;
+    margin-top: 34px;
     width: 207px;
     height: 38px;
     font-family: Raleway,sans-serif;
@@ -466,7 +474,7 @@ button:focus{
 }
 #map-block{
     width: 370px;
-    height: 626px;
+    height: 693px;
     position: relative;
     display: inline-block;
 }

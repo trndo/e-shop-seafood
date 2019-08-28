@@ -72,6 +72,9 @@
         padding-top: 7px;
         padding-bottom: 25px;
     }
+    .make-order-height{
+        height: 1110px !important;
+    }
 
     .additional-nav-container{
         width: 100%;
@@ -770,5 +773,8 @@
     }
     .checkout{
         width: 171px;
+    }
+    .make-order-height{
+        height: 1110px !important;
     }
 }

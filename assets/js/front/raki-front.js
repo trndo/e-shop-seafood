@@ -57,7 +57,7 @@ $(document).ready(function () {
         let id = $(this).data('name');
 
         if (checked == null && type === 'receipt') {
-            alert('Vyberi razmer!');
+            alert('Выбери размер!');
             return;
         }
 
@@ -77,10 +77,7 @@ $(document).ready(function () {
                 } else {
                     console.log('ne-ok');
                     alert(res.message);
-                    if (res.rest != 0)
-                        $('.item-res > input').val(res.rest);
-                    else
-                        $('.item-res > input').val(1);
+                    $('.item-res > input').val(1);
                 }
             }
         });

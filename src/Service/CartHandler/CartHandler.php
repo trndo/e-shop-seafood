@@ -121,8 +121,7 @@ class CartHandler implements CartHandlerInterface
     private function checkItemQuantityAndReserve(Product $product, Item $item): void
     {
         $productQuantity = $product->getSupply()->getReservationQuantity();
-
-        if ($item->getQuantity() > $productQuantity + $this->getReservedQuantity($item->getUniqueIndex()) && $this->todayValidation) {
+        if ($item->getQuantity() > $productQuantity/* + $this->getReservedQuantity($item->getUniqueIndex())*/ && $this->todayValidation) {
             $item->setValid(false)
                 ->setInvalidMessage('Извините, на складе недостаточное количество этого продукта. Попробуйте выбрать другой размер или товар!');
         } else {

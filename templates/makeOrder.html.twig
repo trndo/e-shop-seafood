@@ -7,7 +7,8 @@
         <div class="container">
             {% set sum = app.session.get('totalSum') %}
             {% include 'elements/small_header.html.twig' %}
-            <div class="red-content">
+            <main>
+            <div class="red-content make-order-height">
                 <embed id="van" type="image/svg+xml" src="/assets/img/van.svg"/>
                 <div class="order-block">
                     <div id="order-title">
@@ -51,6 +52,9 @@
                         <div>
                             {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
                         </div>
+                        <div>
+                            {{ form_widget(form.comment,{'attr':{ 'class': 'order-input text-area','rows': 4,'placeholder':'Комментарий'}}) }}
+                        </div>
                         <div class="lipinka-street">
                             Улица Сергея Данченка 12, Киев
                         </div>
@@ -88,6 +92,7 @@
 
                 </div>
             </div>
+            </main>
         </div>
         {% include 'elements/__footer.html.twig' with { 'active': false } %}
         {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}

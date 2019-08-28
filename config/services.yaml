@@ -30,4 +30,7 @@ services:
     App\Service\FileSystemService\FileUploader:
         arguments:
             - '%app.uploads_dir%'
+    App\Twig\MimeTypeExtension:
+        arguments:
+            - '%app.uploads_dir%receipts/'
 

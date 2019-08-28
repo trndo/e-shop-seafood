@@ -62,7 +62,7 @@ class ProductType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => function ($category) {
                     /**@var Category $category */
-                    return $category->getName() . ' - ' . ($category->getDisplayType() == 'size' ? 'Отображается размерами' : 'Обычное отображение');
+                    return $category->getName() . ' - ' . ($category->getDisplayType() == 'size' ? 'S,M,L,XL,XXL' : 'Обычное отображение');
                 },
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
@@ -101,6 +101,24 @@ class ProductType extends AbstractType
             'required' => false,
             'placeholder' => 'Выбирете размер(без размера)'
         ])
+            ->add('percent',NumberType::class,[
+                'label' => 'Процент платёжной системы (Процент/100)',
+                'attr' => [
+                    'min' => 0.001,
+                    'max' => 1,
+                    'step' => 0.001
+                ],
+
+            ])
+            ->add('additionalPrice',NumberType::class,[
+                'label' => 'Цена тары на единицу товара',
+                'attr' => [
+                    'min' => 1,
+                    'step' => 0.01
+                ],
+                'required' => false
+
+            ])
             ->add('amountPerUnit', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Количесвто шт/кг (не обязательно)',
@@ -158,6 +176,11 @@ class ProductType extends AbstractType
 
     }
 
+    public function onPostSetData(FormEvent $event)
+    {
+        /** @var Product $product */
+        return  $event->getData();
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -165,12 +188,6 @@ class ProductType extends AbstractType
             'data_class' => ProductModel::class,
             'update' => false
         ]);
-    }
-
-    public function onPostSetData(FormEvent $event)
-    {
-        /** @var Product $product */
-        return  $event->getData();
     }
 
     private function findExistedSize(string $chosenSize, Category $chosenCategory, array $options, ?string $primarySize): ?FormError
@@ -198,7 +215,5 @@ class ProductType extends AbstractType
             }
         }
         return null;
-
     }
-
 }

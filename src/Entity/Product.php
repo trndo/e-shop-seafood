@@ -152,6 +152,16 @@ class Product
      */
     private $reservations;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $percent;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $additionPrice;
+
 
     public function __construct()
     {
@@ -633,6 +643,30 @@ class Product
                 $reservation->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPercent(): ?float
+    {
+        return $this->percent;
+    }
+
+    public function setPercent(?float $percent): self
+    {
+        $this->percent = $percent;
+
+        return $this;
+    }
+
+    public function getAdditionPrice(): ?float
+    {
+        return $this->additionPrice;
+    }
+
+    public function setAdditionPrice(float $additionPrice): self
+    {
+        $this->additionPrice = $additionPrice;
 
         return $this;
     }

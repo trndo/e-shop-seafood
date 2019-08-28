@@ -72,8 +72,9 @@ class RegisterUser implements RegisterUserInterface
             ->setUniqueId($user->generateUniqueId(6));
 
         $friendUniqueId = $model->getFriendUniqueId();
+
         if ($friendUniqueId && $this->checkIsFriendIdIsValid($friendUniqueId)) {
-            $user->setRegisterWithUniqueId(true);
+            $user->setRegisterWithUniqueId($friendUniqueId);
         }
 
         $this->entityManager->persist($user);

@@ -52,9 +52,10 @@ interface ReceiptServiceInterface
 
     /**
      * @param Category $category
+     * @param bool $setMaxResults
      * @return ReceiptCollection|null
      */
-    public function getReceiptsByCategory(Category $category): ?ReceiptCollection ;
+    public function getReceiptsByCategory(Category $category, bool $setMaxResults = false): ?ReceiptCollection ;
 
     /**
      * @param Category $category
@@ -86,6 +87,8 @@ interface ReceiptServiceInterface
      * @param Receipt|null $receipt
      */
     public function addSalesInReceipt(array $products, ?Receipt $receipt): void ;
+
+    public function getReceiptById(?int $receiptId): ?Receipt;
 
 
 }

@@ -50,5 +50,18 @@ interface CategoryServiceInterface
      */
     public function updateCategory(Category $category, CategoryModel $categoryModel): void ;
 
+    /**
+     * @param string|null $type
+     * @return CategoryCollection|null
+     */
+    public function getCategoriesByType(?string $type): ?CategoryCollection;
+
+    /**
+     * @param int|null $id
+     * @return Category
+     */
+    public function getCategoryById(?int $id): ?Category;
+
+
 
 }

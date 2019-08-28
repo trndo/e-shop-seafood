@@ -68,23 +68,25 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
 
     /**
      * @param int $categoryId
+     * @param bool $setMaxResults
      * @return Receipt[]|null
      */
-    public function getReceiptsFromCategory(int $categoryId): ?array
+    public function getReceiptsFromCategory(int $categoryId, bool $setMaxResults = false): ?array
     {
-        $dd = $this->createQueryBuilder('r')
+        $query = $this->createQueryBuilder('r')
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
             ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('r.category', 'ASC')
-            ->setMaxResults(8)
-            ->getQuery()
-            ->getResult();
+            ->orderBy('r.category', 'ASC');
 
+            if ($setMaxResults) {
+                $query->setMaxResults(8);
+            }
 
-        return $dd;
+          return  $query->getQuery()
+                       ->getResult();
     }
 
 
@@ -121,11 +123,20 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->getResult();
     }
 
-    public function createQueryBuilderForReceipt(string $alias): QueryBuilder
+    private function createQueryBuilderForReceipt(string $alias): QueryBuilder
     {
         return $this->createQueryBuilder($alias)
             ->addSelect('c', 'od')
             ->leftJoin($alias.'.category', 'c')
             ->leftJoin($alias.'.orderDetail', 'od');
+    }
+
+    public function findById(int $id): ?Receipt
+    {
+        return $this->createQueryBuilderForReceipt('r')
+                ->andWhere('r.id = :id')
+                ->setParameter('id',$id)
+                ->getQuery()
+                ->getOneOrNullResult();
     }
 }

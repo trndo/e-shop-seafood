@@ -8,6 +8,7 @@ use App\Collection\CategoryCollection;
 use App\Collection\ProductCollection;
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Receipt;
 use App\Model\ProductModel;
 
 interface ProductServiceInterface
@@ -73,9 +74,10 @@ interface ProductServiceInterface
 
     /**
      * @param Category $category
+     * @param bool $setMaxResults
      * @return ProductCollection|null
      */
-    public function getProductsByCategory(Category $category): ?array ;
+    public function getProductsByCategory(Category $category, bool $setMaxResults = false): ?array ;
 
     /**
      * @param Category $category
@@ -83,4 +85,12 @@ interface ProductServiceInterface
      * @return ProductCollection|null
      */
     public function loadMoreProducts(Category $category, int $count): ?ProductCollection ;
+
+    /**
+     * @param Product|null $product
+     * @param int|null $orderId
+     * @param Receipt|null $receipt
+     * @return mixed
+     */
+    public function adjustmentAddingProduct(?Product $product, ?int $orderId, ?Receipt $receipt): array ;
 }

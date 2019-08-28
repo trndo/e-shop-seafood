@@ -118,10 +118,12 @@ class PaymentHandler implements PaymentInterface
                 $receipt = $orderDetail->getReceipt();
                 $product = $orderDetail->getProduct();
                 $quantity = $orderDetail->getQuantity();
+                $productSupply = $orderDetail->getProduct()->getSupply();
 
                 if ($orderDetail->getReceipt() !== null) {
                     $userBonuses = ($receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity) * 0.1 + $userBonuses;
                 }
+                $productSupply->setQuantity($productSupply->getQuantity() - $quantity);
             }
 
             $orderInfo->setStatus('payed');

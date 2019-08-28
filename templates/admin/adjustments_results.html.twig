@@ -1,0 +1,25 @@
+{% for item in items %}
+<tr data-search="{{ item.name }}" class="forSearch">
+    <td>{{ item.id }}</td>
+    <td><img src="{{ item.TitlePhotoPath }}" width="200px" height="200px" style="object-fit: cover "></td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.category.name }}</td>
+    <td>{{ item.price }}/{{ item.unit }}</td>
+        <td>
+    {% if item.type == 'receipt' %}
+            {% for product in item.products %}
+                {% if product.productSize %}
+                    <input type="radio" class="size-adjust" name="size" data-item="{{ item.id }}" value="{{ product.id }}">{{ product.productSize }}<br>
+                {% else %}
+                    <p data-receipt="{{ item.id }}" data-value="{{ product.id }}">Без размерности</p>
+                {% endif %}
+            {% endfor %}
+    {% else %}
+        <p data-item="{{ item.id }}">{{ item.productSize }}</p>
+    {% endif %}
+        </td>
+    <td>
+        <button type="button" class="btn btn-primary addItem" data-item="{{ item.id }}">Добавить</button>
+    </td>
+</tr>
+{% endfor %}

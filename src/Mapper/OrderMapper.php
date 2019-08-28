@@ -30,7 +30,6 @@ final class OrderMapper
 
         return $model->setOrderDate($info->getOrderDate())
                 ->setOrderTime($info->getOrderTime())
-                ->setOrderDetails($info->getOrderDetails())
                 ->setTotalPrice($info->getTotalPrice());
     }
 
@@ -39,11 +38,6 @@ final class OrderMapper
         $info->setOrderDate($model->getOrderDate())
             ->setOrderTime($model->getOrderTime())
             ->setTotalPrice($model->getTotalPrice());
-        $orderDetails = $model->getOrderDetails();
-
-        foreach ($orderDetails as $orderDetail) {
-            $info->addOrderDetail($orderDetail);
-        }
 
         return $info;
     }

@@ -102,6 +102,18 @@ class Receipt
      */
     private $orderDetail;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $percent;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $additionalPrice;
+
+
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -312,6 +324,11 @@ class Receipt
         return '/uploads/receipts/'.$this->getTitlePhoto();
     }
 
+    public function getFullFilePath(): ?string
+    {
+        return '/uploads/receipts/'.$this->getTitlePhoto();
+    }
+
     public function getDataForRating(): string
     {
         return 'receipt_'.$this->getId();
@@ -410,6 +427,30 @@ class Receipt
         if ($newReceipt !== $orderDetail->getReceipt()) {
             $orderDetail->setReceipt($newReceipt);
         }
+
+        return $this;
+    }
+
+    public function getPercent(): ?float
+    {
+        return $this->percent;
+    }
+
+    public function setPercent(?float $percent): self
+    {
+        $this->percent = $percent;
+
+        return $this;
+    }
+
+    public function getAdditionalPrice(): ?float
+    {
+        return $this->additionalPrice;
+    }
+
+    public function setAdditionalPrice(?float $additionalPrice): self
+    {
+        $this->additionalPrice = $additionalPrice;
 
         return $this;
     }

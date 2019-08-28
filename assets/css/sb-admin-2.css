@@ -11181,8 +11181,16 @@ a.text-warning:hover, a.text-warning:focus {
     color: #dda20a !important;
 }
 
+.text-canceled {
+    color: #690707 !important;
+}
+
 .text-danger {
     color: #e74a3b !important;
+}
+
+.text-done {
+    color: #3f7320 !important;
 }
 
 a.text-danger:hover, a.text-danger:focus {
@@ -11645,6 +11653,14 @@ a:focus {
 
 .border-bottom-danger {
     border-bottom: 0.25rem solid #e74a3b !important;
+}
+
+.border-bottom-canceled {
+    border-bottom: 0.25rem solid #690707 !important;
+}
+
+.border-bottom-done {
+    border-left: 0.25rem solid #3f7320 !important;
 }
 
 .progress-sm {
@@ -12942,6 +12958,17 @@ body.sidebar-toggled footer.sticky-footer {
     border-bottom-left-radius: 20px;
 }
 
+.order-status-lipadmin {
+    top: 0;
+    right: 0;
+    width: 190px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 40px;
+    border-radius: 20px;
+}
+
 .status-new {
     background-color: #1eff27;
     color: white;
@@ -12961,6 +12988,11 @@ body.sidebar-toggled footer.sticky-footer {
 
 .status-done {
     background-color: #ff613e;
+    color: white;
+}
+
+.status-canceled {
+    background-color: #690707;
     color: white;
 }
 

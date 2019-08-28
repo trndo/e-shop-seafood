@@ -47,6 +47,10 @@
                                     <div class="order-status status-done">
                                         Готово
                                     </div>
+                                {% elseif order.status == 'canceled' %}
+                                    <div class="order-status status-canceled">
+                                        Отменено
+                                    </div>
                                 {% endif %}
                                 <div class="row justify-content-center">
                                     <div class="col-6 col-md-6 col-sm-12">
@@ -59,15 +63,26 @@
                                                         - {{ item.quantity }} {{ item.product.unit }} |
                                                         <span style="color: red">В наличии: {{ item.product.supply.quantity }} {{ item.product.unit }}</span>
                                                     </div>
-                                                    {% if order.status == 'new' and order.orderDetails|length > 1%}
-                                                            <i class="fas fa-trash-alt" data-id="{{ item.id }}"></i>
-                                                        {% elseif order.status == 'new'  %}
-                                                            <i class="fas fa-trash-alt"
-                                                               onclick="if(confirm('Остался один продукт в заказе. Вы хотите удалить закз полностью ?'))window.location.href ='{{ path('deleteOrder', {'id': order.id}) }}'"></i>
-                                                        {% endif %}
+{#                                                    {% if order.status == 'new' and order.orderDetails|length > 1%}#}
+{#                                                            <i class="fas fa-trash-alt" data-id="{{ item.id }}"></i>#}
+{#                                                        {% elseif order.status == 'new'  %}#}
+{#                                                            <i class="fas fa-trash-alt"#}
+{#                                                               onclick="if(confirm('Остался один продукт в заказе. Вы хотите удалить закз полностью ?'))window.location.href ='{{ path('deleteOrder', {'id': order.id}) }}'"></i>#}
+{#                                                    {% endif %}#}
                                                 </li>
                                             {% endfor %}
                                         </ul>
+                                        <br>
+                                        <div class="card text-center">
+                                            <div class="card-header">
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">Комментарий</h5>
+                                                <p class="card-text">{{ order.comment is not null ? order.comment : '-' }}</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -101,11 +116,11 @@
                                     <div class="col-6 text-center">
                                         {% if order.status == 'new' or order.status == 'confirmed' %}
                                             <button class="btn btn-danger mr-2 list-inline-item"
-                                                    onclick="window.location.href='{{ path('deleteOrder',{'id': order.id}) }}'">
-                                                Удалить заказ
+                                                    onclick="window.location.href='{{ path('cancelOrder',{'id': order.id}) }}'">
+                                                Отменть заказ
                                             </button>
                                         {% endif %}
-                                        {% if order.status == 'new' %}
+                                        {% if order.status == 'new' or order.status == 'canceled'%}
                                             <button class="btn btn-primary mr-2  list-inline-item"
                                                     onclick="window.location.href='{{ path('editOrder',{'id': order.id}) }}'">
                                                 Изменить заказ

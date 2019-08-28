@@ -123,7 +123,7 @@ class User implements UserInterface
     private $uniqueId;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $registerWithUniqueId;
 

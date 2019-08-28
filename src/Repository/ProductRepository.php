@@ -82,19 +82,23 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
 
     /**
      * @param int $categoryId
+     * @param bool $setMaxResults
      * @return array|null
      */
-    public function getProductsFromCategory(int $categoryId): ?array
+    public function getProductsFromCategory(int $categoryId, bool $setMaxResults = false): ?array
     {
-        $dd = $this->createQueryBuilderForProduct('p')
+        $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('p.category', 'ASC')
-            ->setMaxResults(8)
-            ->getQuery()
-            ->execute();
+            ->orderBy('p.category', 'ASC');
 
-        return $dd;
+            if ($setMaxResults) {
+                $query->setMaxResults(8);
+            }
+
+        return $query->getQuery()
+                  ->execute();
+
     }
 
     public function getProductsForLoading(int $categoryId, int $count, int $offset = 9): ?array

@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 require('../css/sb-admin-2.css');
 const jQuery = require('jquery');
 require('bootstrap');
@@ -44,6 +46,7 @@ $('#order_info_totalPrice').abacus(totalSum);
     $('.fa-trash-alt').click(function () {
         let id = $(this).data('id');
         let trash = $(this);
+        let tr = $('tr[data-detail="' + id + '"]');
 
         $.ajax({
             type: "DELETE",
@@ -51,9 +54,7 @@ $('#order_info_totalPrice').abacus(totalSum);
             success: function (res) {
                 $('.orderTotalPrice').text('Cумма: ' + res.totalPrice);
                 console.log(res.totalPrice);
-                trash.parent().remove();
-
-
+                tr.remove();
             }
         })
     });
@@ -112,7 +113,9 @@ $('#order_info_totalPrice').abacus(totalSum);
     $('.phone').mask('+38(000)000-00-00', {placeholder: "+38(___)___-__-__"});
 
     $(document).on('click', '.category-adjust', function () {
+        let tbody = $('tbody');
         let categoryId = $(this).data('id');
+        tbody.empty();
         console.log(categoryId);
         $.ajax({
             type: "POST",
@@ -120,9 +123,101 @@ $('#order_info_totalPrice').abacus(totalSum);
             data: {
                 categoryId: categoryId
             }, success(res) {
-                $('tbody').append(res);
+                tbody.append(res);
             }
         })
-    })
+    });
+
+    $(document).on('click', '.addItem', function () {
+        let button = $(this).data('item');
+        let radio = $('input[name="size"]:checked');
+        let productAttr = $('p[data-item="' + button + '"]');
+        let receiptAttr = $('p[data-receipt="' + button + '"]');
+
+        let receiptItem = radio.data('item');
+        let productId = radio.val();
+
+        let productItem = productAttr.data('item');
+        let noSizeReceiptItem = receiptAttr.data('receipt');
+        let noSizeReceiptValue = receiptAttr.data('value');
+        let orderId = $('#order-number').text();
+
+        if (receiptItem === undefined && noSizeReceiptItem) {
+            receiptItem = noSizeReceiptItem;
+            productId = noSizeReceiptValue;
+        }
+
+        if (productId) {
+            productItem = productId
+        }
+
+        console.log('Product',productItem,productId,button);
+        console.log('Receipt',receiptItem,productItem,button);
+
+        if (receiptItem === button || productItem === button) {
+            console.log("gg");
+            $.ajax({
+                type: "POST",
+                url: "/orderAdjustment/checkProductReservation",
+                data: {
+                    productId: productItem,
+                    receiptId: receiptItem,
+                    orderId: orderId
+                }, success(res) {
+                    radio.prop("checked", false);
+                    if (res.status === false)
+                        alert(res.message);
+                    else
+                        console.log(res.order);
+                        // window.location.href = res.order
+                }
+            })
+        }
+
+    });
+
+    $(document).on('click', '.addOrderDetail', function () {
+        let button = $(this).data('item');
+        let value = $(this).prev().val();
+        let productId = $(this).parent().siblings('.prodId').data('item');
+        let receiptDetail = $('p[data-receipt="' + button + '"]').data('receipt');
+        let productDetail = $('p[data-product="' + button + '"]').data('product');
+        let orderId = $('#order-number').text();
+
+        if (receiptDetail === button || productDetail === button) {
+            $.ajax({
+                type: "POST",
+                url:"",
+                data: {
+                    value: value,
+                    receiptId: receiptDetail,
+                    productId: productDetail,
+                    orderId: orderId
+                }
+            })
+        }
+        console.log('Product',productDetail,productId,value,button);
+        console.log('Receipt',receiptDetail,productId,value,button);
+
+    });
+
+    $('#searchItem').keyup(function (e) {
+        let item = $(this).val();
+        if (item !== '') {
+            $('.forSearch').each(function () {
+                let name = $(this).data('search');
+                let regex = new RegExp('.*' + item + '.*', "i");
+
+                if (!name.match(regex)) {
+                    $(this).hide();
+                } else
+                    $(this).show();
+            })
+        } else {
+            $('.forSearch').each(function () {
+                $(this).show();
+            })
+        }
+    });
 
 })(jQuery); // End of use strict

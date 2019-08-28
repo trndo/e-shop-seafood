@@ -51,7 +51,7 @@ interface OrderInfoInterface
      * @param int $id
      * @return float
      */
-    public function deleteOrderDetail(int $id): ?float;
+    public function deleteOrderDetail(?int $id): ?float;
 
     /**
      * @param int $id
@@ -69,4 +69,9 @@ interface OrderInfoInterface
      * @return array
      */
     public function getCountOfOrders(): array;
+
+    /**
+     * @param int|null $id
+     */
+    public function cancelOrder(?int $id): void;
 }

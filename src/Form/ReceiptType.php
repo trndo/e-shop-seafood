@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -58,7 +59,7 @@ class ReceiptType extends AbstractType
             ])
             ->add('titlePhoto', FileType::class, [
                 'attr' => ['class' => 'form-control-file'],
-                'label' => 'Фото Обложки'
+                'label' => 'Фото Обложки/Видео обложки'
             ]);
         if (!$options['update'])
             $builder->add('photo', FileType::class, [
@@ -71,6 +72,21 @@ class ReceiptType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
                 'label' => 'Сео Тайтл ',
+            ])
+            ->add('percent',NumberType::class,[
+                'label' => 'Процент платёжной системы (Процент/100)',
+                'attr' => [
+                    'min' => 0.001,
+                    'max' => 1,
+                    'step' => 0.001
+                ]
+            ])
+            ->add('additionalPrice',NumberType::class,[
+                'label' => 'Цена тары на единицу товара',
+                'attr' => [
+                    'min' => 1,
+                    'step' => 0.01
+                ]
             ])
             ->add('seoDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],

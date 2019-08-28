@@ -2,6 +2,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('autocomplete') }}
+    {{ encore_entry_link_tags('video') }}
 {% endblock %}
 {% block body %}
 <!-- Page Wrapper -->
@@ -75,8 +76,17 @@
                                         <td>
                                             {{ receipt.id }}
                                         </td>
+
+
+
                                         <td>
-                                            <img src="/uploads/receipts/{{ receipt.titlePhoto }}" style="width: 200px; height: 150px">
+                                            {% if getMimeType(receipt.titlePhoto) == "video/mp4" %}
+                                                <video class="js-player" playsinline loop style="width: 200px; height: 150px" allow="autoplay">
+                                                    <source src="{{ receipt.TitlePhotoPath }}" type="video/mp4"/>
+                                                </video>
+                                            {% else %}
+                                                <img src="/uploads/receipts/{{ receipt.titlePhoto }}" style="width: 200px; height: 150px">
+                                            {% endif %}
                                         </td>
                                         <td class="text-center">
                                             {{ receipt.name }}

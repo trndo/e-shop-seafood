@@ -111,6 +111,19 @@ class AdminOrderController extends AbstractController
     }
 
     /**
+     * @Route("/lipadmin/showOrder/{id}/cancelOrder" ,name="cancelOrder")
+     * @param int|null $id
+     * @param OrderInfoInterface $orderInfo
+     * @return Response
+     */
+    public function cancelOrder(?int $id, OrderInfoInterface $orderInfo): Response
+    {
+        $orderInfo->cancelOrder($id);
+
+        return $this->redirectToRoute('admin');
+    }
+
+    /**
      * @Route("/lipadmin/showOrder/{id}/adjustmentOrder" ,name="adjustmentOrder")
      * @param OrderInfo $orderInfo
      * @param CategoryServiceInterface $categoryService
@@ -150,6 +163,25 @@ class AdminOrderController extends AbstractController
         return $this->render('admin/adjustments_results.html.twig',[
            'items' => $items
         ]);
+
+    }
+
+    /**
+     * @Route("/orderAdjustment/checkProductReservation", name="checkProductReservation", methods={"POST"})
+     * @param Request $request
+     * @param ProductServiceInterface $productService
+     * @param ReceiptServiceInterface $receiptService
+     * @return JsonResponse
+     */
+    public function checkProductReservation(Request $request, ProductServiceInterface $productService, ReceiptServiceInterface $receiptService): JsonResponse
+    {
+        $product = $productService->getProductById($request->request->getInt('productId'));
+        $receipt = $receiptService->getReceiptById($request->request->getInt('receiptId'));
+        $orderId = $request->request->getInt('orderId');
+
+        $addingResult = $productService->adjustmentAddingProduct($product, $orderId, $receipt);
+
+        return new JsonResponse($addingResult);
 
     }
 

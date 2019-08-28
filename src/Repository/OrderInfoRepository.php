@@ -86,6 +86,7 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->orderBy('o.id', 'ASC')
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
+
     }
 
     private function createQueryBuilderForOrderInfo(string $alias): QueryBuilder

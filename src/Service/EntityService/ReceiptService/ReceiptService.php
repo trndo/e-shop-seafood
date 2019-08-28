@@ -3,6 +3,7 @@
 namespace App\Service\EntityService\ReceiptService;
 
 use App\Collection\CategoryCollection;
+use App\Collection\ProductCollection;
 use App\Collection\ReceiptCollection;
 use App\Entity\Category;
 use App\Entity\Photo;
@@ -253,4 +254,5 @@ class ReceiptService implements ReceiptServiceInterface
     {
         return new CategoryCollection($this->repositoryCategory->getCategories('receipt'));
     }
+
 }

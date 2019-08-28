@@ -3,15 +3,38 @@
         <div class="container">
             <div class="container-inside">
                 {% include 'elements/__header.html.twig' with {'active': active } %}
+            </div>
                 <main>
+                    <div class="additional-special">
+                        <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
+                        <!--<div class="additional-fo">
+                            Быстрый заказ
+                            <div></div>
+                        </div> -->
+                    </div>
+                    <div class="additional-nav">
+                        <div class="additional-nav-container">
+                            <div class="additional-nav-item">
+                                Живые раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Вареные раки
+                            </div>
+                            <div class="additional-nav-item">
+                                Жареные раки
+                            </div>
+                        </div>
+                    </div>
                     <div class="product-container">
                         <div class="product-photo">
                             <img src="{{ item.titlePhotoPath }}" alt="">
                         </div>
                         <div class="product-info">
                             <div class="product-size">
-                                <div class="size-xl-product">
-                                    <span class="size-xx">xx</span><span class="size-l">L</span>
+                                <div class="size-simple-product"> {# size-xl-product #}
+{#                                    <span class="size-xx l-0">xx</span><span class="size-l l-20">L</span>#}
+{#                                    <span class="size-x l-0">x</span><span class="size-l l-20">L</span>#}
+                                      <span class="size">S</span>
                                 </div>
                                 <div class="product-size-info in-product">
                                         <span class="grams">
@@ -21,21 +44,38 @@
                                             <embed id="ruler" type="image/svg+xml" src="/assets/img/weight.svg"/> <span>- до 250 gr.</span>
                                         </span>
                                 </div>
-                                <!--<div class="percent-promotion">
-                                    <span id="percent">
-                                        -5 %
-                                    </span>
-                                    <span id="percent-date">
-                                        до 10/11/12
-                                    </span>
-                                </div> --->
+{#                                <div class="percent-promotion">#}
+{#                                    <span id="percent">#}
+{#                                        -5 %#}
+{#                                    </span>#}
+{#                                    <span id="percent-date">#}
+{#                                        до 10/11/12#}
+{#                                    </span>#}
+{#                                </div>#}
                             </div>
                             <div class="description">
                                {{ item.description }}
                             </div>
-                            <div class="product-price">
-                                {{ item.price }} грн / кг.<!--<span class="special-price">550 грн</span> -->
+                            {% set session = app.session.get('chooseOrder') %}
+                            {% if session is null %}
+                            <div class="today-or-tomorrow">
+                                <div class="tor-title">
+                                    На когда заказ:
+                                </div>
+                                <div class="choose-type-container" data-name="{{ item.id }}" data-type="{{ item.getType }}">
+                                    <div class="custom-button choose-type" data-order="today" >
+                                        Сегодня
+                                    </div>
+                                    <div class="custom-button choose-type transparent-choose-type" data-order="tomorrow">
+                                        Другой день
+                                    </div>
+                                </div>
                             </div>
+                            {% endif %}
+                            <div class="product-price">
+                                {{ item.price }} грн / кг.{#<span class="special-price">550 грн</span>#}
+                            </div>
+                            {% if session is not null %}
                             <div class="product-to-basket">
                                 <div class="quantity">
                                     <span data- class="plus item-plus">+</span>
@@ -44,63 +84,59 @@
                                     </div>
                                     <span class="minus item-minus">-</span>
                                 </div>
-                                {% set session = app.session.get('chooseOrder') %}
-                                {% if session is not null %}
-                                    {% dump(session) %}
                                     <div class="custom-button add-basket" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                         Добавить в козину
                                     </div>
-                                {% else %}
-                                    <div class="custom-button order-type show-modal" data-name="{{ item.id }}" data-type="{{ item.getType }}">
-                                        Добавить в козину
-                                    </div>
-                                {% endif %}
+{#                                    <div class="custom-button order-type show-modal" data-name="{{ item.id }}" data-type="{{ item.getType }}">#}
+{#                                        Добавить в козину#}
+{#                                    </div>#}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="additional-products">
                         <div class="see-also">
                             Посмотри так же
                         </div>
-                        <div class="row additional-products-row">
-                            <div class="col-4">
-                                  <div class="product-card">
+                        <div class="additional-products-row">
+                                  <div class="product-card additional-product-card">
                                         <img src="{{ asset('assets/img/test.jpg') }}" alt="">
                                         <div class="card-content">
                                             <h4>Живой рак вкусный прекрасный</h4>
                                             <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                            <div class="main-info">
+                                                <span class="price">₴ 220</span>
+                                                <div class="in_basket" >В корзину</div>
+                                            </div>
+                                        </div>
+                                 </div>
+                                <div class="product-card additional-product-card">
+                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                                    <div class="card-content">
+                                        <h4>Живой рак вкусный прекрасный</h4>
+                                        <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                        <div class="main-info">
                                             <span class="price">₴ 220</span>
                                             <div class="in_basket" >В корзину</div>
                                         </div>
-                                 </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="product-card">
+                                    </div>
+                                </div>
+                                <div class="product-card additional-product-card">
                                     <img src="{{ asset('assets/img/test.jpg') }}" alt="">
                                     <div class="card-content">
                                         <h4>Живой рак вкусный прекрасный</h4>
                                         <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                        <span class="price">₴ 220</span>
-                                        <div class="in_basket" >В корзину</div>
+                                        <div class="main-info">
+                                            <span class="price">₴ 220</span>
+                                            <div class="in_basket" >В корзину</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="product-card">
-                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                    <div class="card-content">
-                                        <h4>Живой рак вкусный прекрасный</h4>
-                                        <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                        <span class="price">₴ 220</span>
-                                        <div class="in_basket" >В корзину</div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </main>
-            </div>
         </div>
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
         {% include 'elements/__footer.html.twig' with {'active': active } %}
         <div id="overlay">
             <div class="modal-window pt-10 text-center">

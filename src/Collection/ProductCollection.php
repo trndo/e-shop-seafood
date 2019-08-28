@@ -27,4 +27,12 @@ class ProductCollection implements \IteratorAggregate
     {
         return new \ArrayIterator($this->products);
     }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->products);
+    }
 }

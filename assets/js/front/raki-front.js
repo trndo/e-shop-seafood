@@ -5,6 +5,7 @@ import '../../css/lipinskie-raki/product.css';
 import '../../css/lipinskie-raki/user.css';
 import '../../css/lipinskie-raki/media-query/main-media.css';
 import '../../css/lipinskie-raki/media-query/products-media.css';
+import '../../css/lipinskie-raki/media-query/product-media.css';
 import '../../css/lipinskie-raki/media-query/small-page-query.css';
 import '../../css/lipinskie-raki/media-query/user-media.css';
 import 'simplebar/dist/simplebar.css';
@@ -30,6 +31,16 @@ $(document).ready(function () {
         });
     if (window.screen.width < 500) {
         $('.additional-nav-container').slick({
+            infinite: false,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            variableWidth: true,
+            centerMode: false,
+            arrows: false
+        })
+    }
+    if(window.screen.width <= 991 && window.screen.width >= 768){
+        $('.additional-products-row').slick({
             infinite: false,
             slidesToShow: 2,
             slidesToScroll: 1,
@@ -131,12 +142,48 @@ $(document).ready(function () {
         $('#overlay').toggle();
         replaceButton = ' <div class="custom-button add-basket" data-name="' + name + '" data-type="' + type + '">Добавить в козину</div>';
     });
-
     let replaceButton = '';
 
-    $('.choose-type').on('click', function () {
-        let orderType = $(this).data('order');
+    function getBlock(type, id){
+        return '<div class="product-to-basket">\n' +
+        '                                <div class="quantity">\n' +
+        '                                    <span data- class="plus item-plus">+</span>\n' +
+        '                                    <div class="quantity-res item-res">\n' +
+        '                                        <input type="number" value="1">\n' +
+        '                                    </div>\n' +
+        '                                    <span class="minus item-minus">-</span>\n' +
+        '                                </div>\n' +
+        '                                    <div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
+        '                                        Добавить в козину\n' +
+        '                                    </div></div>'
+    }
 
+    function getSizes(info,block,orderType){
+        $.ajax('/api/getSizes',{
+            type: 'POST',
+            data: {
+                receipt: info.data('name'),
+                orderType: orderType
+            },
+            success:function (res) {
+                if(res) {
+                    console.log(res);
+                    console.log(info.parent());
+                    info.parent().replaceWith(res);
+                    if($('.receipt-sizes-container').length)
+                        $('.product-price').after(block);
+                }
+                else {
+                    info.parent().remove();
+                    console.log('too bad')
+                }
+            }
+        })
+    }
+
+    $(document).on('click','.choose-type', function () {
+        let orderType = $(this).data('order');
+        let info = $(this).parent();
         $.ajax({
             type: 'POST',
             url: '/chooseOrder',
@@ -146,15 +193,20 @@ $(document).ready(function () {
                 orderType: orderType === "today"
             }),
             success: function (res) {
-                $('.order-type').replaceWith(replaceButton);
-                $('.add-basket').trigger('click');
+                // $('.order-type').replaceWith(replaceButton);
+                // $('.add-basket').trigger('click');
+                let block = getBlock(info.data('type'),info.data('name'));
+                if(info.data('type') === 'receipt' && !checked)
+                    getSizes(info,block,orderType);
+                else {
+                    info.parent().remove();
+                    $('.product-price').after(block);
+                }
             },
             error: function (res) {
                 console.log(res);
             }
         });
-        console.log('i am in ajax');
-        $('#overlay').toggle();
     });
 
     let counter = 8;

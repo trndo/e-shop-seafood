@@ -151,4 +151,29 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
                 ->leftJoin($alias.'.category', 'c');
         }
     }
+
+    public function findAllAvailableSizes(int $id): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.supply','s')
+            ->leftJoin('p.receipts','r')
+            ->where('p.status != 0')
+            ->andWhere('r.id = :id')
+            ->andWhere('s.quantity > 0')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllSizes(int $id): ?array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.receipts','r')
+            ->andWhere('r.id = :id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
 }

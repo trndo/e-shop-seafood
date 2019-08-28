@@ -262,5 +262,15 @@ class ProductService implements ProductServiceInterface
         return new CategoryCollection($this->categoryService->getCategories('product'));
     }
 
-
+    public function getSizes(int $id, string $orderType): ProductCollection
+    {
+        switch ($orderType) {
+            case 'today':
+                return new ProductCollection($this->productRepository->findAllAvailableSizes($id));
+            case 'tomorrow':
+                return new ProductCollection($this->productRepository->findAllSizes($id));
+            default:
+                return new ProductCollection([]);
+        }
+    }
 }

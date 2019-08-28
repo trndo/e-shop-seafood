@@ -121,7 +121,6 @@
         width: 199.36px;
         height: 36.88px;
         font-size: 14px;
-        margin-bottom: 20px;
     }
 
     .price{
@@ -270,9 +269,9 @@
     }
 
     .choose-type-container{
-        flex-direction: column;
-        width: 200px;
-        height: 90px;
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
         align-items: center;
     }
 
@@ -347,7 +346,6 @@
         width: 210px;
         height: 39px;
         font-size: 14px;
-        margin-bottom: 20px;
     }
 
     .price{
@@ -521,9 +519,9 @@
     }
 
     .choose-type-container{
-        flex-direction: column;
-        width: 200px;
-        height: 90px;
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
         align-items: center;
     }
     #plate{
@@ -597,7 +595,6 @@
         width: 210px;
         height: 39px;
         font-size: 14px;
-        margin-bottom: 20px;
     }
 
     .price{

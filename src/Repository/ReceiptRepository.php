@@ -61,7 +61,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->getResult();
     }
 
-    public function findReceiptBySlug(string $slug): Receipt
+    public function findReceiptBySlug(string $slug): ?Receipt
     {
         return $this->findOneBy(['slug' => $slug]);
     }

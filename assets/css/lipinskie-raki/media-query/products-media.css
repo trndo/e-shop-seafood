@@ -1,0 +1,234 @@
+@media (max-width: 991px) and (min-width: 768px) {
+    .warn{
+        width: 100%;
+        margin-top: 0;
+    }
+    .sizes-container{
+        width: 100%;
+        justify-content: center;
+    }
+    .size-card{
+        width: 177px;
+        height: 124px
+    }
+
+    .size-card:nth-child(4){
+        margin-left: 33px;
+    }
+
+    #products-with-size-photo{
+        width: 393px;
+        height: 461px;
+    }
+    .products-container{
+        width: 547px;
+        padding-top: 0;
+    }
+    #special-card{
+        width: 242px;
+        height: 345px;
+        margin-top: 42px;
+        margin-right: 63px;
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+    .warn{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .warn-button{
+        width: 220px;
+        height: 35px;
+    }
+
+    .sizes-container{
+        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .size-card:nth-child(4){
+        margin-left: 0;
+    }
+    .size-card:nth-child(1),.size-card:nth-child(2), .size-card:nth-child(3){
+        margin-top: 34px;
+    }
+
+    .size-card{
+        margin-top: 34px;
+        margin-right: 0;
+        width: 255px;
+        height: 161px;
+    }
+
+    .size-card-info{
+        padding-left: 26px;
+        height: 93px;
+    }
+
+    .product-size-info{
+        width: 112px;
+        height: 67px;
+        align-self: center;
+    }
+    .grams{
+        font-size: 18px;
+    }
+    .size-price{
+        font-size: 18px;
+        padding-left: 17px;
+    }
+
+    .size{
+        font-size: 96px;
+    }
+
+    .size-l{
+        font-size: 96px;
+    }
+    .size-x{
+        font-size: 36px;
+        left: 23px;
+        top: 26px;
+    }
+    .size-xx{
+        font-size: 36px;
+        left: 22px;
+        top: 18px;
+    }
+
+    .size-button{
+        width: 121px;
+        height: 30px;
+        margin-top: 17px;
+        font-size: 18px;
+    }
+
+    #products-with-size-photo{
+        width: 100%;
+        order: 2;
+    }
+
+    .products-container{
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .products-row{
+        flex-direction: column;
+        align-items: center;
+    }
+    #special-card{
+        width: 252px;
+        height: 361px;
+        margin-right: 0;
+        font-size: 24px;
+    }
+}
+@media (min-width: 320px) and (max-width: 374px){
+    .warn{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .warn h2{
+        width: 320px;
+    }
+
+    .warn-button{
+        width: 220px;
+        height: 35px;
+        margin-top: 20px;
+    }
+
+    .sizes-container{
+        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .size-card:nth-child(4){
+        margin-left: 0;
+    }
+    .size-card:nth-child(1),.size-card:nth-child(2), .size-card:nth-child(3){
+        margin-top: 34px;
+    }
+
+    .size-card{
+        margin-top: 34px;
+        margin-right: 0;
+        width: 255px;
+        height: 161px;
+    }
+
+    .size-card-info{
+        padding-left: 26px;
+        height: 93px;
+    }
+
+    .product-size-info{
+        width: 112px;
+        height: 67px;
+        align-self: center;
+    }
+    .grams{
+        font-size: 18px;
+    }
+    .size-price{
+        font-size: 18px;
+        padding-left: 17px;
+    }
+
+    .size{
+        font-size: 96px;
+    }
+
+    .size-l{
+        font-size: 96px;
+    }
+    .size-x{
+        font-size: 36px;
+        left: 23px;
+        top: 26px;
+    }
+    .size-xx{
+        font-size: 36px;
+        left: 22px;
+        top: 18px;
+    }
+
+    .size-button{
+        width: 121px;
+        height: 30px;
+        margin-top: 17px;
+        font-size: 18px;
+    }
+
+    #products-with-size-photo{
+        width: 100%;
+        order: 2;
+    }
+
+    .products-container{
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .products-row{
+        flex-direction: column;
+        align-items: center;
+    }
+    #special-card{
+        width: 252px;
+        height: 361px;
+        margin-right: 0;
+        font-size: 24px;
+    }
+}

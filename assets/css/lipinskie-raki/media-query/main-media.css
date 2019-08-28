@@ -9,6 +9,7 @@
         position: relative;
         width: 100% !important;
         top: 0 !important;
+        padding-top: 0;
     }
     #desktop{
         display: none;
@@ -164,6 +165,7 @@
         position: relative;
         width: 100% !important;
         top: 0 !important;
+        padding-top: 0;
     }
     #desktop{
         display: none;
@@ -399,6 +401,7 @@
         position: relative;
         width: 100% !important;
         top: 0 !important;
+        padding-top: 0;
     }
     #desktop{
         display: none;

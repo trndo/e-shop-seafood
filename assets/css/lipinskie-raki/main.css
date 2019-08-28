@@ -25,7 +25,7 @@ body{
 }
 
 .container-inside{
-    top: 39px;
+    padding-top: 39px;
     position: relative;
     margin: 0 auto;
     width: 83%;

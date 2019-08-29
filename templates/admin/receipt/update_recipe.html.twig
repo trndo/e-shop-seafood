@@ -41,13 +41,13 @@
                         <div class="form-group">
                             {{ form_row(form.category) }}
                         </div>
-                        {% if getMimeType(receipt.titlePhoto) == "video/mp4" %}
-                            <video class="js-player" playsinline loop width="50%" height="50%" allow="autoplay">
-                                <source src="{{ receipt.TitlePhotoPath }}" type="video/mp4"/>
-                            </video>
-                        {% else %}
+{#                        {% if getMimeType(receipt.titlePhoto) == "video/mp4" %}#}
+{#                            <video class="js-player" playsinline loop width="50%" height="50%" allow="autoplay">#}
+{#                                <source src="{{ receipt.TitlePhotoPath }}" type="video/mp4"/>#}
+{#                            </video>#}
+{#                        {% else %}#}
                             <img src="/uploads/receipts/{{ receipt.titlePhoto }}" width="50%" height="50%" alt="img">
-                        {% endif %}
+{#                        {% endif %}#}
                         <div class="form-group">
                             {{ form_row(form.titlePhoto, {'required': false}) }}
                         </div>

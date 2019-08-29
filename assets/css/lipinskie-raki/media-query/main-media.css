@@ -232,6 +232,7 @@
         text-align: center;
         cursor: pointer;
         user-select: none;
+        -moz-user-select: none;
         margin: 0 auto;
         color: #CECECE;
         font-size: 18px;
@@ -465,6 +466,7 @@
         text-align: center;
         cursor: pointer;
         user-select: none;
+        -moz-user-select: none;
         margin: 0 auto;
         color: #CECECE;
         font-size: 18px;

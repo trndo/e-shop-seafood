@@ -127,7 +127,7 @@ class CartHandler implements CartHandlerInterface
                 ->setInvalidMessage('Извините, на складе недостаточное количество этого продукта. Попробуйте выбрать другой размер или товар!');
         } else {
             $item->setValid(true);
-            $this->addToSessionReserve($item);
+            //$this->addToSessionReserve($item);
         }
     }
 
@@ -178,7 +178,7 @@ class CartHandler implements CartHandlerInterface
         $key = $requestParams->get('id');
 
         if (isset($cart[$key])) {
-            $this->deleteReservation($cart[$key]);
+            //$this->deleteReservation($cart[$key]);
             unset($cart[$key]);
             $this->session->set('cart', $cart);
         }

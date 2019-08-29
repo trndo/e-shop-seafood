@@ -27,7 +27,7 @@ class OrderDetail
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", inversedBy="orderDetail", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", inversedBy="orderDetail")
      */
     private $receipt;
 

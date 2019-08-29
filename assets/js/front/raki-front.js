@@ -87,17 +87,23 @@ $(document).ready(function () {
     $(document).on('click', '.item-plus', function () {
 
         let input = $(this).siblings('.item-res').children();
-        let val = Number(input.val());
+        let val = roundHalf(Number(input.val()));
 
         input.val(val + 0.5);
     });
 
+    function roundHalf(num) {
+        return Math.round(num*2)/2;
+    }
+
     $(document).on('click', '.item-minus', function () {
         let input = $(this).siblings('.item-res').children();
 
-        if (input.val() == 1)
+        let val = roundHalf(Number(input.val()));
+        if (val <= 1){
+            input.val(1);
             return;
-        let val = Number(input.val());
+        }
         input.val(val - 0.5);
     });
     $(document).on('keyup', '.item-res > input', function (e) {
@@ -143,16 +149,16 @@ $(document).ready(function () {
 
     function getBlock(type, id){
         return '<div class="product-to-basket">\n' +
-        '                                <div class="quantity">\n' +
-        '                                    <span data- class="plus item-plus">+</span>\n' +
-        '                                    <div class="quantity-res item-res">\n' +
-        '                                        <input type="number" value="1">\n' +
-        '                                    </div>\n' +
-        '                                    <span class="minus item-minus">-</span>\n' +
-        '                                </div>\n' +
-        '                                    <div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
-        '                                        Добавить в козину\n' +
-        '                                    </div></div>'
+        '<div class="quantity">\n' +
+        '<span data- class="plus item-plus">+</span>\n' +
+        '<div class="quantity-res item-res">\n' +
+        '<input type="number" value="1">\n' +
+        '</div>\n' +
+        '<span class="minus item-minus">-</span>\n' +
+        '</div>\n' +
+        '<div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
+        'Добавить в козину\n' +
+        '</div></div>'
     }
 
     function getSizes(info,block,orderType){
@@ -474,6 +480,9 @@ $(document).ready(function () {
             },
             'order[deliveryType]': {
                 required: true,
+            },
+            'order[comment]': {
+                required: false,
             }
         },
         messages: {

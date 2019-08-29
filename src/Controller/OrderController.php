@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     /**
-     * @Route("/cart/makeOrder")
+     * @Route("/cart/makeOrder", name="makeOrder")
      *
      * @param Request $request
      * @param OrderInfoInterface $orderInfo
@@ -28,35 +28,40 @@ class OrderController extends AbstractController
      */
     public function makeOrder(Request $request, OrderInfoInterface $orderInfo, UserServiceInterface $userService, RegisterUserInterface $registerUser): Response
     {
-        $chooseOrder['chooseOrder'] = $request->getSession()->get('chooseOrder');
-        $user = $this->getUser();
+        if ($request->getSession()->get('cart') !== null ){
+            $chooseOrder['chooseOrder'] = $request->getSession()->get('chooseOrder');
+            $user = $this->getUser();
 
-        $orderModel = $this->getOrderModel($user);
-        $form = $this->createForm(OrderType::class, $orderModel, $chooseOrder);
-        $form->handleRequest($request);
+            $orderModel = $this->getOrderModel($user);
+            $form = $this->createForm(OrderType::class, $orderModel, $chooseOrder);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($user) {
-                $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
-                $orderModel = $orderModel->setUser($user);
-            } else {
-                $user = $registerUser->registerUnknownUser($orderModel);
-                $orderModel = $orderModel->setUser($user);
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($user) {
+                    $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
+                    $orderModel = $orderModel->setUser($user);
+                } else {
+                    $user = $registerUser->registerUnknownUser($orderModel);
+                    $orderModel = $orderModel->setUser($user);
 
+                    $orderInfo->addOrder($orderModel, $request);
+
+                    return $this->redirectToRoute('confirmUnknownRegistration', [
+                        'email' => $user->getEmail()
+                    ]);
+                }
                 $orderInfo->addOrder($orderModel, $request);
 
-                return $this->redirectToRoute('confirmUnknownRegistration', [
-                    'email' => $user->getEmail()
-                ]);
+                return $this->redirectToRoute('home');
             }
-            $orderInfo->addOrder($orderModel, $request);
 
-            return $this->redirectToRoute('home');
+            return $this->render('makeOrder.html.twig', [
+                'form' => $form->createView()
+            ]);
         }
 
-        return $this->render('makeOrder.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->redirectToRoute('home');
+
     }
 
     private function getOrderModel(User $user)

@@ -93,4 +93,6 @@ interface ProductServiceInterface
      * @return mixed
      */
     public function adjustmentAddingProduct(?Product $product, ?int $orderId, ?Receipt $receipt): array ;
+
+    public function adjustmentProductQuantity(?Product $product, ?Receipt $receipt, ?float $value, ?int $orderId);
 }

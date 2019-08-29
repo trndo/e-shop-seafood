@@ -110,7 +110,8 @@ class CartHandler implements CartHandlerInterface
                     && $relatedProduct instanceof Product
                     && $receipt->getProducts()->contains($relatedProduct)) {
                     $this->checkItemQuantityAndReserve($relatedProduct, $item);
-                } else $item->setValid(false);
+                } else
+                    $item->setValid(false);
                 break;
 
             default:
@@ -126,7 +127,7 @@ class CartHandler implements CartHandlerInterface
                 ->setInvalidMessage('Извините, на складе недостаточное количество этого продукта. Попробуйте выбрать другой размер или товар!');
         } else {
             $item->setValid(true);
-            $this->addToSessionReserve($item);
+            //$this->addToSessionReserve($item);
         }
     }
 
@@ -156,15 +157,15 @@ class CartHandler implements CartHandlerInterface
             /** @var Item $item */
             if ($item->getItemType() == 'product') {
                 $product = $this->productRepository->find($item->getId());
-                if ($product instanceof Product) {
-                    $total += $product->getPrice() * $item->getQuantity();
-                }
+                    if ($product instanceof Product) {
+                        $total += $product->getPrice() * $item->getQuantity();
+                    }
             } elseif ($item->getItemType() == 'receipt') {
                 $receipt = $this->receiptRepository->find($item->getId());
                 $product = $this->productRepository->find($item->getRelatedProductId());
-                if ($product instanceof Product && $receipt instanceof Receipt) {
-                    $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
-                }
+                    if ($product instanceof Product && $receipt instanceof Receipt) {
+                        $total += $item->getQuantity() * $product->getPrice() + $receipt->getPrice() * ceil($item->getQuantity());
+                    }
             } else
                 continue;
         }
@@ -177,7 +178,7 @@ class CartHandler implements CartHandlerInterface
         $key = $requestParams->get('id');
 
         if (isset($cart[$key])) {
-            $this->deleteReservation($cart[$key]);
+            //$this->deleteReservation($cart[$key]);
             unset($cart[$key]);
             $this->session->set('cart', $cart);
         }

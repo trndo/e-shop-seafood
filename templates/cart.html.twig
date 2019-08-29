@@ -5,7 +5,7 @@
         {% include 'elements/small_header.html.twig' %}
         <main>
         <div class="red-content">
-            <img id="close-modal" src="/assets/img/close-modal.svg"/>
+            <img id="close-modal" class="back-to-main" src="/assets/img/close-modal.svg"/>
             <div id="shopping-cart">
                 <embed type="image/svg+xml" src="/assets/img/shopping-cart.svg"/>
             </div>
@@ -64,12 +64,15 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="summary">
-                <div class="final">
-                    Итог: <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
+            {% set cart = app.session.get('cart') %}
+            {% if cart != null %}
+                <div class="summary">
+                    <div class="final">
+                        Итог: <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
+                    </div>
+                    <div class="checkout">Оформить</div>
                 </div>
-                <div class="checkout">Оформить</div>
-            </div>
+            {% endif %}
         </div>
         </main>
     </div>

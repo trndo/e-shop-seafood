@@ -27,7 +27,13 @@
                     </div>
                 </div>
                 <div class="receipt-container">
-                    <img src="{{ item.getTitlePhotoPath }}" alt="">
+                    {% if getMimeType(item.titlePhoto) == "video/mp4" %}
+                        <video class="js-player"  allow="autoplay">
+                            <source src="{{ item.TitlePhotoPath }}" type="video/mp4"/>
+                        </video>
+                    {% else %}
+                        <img src="/uploads/receipts/{{ item.titlePhoto }}" alt="img">
+                    {% endif %}
                     <div class="receipt-info">
                         <div class="receipt-name" {% if item.products.count == 1 and item.products[0].ProductSize is null %} data-related="{{ item.products[0].id }}"{% endif %}>
                             {{ item.name }}
@@ -94,7 +100,7 @@
                             <div class="quantity">
                                 <span data- class="plus item-plus">+</span>
                                 <div class="quantity-res item-res">
-                                    <input type="number" value="1">
+                                    <input type="number" inputmode="numeric" value="1">
                                 </div>
                                 <span class="minus item-minus">-</span>
                             </div>

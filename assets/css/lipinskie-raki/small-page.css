@@ -149,6 +149,7 @@
     top: 15px;
     left: 0;
     user-select: none;
+    -moz-user-select: none;
     cursor: pointer;
 }
 
@@ -157,6 +158,7 @@
     top: 16px;
     right: 0;
     user-select: none;
+    -moz-user-select: none;
     cursor: pointer;
 }
 
@@ -469,6 +471,10 @@
     display: block;
     padding: 0 0;
 }
+.checkout-order:hover{
+    box-shadow: 0 0 18px rgba(0,0,0,0.5);
+}
+
 button:focus{
     outline: none;
 }
@@ -625,6 +631,7 @@ input[type=number] {
     margin: 0 auto;
     cursor: pointer;
     user-select: none;
+    -moz-user-select: none;
     line-height: 38px;
     position: relative;
     z-index: 30;
@@ -718,6 +725,7 @@ input[type=number] {
     color: #F13A3A;
     cursor: pointer;
     user-select: none;
+    -moz-user-select: none;
 }
 
 .input-reg-container{

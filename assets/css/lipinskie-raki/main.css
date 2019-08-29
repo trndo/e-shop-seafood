@@ -5,6 +5,15 @@ body, html{
     height: 100%;
 }
 
+input:invalid {
+    box-shadow: none;
+}
+
+.btn:hover{
+    color: white;
+    box-shadow: 0 0 18px rgba(0,0,0,0.5);
+}
+
 .wrapper{
     min-height: 100%;
     position: relative;
@@ -63,6 +72,7 @@ header{
     position: relative;
     left: 32px;
     user-select: none;
+    -moz-user-select: none;
     z-index: 2;
 }
 #fish-bone{
@@ -99,6 +109,7 @@ header{
     text-align: center;
     cursor: pointer;
     user-select: none;
+    -moz-user-select: none;
 }
 #basket-container span{
     font-family: Raleway, sans-serif;
@@ -207,6 +218,7 @@ nav ul li{
     line-height: 100%;
     color: #9e9999;
     user-select: none;
+    -moz-user-select: none;
     cursor: pointer;
     transition: .2s;
 }
@@ -567,6 +579,7 @@ footer{
     line-height: 100%;
     color: #9e9999;
     user-select: none;
+    -moz-user-select: none;
     cursor: pointer;
     width: max-content;
     margin-top: 6px;
@@ -695,6 +708,7 @@ footer{
     width: max-content;
     cursor: pointer;
     user-select: none;
+    -moz-user-select: none;
 }
 .menu-nav ul li:hover{
     font-weight: normal !important;
@@ -788,6 +802,7 @@ footer{
     height: 25px;
     top: 13px;
     right: 13px;
+    cursor: pointer;
 }
 
 .choose-type-container{

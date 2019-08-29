@@ -169,8 +169,7 @@ class OrderInfoHandler implements OrderInfoInterface
             $quantity = $orderDetail->getQuantity();
             $productSupply = $product->getSupply();
             $orderDetailPrice = 0;
-
-
+            
             $receipt !== null
                 ? $orderDetailPrice = $receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity
                 : $orderDetailPrice = $product->getPrice() * $quantity;

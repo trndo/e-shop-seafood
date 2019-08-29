@@ -47,14 +47,17 @@ class ProductService implements ProductServiceInterface
      * @var ProductRepository $productRepository
      */
     private $productRepository;
+
     /**
      * @var CategoryServiceInterface
      */
     private $categoryService;
+
     /**
      * @var OrderInfoRepository
      */
     private $infoRepository;
+
     /**
      * @var UrlGeneratorInterface
      */
@@ -89,46 +92,6 @@ class ProductService implements ProductServiceInterface
 
     }
 
-    /**
-     * @param UploadedFile|null $file
-     * @param string $folder
-     * @param null $hash
-     * @return string|null
-     */
-    private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
-    {
-        return $this->fileUploader->uploadFile($file, $folder, $hash);
-    }
-
-    private function uploadProductPhotos(array $photos, Product $product): void
-    {
-        foreach ($photos as $photo) {
-            if ($photo instanceof UploadedFile) {
-                $productPhoto = new Photo();
-                $newPhoto = $this->upload($photo, self::PRODUCT_IMAGE_FOLDER);
-                $productPhoto->setHash($newPhoto)
-                    ->setProduct($product);
-
-                $this->entityManager->persist($productPhoto);
-                $this->entityManager->flush();
-            }
-        }
-    }
-
-    private function setNewProduct(ProductModel $model): Product
-    {
-        $product = new Product();
-        $product = $this->setProductFromModel($product, $model);
-        $product->setProductSize($model->getProductSize());
-
-        if ($model->getTitlePhoto() instanceof UploadedFile) {
-            $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER);
-            $product->setTitlePhoto($newTitlePhoto);
-        }
-
-        return $product;
-    }
-
     private function setSupply(Product $product): Supply
     {
         $supply = new Supply();
@@ -140,20 +103,12 @@ class ProductService implements ProductServiceInterface
         return $supply;
     }
 
-    /**
-     * @return ProductCollection
-     */
     public function getProducts(): ProductCollection
     {
         return new ProductCollection($this->productRepository->findAll());
     }
 
-    /**
-     * @param string $name
-     * @param int $category
-     * @return ProductCollection
-     */
-    public function getProductsByCriteria(?string $name, ?int $category): ?ProductCollection
+    function getProductsByCriteria(?string $name, ?int $category): ?ProductCollection
     {
         return new ProductCollection($this->productRepository->findProductsBy($name, $category));
     }
@@ -173,9 +128,6 @@ class ProductService implements ProductServiceInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Product $product
-     */
     public function deleteProduct(Product $product): void
     {
         $titlePhoto = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $product->getTitlePhoto();
@@ -216,22 +168,14 @@ class ProductService implements ProductServiceInterface
             if (!in_array($key, $this->allowedGetParameters))
                 unset($query[$key]);
         }
-
         return $query;
     }
 
-    /**
-     * @return array|null
-     */
     public function getProductsForRating(): ?array
     {
         return $this->productRepository->findForRating();
     }
 
-    /**
-     * @param string|null $slug
-     * @return Product
-     */
     public function getProduct(?string $slug): Product
     {
         return $this->productRepository->findProductBySlug($slug);
@@ -254,7 +198,6 @@ class ProductService implements ProductServiceInterface
                 $this->productRepository->getProductsForLoading($category->getId(), $count)
             );
         }
-
         return null;
     }
 
@@ -283,7 +226,6 @@ class ProductService implements ProductServiceInterface
                     ];
                 }
                 $orderDetail = $this->setNewOrderDetail($productSupply, $product, $receipt, $order);
-
                 $this->entityManager->persist($orderDetail);
                 $this->entityManager->flush();
 
@@ -293,7 +235,6 @@ class ProductService implements ProductServiceInterface
                         'editOrder',['id' => $order->getId()],UrlGeneratorInterface::ABSOLUTE_URL
                     )];
             }
-
         }
         return [
             'status' => false,
@@ -301,13 +242,88 @@ class ProductService implements ProductServiceInterface
         ];
     }
 
+    public function getSizes(int $id, string $orderType): ProductCollection
+    {
+        switch ($orderType) {
+            case 'today':
+                return new ProductCollection($this->productRepository->findAllAvailableSizes($id));
+            case 'tomorrow':
+                return new ProductCollection($this->productRepository->findAllSizes($id));
+            default:
+                return new ProductCollection([]);
+        }
+    }
+
+    public function adjustmentProductQuantity(?Product $product, ?Receipt $receipt, ?float $value, ?int $orderId): ?array
+    {
+        $order = $this->infoRepository->getOrderById($orderId);
+        $recountQuantity = 0;
+
+        if ($product && $order) {
+            $productSupply = $product->getSupply();
+            $reservations = $productSupply->getReservationQuantity();
+
+            $orderDetail = $this->checkIsExistedOrderDetail($order->getOrderDetails(), $receipt, $product);
+            if ($orderDetail) {
+                $oldQuantity = $orderDetail->getQuantity();
+                   $value > $oldQuantity ? $recountQuantity = $value - $oldQuantity : $recountQuantity = $oldQuantity - $value;
+
+                    if ($recountQuantity <= $reservations) {
+
+                    $oldPrice = $this->getOrderDetailPrice($orderDetail, $oldQuantity);
+                    $newPrice = $this->getOrderDetailPrice($orderDetail, $value);
+
+                    $priceDiff = $this->recognizeDiff($newPrice,$oldPrice);
+                    $reservationDiff = $this->recognizeDiff($value, $oldQuantity);
+
+                    $order->setTotalPrice($order->getTotalPrice() - $priceDiff);
+                    $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $reservationDiff);
+                    $orderDetail->setQuantity($value);
+
+                    $this->entityManager->flush();
+
+                    return [
+                      'status' => true,
+                      'totalSum' => $order->getTotalPrice(),
+                      'reservation' => $productSupply->getReservationQuantity()
+                    ];
+                }
+                return [
+                    'status' => false,
+                    'message' => 'Недостаточное количество на складе',
+                    'totalSum' => $order->getTotalPrice(),
+                ];
+            }
+            return [
+                'status' => false,
+                'message' => 'Такого товара не сущевствует!',
+                'totalSum' => $order->getTotalPrice()
+            ];
+        }
+        return null;
+    }
+
+    private function getOrderDetailPrice(OrderDetail $orderDetail, $value): float
+    {
+        $price = 0;
+        $orderDetailProduct = $orderDetail->getProduct();
+        $orderDetailReceipt = $orderDetail->getReceipt();
+
+        $orderDetailReceipt
+            ? $price += ceil($value) * $orderDetailReceipt->getPrice() + $value * $orderDetailProduct->getPrice()
+            : $price += $value * $orderDetailProduct->getPrice();
+
+        return $price;
+    }
+
     private function setNewOrderDetail(Supply $productSupply, Product $product, ?Receipt $receipt, OrderInfo $order): OrderDetail
     {
+        $orderDetail = new OrderDetail();
         $value = 1;
         $amount = 0;
+
         $diff = $productSupply->getReservationQuantity() - $value;
 
-        $orderDetail = new OrderDetail();
         $receipt !== null
             ? $orderDetail->setReceipt($receipt)->setProduct($product)
             : $orderDetail->setProduct($product);
@@ -325,26 +341,24 @@ class ProductService implements ProductServiceInterface
         return  $orderDetail;
     }
 
-    private function getOrderDetail(OrderInfo $orderInfo, ?Receipt $receipt, ?Product $product, float $value): OrderDetail
+    private function recognizeDiff(float $newQuantity, float $oldQuantity): float
     {
-        $orderDetails = $orderInfo->getOrderDetails();
-        $orderDetail = $this->checkIsNeedNewOrderDetail($orderDetails, $receipt, $product);
-
-        if ($orderDetail->getProduct() === $product) {
-            $orderDetail->setQuantity($orderDetail->getQuantity() + $value);
-        } else {
-            $receipt !== null ? $orderDetail->setReceipt($receipt)->setProduct($product) : $orderDetail->setProduct($product);
-            $orderDetail->setQuantity($value);
-            $orderInfo->addOrderDetail($orderDetail);
+        $difference = 0;
+        if ($newQuantity > $oldQuantity) {
+            $difference = ($newQuantity - $oldQuantity) * -1;
         }
 
-        return $orderDetail;
+        if ($newQuantity < $oldQuantity) {
+            $difference = $oldQuantity - $newQuantity;
+        }
+
+        return $difference;
     }
 
     private function checkIsExistedOrderDetail(Collection $orderDetails, ?Receipt $receipt, ?Product $product): ?OrderDetail
     {
-                 /** @var OrderDetail $orderDetail */
         foreach ($orderDetails as $orderDetail) {
+                /** @var OrderDetail $orderDetail */
                 $orderDetailProduct = $orderDetail->getProduct();
                 $orderDetailReceipt = $orderDetail->getReceipt();
 
@@ -358,7 +372,6 @@ class ProductService implements ProductServiceInterface
                         return $orderDetail;
                     }
                 }
-
         }
         return null;
     }
@@ -384,15 +397,37 @@ class ProductService implements ProductServiceInterface
         return $product;
     }
 
-    public function getSizes(int $id, string $orderType): ProductCollection
+    private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
     {
-        switch ($orderType) {
-            case 'today':
-                return new ProductCollection($this->productRepository->findAllAvailableSizes($id));
-            case 'tomorrow':
-                return new ProductCollection($this->productRepository->findAllSizes($id));
-            default:
-                return new ProductCollection([]);
+        return $this->fileUploader->uploadFile($file, $folder, $hash);
+    }
+
+    private function uploadProductPhotos(array $photos, Product $product): void
+    {
+        foreach ($photos as $photo) {
+            if ($photo instanceof UploadedFile) {
+                $productPhoto = new Photo();
+                $newPhoto = $this->upload($photo, self::PRODUCT_IMAGE_FOLDER);
+                $productPhoto->setHash($newPhoto)
+                    ->setProduct($product);
+
+                $this->entityManager->persist($productPhoto);
+                $this->entityManager->flush();
+            }
         }
+    }
+
+    private function setNewProduct(ProductModel $model): Product
+    {
+        $product = new Product();
+        $product = $this->setProductFromModel($product, $model);
+        $product->setProductSize($model->getProductSize());
+
+        if ($model->getTitlePhoto() instanceof UploadedFile) {
+            $newTitlePhoto = $this->upload($model->getTitlePhoto(), self::PRODUCT_IMAGE_FOLDER);
+            $product->setTitlePhoto($newTitlePhoto);
+        }
+
+        return $product;
     }
 }

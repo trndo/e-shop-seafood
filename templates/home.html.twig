@@ -49,10 +49,16 @@
                     <div class="row row-rating">
                     {% for item in items %}
                         <div class="product-card">
-                            <img src="{{ item.TitlePhotoPath }}" alt="">
+                            {% if item.type == 'product' %}
+                                <img src="{{ item.TitlePhotoPath }}" alt="photo">
+                            {% else %}
+                                {% dump(item.photo.1.hash) %}
+                                <img src="/uploads/receipts/{{ item.photo.1.hash }}" alt="photo">
+                            {% endif %}
+
                             <div class="card-content">
                                 <h4>{{ item.name }}</h4>
-                                <p>{{ item.description }}</p>
+                                <p>{{ item.description|truncate(70) }}</p>
                                 <div class="main-info">
                                     <span class="price">{{ item.price }} ₴</span>
                                     <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">Подробнее</div>

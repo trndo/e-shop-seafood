@@ -185,4 +185,23 @@ class AdminOrderController extends AbstractController
 
     }
 
+    /**
+     * @Route("/orderAdjustment/changeProductQuantity", name="changeProductQuantity", methods={"POST"})
+     * @param Request $request
+     * @param ProductServiceInterface $productService
+     * @param ReceiptServiceInterface $receiptService
+     * @return JsonResponse
+     */
+    public function changeProductQuantity(Request $request, ProductServiceInterface $productService, ReceiptServiceInterface $receiptService): JsonResponse
+    {
+        $product = $productService->getProductById($request->request->getInt('productId'));
+        $receipt = $receiptService->getReceiptById($request->request->getInt('receiptId'));
+        $orderId = $request->request->getInt('orderId');
+        $value = (float) $request->request->get('value');
+
+        $changeResult = $productService->adjustmentProductQuantity($product, $receipt, $value, $orderId);
+
+        return new JsonResponse($changeResult);
+    }
+
 }

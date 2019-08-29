@@ -17,12 +17,12 @@ $('#order_info_totalPrice').abacus(totalSum);
 
     });
 
-    $('input[type=number]').change(function () {
+    $('.abacus-style').change(function () {
 
         let totalPrice = $('#order_info_totalPrice');
         let sum = 0;
 
-        $('input[type=number]').each(function () {
+        $('.abacus-style').each(function () {
             let product = $(this).parent().prev();
             let quantity = Number($(this).val());
             let productPrice = Number(product.val());
@@ -169,14 +169,16 @@ $('#order_info_totalPrice').abacus(totalSum);
                         alert(res.message);
                     else
                         console.log(res.order);
-                        // window.location.href = res.order
+                         window.location.href = res.order
                 }
             })
         }
+        radio.prop("checked", false);
 
     });
 
     $(document).on('click', '.addOrderDetail', function () {
+        let thisButton = $(this);
         let button = $(this).data('item');
         let value = $(this).prev().val();
         let productId = $(this).parent().siblings('.prodId').data('item');
@@ -184,15 +186,23 @@ $('#order_info_totalPrice').abacus(totalSum);
         let productDetail = $('p[data-product="' + button + '"]').data('product');
         let orderId = $('#order-number').text();
 
+        if (!productDetail) {
+            productDetail = productId;
+        }
+
         if (receiptDetail === button || productDetail === button) {
             $.ajax({
                 type: "POST",
-                url:"",
+                url:"/orderAdjustment/changeProductQuantity",
                 data: {
                     value: value,
                     receiptId: receiptDetail,
                     productId: productDetail,
                     orderId: orderId
+                }, success (res) {
+                    console.log(res);
+                    $('#order_info_totalPrice').val(res.totalSum);
+                    thisButton.parent().siblings('.prodId').children('.product-reserve').text('Доступно в резерве: '+res.reservation);
                 }
             })
         }

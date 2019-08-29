@@ -22,7 +22,7 @@ class OrderDetail
     private $quantity;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetail" )
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetail")
      */
     private $product;
 

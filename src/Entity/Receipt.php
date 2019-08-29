@@ -99,7 +99,6 @@ class Receipt
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="receipt", referencedColumnName="id", onDelete="SET NULL")
      */
     private $orderDetail;
 

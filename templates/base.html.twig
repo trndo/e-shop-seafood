@@ -13,6 +13,7 @@
             <!-- Add the slick-theme.css if you want default styling -->
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
             {{ encore_entry_link_tags('main') }}
+            {{ encore_entry_link_tags('video') }}
         {% endblock %}
     </head>
     <body>
@@ -20,6 +21,7 @@
         {% block javascripts %}
         {{ encore_entry_script_tags('main') }}
         {{ encore_entry_script_tags('common') }}
+        {{ encore_entry_script_tags('video') }}
         {% endblock %}
     </body>
 </html>

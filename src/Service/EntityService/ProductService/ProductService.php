@@ -47,14 +47,17 @@ class ProductService implements ProductServiceInterface
      * @var ProductRepository $productRepository
      */
     private $productRepository;
+
     /**
      * @var CategoryServiceInterface
      */
     private $categoryService;
+
     /**
      * @var OrderInfoRepository
      */
     private $infoRepository;
+
     /**
      * @var UrlGeneratorInterface
      */
@@ -100,20 +103,12 @@ class ProductService implements ProductServiceInterface
         return $supply;
     }
 
-    /**
-     * @return ProductCollection
-     */
     public function getProducts(): ProductCollection
     {
         return new ProductCollection($this->productRepository->findAll());
     }
 
-    /**
-     * @param string $name
-     * @param int $category
-     * @return ProductCollection
-     */
-    public function getProductsByCriteria(?string $name, ?int $category): ?ProductCollection
+    function getProductsByCriteria(?string $name, ?int $category): ?ProductCollection
     {
         return new ProductCollection($this->productRepository->findProductsBy($name, $category));
     }
@@ -133,9 +128,6 @@ class ProductService implements ProductServiceInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Product $product
-     */
     public function deleteProduct(Product $product): void
     {
         $titlePhoto = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $product->getTitlePhoto();
@@ -179,18 +171,11 @@ class ProductService implements ProductServiceInterface
         return $query;
     }
 
-    /**
-     * @return array|null
-     */
     public function getProductsForRating(): ?array
     {
         return $this->productRepository->findForRating();
     }
 
-    /**
-     * @param string|null $slug
-     * @return Product
-     */
     public function getProduct(?string $slug): Product
     {
         return $this->productRepository->findProductBySlug($slug);
@@ -272,23 +257,24 @@ class ProductService implements ProductServiceInterface
     public function adjustmentProductQuantity(?Product $product, ?Receipt $receipt, ?float $value, ?int $orderId): ?array
     {
         $order = $this->infoRepository->getOrderById($orderId);
+        $recountQuantity = 0;
 
         if ($product && $order) {
             $productSupply = $product->getSupply();
             $reservations = $productSupply->getReservationQuantity();
 
-            if ($value <= $reservations) {
-                $orderDetail = $this->checkIsExistedOrderDetail($order->getOrderDetails(), $receipt, $product);
+            $orderDetail = $this->checkIsExistedOrderDetail($order->getOrderDetails(), $receipt, $product);
+            if ($orderDetail) {
+                $oldQuantity = $orderDetail->getQuantity();
+                   $value > $oldQuantity ? $recountQuantity = $value - $oldQuantity : $recountQuantity = $oldQuantity - $value;
 
-                if ($orderDetail) {
+                    if ($recountQuantity <= $reservations) {
 
-                    $oldQuantity = $orderDetail->getQuantity();
                     $oldPrice = $this->getOrderDetailPrice($orderDetail, $oldQuantity);
                     $newPrice = $this->getOrderDetailPrice($orderDetail, $value);
 
                     $priceDiff = $this->recognizeDiff($newPrice,$oldPrice);
                     $reservationDiff = $this->recognizeDiff($value, $oldQuantity);
-
 
                     $order->setTotalPrice($order->getTotalPrice() - $priceDiff);
                     $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $reservationDiff);
@@ -298,22 +284,25 @@ class ProductService implements ProductServiceInterface
 
                     return [
                       'status' => true,
-                      'totalSum' => $order->getTotalPrice()
+                      'totalSum' => $order->getTotalPrice(),
+                      'reservation' => $productSupply->getReservationQuantity()
                     ];
                 }
                 return [
                     'status' => false,
-                    'message' => 'Такого товара не сущевствует!'
+                    'message' => 'Недостаточное количество на складе',
+                    'totalSum' => $order->getTotalPrice(),
                 ];
             }
             return [
                 'status' => false,
-                'message' => 'Недостаточное количество на складе'
+                'message' => 'Такого товара не сущевствует!',
+                'totalSum' => $order->getTotalPrice()
             ];
-
         }
         return null;
     }
+
     private function getOrderDetailPrice(OrderDetail $orderDetail, $value): float
     {
         $price = 0;
@@ -408,12 +397,6 @@ class ProductService implements ProductServiceInterface
         return $product;
     }
 
-    /**
-     * @param UploadedFile|null $file
-     * @param string $folder
-     * @param null $hash
-     * @return string|null
-     */
     private function upload(?UploadedFile $file, string $folder, $hash = null): ?string
     {
         return $this->fileUploader->uploadFile($file, $folder, $hash);

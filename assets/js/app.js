@@ -17,12 +17,12 @@ $('#order_info_totalPrice').abacus(totalSum);
 
     });
 
-    $('input[type=number]').change(function () {
+    $('.abacus-style').change(function () {
 
         let totalPrice = $('#order_info_totalPrice');
         let sum = 0;
 
-        $('input[type=number]').each(function () {
+        $('.abacus-style').each(function () {
             let product = $(this).parent().prev();
             let quantity = Number($(this).val());
             let productPrice = Number(product.val());
@@ -178,6 +178,7 @@ $('#order_info_totalPrice').abacus(totalSum);
     });
 
     $(document).on('click', '.addOrderDetail', function () {
+        let thisButton = $(this);
         let button = $(this).data('item');
         let value = $(this).prev().val();
         let productId = $(this).parent().siblings('.prodId').data('item');
@@ -201,6 +202,7 @@ $('#order_info_totalPrice').abacus(totalSum);
                 }, success (res) {
                     console.log(res);
                     $('#order_info_totalPrice').val(res.totalSum);
+                    thisButton.parent().siblings('.prodId').children('.product-reserve').text('Доступно в резерве: '+res.reservation);
                 }
             })
         }

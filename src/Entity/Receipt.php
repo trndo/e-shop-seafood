@@ -98,7 +98,8 @@ class Receipt
     private $specialPropositions;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="receipt", referencedColumnName="id", onDelete="SET NULL")
      */
     private $orderDetail;
 

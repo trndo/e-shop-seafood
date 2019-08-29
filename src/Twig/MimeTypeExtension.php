@@ -29,7 +29,7 @@ class MimeTypeExtension extends AbstractExtension
     {
         $mimeType = new MimeTypeGuesser();
 
-        return $mimeType->guess($this->uploadDir.$fileName);
+        return $mimeType->guess('/uploads/receipts/'.$fileName);
 
     }
 }

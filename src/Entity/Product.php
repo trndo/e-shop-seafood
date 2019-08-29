@@ -144,6 +144,7 @@ class Product
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="product", referencedColumnName="id", onDelete="SET NULL")
      */
     private $orderDetail;
 

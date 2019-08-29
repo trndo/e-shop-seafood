@@ -143,16 +143,16 @@ $(document).ready(function () {
 
     function getBlock(type, id){
         return '<div class="product-to-basket">\n' +
-        '                                <div class="quantity">\n' +
-        '                                    <span data- class="plus item-plus">+</span>\n' +
-        '                                    <div class="quantity-res item-res">\n' +
-        '                                        <input type="number" value="1">\n' +
-        '                                    </div>\n' +
-        '                                    <span class="minus item-minus">-</span>\n' +
-        '                                </div>\n' +
-        '                                    <div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
-        '                                        Добавить в козину\n' +
-        '                                    </div></div>'
+        '<div class="quantity">\n' +
+        '<span data- class="plus item-plus">+</span>\n' +
+        '<div class="quantity-res item-res">\n' +
+        '<input type="number" value="1">\n' +
+        '</div>\n' +
+        '<span class="minus item-minus">-</span>\n' +
+        '</div>\n' +
+        '<div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
+        'Добавить в козину\n' +
+        '</div></div>'
     }
 
     function getSizes(info,block,orderType){
@@ -474,6 +474,9 @@ $(document).ready(function () {
             },
             'order[deliveryType]': {
                 required: true,
+            },
+            'order[comment]': {
+                required: false,
             }
         },
         messages: {

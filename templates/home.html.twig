@@ -52,8 +52,11 @@
                             {% if item.type == 'product' %}
                                 <img src="{{ item.TitlePhotoPath }}" alt="photo">
                             {% else %}
-                                {% dump(item.photo.1.hash) %}
-                                <img src="/uploads/receipts/{{ item.photo.1.hash }}" alt="photo">
+                                    {% if item.photo is not empty %}
+                                        <img src="/uploads/receipts/{{ item.photo.0.hash }}" alt="photo">
+                                    {% else %}
+                                        <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                    {% endif %}
                             {% endif %}
 
                             <div class="card-content">

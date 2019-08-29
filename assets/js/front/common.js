@@ -1,6 +1,5 @@
 import $ from 'jquery';
 
-
 $('li').click(function () {
     if ($(this).data('location'))
         window.location.href = $(this).data('location');
@@ -18,12 +17,12 @@ $('.toogle-dropdown').click(function () {
         $('.dropdown').fadeOut();
 });
 
-$('.toogle-dropdown-footer').click(function () {
+/*$('.toogle-dropdown-footer').click(function () {
     if ($('.dropdown-footer').css('display') === 'none')
         $('.dropdown-footer').fadeIn();
     else
         $('.dropdown-footer').fadeOut();
-});
+});*/
 
 $('#basket-container').click(function () {
     window.location.href = '/cart';
@@ -44,7 +43,15 @@ $('.login-button').click(function () {
 $('#menu').click(function () {
     let nav = $('.menu-nav');
     let body = $('body');
-    nav.css('display') === 'none' ? nav.fadeIn() : nav.fadeOut();
+    if(nav.css('display') === 'none'){
+        nav.fadeIn();
+        document.ontouchmove = function(e){
+            e.preventDefault();
+        }
+    } else {
+        nav.fadeOut();
+        document.ontouchmove = function(e){ return true; }
+    }
     body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
 });
 
@@ -60,4 +67,16 @@ $('.social').click(function () {
 
 $('#user').click(function () {
    window.location.href = $(this).data('user');
+});
+
+$('.warn-button').click(function () {
+   window.location.href = '/category-varenye-raki';
+});
+
+$('.back-to-main').click(function () {
+    window.location.href = '/';
+});
+
+$('.user-tab').click(function () {
+   window.location.href = $(this).data('path');
 });

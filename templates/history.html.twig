@@ -1,26 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
-    <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
-    <style>
-        .slick-slide {
-            margin: 0 13px;
-            width: 150px;
-        }
-
-        /* the parent */
-        .slick-list {
-            margin: 0;
-        }
-
-        .slick-track {
-
-        }
-    </style>
-    {{ parent() }}
-{% endblock %}
 {% block body %}
     <div class="container">
         {% set sum = app.session.get('totalSum') %}
@@ -40,9 +18,9 @@
                 </div>
             </div>
             <div class="user-tabs">
-                <div class="user-tab">Личные данные</div>
-                <div class="user-tab user-tab-active">История заказов</div>
-                <div class="user-tab user-tab-last">Поменять пароль</div>
+                <div class="user-tab" data-path="{{ path('user',{'id': app.user.id}) }}">Личные данные</div>
+                <div class="user-tab user-tab-active" data-path="{{ path('user_orders',{'id': app.user.id}) }}">История заказов</div>
+                <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'id': app.user.id}) }}">Поменять пароль</div>
             </div>
             <div class="user-red-content">
                 <embed id="steamed-fish" type="image/svg+xml" src="/assets/img/steamed-fish.svg"/>

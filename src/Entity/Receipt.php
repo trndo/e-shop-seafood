@@ -98,7 +98,7 @@ class Receipt
     private $specialPropositions;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\OrderDetail", mappedBy="receipt", orphanRemoval=true)
      */
     private $orderDetail;
 

@@ -22,12 +22,12 @@ class OrderDetail
     private $quantity;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetail", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Product", inversedBy="orderDetail", orphanRemoval=true )
      */
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", inversedBy="orderDetail", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Receipt", inversedBy="orderDetail", orphanRemoval=true )
      */
     private $receipt;
 

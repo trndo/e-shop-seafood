@@ -114,12 +114,12 @@ class Product
     private $weightPerUnit;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="products", cascade={"persist", "remove"})
      */
     private $additionalProduct;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="additionalProduct")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="additionalProduct", cascade={"persist", "remove"})
      */
     private $products;
 

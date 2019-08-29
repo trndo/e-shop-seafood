@@ -64,6 +64,10 @@
                                 <div>
                                     {{ form_widget(form.password.second,{'attr':{'class': 'user-input login-input'}}) }}
                                 </div>
+                                <div style="display: none">
+                                    {{ form_widget(form.friendUniqueId,{'attr':{'class': 'user-input login-input'}}) }}
+                                </div>
+
                             </div>
                         {{ form_widget(form.save,
                             {'attr':{'class': 'user-input login-input login-button'}

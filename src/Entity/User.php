@@ -423,7 +423,9 @@ class User implements UserInterface
 
     public function generateUniqueId(int $length): string
     {
-        return substr(uniqid(md5(new \DateTimeImmutable("now"))),0, $length);
+        return substr(uniqid(md5(
+            (new \DateTime("now"))->getTimestamp()
+        )),0, $length);
     }
 
 

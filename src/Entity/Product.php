@@ -148,7 +148,7 @@ class Product
     private $orderDetail;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="product", cascade={"persist", "remove"})
      */
     private $reservations;
 

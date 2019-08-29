@@ -17,12 +17,12 @@ $('.toogle-dropdown').click(function () {
         $('.dropdown').fadeOut();
 });
 
-$('.toogle-dropdown-footer').click(function () {
+/*$('.toogle-dropdown-footer').click(function () {
     if ($('.dropdown-footer').css('display') === 'none')
         $('.dropdown-footer').fadeIn();
     else
         $('.dropdown-footer').fadeOut();
-});
+});*/
 
 $('#basket-container').click(function () {
     window.location.href = '/cart';

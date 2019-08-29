@@ -74,7 +74,7 @@ class Product
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="product", cascade={"remove"})
      */
     private $photos;
 

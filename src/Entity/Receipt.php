@@ -83,7 +83,7 @@ class Receipt
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="receipt")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="receipt", cascade={"remove"})
      */
     private $photo;
 

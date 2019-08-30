@@ -11,27 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RatingController extends AbstractController
+class AdminRatingController extends AbstractController
 {
     /**
      * @Route("/lipadmin/rating", name="rating")
      *
-     * @param ProductServiceInterface $productService
-     * @param ReceiptServiceInterface $receiptService
+     * @param RatingServiceInterface $ratingService
      * @return Response
      */
-    public function rating(ProductServiceInterface $productService,
-                           ReceiptServiceInterface $receiptService): Response
+    public function rating(RatingServiceInterface $ratingService): Response
     {
-        $result = array_merge($productService->getProductsForRating(),$receiptService->getReceiptsForRating());
-        usort($result, function ($product,$receipt){
-            if($product->getRating() == $receipt->getRating())
-                return null;
-            return ($product->getRating() < $receipt->getRating()) ? -1 : 1;
-        });
-
         return $this->render('admin/rating/rating.html.twig',[
-            'results' => $result
+            'results' => $ratingService->getItems()
         ]);
     }
 

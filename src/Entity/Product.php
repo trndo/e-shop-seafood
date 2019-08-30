@@ -664,7 +664,7 @@ class Product
         return $this->additionPrice;
     }
 
-    public function setAdditionPrice(float $additionPrice): self
+    public function setAdditionPrice(?float $additionPrice): self
     {
         $this->additionPrice = $additionPrice;
 

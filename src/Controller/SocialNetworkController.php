@@ -93,8 +93,4 @@ class SocialNetworkController extends AbstractController
             'social' => $social
         ]);
    }
-
-
-
-
 }

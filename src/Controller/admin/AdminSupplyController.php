@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SupplyController extends AbstractController
+class AdminSupplyController extends AbstractController
 {
     /**
      * @Route("/lipadmin/supply/edit", name="supplyEdit", methods={"POST"})

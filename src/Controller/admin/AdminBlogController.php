@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BlogController extends AbstractController
+class AdminBlogController extends AbstractController
 {
     /**
      * @Route("/lipadmin/blog/createMessage", name="createMessage")

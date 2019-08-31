@@ -22,7 +22,6 @@ class ProductController extends AbstractController
      * @Route("/category-{category_slug}/{slug}", name="showItem")
      * @ParamConverter("category", options={"mapping": {"category_slug": "slug"}})
      *
-     *
      * @param Category $category
      * @param string $slug
      * @param ProductServiceInterface $service

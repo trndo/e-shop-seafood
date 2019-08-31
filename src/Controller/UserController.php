@@ -16,6 +16,7 @@ use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
 use App\Service\PaymentService\PaymentInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,41 +27,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/forgotPassword", name="enterEmail")
-     * @param Request $request
-     * @param UserServiceInterface $userService
-     * @return \Symfony\Component\HttpKernel\Exception\NotFoundHttpException|Response
-     */
-    public function enterEmail(Request $request, UserServiceInterface $userService):Response
-    {
-        $emailModel = new ResetPasswordModel();
-        $options['email'] = true;
-        $form = $this->createForm(ResetPasswordType::class, $emailModel, $options);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var ResetPasswordModel $data */
-            $data = $form->getData();
-            $email = $data->getEmail();
-            $user = $userService->findUserByEmail($email);
-            if ($user->getRegistrationStatus()) {
-                $userService->resetPassword($user);
-            }
-            if (!$user->getRegistrationStatus()) {
-                throw $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
-            }
-            if (!$user) {
-                throw $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
-            }
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('enter_email.html.twig', [
-            'form' => $form->createView()
-        ]);
-
-    }
-
     /**
      * @Route("/newPassword-{passToken}", name="newPassword")
      * @param Request $request
@@ -91,6 +57,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}/resetPassword", name="resetPass")
      * @param Request $request
      * @param UserServiceInterface $userService
@@ -121,6 +88,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}" , name="user")
      * @param User $user
      * @param Request $request
@@ -129,7 +97,6 @@ class UserController extends AbstractController
      */
     public function updateUser(User $user, Request $request, UserServiceInterface $service): Response
     {
-        $user = $this->getUser();
         $userInfoModel = UserMapper::entityToUserModel($user);
         $form = $this->createForm(UserInfoUpdateType::class, $userInfoModel);
         $form->handleRequest($request);
@@ -146,6 +113,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}/orders", name="user_orders")
      *
      * @param User $user
@@ -157,43 +125,5 @@ class UserController extends AbstractController
         return $this->render('history.html.twig', [
             'orders' => $orderInfo->getUserOrders($user->getId())
         ]);
-    }
-
-    /**
-     * @Route("/orders/payment/{orderUniqueId}", name="pay")
-     * @param OrderInfo $order
-     * @param PaymentInterface $handler
-     * @return Response
-     */
-    public function pay(OrderInfo $order, PaymentInterface $handler): Response
-    {
-        $payment = $handler->doPayment($order);
-        return $this->render('pay.html.twig', [
-            'payment' => $payment
-        ]);
-    }
-
-    /**
-     * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
-     * @param Request $request
-     * @param OrderInfo $orderInfo
-     * @param PaymentInterface $paymentHandler
-     * @return JsonResponse
-     */
-    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
-    {
-        $res = $request->request->get('data');
-
-        $status = $paymentHandler->confirmPayment($orderInfo, $res);
-
-        if (!$status) {
-            return new JsonResponse([
-                'status' => $status
-            ], 400);
-        } else {
-            return new JsonResponse([
-                'status' => $status
-            ], 200);
-        }
     }
 }

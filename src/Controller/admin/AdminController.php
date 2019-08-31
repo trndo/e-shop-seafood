@@ -36,5 +36,20 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/lipadmin/showOrder/{id}" ,name="admin_show_order")
+     * @param int|null $id
+     * @param OrderInfoInterface $orderInfo
+     * @return Response
+     */
+    public function order(?int $id, OrderInfoInterface $orderInfo): Response
+    {
+        $order = $orderInfo->getOrder($id);
+
+        return $this->render('admin/order.html.twig', [
+            'order' => $order
+        ]);
+    }
+
 
 }

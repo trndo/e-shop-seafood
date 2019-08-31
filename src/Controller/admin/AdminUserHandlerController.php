@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller\admin;
 
 use App\Entity\User;
@@ -14,25 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class UserController
- * @package App\Controller\admin
- */
-class UserController extends AbstractController
+class AdminUserHandlerController extends AbstractController
 {
     /**
-     * @Route(path="/lipadmin/admins", name="admins")
+     * @Route("/lipadmin/users/delete/{id}", name="deleteUser")
      *
      * @param UserServiceInterface $userService
+     * @param User $user
      * @return Response
      */
-    public function adminUsers(UserServiceInterface $userService): Response
+    public function deleteUser(UserServiceInterface $userService, User $user): Response
     {
-        $admins = $userService->getAdmins();
+        $userService->deleteUserById($user);
 
-        return $this->render('admin/users/admins.html.twig', [
-            'admins' => $admins
-        ]);
+        return $this->redirectToRoute('users');
     }
 
     /**
@@ -101,71 +97,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('security/admin_registration.html.twig',[
-           'form' => $form->createView()
+            'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route(path="/lipadmin/users", name="users")
-     *
-     * @param UserServiceInterface $userService
-     * @return Response
-     */
-    public function showUsers(UserServiceInterface $userService): Response
-    {
-        $users = $userService->getUsers();
-
-        return $this->render('admin/users/users.html.twig', [
-            'users' => $users
-        ]);
-    }
-
-    /**
-     * @Route("/lipadmin/users/delete/{id}", name="deleteUser")
-     *
-     * @param UserServiceInterface $userService
-     * @param User $user
-     * @return Response
-     */
-    public function deleteUser(UserServiceInterface $userService, User $user): Response
-    {
-        $userService->deleteUserById($user);
-
-        return $this->redirectToRoute('users');
-    }
-
-    /**
-     * @Route("/lipadmin/users/showBonuses/{id}", name="showBonuses")
-     *
-     * @param UserServiceInterface $userService
-     * @param User $user
-     * @param Request $request
-     * @return Response
-     */
-    public function showBonuses(UserServiceInterface $userService, User $user, Request $request): Response
-    {
-        return $this->render('elements/bonus_modal.html.twig',[
-            'user' => $user
-        ]);
-    }
-
-    /**
-     * @Route("/lipadmin/users/editBonuses/{id}", name="editUserBonuses")
-     *
-     * @param UserServiceInterface $userService
-     * @param User $user
-     * @param Request $request
-     * @return Response
-     */
-    public function editBonuses(UserServiceInterface $userService, User $user, Request $request): Response
-    {
-        $newBonuses = $request->request->get('bonuses');
-        $oldBonuses = $user->getBonuses();
-
-        if ($newBonuses != $oldBonuses && $newBonuses !=null) {
-            $userService->saveBonuses($user,$newBonuses);
-        }
-
-        return $this->redirectToRoute('users');
     }
 }

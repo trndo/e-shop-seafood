@@ -64,7 +64,7 @@ class OrderController extends AbstractController
 
     }
 
-    private function getOrderModel(User $user)
+    private function getOrderModel(?User $user): OrderModel
     {
         if ($this->isGranted('IS_AUTHENTICATED_FULLY') && $this->isGranted('IS_AUTHENTICATED_REMEMBERED'))
             $orderModel = OrderMapper::entityUserToOrderModel($user);

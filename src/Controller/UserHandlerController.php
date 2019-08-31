@@ -5,10 +5,13 @@ namespace App\Controller;
 
 
 use App\Entity\OrderInfo;
+use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserHandlerController extends AbstractController
 {
     /**
-     * @Route("/orders/payment/{orderUniqueId}", name="pay")
+     * @IsGranted("ROLE_USER")
+     * @Route("/user-{user_id}/orders/payment/{orderUniqueId}", name="pay")
+     * @ParamConverter("user", options={"id" = "user_id"})
      * @param OrderInfo $order
      * @param PaymentInterface $handler
      * @return Response
      */
-    public function pay(OrderInfo $order, PaymentInterface $handler): Response
+    public function pay(OrderInfo $order, PaymentInterface $handler, User $user): Response
     {
         $payment = $handler->doPayment($order);
         return $this->render('pay.html.twig', [
@@ -32,7 +37,7 @@ class UserHandlerController extends AbstractController
     }
 
     /**
-     * @Route("/api/confirm/payment/{orderUniqueId}", name="confirmPay")
+     * @Route("/api/confirm-payment/{orderUniqueId}", name="confirmPay")
      * @param Request $request
      * @param OrderInfo $orderInfo
      * @param PaymentInterface $paymentHandler

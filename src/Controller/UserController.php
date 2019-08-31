@@ -16,6 +16,7 @@ use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentHandler;
 use App\Service\PaymentService\PaymentInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,6 +57,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}/resetPassword", name="resetPass")
      * @param Request $request
      * @param UserServiceInterface $userService
@@ -86,6 +88,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}" , name="user")
      * @param User $user
      * @param Request $request
@@ -94,7 +97,6 @@ class UserController extends AbstractController
      */
     public function updateUser(User $user, Request $request, UserServiceInterface $service): Response
     {
-        $user = $this->getUser();
         $userInfoModel = UserMapper::entityToUserModel($user);
         $form = $this->createForm(UserInfoUpdateType::class, $userInfoModel);
         $form->handleRequest($request);
@@ -111,6 +113,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}/orders", name="user_orders")
      *
      * @param User $user

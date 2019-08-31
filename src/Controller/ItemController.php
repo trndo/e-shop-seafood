@@ -10,6 +10,7 @@ use App\Service\EntityService\UserService\UserService;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\RegistrationService\RegisterUser;
 use App\Service\RegistrationService\RegisterUserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController
+class ItemController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
@@ -132,6 +133,7 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/user-{id}/credentials", name="showCredentials")
      * @param User $user
      * @param Request $request

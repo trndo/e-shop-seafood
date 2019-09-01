@@ -25,6 +25,7 @@
         "plyr": "^3.5.6",
         "popper.js": "^1.15.0",
         "simplebar": "^4.0.0",
-        "slick-carousel": "^1.8.1"
+        "slick-carousel": "^1.8.1",
+        "timepicker": "^1.11.15"
     }
 }

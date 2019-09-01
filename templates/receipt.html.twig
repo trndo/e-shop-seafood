@@ -63,7 +63,7 @@
                                     </h4>
                                     <div class="receipt-sizes-container">
                                         {% for size in sizes %}
-                                        <div class="size-block" data-name="{{ size.id }}">
+                                        <div class="size-block" data-name="{{ size.id }}" data-size-price="{{ size.price }}">
                                             {{ size.ProductSize }}
                                         </div>
                                         {% endfor %}
@@ -104,8 +104,8 @@
                                 Другой день
                             </div>
                         </div>#}
-                        <div class="product-price receipt-price">
-                            {{ item.price }} грн / {{ item.unit }}.{#<span class="special-price-receipt special-price">550 грн</span>#}
+                        <div class="product-price receipt-price" data-price="{{ item.price }}">
+                            <span id="price">{% if item.products.count == 1 and item.products[0].ProductSize is null %}{{ item.price + item.products[0].price }}{% else %}{{ item.price }}{% endif %}</span> грн / {{ item.unit }}.{#<span class="special-price-receipt special-price">550 грн</span>#}
                         </div>
                         {% if session is not null and showInBasket %}
                         <div class="product-to-basket">

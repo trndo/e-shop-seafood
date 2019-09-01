@@ -32,6 +32,7 @@ Encore
     .addEntry('order','./assets/js/front/order.js')
     .addEntry('cart','./assets/js/front/cart.js')
     .addEntry('video','./assets/js/front/video.js')
+    .addEntry('slider','./assets/js/front/hard-slider.js')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

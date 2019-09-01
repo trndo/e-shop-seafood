@@ -56,7 +56,7 @@
                                     <div class="col-6">
                                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
-                                                {% for photo in product.photos %}
+                                                {% for photo in product.photo %}
                                                 <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
                                                     <img src="/uploads/products/{{ photo.hash }}" class="d-block w-100" alt="...">
                                                 </div>

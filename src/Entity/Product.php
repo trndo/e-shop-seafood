@@ -304,7 +304,7 @@ class Product
     /**
      * @return Collection|Photo[]
      */
-    public function getPhotos(): Collection
+    public function getPhoto(): Collection
     {
         return $this->photos;
     }

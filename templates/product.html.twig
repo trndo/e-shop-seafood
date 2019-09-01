@@ -27,7 +27,14 @@
                     </div>
                     <div class="product-container">
                         <div class="product-photo">
+                            {% if item.titlePhoto is not null %}
                             <img src="{{ item.titlePhotoPath }}" alt="">
+                            {% else %}
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="img">
+                            {% endif %}
+                            {% for addphoto in item.photo %}
+                                <img src="/uploads/products/{{ addphoto.hash }}" alt="img">
+                            {% endfor %}
                         </div>
                         <div class="product-info">
                             <div class="product-size">
@@ -155,3 +162,7 @@
             </div>
         </div>
  {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('slider') }}
+{% endblock %}

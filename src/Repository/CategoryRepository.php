@@ -63,6 +63,7 @@ class CategoryRepository extends ServiceEntityRepository
             : $query->andWhere('c.type = :receipts')
                 ->setParameter('receipts','receipts');
 
+
             return $query->orderBy('c.id','ASC')
                 ->getQuery()
                 ->getResult();

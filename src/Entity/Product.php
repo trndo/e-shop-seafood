@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
@@ -161,6 +162,11 @@ class Product
      * @ORM\Column(type="float", nullable=true)
      */
     private $additionPrice;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isDeletable;
 
 
     public function __construct()
@@ -667,6 +673,18 @@ class Product
     public function setAdditionPrice(?float $additionPrice): self
     {
         $this->additionPrice = $additionPrice;
+
+        return $this;
+    }
+
+    public function getIsDeletable(): ?bool
+    {
+        return $this->isDeletable;
+    }
+
+    public function setIsDeletable(?bool $isDeletable): self
+    {
+        $this->isDeletable = $isDeletable;
 
         return $this;
     }

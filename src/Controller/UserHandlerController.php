@@ -26,6 +26,7 @@ class UserHandlerController extends AbstractController
      * @ParamConverter("user", options={"id" = "user_id"})
      * @param OrderInfo $order
      * @param PaymentInterface $handler
+     * @param User $user
      * @return Response
      */
     public function pay(OrderInfo $order, PaymentInterface $handler, User $user): Response

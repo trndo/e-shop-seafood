@@ -112,6 +112,11 @@ class Receipt
      */
     private $additionalPrice;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isDeletable;
+
 
 
     public function __construct()
@@ -451,6 +456,18 @@ class Receipt
     public function setAdditionalPrice(?float $additionalPrice): self
     {
         $this->additionalPrice = $additionalPrice;
+
+        return $this;
+    }
+
+    public function getIsDeletable(): ?bool
+    {
+        return $this->isDeletable;
+    }
+
+    public function setIsDeletable(?bool $isDeletable): self
+    {
+        $this->isDeletable = $isDeletable;
 
         return $this;
     }

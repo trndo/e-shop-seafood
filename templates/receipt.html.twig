@@ -8,10 +8,10 @@
                 {% set showInBasket = true %}
                 <div class="additional-special">
                     <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
-                    <!--<div class="additional-fo">
-                        Быстрый заказ
-                        <div></div>
-                    </div> -->
+{#                    <!--<div class="additional-fo">#}
+{#                        Быстрый заказ#}
+{#                        <div></div>#}
+{#                    </div> -->#}
                 </div>
                 <div class="additional-nav">
                     <div class="additional-nav-container">
@@ -27,14 +27,25 @@
                     </div>
                 </div>
                 <div class="receipt-container">
-{#                    {% if getMimeType(item.titlePhoto) == "video/mp4" %}#}
-{#                        <video class="js-player"  allow="autoplay">#}
-{#                            <source src="{{ item.TitlePhotoPath }}" type="video/mp4"/>#}
-{#                        </video>#}
-{#                    {% else %}#}
-{#                     #}
-{#                    {% endif %}#}
-                    <img src="/uploads/receipts/{{ item.titlePhoto }}" alt="img">
+                    <div class="receipt-photo">
+                    {% if item.titlePhoto is not null %}
+                        {% if getMimeType(item.titlePhoto) == "video/mp4" %}
+                            <video class="js-player"  allow="autoplay" loop>
+                                <source src="{{ item.TitlePhotoPath }}" type="video/mp4"/>
+                            </video>
+                        {% else %}
+                            <img src="{{ item.titlePhotoPath }}" alt="img">
+                        {% endif %}
+                    {% else %}
+                        <img src="{{ asset('assets/img/test.jpg') }}" alt="img">
+                    {% endif %}
+                    {% for addphoto in item.photo %}
+                        <img src="/uploads/receipts/{{ addphoto.hash }}" alt="img">
+                    {% endfor %}
+                    </div>
+                   {# <div class="receipt-photo">
+                        <img src="/uploads/receipts/{{ item.titlePhoto }}" alt="img">
+                    </div>#}
                     <div class="receipt-info">
                         <div class="receipt-name" {% if item.products.count == 1 and item.products[0].ProductSize is null %} data-related="{{ item.products[0].id }}"{% endif %}>
                             {{ item.name }}
@@ -52,7 +63,7 @@
                                     </h4>
                                     <div class="receipt-sizes-container">
                                         {% for size in sizes %}
-                                        <div class="size-block" data-name="{{ size.id }}">
+                                        <div class="size-block" data-name="{{ size.id }}" data-size-price="{{ size.price }}">
                                             {{ size.ProductSize }}
                                         </div>
                                         {% endfor %}
@@ -93,8 +104,8 @@
                                 Другой день
                             </div>
                         </div>#}
-                        <div class="product-price receipt-price">
-                            {{ item.price }} грн / {{ item.unit }}.{#<span class="special-price-receipt special-price">550 грн</span>#}
+                        <div class="product-price receipt-price" data-price="{{ item.price }}">
+                            <span id="price">{% if item.products.count == 1 and item.products[0].ProductSize is null %}{{ item.price + item.products[0].price }}{% else %}{{ item.price }}{% endif %}</span> грн / {{ item.unit }}.{#<span class="special-price-receipt special-price">550 грн</span>#}
                         </div>
                         {% if session is not null and showInBasket %}
                         <div class="product-to-basket">
@@ -180,4 +191,8 @@
                 </div>
             </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('slider') }}
 {% endblock %}

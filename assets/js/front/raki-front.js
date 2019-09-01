@@ -136,6 +136,11 @@ $(document).ready(function () {
         });
         $(this).addClass('size-block-checked');
         checked = $(this).data('name');
+        let price = Number($(this).data('size-price'));
+        let receiptPrice = Number($('.receipt-price').data('price'));
+        let newPrice = price + receiptPrice;
+        $('#price').text(newPrice);
+
     });
 
     $('.show-modal').on('click', function () {

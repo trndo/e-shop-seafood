@@ -1,8 +1,10 @@
 import 'air-datepicker/dist/css/datepicker.min.css';
 import 'pickerjs/dist/picker.min.css';
 import 'air-datepicker/dist/js/datepicker';
+import 'timepicker/jquery.timepicker.css';
 import Picker from 'pickerjs/dist/picker';
 import $ from 'jquery';
+import 'timepicker/jquery.timepicker';
 
 $('.date-input').datepicker();
 
@@ -14,6 +16,12 @@ new Picker(document.querySelector('.time-input'), {
         title: 'Выбирете время',
     },
 });
+else
+    $('.time-input').timepicker({
+        'scrollDefault': 'now',
+        'timeFormat': 'H:i',
+        'step': 10
+    });
 
 $('.delivery').click(function () {
     $('.self-delivery').removeClass('delivery-active');

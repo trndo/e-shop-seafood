@@ -5,7 +5,7 @@
      </h4>
     <div class="receipt-sizes-container">
     {% for product in products %}
-        <div class="size-block" data-name="{{ product.id }}">
+        <div class="size-block" data-name="{{ product.id }}" data-size-price="{{ size.price }}">
             {{ product.ProductSize }}
         </div>
     {% endfor %}

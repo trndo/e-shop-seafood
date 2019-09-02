@@ -44,6 +44,9 @@
                                     {% elseif order.status == 'done' %}
                                         <span class="date-status">В пути к вам <span
                                                     class="order-stat order-delivery"></span></span>
+                                    {% elseif order.status == 'failure' %}
+                                        <span class="date-status">Неудачная оплата, повторите<span
+                                                    class="order-stat order-delivery"></span></span>
                                     {% else %}
                                         <span class="date-status">{{ order.orderDate|date('d/m/y') }}</span>
                                     {% endif %}

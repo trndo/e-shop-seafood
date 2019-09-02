@@ -130,18 +130,9 @@ class ProductService implements ProductServiceInterface
 
     public function deleteProduct(Product $product): void
     {
-        $titlePhoto = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $product->getTitlePhoto();
-        if (file_exists($titlePhoto) && is_file($titlePhoto))
-            unlink($titlePhoto);
+        $product->setIsDeletable(true)
+                ->setStatus(false);
 
-        foreach ($product->getPhotos() as $photo) {
-            $photoHash = $this->fileUploader->getUploadDir() . self::PRODUCT_IMAGE_FOLDER . $photo->getHash();
-            if (file_exists($photoHash) && is_file($photoHash))
-                unlink($photoHash);
-            $this->entityManager->remove($photo);
-        }
-
-        $this->entityManager->remove($product);
         $this->entityManager->flush();
     }
 

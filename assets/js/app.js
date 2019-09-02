@@ -167,8 +167,7 @@ $('#order_info_totalPrice').abacus(totalSum);
                     radio.prop("checked", false);
                     if (res.status === false)
                         alert(res.message);
-                    else
-                        console.log(res.order);
+                    if (res.status === true)
                          window.location.href = res.order
                 }
             })

@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminOrderController extends AbstractController
 {
-
     /**
      * @Route("/lipadmin/showOrder/{id}/edit" ,name="editOrder")
      * @param Request $request

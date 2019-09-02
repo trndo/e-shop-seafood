@@ -87,18 +87,9 @@ class ReceiptService implements ReceiptServiceInterface
 
     public function deleteReceipt(Receipt $receipt): void
     {
-        $titlePhoto = $this->fileUploader->getUploadDir().self::RECEIPT_IMAGE_FOLDER.$receipt->getTitlePhoto();
-        if(file_exists($titlePhoto) && is_file($titlePhoto))
-            unlink($titlePhoto);
+        $receipt->setIsDeletable(true)
+        ->setStatus(false);
 
-        foreach ($receipt->getPhoto() as $photo){
-            $photoHash = $this->fileUploader->getUploadDir().self::RECEIPT_IMAGE_FOLDER.$photo->getHash();
-            if(file_exists($photoHash) && is_file($photoHash))
-                unlink($photoHash);
-            $this->entityManager->remove($photo);
-        }
-
-        $this->entityManager->remove($receipt);
         $this->entityManager->flush();
     }
 

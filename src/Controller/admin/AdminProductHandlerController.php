@@ -96,4 +96,20 @@ class AdminProductHandlerController extends AbstractController
         $productService->activateProduct($request->request->get('id'));
         return new JsonResponse(['status' => true],200);
     }
+
+    /**
+     * @Route(path="/lipadmin/products/getForReceipts", methods={"GET"})
+     *
+     * @param Request $request
+     * @param ProductServiceInterface $service
+     * @return Response
+     */
+    public function getProductsForReceipts(Request $request,ProductServiceInterface $service): Response
+    {
+        $products = $service->getProductsByCriteria(null,$request->query->get('category'));
+        return $this->render('elements/products_for_receipts.html.twig', [
+            'products' => $products,
+            'type' => $request->query->get('type')
+        ]);
+    }
 }

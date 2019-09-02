@@ -29,11 +29,11 @@
                         <li {% if active == 'not exist yet' %} {% set active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
                         <li class="toogle-dropdown-footer {% if active %}active-nav{% endif %}">Ассортимент</li>
                     </ul>
-                    <div class="dropdown dropdown-footer">
+                    {#<div class="dropdown dropdown-footer">
                         <ul>
                             {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
                         </ul>
-                    </div>
+                    </div>#}
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ interface PaymentInterface
      * @param OrderInfo $orderInfo
      * @return string
      */
-    public function doPayment(OrderInfo $orderInfo): string ;
+    public function doPayment(OrderInfo $orderInfo): ?string ;
 
     /**
      * @param OrderInfo $orderInfo

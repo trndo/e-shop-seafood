@@ -6,7 +6,7 @@
         </div>#}
         <div class="user_basket">
             {% set sum = app.session.get('totalSum') %}
-            <div id="basket-container">
+            <div class="basket-container">
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>
             <img id="user" src="/assets/img/avatar.svg" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"/>
@@ -43,7 +43,7 @@
 <header id="mobile">
     <img id="mobile-logo" src="/assets/img/header-logo.svg"/>
     <div class="mobile-user_basket">
-        <div id="basket-container">
+        <div class="basket-container">
             <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
         </div>
         <div id="menu">

@@ -58,7 +58,7 @@ $('.toogle-dropdown').click(function () {
         $('.dropdown-footer').fadeOut();
 });*/
 
-$('#basket-container').click(function () {
+$('.basket-container').click(function () {
     window.location.href = '/cart';
 });
 

@@ -46,7 +46,7 @@
         top: 8px;
     }
 
-    #basket-container{
+    .basket-container{
         display: block;
         position: static;
         width: 113px;
@@ -191,7 +191,7 @@
         float: left;
     }
 
-    #basket-container{
+    .basket-container{
         display: none;
     }
 
@@ -429,7 +429,7 @@
         float: left;
     }
 
-    #basket-container{
+    .basket-container{
         display: none;
     }
 

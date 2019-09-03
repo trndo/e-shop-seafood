@@ -1,4 +1,38 @@
 import $ from 'jquery';
+var $docEl = $('html, body'),
+    $wrap = $('.wrapper'),
+    scrollTop;
+$.lockBody = function() {
+    if(window.pageYOffset) {
+        scrollTop = window.pageYOffset;
+
+       /* $wrap.css({
+            top: - (scrollTop)
+        });*/
+    }
+
+    $docEl.css({
+        height: "100%",
+        overflow: "hidden"
+    });
+};
+
+$.unlockBody = function() {
+    $docEl.css({
+        height: "",
+        overflow: ""
+    });
+
+    /*$wrap.css({
+        top: ''
+    });*/
+
+    window.scrollTo(0, scrollTop);
+    window.setTimeout(function () {
+        scrollTop = null;
+    }, 0);
+
+};
 
 $('li').click(function () {
     if ($(this).data('location'))
@@ -45,14 +79,16 @@ $('#menu').click(function () {
     let allowScroll = $('.menu-nav > ul');
     let body = $('body');
     if(nav.css('display') === 'none'){
-        nav.fadeIn();
+        nav.slideDown();
+        $.lockBody();
     } else {
-        nav.fadeOut();
+        nav.slideUp();
+        $.unlockBody();
     }
-    if(!/iPad|iPhone|iPod/.test(navigator.userAgent))
+    /*if(!/iPad|iPhone|iPod/.test(navigator.userAgent))
         body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
     else
-        body.css('position') === 'fixed' ?  body.css({position: 'static'}) : body.css({top: 0, left: 0, right:0, bottom: 0,position: 'fixed' })
+        body.css('position') === 'fixed' ?  body.css({position: 'static'}) : body.css({top: 0, left: 0, right:0, bottom: 0,position: 'fixed' })*/
 });
 
 $('.toggle-mobile').click(function () {
@@ -83,4 +119,12 @@ $('.user-tab').click(function () {
 
 $('#mobile-basket').click(function () {
     window.location.href = '/cart'
+});
+
+$('#mobile-logo').click(function () {
+    window.location.href = '/';
+});
+
+$('#user-mobile').click(function () {
+    window.location.href = $(this).data('url');
 });

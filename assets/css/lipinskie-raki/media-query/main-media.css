@@ -643,6 +643,19 @@
         margin-top: 20px;
     }
 }
+@media (max-width: 736px) and (min-width: 568px) {
+    .additional-nav{
+        margin: 0 auto !important;
+        width: 500px !important;
+    }
+}
+
+@media (max-height: 414px) and (min-height: 320px) {
+    .curtain-info{
+        display: none;
+    }
+}
+
 /*
 @media (max-device-height: 1024px) and (max-width: 991px) {
     footer{

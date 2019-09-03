@@ -21,7 +21,7 @@ $(document).ready(function () {
             autoHide: false
         });
 
-    if ($('.menu-nav > ul').length && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream)
+    if ($('.menu-nav > ul').length)
         new SimpleBar($('.menu-nav > ul')[0], {
             autoHide: false
         });

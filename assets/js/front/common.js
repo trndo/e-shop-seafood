@@ -1,7 +1,4 @@
 import $ from 'jquery';
-const bodyScrollLock = require('body-scroll-lock');
-const disableBodyScroll = bodyScrollLock.disableBodyScroll;
-const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 $('li').click(function () {
     if ($(this).data('location'))
@@ -49,12 +46,13 @@ $('#menu').click(function () {
     let body = $('body');
     if(nav.css('display') === 'none'){
         nav.fadeIn();
-        disableBodyScroll(allowScroll);
     } else {
-        enableBodyScroll(allowScroll);
         nav.fadeOut();
     }
-    //body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
+    if(!/iPad|iPhone|iPod/.test(navigator.userAgent))
+        body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
+    else
+        body.css('position') === 'fixed' ?  body.css({position: 'static'}) : body.css({top: 0, left: 0, right:0, bottom: 0,position: 'fixed' })
 });
 
 $('.toggle-mobile').click(function () {

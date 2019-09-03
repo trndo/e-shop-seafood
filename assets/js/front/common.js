@@ -54,7 +54,7 @@ $('#menu').click(function () {
         enableBodyScroll(allowScroll);
         nav.fadeOut();
     }
-    body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
+    //body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
 });
 
 $('.toggle-mobile').click(function () {

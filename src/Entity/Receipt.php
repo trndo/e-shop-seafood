@@ -79,6 +79,7 @@ class Receipt
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="receipts")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $category;
 

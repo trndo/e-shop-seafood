@@ -52,12 +52,12 @@ class Category
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
      */
     private $products;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="category", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="category")
      */
     private $receipts;
 

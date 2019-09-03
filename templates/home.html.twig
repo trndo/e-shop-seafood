@@ -49,17 +49,22 @@
                     <div class="row row-rating">
                     {% for item in items %}
                         <div class="product-card">
-                            <img src="{{ item.TitlePhotoPath }}" alt="photo">
-{#                            {% if item.type == 'product' %}#}
-{#                                <img src="{{ item.TitlePhotoPath }}" alt="photo">#}
-{#                            {% else %}#}
-{#                                    {% if item.photo is not empty %}#}
-{#                                        <img src="{{ item.TitlePhotoPath }}" alt="photo">#}
-{#                                    {% else %}#}
-{#                                        <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">#}
-{#                                    {% endif %}#}
-{#                            {% endif %}#}
-
+                            {% if item.type == 'product' %}
+                                {% if item.TitlePhotoPath is not null %}
+                                <img src="{{ item.TitlePhotoPath }}" alt="photo">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                {% endif %}
+                            {% else %}
+                                {% set mimeType = getMimeType(item.titlePhoto) %}
+                                {% if item.TitlePhotoPath is not null and mimeType != "video/mp4" %}
+                                    <img src="{{ item.TitlePhotoPath }}" alt="photo">
+                                {% elseif item.getPhoto is not empty %}
+                                    <img src="/uploads/receipts/{{ item.getPhoto.first.hash }}" alt="photo">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                {% endif %}
+                            {% endif %}
                             <div class="card-content">
                                 <h4>{{ item.name }}</h4>
                                 <p>{{ item.description|truncate(70) }}</p>

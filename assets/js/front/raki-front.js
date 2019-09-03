@@ -21,10 +21,10 @@ $(document).ready(function () {
             autoHide: false
         });
 
-    if ($('.menu-nav > ul').length)
+   /* if ($('.menu-nav > ul').length && !/iPad|iPhone|iPod/.test(navigator.userAgent))
         new SimpleBar($('.menu-nav > ul')[0], {
             autoHide: false
-        });
+        });*/
     if ($('.history-container').length)
         new SimpleBar($('.history-container')[0], {
             autoHide: false

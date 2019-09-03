@@ -124,7 +124,17 @@ $('#mobile-basket').click(function () {
 $('#mobile-logo').click(function () {
     window.location.href = '/';
 });
+$('.header-raki-logo img').click( function () {
+   window.location.href = '/';
+});
 
 $('#user-mobile').click(function () {
     window.location.href = $(this).data('url');
+});
+
+$(document).ready(function () {
+    let children = $('.products-row').children();
+    if(children.length < 7 && window.screen.height > 1024) {
+        $('footer').css('position', 'absolute');
+    }
 });

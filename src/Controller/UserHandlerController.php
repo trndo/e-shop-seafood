@@ -26,6 +26,7 @@ class UserHandlerController extends AbstractController
      * @ParamConverter("user", options={"id" = "user_id"})
      * @param OrderInfo $order
      * @param PaymentInterface $handler
+     * @param User $user
      * @return Response
      */
     public function pay(OrderInfo $order, PaymentInterface $handler, User $user): Response
@@ -43,7 +44,7 @@ class UserHandlerController extends AbstractController
      * @param PaymentInterface $paymentHandler
      * @return JsonResponse
      */
-    public function confirmOrder(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
+    public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
     {
         $res = $request->request->get('data');
 

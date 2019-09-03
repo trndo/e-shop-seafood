@@ -80,3 +80,7 @@ $('.back-to-main').click(function () {
 $('.user-tab').click(function () {
    window.location.href = $(this).data('path');
 });
+
+$('#mobile-basket').click(function () {
+    window.location.href = '/cart'
+});

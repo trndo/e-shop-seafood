@@ -40,6 +40,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->select('p.name')
             ->andWhere('p.name LIKE :productName')
             ->setParameter('productName', '%' . $productName . '%')
+            ->andWhere('p.isDeletable IS NULL')
             ->setMaxResults(10)
             ->getQuery()
             ->getArrayResult();
@@ -55,6 +56,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('p.orderDetail', 'orderDetail')
             ->addSelect('p, supply, category, specialPropositions, gift, orderDetail')
             ->andWhere('p.rating != 0 AND p.status = true')
+            ->andWhere('p.isDeletable IS NULL')
             ->setMaxResults(9)
             ->getQuery()
             ->getResult();
@@ -69,6 +71,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('p')
             ->addSelect('p')
             ->andWhere('p.name LIKE :productName ')
+            ->andWhere('p.isDeletable IS NULL')
             ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()
@@ -90,7 +93,8 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('p.category', 'ASC');
+            ->orderBy('p.category', 'ASC')
+            ->andWhere('p.isDeletable IS NULL');
 
             if ($setMaxResults) {
                 $query->setMaxResults(8);
@@ -105,6 +109,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
     {
         $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = true AND c.id = :categoryId')
+            ->andWhere('p.isDeletable IS NULL')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('p.category', 'ASC')
             ->setFirstResult($count)
@@ -126,21 +131,11 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             $query->andWhere('p.category = :category')
                 ->setParameter('category', $category);
         }
-         return $query->orderBy('p.status','ASC')
+         return $query->andWhere('p.isDeletable IS NULL')
+             ->orderBy('p.status','ASC')
              ->getQuery()
              ->getResult();
     }
-
-
-
-//    public function findById(int $id): ?Product
-//    {
-//        return $this->createQueryBuilderForProduct('p')
-//            ->andWhere('p.status = true AND p.id = :id')
-//            ->setParameter('id',$id)
-//            ->getQuery()
-//            ->getOneOrNullResult();
-//    }
 
     private function createQueryBuilderForProduct(string $alias): QueryBuilder
     {
@@ -162,7 +157,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->select('p')
             ->leftJoin('p.supply','s')
             ->leftJoin('p.receipts','r')
-            ->where('p.status != 0')
+            ->where('p.status != 0 AND p.isDeletable IS NULL')
             ->andWhere('r.id = :id')
             ->andWhere('s.quantity > 0')
             ->setParameter('id',$id)
@@ -176,6 +171,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
             ->select('p')
             ->leftJoin('p.receipts','r')
             ->andWhere('r.id = :id')
+            ->andWhere('p.isDeletable IS NULL')
             ->setParameter('id',$id)
             ->getQuery()
             ->getResult();

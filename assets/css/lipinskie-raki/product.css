@@ -17,8 +17,8 @@
 
 }
 .product-photo img{
-    width: inherit;
-    height: inherit;
+    width: 432px;
+    height: 286px;
 }
 
 .product-info{
@@ -229,11 +229,20 @@
     padding-left: 31px;
 }
 
-.receipt-container img{
+.receipt-photo{
     width: 530px;
     height: 510px;
     position: relative;
     display: block;
+}
+.receipt-photo img{
+    width: 530px;
+    height: 510px;
+}
+
+.receipt-photo video{
+    width: 530px;
+    height: 510px;
 }
 
 .container-inside-product{
@@ -338,4 +347,14 @@
     font-size: 19px;
     color: #FFFFFF;
     margin-bottom: 5px;
+}
+
+.slick-prev {
+    left: 30px;
+    /*background: red;*/ /*to notice it, is white*/
+    z-index: 1;
+}
+.slick-next {
+    right: 30px;
+    /*background: red;*/ /*to notice it, is white*/
 }

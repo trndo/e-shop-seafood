@@ -27,7 +27,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
     {
         return $this->createQueryBuilder('r')
             ->select('r.name')
-            ->andWhere('r.name LIKE :receiptName')
+            ->andWhere('r.name LIKE :receiptName AND r.isDeletable IS NULL')
             ->setParameter('receiptName', '%' . $receiptName . '%')
             ->setMaxResults(10)
             ->getQuery()
@@ -40,7 +40,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.category', 'category')
             ->leftJoin('r.orderDetail', 'orderDetail')
             ->addSelect('category, orderDetail')
-            ->andWhere('r.rating != 0 and r.status = true')
+            ->andWhere('r.rating != 0 AND r.status = true AND r.isDeletable IS NULL')
             ->setMaxResults(9)
             ->getQuery()
             ->getResult();
@@ -54,7 +54,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
     {
         return $this->createQueryBuilder('r')
             ->addSelect('r')
-            ->andWhere('r.name LIKE :productName ')
+            ->andWhere('r.name LIKE :productName')
             ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()
@@ -77,7 +77,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
             ->leftJoin('r.orderDetail', 'od')
-            ->andWhere('r.status = true AND c.id = :categoryId')
+            ->andWhere('r.status = true AND c.id = :categoryId AND r.isDeletable IS NULL')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('r.category', 'ASC');
 
@@ -96,7 +96,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->addSelect('c', 'od')
             ->leftJoin('r.category', 'c')
             ->leftJoin('r.orderDetail', 'od')
-            ->andWhere('r.status = true AND c.id = :categoryId')
+            ->andWhere('r.status = true AND c.id = :categoryId AND r.isDeletable IS NULL')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('r.category', 'ASC')
             ->setFirstResult($count)
@@ -118,7 +118,8 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             $query->andWhere('r.category = :category')
                 ->setParameter('category', $category);
         }
-        return $query->orderBy('r.status','ASC')
+        return $query->andWhere('r.isDeletable IS NULL')
+            ->orderBy('r.status','ASC')
             ->getQuery()
             ->getResult();
     }

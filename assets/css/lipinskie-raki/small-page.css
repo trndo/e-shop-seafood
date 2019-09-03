@@ -738,7 +738,7 @@ input[type=number] {
     margin-bottom: 42px;
 }
 .validation-mess{
-    width: 165px;
+    width: 100%;
     font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;

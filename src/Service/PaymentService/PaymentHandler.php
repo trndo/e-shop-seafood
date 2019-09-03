@@ -59,9 +59,9 @@ class PaymentHandler implements PaymentInterface
      * @param OrderInfo $orderInfo
      * @return string
      */
-    public function doPayment(OrderInfo $orderInfo): string
+    public function doPayment(OrderInfo $orderInfo): ?string
     {
-        if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
+        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failure')) {
 
             $liqpay = new \LiqPay($this->publicKey, $this->privateKey);
             $form = $liqpay->cnb_form([
@@ -73,7 +73,7 @@ class PaymentHandler implements PaymentInterface
                 'result_url' => $this->generator->generate(
                     'home', [], UrlGeneratorInterface::ABSOLUTE_URL),
                 'language' => 'ru',
-                'order_id' => $orderInfo->getOrderUniqueId(),
+                'order_id' => $this->generateLiqPayId(7),
                 'server_url' => $this->generator->generate(
                     'confirmPay', [
                     'orderUniqueId' => $orderInfo->getOrderUniqueId()
@@ -82,6 +82,8 @@ class PaymentHandler implements PaymentInterface
 
             return $form;
         }
+
+        return null;
     }
 
     public function confirmPayment(OrderInfo $orderInfo, string $res): bool
@@ -94,6 +96,11 @@ class PaymentHandler implements PaymentInterface
                 case 'sandbox':
                     return $this->handleConfirmation($orderInfo, $data) == true ?: null;
                 case 'failure':
+                    $orderInfo->setStatus('failure');
+                    $this->entityManager->flush();
+                    return $this->generator->generate('user_orders',[
+                        'id' => $orderInfo->getUser()->getId(),
+                    ], UrlGeneratorInterface::ABSOLUTE_URL);
                 case 'error':
                 case '3ds_verify':
                 case 'wait_secure':
@@ -137,4 +144,17 @@ class PaymentHandler implements PaymentInterface
         return false;
     }
 
+    private function generateLiqPayId(int $length): string
+    {
+        $str = (new \DateTime())->getTimestamp();
+
+        $binHash = md5($str, true);
+        $numHash = unpack('N2', $binHash);
+        $hash = $numHash[1] . $numHash[2];
+        if ($length && is_int($length)) {
+            $hash = substr($hash, 0, $length);
+        }
+        return $hash;
+    }
 }
+

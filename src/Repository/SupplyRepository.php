@@ -28,7 +28,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
     public function findForRender(string $productName): ?array
     {
         return $this->createQueryBuilderForSuppliesProducts('s')
-            ->andWhere('p.name LIKE :productName ')
+            ->andWhere('p.name LIKE :productName p.isDeletable IS NULL')
             ->setParameter('productName', '%'.$productName.'%')
             ->setMaxResults(10)
             ->getQuery()
@@ -40,6 +40,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
     {
         return $this->createQueryBuilderForSuppliesProducts('s')
             ->addOrderBy('s.quantity','DESC')
+            ->andWhere('p.isDeletable IS NULL')
             ->getQuery()
             ->getResult()
             ;
@@ -53,7 +54,8 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
                 ->setParameter('category', $category);
         }
 
-        return $query->orderBy('p.status','ASC')
+        return $query->andWhere('p.isDeletable IS NULL')
+            ->orderBy('p.status','ASC')
             ->getQuery()
             ->getResult();
     }
@@ -62,6 +64,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
     {
         // TODO: Implement findByName() method.
     }
+
     private function createQueryBuilderForSuppliesProducts(string $alias): QueryBuilder
     {
         return $this->createQueryBuilder($alias)
@@ -70,6 +73,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
             ->leftJoin('p.category','c')
             ->leftJoin('p.orderDetail','od')
             ->addSelect('p','g','c','od');
+
     }
 
 }

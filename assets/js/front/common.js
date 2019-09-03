@@ -1,4 +1,7 @@
 import $ from 'jquery';
+const bodyScrollLock = require('body-scroll-lock');
+const disableBodyScroll = bodyScrollLock.disableBodyScroll;
+const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 $('li').click(function () {
     if ($(this).data('location'))
@@ -45,12 +48,10 @@ $('#menu').click(function () {
     let body = $('body');
     if(nav.css('display') === 'none'){
         nav.fadeIn();
-        document.ontouchmove = function(e){
-            e.preventDefault();
-        }
+        disableBodyScroll(nav);
     } else {
+        enableBodyScroll(nav);
         nav.fadeOut();
-        document.ontouchmove = function(e){ return true; }
     }
     body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
 });

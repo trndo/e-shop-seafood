@@ -45,12 +45,13 @@ $('.login-button').click(function () {
 
 $('#menu').click(function () {
     let nav = $('.menu-nav');
+    let allowScroll = $('.menu-nav > ul');
     let body = $('body');
     if(nav.css('display') === 'none'){
         nav.fadeIn();
-        disableBodyScroll(nav);
+        disableBodyScroll(allowScroll);
     } else {
-        enableBodyScroll(nav);
+        enableBodyScroll(allowScroll);
         nav.fadeOut();
     }
     body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');

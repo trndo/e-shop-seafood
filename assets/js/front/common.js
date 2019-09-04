@@ -133,8 +133,11 @@ $('#user-mobile').click(function () {
 });
 
 $(document).ready(function () {
-    let children = $('.products-row').children();
-    if(children.length < 7 && window.screen.height > 1024) {
-        $('footer').css('position', 'absolute');
+    if($('.products-row').length) {
+        let children = $('.products-row').children();
+        if (children.length < 7 && window.screen.height > 1024) {
+            console.log(children.length);
+            $('footer').css('position', 'absolute');
+        }
     }
 });

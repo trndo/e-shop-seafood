@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        footer{
+            position: absolute;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <section class="wrapper">
         <div class="container">

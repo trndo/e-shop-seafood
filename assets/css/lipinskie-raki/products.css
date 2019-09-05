@@ -178,7 +178,7 @@
     text-transform: uppercase;
     color: #FFFFFF;
     writing-mode: vertical-rl;
-    text-orientation: upright;
+    -webkit-text-orientation: upright;
     letter-spacing: -15px;
     position: absolute;
     left: 14px;

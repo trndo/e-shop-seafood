@@ -1,4 +1,38 @@
 import $ from 'jquery';
+var $docEl = $('html, body'),
+    $wrap = $('.wrapper'),
+    scrollTop;
+$.lockBody = function() {
+    if(window.pageYOffset) {
+        scrollTop = window.pageYOffset;
+
+       /* $wrap.css({
+            top: - (scrollTop)
+        });*/
+    }
+
+    $docEl.css({
+        height: "100%",
+        overflow: "hidden"
+    });
+};
+
+$.unlockBody = function() {
+    $docEl.css({
+        height: "",
+        overflow: ""
+    });
+
+    /*$wrap.css({
+        top: ''
+    });*/
+
+    window.scrollTo(0, scrollTop);
+    window.setTimeout(function () {
+        scrollTop = null;
+    }, 0);
+
+};
 
 $('li').click(function () {
     if ($(this).data('location'))
@@ -24,7 +58,7 @@ $('.toogle-dropdown').click(function () {
         $('.dropdown-footer').fadeOut();
 });*/
 
-$('#basket-container').click(function () {
+$('.basket-container').click(function () {
     window.location.href = '/cart';
 });
 
@@ -42,17 +76,19 @@ $('.login-button').click(function () {
 
 $('#menu').click(function () {
     let nav = $('.menu-nav');
+    let allowScroll = $('.menu-nav > ul');
     let body = $('body');
     if(nav.css('display') === 'none'){
-        nav.fadeIn();
-        document.ontouchmove = function(e){
-            e.preventDefault();
-        }
+        nav.slideDown();
+        $.lockBody();
     } else {
-        nav.fadeOut();
-        document.ontouchmove = function(e){ return true; }
+        nav.slideUp();
+        $.unlockBody();
     }
-    body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
+    /*if(!/iPad|iPhone|iPod/.test(navigator.userAgent))
+        body.css("overflow") === "hidden" ? body.css('overflow','auto') : body.css('overflow','hidden');
+    else
+        body.css('position') === 'fixed' ?  body.css({position: 'static'}) : body.css({top: 0, left: 0, right:0, bottom: 0,position: 'fixed' })*/
 });
 
 $('.toggle-mobile').click(function () {
@@ -83,4 +119,25 @@ $('.user-tab').click(function () {
 
 $('#mobile-basket').click(function () {
     window.location.href = '/cart'
+});
+
+$('#mobile-logo').click(function () {
+    window.location.href = '/';
+});
+$('.header-raki-logo img').click( function () {
+   window.location.href = '/';
+});
+
+$('#user-mobile').click(function () {
+    window.location.href = $(this).data('url');
+});
+
+$(document).ready(function () {
+    if($('.products-row').length) {
+        let children = $('.products-row').children();
+        if (children.length < 7 && window.screen.height > 1024) {
+            console.log(children.length);
+            $('footer').css('position', 'absolute');
+        }
+    }
 });

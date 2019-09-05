@@ -144,7 +144,6 @@ class PaymentHandler implements PaymentInterface
         return false;
     }
 
-
     private function generateLiqPayId(int $length): string
     {
         $str = (new \DateTime())->getTimestamp();
@@ -157,5 +156,5 @@ class PaymentHandler implements PaymentInterface
         }
         return $hash;
     }
-
 }
+

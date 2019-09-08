@@ -27,7 +27,7 @@ class Receipt
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -117,8 +117,6 @@ class Receipt
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isDeletable;
-
-
 
     public function __construct()
     {

@@ -9,7 +9,16 @@
             <div class="basket-container">
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>
-            <img id="user" src="/assets/img/avatar.svg" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"/>
+            <img id="user" src="/assets/img/avatar.svg"
+                 data-user="{% if app.user is not null %}
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    {{ path('admin') }}
+                                        {% else %}
+                                    {{ path('user', {'id': app.user.id}) }}
+                                {% endif %}
+                            {% else %}
+                                {{ path('login') }}
+                            {% endif %}"/>
         </div>
     </div>
     <div class="row">
@@ -26,17 +35,25 @@
     <div class="row nav-row">
         <nav>
             <ul>{% set mob_active = active %}
-                <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главная</li>
-                <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
-                <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
-                <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки</li>
+                <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('home') }}">Главная
+                </li>
+                <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки
+                </li>
+                <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки
+                </li>
+                <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки
+                </li>
                 <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>
             </ul>
         </nav>
     </div>
     <div class="dropdown">
         <ul>
-           {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
+            {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
         </ul>
     </div>
 </header>
@@ -47,7 +64,7 @@
             <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
         </div>
         <div id="menu">
-            <object  type="image/svg+xml" data="/assets/img/menu.svg"></object>
+            <object type="image/svg+xml" data="/assets/img/menu.svg"></object>
         </div>
     </div>
 </header>

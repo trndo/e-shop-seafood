@@ -31,4 +31,9 @@ class ReceiptCollection implements \IteratorAggregate
     {
         return new \ArrayIterator($this->receipts);
     }
+
+    public function toArray()
+    {
+        return $this->receipts;
+    }
 }

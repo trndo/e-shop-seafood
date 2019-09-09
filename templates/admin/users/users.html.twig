@@ -17,7 +17,6 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
                 <h1 class="h3 mb-2 text-gray-800">Пользователь</h1>
-{#                <p class="mb-4">Добвить нового администратора -  <button onclick="window.location.href = '{{ path('admin_create') }}'" class="btn btn-primary">Добавить!</button></p>#}
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -84,9 +83,6 @@
                                             {{ user.instagramId ?:'-' }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы хотите удалить этого пользователя ?')) window.location.href='{{ path('deleteUser',{'id': user.id}) }}'">
-                                                <i class="fas fa-times"></i>
-                                            </button>
                                             <button class="btn btn-light btn-circle btn-sm" data-toggle="modal" data-target="#bonusModal" onclick="if(confirm('Вы хотите отредактировать бонусы этого пользователя ?')) window.location.href='{{ path('showBonuses',{'id': user.id}) }}'">
                                                 <i class="fas fa-bold"></i>
                                             </button>

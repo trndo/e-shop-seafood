@@ -8,6 +8,7 @@ use App\Entity\OrderInfo;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Model\ResetPasswordModel;
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -35,30 +36,6 @@ class UserHandlerController extends AbstractController
         return $this->render('pay.html.twig', [
             'payment' => $payment
         ]);
-    }
-
-    /**
-     * @Route("/api/confirm-payment/{orderUniqueId}", name="confirmPay")
-     * @param Request $request
-     * @param OrderInfo $orderInfo
-     * @param PaymentInterface $paymentHandler
-     * @return JsonResponse
-     */
-    public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
-    {
-        $res = $request->request->get('data');
-
-        $status = $paymentHandler->confirmPayment($orderInfo, $res);
-
-        if (!$status) {
-            return new JsonResponse([
-                'status' => $status
-            ], 400);
-        } else {
-            return new JsonResponse([
-                'status' => $status
-            ], 200);
-        }
     }
 
     /**
@@ -94,5 +71,46 @@ class UserHandlerController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+
+    /**
+     * @Route("/user-{user_id}/orders/cancel/{orderUniqueId}", name="cancelUserOrder")
+     * @ParamConverter("user", options={"id" = "user_id"})
+     * @param User $user
+     * @param int|null $orderUniqueId
+     * @param OrderInfoInterface $orderInfo
+     * @return Response
+     */
+    public function cancelUserOrder(User $user,?int $orderUniqueId, OrderInfoInterface $orderInfo): Response
+    {
+        $orderInfo->cancelOrder($orderUniqueId);
+
+        return $this->redirectToRoute('user_orders',[
+            'id' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/api/confirm-payment/{orderUniqueId}", name="confirmPay")
+     * @param Request $request
+     * @param OrderInfo $orderInfo
+     * @param PaymentInterface $paymentHandler
+     * @return JsonResponse
+     */
+    public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
+    {
+        $res = $request->request->get('data');
+
+        $status = $paymentHandler->confirmPayment($orderInfo, $res);
+
+        if (!$status) {
+            return new JsonResponse([
+                'status' => $status
+            ], 400);
+        } else {
+            return new JsonResponse([
+                'status' => $status
+            ], 200);
+        }
     }
 }

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
@@ -29,15 +30,14 @@ class ProductController extends AbstractController
      * @param SessionInterface $session
      * @return Response
      */
-    public function item(Category $category,
-                         ?string $slug, ProductServiceInterface $service,
-                         ReceiptServiceInterface $receiptService,
-                         SessionInterface $session): Response
+    public function item(Category $category, ?string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService, SessionInterface $session): Response
     {
         if ($category->getType() == 'products')
             $item = $service->getProduct($slug);
         else
-           $item = $receiptService->getReceipt($slug);
+            $item = $receiptService->getReceipt($slug);
+
+        $this->checkIsValidProduct($category, $item);
 
         $orderType = $session->get('chooseOrder');
         return $item->getType() == 'product'
@@ -66,6 +66,16 @@ class ProductController extends AbstractController
         $sizes = $productService->getSizes($id, $orderType);
 
         return $this->render('elements/sizes.html.twig', ['products' => $sizes, 'id' => $id]);
+    }
+
+    private function checkIsValidProduct(Category $category, $item): void
+    {
+         if($item->getType() == 'product' && !$category->getProducts()->contains($item))
+               throw $this->createNotFoundException('404');
+
+         if($item->getType() == 'receipt' && !$category->getReceipts()->contains($item))
+             throw $this->createNotFoundException('404');
+
     }
 
 }

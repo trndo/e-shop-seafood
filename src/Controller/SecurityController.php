@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class ItemController extends AbstractController
+class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="login")

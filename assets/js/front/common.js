@@ -135,7 +135,7 @@ $('#user-mobile').click(function () {
 $(document).ready(function () {
     if($('.products-row').length) {
         let children = $('.products-row').children();
-        if (children.length < 7 && window.screen.height > 1024) {
+        if (children.length < 4 && window.screen.height > 1024) {
             console.log(children.length);
             $('footer').css('position', 'absolute');
         }

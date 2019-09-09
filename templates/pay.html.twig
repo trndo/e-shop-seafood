@@ -5,6 +5,11 @@
         footer{
             position: absolute;
         }
+        @media  (max-height: 757px) {
+            footer{
+                position: relative;
+            }
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -17,7 +22,7 @@
                         <span class="attention-subtitle">Последний шаг!</span><br>
                         <span class="attention-title">Выбери способ оплаты</span>
                     </div>
-                    <div class="payment-types">
+                    <div class="payment-types mb-4">
                         {{ payment|raw }}
                     </div>
                 </main>

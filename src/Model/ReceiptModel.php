@@ -41,6 +41,7 @@ class ReceiptModel
     private $seoTitle;
 
     /**
+     * @Assert\Length(max="170", maxMessage="Длина дескрипшина не должна быть больше 170 символов")
      * @var string|null $seoDescription
      */
     private $seoDescription;

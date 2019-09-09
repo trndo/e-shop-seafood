@@ -35,4 +35,9 @@ class ProductCollection implements \IteratorAggregate
     {
         return count($this->products);
     }
+
+    public function toArray()
+    {
+        return $this->products;
+    }
 }

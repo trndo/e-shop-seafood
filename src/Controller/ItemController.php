@@ -2,154 +2,80 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserRegistrationType;
-use App\Model\UserRegistrationModel;
-use App\Security\LoginFormAuthenticator;
-use App\Service\EntityService\UserService\UserService;
-use App\Service\EntityService\UserService\UserServiceInterface;
-use App\Service\RegistrationService\RegisterUser;
-use App\Service\RegistrationService\RegisterUserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Category;
+use App\Entity\Product;
+use App\Entity\Receipt;
+use App\Service\EntityService\ProductService\ProductServiceInterface;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ItemController extends AbstractController
 {
-    /**
-     * @Route("/login", name="login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
-     */
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error
-        ]);
-    }
 
     /**
-     * @Route("/logout", name="logout")
-     */
-    public function logout(): Response
-    {
-        return $this->redirectToRoute('login');
-    }
-
-    /**
-     * @Route("/register", name="register")
-     * @param Request $request
-     * @param RegisterUserInterface $registerService
-     * @return Response
-     */
-    public function register(Request $request,RegisterUserInterface $registerService): Response
-    {
-        $registrationModel = new UserRegistrationModel();
-
-        $form = $this->createForm(UserRegistrationType::class,$registrationModel);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $registerService->registerUser($form->getData());
-
-            return $this->redirectToRoute('attention');
-        }
-
-        return $this->render('security/registration.html.twig',[
-            'form' => $form->createView()
-        ]);
-
-    }
-
-    /**
-     * @Route("/confirmation/{token}", name="confirmation")
+     * @Route("/category-{category_slug}/{slug}", name="showItem")
+     * @ParamConverter("category", options={"mapping": {"category_slug": "slug"}})
      *
-     * @param string $token
-     * @param UserServiceInterface $userService
-     * @param Request $request
-     * @param GuardAuthenticatorHandler $handler
-     * @param LoginFormAuthenticator $loginFormAuthenticator
-     * @param RegisterUserInterface $registerUser
+     * @param Category $category
+     * @param string $slug
+     * @param ProductServiceInterface $service
+     * @param ReceiptServiceInterface $receiptService
+     * @param SessionInterface $session
      * @return Response
      */
-    public function confirmRegistration(string $token,UserServiceInterface $userService,Request $request,
-                                        GuardAuthenticatorHandler $handler,
-                                        LoginFormAuthenticator $loginFormAuthenticator,
-                                        RegisterUserInterface $registerUser): Response
+    public function item(Category $category, ?string $slug, ProductServiceInterface $service, ReceiptServiceInterface $receiptService, SessionInterface $session): Response
     {
-        $user = $userService->getUserByToken($token);
+        if ($category->getType() == 'products')
+            $item = $service->getProduct($slug);
+        else
+            $item = $receiptService->getReceipt($slug);
 
-        if ($user instanceof User) {
+        $this->checkIsValidProduct($category, $item);
 
-            $registerUser->confirmUser($user);
-
-            return $handler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $loginFormAuthenticator,
-                'main'
-            );
-        }
-        return new Response('Ooops 404',404);
+        $orderType = $session->get('chooseOrder');
+        return $item->getType() == 'product'
+            ? $this->render('product.html.twig', [
+                'item' => $item,
+                'active' => $item->getCategory()->getSlug()])
+            : $this->render('receipt.html.twig', [
+                'item' => $item,
+                'sizes' => $orderType ? $item->getProducts()->filter(function (Product $product){
+                    return $product->getSupply()->getQuantity() > 0 && $product->getStatus();
+                }) : $item->getProducts(),
+                'active' => $item->getCategory()->getSlug()]);
     }
 
     /**
-     * @Route("/confirmUnknownRegistration/{email}", name="confirmUnknownRegistration")
-     * @param User $user
-     * @param UserServiceInterface $userService
+     * @Route("/api/getSizes")
+     *
      * @param Request $request
-     * @param GuardAuthenticatorHandler $handler
-     * @param LoginFormAuthenticator $loginFormAuthenticator
+     * @param ProductServiceInterface $productService
      * @return Response
      */
-    public function loginUnknownUser(User $user, UserServiceInterface $userService, Request $request,
-                                     GuardAuthenticatorHandler $handler,
-                                     LoginFormAuthenticator $loginFormAuthenticator): Response
+    public function getSizes(Request $request, ProductServiceInterface $productService): Response
     {
-        $user = $userService->findUserByEmail($user->getEmail());
+        $id = (int)$request->request->get('receipt');
+        $orderType = $request->request->get('orderType');
+        $sizes = $productService->getSizes($id, $orderType);
 
-        if ($user instanceof User) {
-
-            return $handler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $loginFormAuthenticator,
-                'main'
-            );
-        }
-
-        return $this->redirectToRoute('home');
+        return $this->render('elements/sizes.html.twig', ['products' => $sizes, 'id' => $id]);
     }
 
-    /**
-     * @IsGranted("ROLE_USER")
-     * @Route("/user-{id}/credentials", name="showCredentials")
-     * @param User $user
-     * @param Request $request
-     * @return Response
-     */
-    public function showNewUserCredentials(User $user,Request $request): Response
+    private function checkIsValidProduct(Category $category, $item): void
     {
-        $session = $request->getSession();
-        $email = $session->get('userEmail');
-        $password = $session->get('userPass');
-        if (!$email && !$password) {
-            $this->createNotFoundException();
-        }
-            return $this->render('user/credentials.html.twig',[
-                'email' => $email,
-                'password' => $password
-            ]);
+         if($item->getType() == 'product' && !$category->getProducts()->contains($item))
+               throw $this->createNotFoundException('404');
+
+         if($item->getType() == 'receipt' && !$category->getReceipts()->contains($item))
+             throw $this->createNotFoundException('404');
+
     }
+
 }

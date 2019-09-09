@@ -33,7 +33,7 @@ interface OrderInfoInterface
      * @param int $id
      * @return OrderInfo
      */
-    public function getOrder(int $id): ?OrderInfo;
+    public function getOrder(?int $id): ?OrderInfo;
 
     /**
      * @param OrderModel $model

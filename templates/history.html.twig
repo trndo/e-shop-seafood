@@ -46,11 +46,14 @@
                                     {% elseif order.status == 'payed' %}
                                         <span class="date-status">Готовится <span class="order-stat order-cook"></span></span>
                                     {% elseif order.status == 'done' %}
-                                        <span class="date-status">В пути к вам <span
+                                        <span class="date-status">В пути к вам<span
                                                     class="order-stat order-delivery"></span></span>
                                     {% elseif order.status == 'failure' %}
                                         <span class="date-status">Неудачная оплата, повторите<span
                                                     class="order-stat order-delivery"></span></span>
+                                    {% elseif order.status == 'canceled' %}
+                                        <span class="date-status">Отменено<span
+                                                    class="order-stat"></span></span>
                                     {% else %}
                                         <span class="date-status">{{ order.orderDate|date('d/m/y') }}</span>
                                     {% endif %}
@@ -63,10 +66,15 @@
                                         Подробнее
                                     </div>
                                     {% set user = app.user %}
+                                    {% if order.status == 'confirmed' %}
                                     <div class="history-btn"
                                          onclick="window.location.href='{{ path('pay', { 'orderUniqueId': order.orderUniqueId, 'user_id' : user.id }) }}'">Оплатить
                                     </div>
-                                    <div class="history-btn">Отменить</div>
+                                    {% endif %}
+                                    {% if order.status == 'confirmed' %}
+                                        <div class="history-btn"
+                                            onclick="window.location.href='{{ path('cancelUserOrder',{ 'user_id': user.id, 'orderUniqueId': order.orderUniqueId }) }}'">Отменить</div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -108,16 +116,7 @@
                     5500 <span class="hryvna">₴</span>
                 </div>
                 <ul class="order-more-list">
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
-                    <li>* Виталик хуй - 100грн</li>
+                    <li>Заказ</li>
                 </ul>
                 <div class="history-actions">
                     <div class="history-btn history-more">

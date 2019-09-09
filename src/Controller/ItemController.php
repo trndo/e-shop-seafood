@@ -43,13 +43,15 @@ class ItemController extends AbstractController
         return $item->getType() == 'product'
             ? $this->render('product.html.twig', [
                 'item' => $item,
-                'active' => $item->getCategory()->getSlug()])
+                'active' => $item->getCategory()->getSlug()
+            ])
             : $this->render('receipt.html.twig', [
                 'item' => $item,
                 'sizes' => $orderType ? $item->getProducts()->filter(function (Product $product){
                     return $product->getSupply()->getQuantity() > 0 && $product->getStatus();
                 }) : $item->getProducts(),
-                'active' => $item->getCategory()->getSlug()]);
+                'active' => $item->getCategory()->getSlug()
+            ]);
     }
 
     /**

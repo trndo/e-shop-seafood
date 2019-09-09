@@ -33,20 +33,24 @@
                                         </figure>
                                     </div>
                                 </div>
-                                <h3>Оснвные значения</h3>
+                                <h3>Основные значения</h3>
                                 <p class="card-text">Цена: {{ product.price }}/{{ product.unit }}</p>
                                 <p class="card-text">Поставка: {{ product.supply.quantity }} {{ product.unit }}</p>
+                                <p class="card-text">
+                                    Резервации: {{ product.supply.reservationQuantity }} {{ product.unit }}</p>
                                 <hr>
                                 <h3>Описание</h3>
                                 <p class="card-text">{{ product.description }}</p>
                                 <h3>Доп. описание</h3>
-                                <p class="card-text"><b>Размерность:</b> {{ product.productSize }}&nbsp;  <b>Количество шт. в еденице:</b> {{ product.amountPerUnit }}&nbsp;  <b>Вес 1шт:</b> {{ product.weightPerUnit }}</p>
+                                <p class="card-text"><b>Размерность:</b> {{ product.productSize }}&nbsp;<br><b>Количество
+                                        шт./{{ product.unit }}:</b> {{ product.amountPerUnit }}&nbsp; <br>
+                                    <b>Вес 1 шт:</b> {{ product.weightPerUnit }}</p>
                                 <hr>
-                                <h3>Seo</h3>
-                                    <h5>Title</h5>
-                                    <p class="card-text">{{ product.seoTitle }}</p>
-                                    <h5>Description</h5>
-                                    <p class="card-text">{{ product.seoDescription }}</p>
+                                <h3>SEO</h3>
+                                <h5>Сео тайтл</h5>
+                                <p class="card-text">{{ product.seoTitle }}</p>
+                                <h5>Сео дескрипшн</h5>
+                                <p class="card-text">{{ product.seoDescription }}</p>
                                 <hr>
                                 <h3>Действия</h3>
                                 <button class="btn btn-primary" onclick="window.location.href ='{{ path('showProductPhotos',{'slug': product.slug }) }}'">Обновить фото на слайдере</button>

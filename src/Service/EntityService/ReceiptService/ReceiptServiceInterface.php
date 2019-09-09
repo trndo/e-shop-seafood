@@ -72,9 +72,10 @@ interface ReceiptServiceInterface
     /**
      * @param string $name
      * @param int $category
+     * @param bool $includeStatus
      * @return ReceiptCollection
      */
-    public function getReceiptsByCriteria(?string $name, ?int $category): ?ReceiptCollection ;
+    public function getReceiptsByCriteria(?string $name, ?int $category, bool $includeStatus = false): ?ReceiptCollection ;
 
     /**
      * @param array $products

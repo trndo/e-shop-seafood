@@ -118,6 +118,24 @@ class Receipt
      */
     private $isDeletable;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", inversedBy="additionalReceipts")
+     */
+    private $additionalReceiptSales;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", mappedBy="additionalReceiptSales")
+     */
+    private $additionalReceipts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Product", inversedBy="productSalesToReceipt")
+     * @ORM\JoinTable(name="receipt_product_sales",
+     *      joinColumns={@ORM\JoinColumn(name="receipt_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
+     * )
+     */
+    private $productSalesFromReceipt;
 
 
     public function __construct()
@@ -128,6 +146,9 @@ class Receipt
         $this->status = 0;
         $this->productSales = new ArrayCollection();
         $this->specialPropositions = new ArrayCollection();
+        $this->additionalReceiptSales = new ArrayCollection();
+        $this->additionalReceipts = new ArrayCollection();
+        $this->productSalesFromReceipt = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -469,6 +490,86 @@ class Receipt
     public function setIsDeletable(?bool $isDeletable): self
     {
         $this->isDeletable = $isDeletable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getAdditionalReceiptSales(): Collection
+    {
+        return $this->additionalReceiptSales;
+    }
+
+    public function addAdditionalReceiptSale(self $additionalReceiptSale): self
+    {
+        if (!$this->additionalReceiptSales->contains($additionalReceiptSale)) {
+            $this->additionalReceiptSales[] = $additionalReceiptSale;
+        }
+
+        return $this;
+    }
+
+    public function removeAdditionalReceiptSale(self $additionalReceiptSale): self
+    {
+        if ($this->additionalReceiptSales->contains($additionalReceiptSale)) {
+            $this->additionalReceiptSales->removeElement($additionalReceiptSale);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getAdditionalReceipts(): Collection
+    {
+        return $this->additionalReceipts;
+    }
+
+    public function addAdditionalReceipt(self $additionalReceipt): self
+    {
+        if (!$this->additionalReceipts->contains($additionalReceipt)) {
+            $this->additionalReceipts[] = $additionalReceipt;
+            $additionalReceipt->addAdditionalReceiptSale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdditionalReceipt(self $additionalReceipt): self
+    {
+        if ($this->additionalReceipts->contains($additionalReceipt)) {
+            $this->additionalReceipts->removeElement($additionalReceipt);
+            $additionalReceipt->removeAdditionalReceiptSale($this);
+        }
+
+        return $this;
+    }
+
+
+    public function getProductSalesFromReceipt(): Collection
+    {
+        return $this->productSalesFromReceipt;
+    }
+
+    public function addProductSalesFromReceipt(Product $product): self
+    {
+        if (!$this->productSalesFromReceipt->contains($product)) {
+            $this->productSalesFromReceipt[] = $product;
+            $product->addProductSalesToReceipt($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductSalesFromReceipt(Product $product): self
+    {
+        if ($this->productSalesFromReceipt->contains($product)) {
+            $this->productSalesFromReceipt->removeElement($product);
+            $product->removeProductSalesToReceipt($this);
+        }
 
         return $this;
     }

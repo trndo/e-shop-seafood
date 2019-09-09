@@ -54,23 +54,4 @@ class AdminProductController extends AbstractController
             'product' => $product
         ]);
     }
-
-    /**
-     * @Route(path="/lipadmin/products/byCategory", methods={"GET"})
-     *
-     * @param Request $request
-     * @param ProductServiceInterface $service
-     * @return Response
-     */
-    public function getProductsByCategory(Request $request, ProductServiceInterface $service): Response
-    {
-        $category = $request->query->get('category');
-        $products = $service->getProductsByCriteria(null, $category);
-        return $this->render('elements/all_products_for_receipts.html.twig', [
-            'products' => $products,
-        ]);
-    }
-
-
-
 }

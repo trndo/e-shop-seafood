@@ -8,10 +8,10 @@
 
 .user-tab{
     height: 28px;
-    width: 159px;
+    width: 170px;
+    border-radius: 5px 5px 0 0;
     background: transparent;
     line-height: 28px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -26,7 +26,7 @@
 }
 .user-tab-last{
     position: relative;
-    left: 284px;
+    left: 250px;
 }
 #lobster{
     position: absolute;
@@ -72,7 +72,6 @@
     background: #FF9797;
     box-shadow: 0 4px 10px #CB2828;
     border-radius: 50px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -144,7 +143,6 @@
     margin-top: 16px;
 }
 .order-id{
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 14px;
@@ -153,7 +151,6 @@
 }
 
 .date-status{
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -166,7 +163,6 @@
     width: max-content;
     height: 23px;
     margin-top: 20px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 36px;
@@ -192,8 +188,6 @@
     background: #FF9797;
     border-radius: 50px;
     cursor: pointer;
-
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 12px;
@@ -265,7 +259,6 @@
 
 .order-more-list{
     padding-top: 13px;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -315,7 +308,6 @@
 }
 
 .newpass{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;

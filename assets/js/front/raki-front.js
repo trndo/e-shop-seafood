@@ -148,7 +148,7 @@ $(document).ready(function () {
         let name = $(this).data('name');
         let type = $(this).data('type');
         $('#overlay').toggle();
-        replaceButton = ' <div class="custom-button add-basket" data-name="' + name + '" data-type="' + type + '">Добавить в козину</div>';
+        replaceButton = ' <div class="custom-button add-basket" data-name="' + name + '" data-type="' + type + '">Добавить в корзину</div>';
     });
     let replaceButton = '';
 
@@ -162,7 +162,7 @@ $(document).ready(function () {
         '<span class="minus item-minus">-</span>\n' +
         '</div>\n' +
         '<div class="custom-button add-basket" data-name="'+id+'" data-type="'+type+'">\n' +
-        'Добавить в козину\n' +
+        'Добавить в корзину\n' +
         '</div></div>'
     }
 

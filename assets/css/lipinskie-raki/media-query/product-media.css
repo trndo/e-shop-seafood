@@ -26,7 +26,7 @@
     }
 
     .product-to-basket .custom-button{
-        width: 132px;
+        width: 145px;
         height: 35px;
         padding-top: 10px;
         font-size: 13px;
@@ -115,9 +115,11 @@
     .size{
         font-size: 80px;
     }
-
+    .modal-body {
+        padding: 3rem 2rem 1rem 2rem;
+    }
     .product-to-basket .custom-button{
-        width: 132px;
+        width: 150px;
         height: 35px;
         padding-top: 10px;
         font-size: 13px;

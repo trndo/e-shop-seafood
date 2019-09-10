@@ -8,15 +8,17 @@
     </div>#}
     <div class="user_basket-mini">
         <div class="basket-container">
+            <i class="fas fa-shopping-cart"></i>
             <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
         </div>
-        <embed id="user" type="image/svg+xml" src="/assets/img/avatar-red.svg"/>
+        <i id="user" class="far fa-user" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"></i>
     </div>
 </header>
 <header id="mobile">
     <img id="mobile-logo" src="/assets/img/header-logo.svg"/>
     <div class="mobile-user_basket">
         <div class="basket-container">
+            <i class="fas fa-shopping-cart"></i>
             <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
         </div>
         <div id="menu">

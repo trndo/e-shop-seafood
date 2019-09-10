@@ -13,8 +13,10 @@
                 <img src="{{ asset('assets/img/plate.png') }}" alt="" id="plate">
                 <div id="promotion">
                     <div class="promotion-text">
-                        {% set message = random(messages) %}
-                        {{ message.message }}
+                        {% if messages is not empty %}
+                            {% set message = random(messages) %}
+                            {{ message.message }}
+                        {% endif %}
                     </div>
                     <div id="slider-points">
                         <div class="ellipse ellipse-active"></div>

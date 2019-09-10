@@ -1,5 +1,5 @@
 <div class="menu-nav">
-    <img id="user-mobile" src="/assets/img/avatar.svg" data-url="{% if app.user %}{{ path('user',{'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}">
+    <i id="user-mobile" class="far fa-user" data-url="{% if app.user %}{{ path('user',{'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"></i>
     <ul>
         <li {% if mob_active == 'home' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главная</li>
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
@@ -11,7 +11,10 @@
         </div>
     </ul>
     <div class="curtain-info">
-        <span id="mobile-basket">{{app.session.get('totalSum')|default(0)}} грн</span>
+        <span id="mobile-basket">
+            <i class=" fas fa-shopping-cart"></i>
+            {{app.session.get('totalSum')|default(0)}} ₴
+        </span>
         <span id="phone">+38(000)000-00-00</span>
         <span id="email">rakiInf@gmail.com</span>
         <span id="address">вулиця Сергія Данеченко 12, Киев</span>

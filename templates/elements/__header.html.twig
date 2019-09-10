@@ -7,9 +7,10 @@
         <div class="user_basket">
             {% set sum = app.session.get('totalSum') %}
             <div class="basket-container">
+                <i class="fas fa-shopping-cart"></i>
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>
-            <img id="user" src="/assets/img/avatar.svg" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"/>
+            <i id="user" class="far fa-user" data-user="{% if app.user is not null %}{{ path('user', {'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"></i>
         </div>
     </div>
     <div class="row">
@@ -30,7 +31,7 @@
                 <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
                 <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
                 <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки</li>
-                <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>
+                <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент<i class="fas fa-angle-right pl-2"></i></li>
             </ul>
         </nav>
     </div>
@@ -44,6 +45,7 @@
     <img id="mobile-logo" src="/assets/img/header-logo.svg"/>
     <div class="mobile-user_basket">
         <div class="basket-container">
+            <i class="fas fa-shopping-cart"></i>
             <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
         </div>
         <div id="menu">

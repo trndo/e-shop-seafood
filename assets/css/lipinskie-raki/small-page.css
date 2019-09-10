@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:200,300,600,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 .mini{
     width: 844px;
     height: 100px;
@@ -21,6 +21,27 @@
     top: 40px;
     position: absolute;
     right: 0;
+}
+.user_basket-mini .fa-shopping-cart {
+    color: white;
+    position: absolute;
+    left: 10px;
+}
+.user_basket-mini .fa-user {
+    color: white;
+    border: solid white 2px;
+    padding: 5px;
+    border-radius: 100%;
+    transition: all 0.35s ease-in;
+    width: 30px;
+}
+.user_basket-mini .fa-user:before {
+    margin-left: 1px;
+}
+
+.user_basket-mini .fa-user:hover {
+    color: #F13A3A;
+    transform: scale(1.3) rotate(360deg);
 }
 
 .red-content{
@@ -65,7 +86,6 @@
 }
 
 .check-shopping p{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -75,7 +95,6 @@
 }
 
 .check-shopping h4{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -98,13 +117,13 @@
 }
 
 .order{
-    width: 559px;
+    width: 100%;
     height: 70px;
     position: relative;
     display: block;
     background: #F85B5B;
-    box-shadow: 0 4px 4px #BF2C2C;
-    border-radius: 2px;
+    box-shadow: 4px 4px 4px #BF2C2C;
+    border-radius: 40px;
     margin-bottom: 7px;
 }
 .order img{
@@ -119,7 +138,6 @@
     height: 70px;
     padding-left: 12px;
     position: relative;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -134,7 +152,6 @@
     height: 70px;
     position: relative;
     display: inline-block;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
@@ -168,7 +185,6 @@
     border-radius: 50px;
     width: 86px;
     height: 27px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
@@ -198,7 +214,6 @@
 .order-price{
     width: 123px;
     height: 70px;
-    font-family: Raleway ,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -249,7 +264,6 @@
     max-width: 400px;
     height: 62px;
     position: relative;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 36px;
@@ -267,7 +281,6 @@
     right: 50px;
     width: 207px;
     height: 38px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -279,7 +292,6 @@
 }
 
 .hryvnas{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
@@ -312,7 +324,6 @@
 }
 
 .order-block #order-title{
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -410,7 +421,6 @@
     border-radius: 5px;
     width:149px;
     height: 33px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 14px;
@@ -428,7 +438,6 @@
     width: 145px;
     height: 33px;
     color: #FFFFFF;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 14px;
@@ -459,7 +468,6 @@
     margin-top: 34px;
     width: 207px;
     height: 38px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -520,7 +528,6 @@ input[type=number] {
     background-image: url('../../img/marker-form-white.svg');
     margin-top: 16px;
     background-repeat: no-repeat;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 16px;
@@ -557,7 +564,6 @@ input[type=number] {
     color: white;
 }
 #subtitle{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -565,7 +571,6 @@ input[type=number] {
 }
 
 #title{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -583,7 +588,6 @@ input[type=number] {
     width: 100%;
     padding-top: 9px;
     padding-bottom: 3px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
@@ -622,7 +626,6 @@ input[type=number] {
     background: #FF9797;
     box-shadow: 0 4px 10px #CB2828;
     border-radius: 50px;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -643,7 +646,6 @@ input[type=number] {
 .forgot-pass{
     width: 100%;
     text-align: center;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -664,7 +666,6 @@ input[type=number] {
 }
 
 .login-with{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 200;
     font-size: 11px;
@@ -717,7 +718,6 @@ input[type=number] {
     border-radius: 50px;
     height: 38px;
     width: 309px;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -739,7 +739,6 @@ input[type=number] {
 }
 .validation-mess{
     width: 100%;
-    font-family: Raleway,sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 12px;
@@ -789,7 +788,6 @@ input[type=number] {
 }
 
 .attention-subtitle{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -799,7 +797,6 @@ input[type=number] {
 }
 
 .attention-title{
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -828,7 +825,6 @@ input[type=number] {
     text-align: right;
     top: 18px;
     right: 80px;
-    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;

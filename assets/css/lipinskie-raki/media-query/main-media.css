@@ -45,7 +45,11 @@
         float: right;
         top: 8px;
     }
-
+    .mobile-user_basket i {
+        color: white;
+        position: absolute;
+        left: 10px;
+    }
     .basket-container{
         display: block;
         position: static;
@@ -74,7 +78,7 @@
     }
 
     .contact-social{
-        margin-top: 60px;
+        margin-top: 55px;
     }
 
     .contact{
@@ -86,7 +90,7 @@
     }
 
     .rating h2{
-        width: 302px;
+        width: 325px;
         height: 24px;
         font-size: 23px;
         padding-bottom: 30px;
@@ -129,7 +133,7 @@
     .in_basket{
         width: 115.25px;
         height: 27px;
-        font-size: 18px;
+        font-size: 15px;
         line-height: 27px;
     }
     .page-text{
@@ -219,10 +223,6 @@
      delL! */
     #mobile-basket{
         display: block;
-        background-image: url("../../../img/online-shopping-cart.svg");
-        background-position: 5px 2px;
-        background-repeat: no-repeat;
-        padding-left: 30px;
         position: relative;
         width: 102px;
         height: 20px;
@@ -233,10 +233,9 @@
         cursor: pointer;
         user-select: none;
         -moz-user-select: none;
-        margin: 0 auto;
+        margin: 0 auto 20px auto;
         color: #CECECE;
         font-size: 18px;
-        margin-bottom: 20px;
         line-height: 20px;
     }
     .curtain-info{
@@ -294,12 +293,12 @@
     }
 
     .promotion-text{
-        width: 285px;
+        width: 280px;
         font-size: 18px;
     }
 
     .rating h2{
-        width: 302px;
+        width: 315px;
         height: 24px;
         font-size: 23px;
         padding-bottom: 30px;
@@ -453,10 +452,6 @@
 
     #mobile-basket{
         display: block;
-        background-image: url("../../../img/online-shopping-cart.svg");
-        background-position: 5px 2px;
-        background-repeat: no-repeat;
-        padding-left: 30px;
         position: relative;
         width: 102px;
         height: 20px;
@@ -467,10 +462,9 @@
         cursor: pointer;
         user-select: none;
         -moz-user-select: none;
-        margin: 0 auto;
+        margin: 0 auto 20px auto;
         color: #CECECE;
         font-size: 18px;
-        margin-bottom: 20px;
         line-height: 20px;
     }
     .curtain-info{
@@ -482,6 +476,7 @@
     }
     .contact{
         margin-left: 0;
+        padding-left: 3px;
     }
     .footer-row {
         justify-content: space-around;
@@ -544,12 +539,12 @@
     }
 
     .promotion-text{
-        width: 285px;
+        width: 275px;
         font-size: 18px;
     }
 
     .rating h2{
-        width: 302px;
+        width: 314px;
         height: 24px;
         font-size: 23px;
         padding-bottom: 30px;
@@ -619,6 +614,9 @@
         width: 100%;
         padding: 46px 46px;
         order: 1
+    }
+    #main-text-container p {
+        font-size: 16px;
     }
     #main-text-container{
         width: 100%;

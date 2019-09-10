@@ -123,8 +123,8 @@
     display: block;
     background: #F85B5B;
     box-shadow: 4px 4px 4px #BF2C2C;
-    border-radius: 40px;
     margin-bottom: 7px;
+    border-radius: 0 40px 40px 0;
 }
 .order img{
     width: 139px;
@@ -538,7 +538,7 @@ input[type=number] {
 .small-red-content{
     position: relative;
     width: 770px;
-    height: 273px;
+    height: 292px;
     margin: 0 auto;
     margin-top: 45px;
     background: #F13A3A;
@@ -741,7 +741,7 @@ input[type=number] {
     width: 100%;
     font-style: normal;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 100%;
     text-align: center;
     color: #FFFFFF;
@@ -864,4 +864,9 @@ input[type=number] {
 .scale-section:last-child{
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
+}
+
+.attention-user-cab{
+    color: white;
+    font-size: 20px;
 }

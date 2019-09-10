@@ -60,8 +60,7 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $registerService->registerUser($form->getData());
+            $registerService->registerUser($form->getData());
 
             return $this->redirectToRoute('attention');
         }

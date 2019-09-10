@@ -46,7 +46,7 @@
 
 .user-title{
     width: 526px;
-    height: 95px;
+    height: max-content;
     margin: 0 auto;
     text-align: left;
     padding-top: 10px;

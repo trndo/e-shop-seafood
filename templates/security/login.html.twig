@@ -32,6 +32,9 @@
                             <span id="title">Осталось только зайти</span>
                         </div>
                         <form method="post" class="login-form">
+                            {% if error %}
+                                <small class="validation-mess">{{ error.message }}</small>
+                            {% endif %}
                             <div class="login-input-container">
                                 <div>
                                     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="user-input login-input" placeholder="Email" required autofocus>

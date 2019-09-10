@@ -30,7 +30,22 @@
                 {% for cartItem in items %}
                     <div class="order-container">
                         <div class="order">
-                            <img src="{{ cartItem.item.getTitlePhotoPath }}" alt="">
+                            {% if cartItem.item.type == 'product' %}
+                                {% if cartItem.item.TitlePhotoPath is not null %}
+                                    <img src="{{ cartItem.item.TitlePhotoPath }}" alt="photo">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                {% endif %}
+                            {% else %}
+                                {% set mimeType = getMimeType(cartItem.item.titlePhoto) %}
+                                {% if cartItem.item.TitlePhotoPath is not null and mimeType != "video/mp4" %}
+                                    <img src="{{ cartItem.item.TitlePhotoPath }}" alt="photo">
+                                {% elseif cartItem.item.getPhoto is not empty %}
+                                    <img src="/uploads/receipts/{{ cartItem.item.getPhoto.first.hash }}" alt="photo">
+                                {% else %}
+                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                {% endif %}
+                            {% endif %}
                             <div class="order-product-name item-name" data-name="{{ cartItem.item.type == 'receipt'
                             ? cartItem.product.ProductSize ? 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id : 'receipt-' ~ cartItem.item.id ~ '-' ~ cartItem.product.id
                             : 'product-' ~ cartItem.item.id }}">
@@ -44,8 +59,7 @@
                                 <span class="minus cart-minus">-</span>
                             </div>
                             <div class="order-price">
-                                {{ cartItem.item.type == 'receipt' ? cartItem.item.price + cartItem.product.price : cartItem.item.price  }}/{{ cartItem.item.unit }}
-                                 <span class="hryvnas">₴</span>
+                                {{ cartItem.item.type == 'receipt' ? cartItem.item.price + cartItem.product.price : cartItem.item.price  }} ₴/{{ cartItem.item.unit }}
                             </div>
                         </div>
                         <div  class="delete-from-cart" data-name="{{ cartItem.item.type == 'receipt'
@@ -80,6 +94,9 @@
             {% endif %}
         </div>
         </main>
+    </div>
+    <div id="overlay">
+        {% include 'elements/modal.html.twig' with {'special_class' : 'product-modal'} %}
     </div>
    {% include 'elements/__footer.html.twig' with { 'active': false } %}
    {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}

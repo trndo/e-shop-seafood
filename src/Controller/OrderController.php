@@ -52,7 +52,7 @@ class OrderController extends AbstractController
                 }
                 $orderInfo->addOrder($orderModel, $request);
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('attention_order');
             }
 
             return $this->render('makeOrder.html.twig', [

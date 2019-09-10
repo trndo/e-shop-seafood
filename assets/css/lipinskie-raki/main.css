@@ -881,6 +881,7 @@ footer{
 }
 
 .modal-window{
+    display: none;
     position: relative;
     width: 770px;
     height: 299px;

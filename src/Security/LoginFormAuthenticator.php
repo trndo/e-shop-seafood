@@ -67,11 +67,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Неверный пароль или email');
         }
 
         if ($user->getRegistrationStatus() === false) {
-            throw new CustomUserMessageAuthenticationException('Prover svoju pochtu!!! a potom zahodi');
+            throw new CustomUserMessageAuthenticationException('Пожалуйста подтвердите свою почту');
         }
 
         return $user;
@@ -92,6 +92,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
                 'id' => $token->getUser()->getId()
             ]));
         }
+        if(in_array('ROLE_SUPER_ADMIN',$token->getUser()->getRoles()))
+            return new RedirectResponse($this->urlGenerator->generate('admin'));
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }

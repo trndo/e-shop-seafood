@@ -1,5 +1,10 @@
 import $ from "jquery";
 
+$('#close-modal').click(function () {
+    console.log('here');
+    $('.modal-window').toggle();
+    $('#overlay').toggle();
+});
 $(document).on('click','.cart-plus',function () {
     let input = $(this).siblings('.cart-res').children();
     let name = $(this).parent().siblings('.item-name').data('name');
@@ -14,7 +19,7 @@ $(document).on('click','.cart-plus',function () {
         },
         success: function (res) {
             if (res.status === false) {
-                alert(res.message);
+                showModal(res.message);
             }
             else {
                 input.val(val + 0.5);
@@ -44,6 +49,7 @@ $(document).on('click','.cart-minus',function () {
         success: function (res) {
             input.val(val - 0.5);
             $('.sum').text(res.totalSum+' ₴');
+            $('.mob-basket').text(res.totalSum + ' ₴');
         }
     });
 });
@@ -76,13 +82,14 @@ $(document).on('keyup','.cart-res > input',function (e) {
         },
         success: function (res) {
             if (res.status === false) {
-                alert(res.message);
+                showModal(res.message);
                 if(res.rest != 0)
                     input.val(res.rest);
             }
             else {
                 input.val(val);
                 $('.sum').text(res.totalSum+' ₴');
+                $('.mob-basket').text(res.totalSum + ' ₴');
             }
         }
     });
@@ -105,18 +112,25 @@ $(document).on('blur','.cart-res > input',function (e) {
             },
             success: function (res) {
                 if (res.status === false) {
-                    alert(res.message);
+                    showModal(res.message);
                     if(res.rest != 0)
                         input.val(res.rest);
                 }
                 else {
                     input.val(1);
                     $('.sum').text(res.totalSum+' ₴');
+                    $('.mob-basket').text(res.totalSum + ' ₴');
                 }
             }
         });
     }
 });
+function showModal(text){
+    let modal = $('.modal-window');
+    modal.children('.attention-title').text(text);
+    $('#overlay').toggle();
+    modal.toggle();
+}
 
 $(document).on('click','.delete-from-cart',function () {
     let name = $(this).data('name');

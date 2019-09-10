@@ -39,6 +39,15 @@ class HomeController extends AbstractController
         return $this->render('attention/attention.html.twig');
     }
 
+    /**
+     * @Route("/makeOrderAttend" , name="attention_order")
+     * @return Response
+     */
+    public function attendAfterMakeOrder(): Response
+    {
+        return $this->render('attention/attentionMakeOrder.html.twig');
+    }
+
 
 
 }

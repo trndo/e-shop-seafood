@@ -52,7 +52,7 @@ class RegisterUser implements RegisterUserInterface
      * @return User
      * @throws \Exception
      */
-    public function registerUser(UserRegistrationModel $model): User
+    public function registerUser(UserRegistrationModel $model)
     {
         $user = new User();
 
@@ -81,9 +81,6 @@ class RegisterUser implements RegisterUserInterface
         $this->entityManager->flush();
 
         $this->mailSender->sendMessage($user);
-
-        return $user;
-
     }
 
     public function registerAdmin(AdminModel $model): User

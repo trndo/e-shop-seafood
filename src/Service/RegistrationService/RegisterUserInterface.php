@@ -18,7 +18,7 @@ interface RegisterUserInterface
      *
      * @return User
      */
-    public function registerUser(UserRegistrationModel $model): User ;
+    public function registerUser(UserRegistrationModel $model);
 
     /**
      * User registration confirmation

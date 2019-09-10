@@ -57,7 +57,7 @@ $(document).ready(function () {
         let id = $(this).data('name');
 
         if (checked == null && type === 'receipt') {
-            alert('Выбери размер!');
+            showModal('Выбери размер!');
             return;
         }
 
@@ -73,10 +73,10 @@ $(document).ready(function () {
             success: function (res) {
                 if (res.status) {
                     $('.sum').text(res.totalSum + ' ₴');
-                    console.log(res);
+                    $('.additional-cart').text(res.totalSum + ' ₴');
+                    $('.mob-basket').text(res.totalSum + ' ₴');
                 } else {
-                    console.log('ne-ok');
-                    alert(res.message);
+                    showModal(res.message);
                     $('.item-res > input').val(1);
                 }
             }
@@ -239,6 +239,11 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+
+    $('#close-modal').click(function () {
+        $('.modal-window').toggle();
+        $('#overlay').toggle();
     });
 
     $(".user_info_update").validate({
@@ -527,6 +532,12 @@ $(document).ready(function () {
         }
     });
 
+    function showModal(text){
+        let modal = $('.modal-window');
+        modal.children('.attention-title').text(text);
+        $('#overlay').toggle();
+        modal.toggle();
+    }
 
 });
 

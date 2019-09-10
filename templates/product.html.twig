@@ -116,39 +116,42 @@
                             Посмотри так же
                         </div>
                         <div class="additional-products-row">
-                                  <div class="product-card additional-product-card">
-                                        <img src="{{ asset('assets/img/test.jpg') }}" alt="">
-                                        <div class="card-content">
-                                            <h4>Живой рак вкусный прекрасный</h4>
-                                            <p>вафвлоыафждлвпофждпыо вафыв в</p>
-                                            <div class="main-info">
-                                                <span class="price">₴ 220</span>
-                                                <div class="in_basket" >В корзину</div>
-                                            </div>
-                                        </div>
-                                 </div>
+                            {% for additionalItem in item.receiptSales %}
                                 <div class="product-card additional-product-card">
-                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                                    {% if additionalItem.titlePhotoPath is not null and getMimeType(additionalItem.titlePhoto) != "video/mp4" %}
+                                        <img src="{{ additionalItem.titlePhotoPath }}" alt="photo">
+                                    {% elseif additionalItem.getPhoto is not empty %}
+                                        <img src="/uploads/receipts/{{ additionalItem.getPhoto.first.hash }}">
+                                    {% else %}
+                                        <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
+                                    {% endif %}
                                     <div class="card-content">
-                                        <h4>Живой рак вкусный прекрасный</h4>
-                                        <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                        <h4>{{ additionalItem.name }}</h4>
+                                        <p>{{ additionalItem.description }}</p>
                                         <div class="main-info">
-                                            <span class="price">₴ 220</span>
-                                            <div class="in_basket" >В корзину</div>
+                                            <span class="price">{{ additionalItem.price }} ₴/{{ additionalItem.unit }}</span>
+                                            <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': additionalItem.category.slug,'slug': additionalItem.slug}) }}">Подробнее</div>
                                         </div>
                                     </div>
                                 </div>
+                            {% endfor %}
+                            {% for additionalItem in item.products %}
                                 <div class="product-card additional-product-card">
-                                    <img src="{{ asset('assets/img/test.jpg') }}" alt="">
+                                    {% if additionalItem.titlePhoto is not null %}
+                                        <img src="/uploads/products/{{ additionalItem.titlePhoto }}">
+                                    {% else %}
+                                        <img src="{{ asset('assets/img/test.jpg') }}" >
+                                    {% endif %}
                                     <div class="card-content">
-                                        <h4>Живой рак вкусный прекрасный</h4>
-                                        <p>вафвлоыафждлвпофждпыо вафыв в</p>
+                                        <h4>{{ additionalItem.name }}</h4>
+                                        <p>{{ additionalItem.description }}</p>
                                         <div class="main-info">
-                                            <span class="price">₴ 220</span>
-                                            <div class="in_basket" >В корзину</div>
+                                            <span class="price">{{ additionalItem.price }} ₴/{{ additionalItem.unit }}</span>
+                                            <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': additionalItem.category.slug,'slug': additionalItem.slug}) }}">Подробнее</div>
                                         </div>
                                     </div>
                                 </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </main>

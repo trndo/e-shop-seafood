@@ -52,9 +52,9 @@ class AdminReceiptAdditionalController extends AbstractController
      */
     public function addAdditionalSales(Receipt $receipt, CategoryService $categoryService): Response
     {
-        $categories = $categoryService->getCategoryByCriteria(['type' => 'products']);
+        $categories = $categoryService->getAllCategories();
         return $this->render('admin/receipt/additionalSales.html.twig',[
-            'additionalProds' => $receipt->getProductSales(),
+            'additionalProds' => array_merge($receipt->getProductSalesFromReceipt()->toArray(), $receipt->getAdditionalReceipts()->toArray()),
             'categories' => $categories,
             'receipt' => $receipt
         ]);

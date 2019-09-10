@@ -91,7 +91,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
     public function getProductsFromCategory(int $categoryId, bool $setMaxResults = false): ?array
     {
         $query = $this->createQueryBuilderForProduct('p')
-            ->andWhere('p.status = true AND c.id = :categoryId')
+            ->andWhere('p.status = 1 AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
             ->orderBy('p.category', 'ASC')
             ->andWhere('p.isDeletable IS NULL');

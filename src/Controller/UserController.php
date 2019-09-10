@@ -53,7 +53,6 @@ class UserController extends AbstractController
         return $this->render('forgot_password.html.twig', [
             'form' => $form->createView()
         ]);
-
     }
 
     /**
@@ -126,4 +125,5 @@ class UserController extends AbstractController
             'orders' => $orderInfo->getUserOrders($user->getId())
         ]);
     }
+
 }

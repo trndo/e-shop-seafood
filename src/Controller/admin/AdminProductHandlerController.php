@@ -4,11 +4,14 @@
 namespace App\Controller\admin;
 
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Mapper\ProductMapper;
 use App\Model\ProductModel;
+use App\Service\EntityService\CategoryService\CategoryService;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
+use App\Service\EntityService\ReceiptService\ReceiptServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -111,5 +114,53 @@ class AdminProductHandlerController extends AbstractController
             'products' => $products,
             'type' => $request->query->get('type')
         ]);
+    }
+
+    /**
+     * @Route("lipadmin/products/{slug}/addSales", name="addProductSales")
+     *
+     * @param CategoryService $categoryService
+     * @param Product $product
+     * @return Response
+     */
+    public function addAdditionalSales(Product $product, CategoryService $categoryService): Response
+    {
+        $categories = $categoryService->getAllCategories();
+        return $this->render('admin/product/additionalSales.html.twig',[
+            'additionalProds' => array_merge($product->getProducts()->toArray(), $product->getReceiptSales()->toArray()),
+            'categories' => $categories,
+            'product' => $product
+        ]);
+    }
+
+    /**
+     * @Route(path="/lipadmin/products/byCategory", methods={"GET"})
+     *
+     * @param Request $request
+     * @param ProductServiceInterface $service
+     * @return Response
+     */
+    public function getProductsByCategory(Request $request, ProductServiceInterface $service): Response
+    {
+        $category = $request->query->get('category');
+        $category = $this->getDoctrine()->getRepository(Category::class)->find((int)$category);
+        $products = $service->getProductsByCategory($category);
+        return $this->render('elements/all_products_for_receipts.html.twig', [
+            'products' => $products,
+        ]);
+    }
+
+    /**
+     * @Route("lipadmin/products/{slug}/saveSales", methods={"POST"})
+     *
+     * @param Product $product
+     * @param Request $request
+     * @param ProductServiceInterface $receiptService
+     * @return JsonResponse
+     */
+    public function saveSalesForReceipt(Product $product,Request $request, ProductServiceInterface $receiptService): JsonResponse
+    {
+        $receiptService->addSalesInProduct((array)$request->request->get('products'), $product);
+        return new JsonResponse([],200);
     }
 }

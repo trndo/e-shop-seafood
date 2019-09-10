@@ -294,6 +294,45 @@ class ProductService implements ProductServiceInterface
         return null;
     }
 
+    public function addSalesInProduct(array $products,?Product $product): void
+    {
+        $productRepo = $this->entityManager->getRepository(Product::class);
+        $receiptRepo = $this->entityManager->getRepository(Receipt::class);
+
+        foreach ($product->getReceiptSales() as $existingReceiptSale){
+            if(!$this->inArrayByCallback($existingReceiptSale->getId(),$existingReceiptSale->getType(),$products))
+                $product->removeReceiptSales($existingReceiptSale);
+        }
+        foreach ($product->getProducts() as $existingProduct) {
+            if(!$this->inArrayByCallback($existingProduct->getId(),$existingProduct->getType(),$products))
+                $product->removeProduct($existingProduct);
+        }
+
+        foreach ($products as $productPosition) {
+            switch ($productPosition['type']) {
+                case 'receipt':
+                    $receipt = $receiptRepo->find($productPosition['id']);
+                    $product->addReceiptSale($receipt);
+                    continue;
+
+                case 'product':
+                    $productAdd = $productRepo->find($productPosition['id']);
+                    $product->addProduct($productAdd);
+                    continue;
+
+                default:
+                    continue;
+            }
+        }
+        $this->entityManager->flush();
+    }
+
+    private function inArrayByCallback(int $id,string $type, array $searchedArray){
+        return current(array_filter($searchedArray, function($element) use($id, $type) {
+            return $element['id'] == $id && $element['type'] == $type;
+        }));
+    }
+
     private function getOrderDetailPrice(OrderDetail $orderDetail, $value): float
     {
         $price = 0;

@@ -131,14 +131,14 @@ class OrderInfoHandler implements OrderInfoInterface
         }
     }
 
-    public function getOrder(int $id): ?OrderInfo
+    public function getOrder(?int $id): ?OrderInfo
     {
-        return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
+         return $this->entityManager->getRepository(OrderInfo::class)->getOrderById($id);
     }
 
     public function cancelOrder(?int $id): void
     {
-        $orderInfo = $this->getOrder($id);
+        $orderInfo = $this->getOrderByUniqueId($id);
 
         if ($orderInfo) {
             $orderInfo->setStatus('canceled');
@@ -249,6 +249,11 @@ class OrderInfoHandler implements OrderInfoInterface
             $hash = substr($hash, 0, $length);
         }
         return $hash;
+    }
+
+    private function getOrderByUniqueId(?int $uniqueId): ?OrderInfo
+    {
+        return $this->entityManager->getRepository(OrderInfo::class)->getOrderByUniqueId($uniqueId);
     }
 
 

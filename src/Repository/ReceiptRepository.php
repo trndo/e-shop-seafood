@@ -107,9 +107,13 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         return $query;
     }
 
-    public function findReceiptsBy(string $name = null, int $category = null): ?array
+    public function findReceiptsBy(string $name = null, int $category = null, bool $includeStatus = false): ?array
     {
         $query = $this->createQueryBuilderForReceipt('r');
+
+        if($includeStatus)
+            $query->where('r.status = 1');
+
         if ($name != null){
             $query->andWhere('r.name = :name')
                 ->setParameter('name', $name);

@@ -44,7 +44,8 @@
                                 <span class="minus cart-minus">-</span>
                             </div>
                             <div class="order-price">
-                                {{ cartItem.item.price }} <span class="hryvnas">₴/кг</span>
+                                {{ cartItem.item.type == 'receipt' ? cartItem.item.price + cartItem.product.price : cartItem.item.price  }}/{{ cartItem.item.unit }}
+                                 <span class="hryvnas">₴</span>
                             </div>
                         </div>
                         <div  class="delete-from-cart" data-name="{{ cartItem.item.type == 'receipt'

@@ -24,7 +24,9 @@ class CategoryController extends AbstractController
      */
     public function category(Category $category, ProductServiceInterface $productService, ReceiptServiceInterface $receiptService): Response
     {
-        $items = $category->getType() == 'products' ? $productService->getProductsByCategory($category, true) : $receiptService->getReceiptsByCategory($category, true);
+        $items = $category->getType() == 'products'
+            ? $productService->getProductsByCategory($category, true)
+            : $receiptService->getReceiptsByCategory($category, true);
         return $category->getDisplayType() == 'simple'
             ? $this->render('products.html.twig',[
                 'items' => $items,

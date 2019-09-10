@@ -37,6 +37,17 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getOrderByUniqueId(?int $orderUniqueId): ?OrderInfo
+    {
+        return $this->createQueryBuilderForOrderInfo('o')
+            ->andWhere('o.orderUniqueId = :orderUniqueId')
+            ->setParameter('orderUniqueId', $orderUniqueId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
+
     /**
      * @param int $userId
      * @return OrderInfo[]|null

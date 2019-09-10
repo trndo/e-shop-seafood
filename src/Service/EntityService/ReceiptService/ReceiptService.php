@@ -118,11 +118,12 @@ class ReceiptService implements ReceiptServiceInterface
     /**
      * @param string $name
      * @param int $category
+     * @param bool $includeStatus
      * @return ReceiptCollection
      */
-    public function getReceiptsByCriteria(?string $name, ?int $category): ?ReceiptCollection
+    public function getReceiptsByCriteria(?string $name, ?int $category, bool $includeStatus = false): ?ReceiptCollection
     {
-        return new ReceiptCollection($this->receiptRepository->findReceiptsBy($name, $category));
+        return new ReceiptCollection($this->receiptRepository->findReceiptsBy($name, $category, $includeStatus));
     }
 
     /**
@@ -149,18 +150,40 @@ class ReceiptService implements ReceiptServiceInterface
     public function addSalesInReceipt(array $products,?Receipt $receipt): void
     {
         $productRepo = $this->entityManager->getRepository(Product::class);
+        $receiptRepo = $this->entityManager->getRepository(Receipt::class);
 
-        foreach ($receipt->getProductSales() as $existingProductSale){
-            if(!in_array($existingProductSale->getId(),$products))
-                $receipt->removeProductSale($existingProductSale);
+        foreach ($receipt->getProductSalesFromReceipt() as $existingProductSale){
+            if(!$this->inArrayByCallback($existingProductSale->getId(),$existingProductSale->getType(),$products))
+                $receipt->removeProductSalesFromReceipt($existingProductSale);
+        }
+        foreach ($receipt->getAdditionalReceipts() as $existingReceipt) {
+            if(!$this->inArrayByCallback($existingReceipt->getId(),$existingReceipt->getType(),$products))
+                $receipt->removeAdditionalReceipt($existingReceipt);
         }
 
         foreach ($products as $product) {
-            $product =  $productRepo->find($product);
-            $receipt->addProductSale($product);
-            $this->entityManager->flush();
-        }
+            switch ($product['type']) {
+                case 'product':
+                    $product = $productRepo->find($product['id']);
+                    $receipt->addProductSalesFromReceipt($product);
+                    continue;
 
+                case 'receipt':
+                    $receiptAdd = $receiptRepo->find($product['id']);
+                    $receipt->addAdditionalReceipt($receiptAdd);
+                    continue;
+
+                default:
+                    continue;
+            }
+        }
+        $this->entityManager->flush();
+    }
+
+    private function inArrayByCallback(int $id,string $type, array $searchedArray){
+        return current(array_filter($searchedArray, function($element) use($id, $type) {
+            return $element['id'] == $id && $element['type'] == $type;
+        }));
     }
 
     public function getReceiptsForRating(): ?array

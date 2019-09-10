@@ -33,24 +33,28 @@
                                         </figure>
                                     </div>
                                 </div>
-                                <h3>Оснвные значения</h3>
+                                <h3>Основные значения</h3>
                                 <p class="card-text">Цена: {{ product.price }}/{{ product.unit }}</p>
                                 <p class="card-text">Поставка: {{ product.supply.quantity }} {{ product.unit }}</p>
+                                <p class="card-text">
+                                    Резервации: {{ product.supply.reservationQuantity }} {{ product.unit }}</p>
                                 <hr>
                                 <h3>Описание</h3>
                                 <p class="card-text">{{ product.description }}</p>
                                 <h3>Доп. описание</h3>
-                                <p class="card-text"><b>Размерность:</b> {{ product.productSize }}&nbsp;  <b>Количество шт. в еденице:</b> {{ product.amountPerUnit }}&nbsp;  <b>Вес 1шт:</b> {{ product.weightPerUnit }}</p>
+                                <p class="card-text"><b>Размерность:</b> {{ product.productSize }}&nbsp;<br><b>Количество
+                                        шт./{{ product.unit }}:</b> {{ product.amountPerUnit }}&nbsp; <br>
+                                    <b>Вес 1 шт:</b> {{ product.weightPerUnit }}</p>
                                 <hr>
-                                <h3>Seo</h3>
-                                    <h5>Title</h5>
-                                    <p class="card-text">{{ product.seoTitle }}</p>
-                                    <h5>Description</h5>
-                                    <p class="card-text">{{ product.seoDescription }}</p>
+                                <h3>SEO</h3>
+                                <h5>Сео тайтл</h5>
+                                <p class="card-text">{{ product.seoTitle }}</p>
+                                <h5>Сео дескрипшн</h5>
+                                <p class="card-text">{{ product.seoDescription }}</p>
                                 <hr>
                                 <h3>Действия</h3>
                                 <button class="btn btn-primary" onclick="window.location.href ='{{ path('showProductPhotos',{'slug': product.slug }) }}'">Обновить фото на слайдере</button>
-                                <button class="btn btn-warning" onclick="window.location.href =''">Добавить доп. продажи</button>
+                                <button class="btn btn-warning" onclick="window.location.href ='{{ path('addProductSales',{'slug': product.slug }) }}'">Добавить доп. продажи</button>
                                 <hr>
                                 <div class="row justify-content-center">
                                     <div class="col-6">
@@ -104,6 +108,77 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                     {{ receipt.price }}/{{ receipt.unit }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card shadow mb-4">
+                                            <div class="card-header py-3">
+                                                <h6 class="m-0 font-weight-bold text-primary">Таблица Доп. Продажи</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Обложка</th>
+                                                            <th>Название</th>
+                                                            <th>Размерность</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for product in product.products %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ product.id }}
+                                                                </td>
+                                                                <td>
+                                                                    {% if product.titlePhoto is not null %}
+                                                                        <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
+                                                                    {% else %}
+                                                                        <img src="{{ asset('assets/img/test.jpg') }}" style="width: 200px; height: 150px">
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ product.name }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {% if product.productSize is not null %}
+                                                                        {{ product.productSize }}
+                                                                    {% else %}
+                                                                        У этого продукта нет размерности
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        {% for receipt in product.receiptSales %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ receipt.id }}
+                                                                </td>
+                                                                <td>
+                                                                    {% if receipt.titlePhotoPath is not null and getMimeType(receipt.titlePhoto) != "video/mp4" %}
+                                                                        <img src="{{ receipt.titlePhotoPath }}" alt="photo" style="width: 200px; height: 150px">
+                                                                    {% elseif receipt.getPhoto is not empty %}
+                                                                        <img src="/uploads/receipts/{{ receipt.getPhoto.first.hash }}" alt="photo" style="width: 200px; height: 150px">
+                                                                    {% else %}
+                                                                        <img src="{{ asset('assets/img/test.jpg') }}" alt="photo" style="width: 200px; height: 150px">
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    {{ receipt.name }}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Это рецепт
                                                                 </td>
                                                             </tr>
                                                         {% endfor %}

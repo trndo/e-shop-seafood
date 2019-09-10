@@ -4,7 +4,21 @@
                     {{ product.id }}
                 </td>
                 <td>
-                    <img src="/uploads/products/{{ product.titlePhoto }}" style="width: 200px; height: 150px">
+                    {% if product.type == 'product' %}
+                        {% if product.TitlePhotoPath is not null %}
+                            <img src="{{ product.TitlePhotoPath }}" alt="photo" style="width: 200px; height: 150px">
+                        {% else %}
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="photo" style="width: 200px; height: 150px">
+                        {% endif %}
+                    {% else %}
+                        {% if product.titlePhotoPath is not null and getMimeType(product.titlePhoto) != "video/mp4" %}
+                            <img src="{{ product.titlePhotoPath }}" alt="photo" style="width: 200px; height: 150px">
+                        {% elseif product.getPhoto is not empty %}
+                            <img src="/uploads/receipts/{{ product.getPhoto.first.hash }}" alt="photo" style="width: 200px; height: 150px">
+                        {% else %}
+                            <img src="{{ asset('assets/img/test.jpg') }}" alt="photo" style="width: 200px; height: 150px">
+                        {% endif %}
+                    {% endif %}
                 </td>
                 <td class="text-center">
                     {{ product.name }}
@@ -20,14 +34,18 @@
                     {{ product.price }}/{{ product.unit }}
                 </td>
                 <td class="text-center">
-                    {% if product.productSize is not null %}
-                        {{ product.productSize }}
+                    {% if product.type == 'product' %}
+                        {% if product.productSize is not null %}
+                            {{ product.productSize }}
+                        {% else %}
+                            У этого продукта нет размерности
+                        {% endif %}
                     {% else %}
-                        У этого продукта нет размерности
+                        Это рецепт
                     {% endif %}
                 </td>
                 <td>
-                    <button class="btn btn-primary addTag" data-id="{{ product.id }}" data-name="{{ product.name }}" data-size="{{ product.productSize }}">
+                    <button class="btn btn-primary addTag" data-type="{{ product.type }}" data-id="{{ product.id }}" data-name="{{ product.name }}" {% if product.type == 'product' %}data-size="{{ product.productSize }}"{% endif %}>
                         Добавить
                     </button>
                 </td>

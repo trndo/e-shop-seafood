@@ -169,6 +169,10 @@ class Product
      */
     private $isDeletable;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Receipt", mappedBy="productSalesFromReceipt")
+     */
+    private $productSalesToReceipt;
 
     public function __construct()
     {
@@ -179,6 +183,7 @@ class Product
         $this->receiptSales = new ArrayCollection();
         $this->specialPropositions = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->productSalesToReceipt = new ArrayCollection();
         $this->rating = 0;
         $this->status = 0;
     }
@@ -686,6 +691,40 @@ class Product
     public function setIsDeletable(?bool $isDeletable): self
     {
         $this->isDeletable = $isDeletable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Receipt[]
+     */
+    public function getProductSalesToReceipt(): Collection
+    {
+        return $this->productSalesToReceipt;
+    }
+
+    /**
+     * @param Receipt $receipt
+     * @return Product
+     */
+    public function addProductSalesToReceipt(Receipt $receipt): self
+    {
+        if (!$this->productSalesToReceipt->contains($receipt)) {
+            $this->productSalesToReceipt[] = $receipt;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Receipt $receipt
+     * @return Product
+     */
+    public function removeProductSalesToReceipt(Receipt $receipt): self
+    {
+        if ($this->productSalesToReceipt->contains($receipt)) {
+            $this->productSalesToReceipt->removeElement($receipt);
+        }
 
         return $this;
     }

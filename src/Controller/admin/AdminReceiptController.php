@@ -68,5 +68,20 @@ class AdminReceiptController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route(path="/lipadmin/receipts/byCategory", methods={"GET"})
+     *
+     * @param Request $request
+     * @param ReceiptServiceInterface $service
+     * @return Response
+     */
+    public function getProductsByCategory(Request $request, ReceiptServiceInterface $service): Response
+    {
+        $category = $request->query->get('category');
+        $products = $service->getReceiptsByCriteria(null, $category,true);
+        return $this->render('elements/all_products_for_receipts.html.twig', [
+            'products' => $products,
+        ]);
+    }
 
 }

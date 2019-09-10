@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,600,900&display=swap');
+
 body, html{
     margin: 0;
     padding: 0;
@@ -189,7 +191,7 @@ header{
     top: 108px;
 }
 #lipinskie{
-
+    font-family: Raleway, sans-serif;
     font-weight: 900;
     font-size: 80px;
     line-height: 53px;
@@ -199,7 +201,7 @@ header{
 }
 
 #raki{
-
+    font-family: Raleway, sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 64px;

@@ -9,7 +9,7 @@ $(document).on('click','.cart-plus',function () {
     let input = $(this).siblings('.cart-res').children();
     let name = $(this).parent().siblings('.item-name').data('name');
 
-    let val = Number(input.val());
+    let val = roundHalf(Number(input.val()));
     $.ajax({
         type: "POST",
         url: "/changeQuantity",
@@ -31,13 +31,17 @@ $(document).on('click','.cart-plus',function () {
 
 });
 
+function roundHalf(num) {
+    return Math.round(num*2)/2;
+}
+
 $(document).on('click','.cart-minus',function () {
     let input = $(this).siblings('.cart-res').children();
     let name = $(this).parent().siblings('.item-name').data('name');
 
     if(input.val() == 1)
         return;
-    let val = Number(input.val());
+    let val = roundHalf(Number(input.val()));
 
     $.ajax({
         type: "POST",
@@ -56,10 +60,11 @@ $(document).on('click','.cart-minus',function () {
 $(document).on('keyup','.cart-res > input',function (e) {
     let input = $(this);
     let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
-    let val = Number(input.val());
 
-    if( val == '')
+    if( input.val() === '')
         return;
+
+    let val = roundHalf(Number(input.val()));
 
     // if (val > 10) {
     //     alert('Max 10');

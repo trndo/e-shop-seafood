@@ -39,6 +39,11 @@ class CategoryModel
     private $titlePhoto;
 
     /**
+     * @var string|null
+     */
+    private $initialCardText;
+
+    /**
      * @return UploadedFile|null
      */
     public function getTitlePhoto(): ?UploadedFile
@@ -153,5 +158,22 @@ class CategoryModel
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getInitialCardText(): ?string
+    {
+        return $this->initialCardText;
+    }
+
+    /**
+     * @param string|null $initialCardText
+     * @return CategoryModel
+     */
+    public function setInitialCardText(?string $initialCardText): CategoryModel
+    {
+        $this->initialCardText = $initialCardText;
+        return $this;
+    }
 
 }

@@ -17,7 +17,8 @@ final class CategoryMapper
               ->setSeoTitle($entity->getSeoTitle())
               ->setSeoDescription($entity->getSeoDescription())
               ->setType($entity->getType())
-              ->setDisplayType($entity->getDisplayType());
+              ->setDisplayType($entity->getDisplayType())
+              ->setInitialCardText($entity->getInitialCardText());
 
         return $model;
     }
@@ -28,7 +29,8 @@ final class CategoryMapper
                   ->setSeoTitle($model->getSeoTitle())
                   ->setSeoDescription($model->getSeoDescription())
                   ->setType($model->getType())
-                  ->setDisplayType($model->getDisplayType());
+                  ->setDisplayType($model->getDisplayType())
+                  ->setInitialCardText($model->getInitialCardText());
 
          return $category;
     }

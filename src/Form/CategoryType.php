@@ -40,6 +40,13 @@ class CategoryType extends AbstractType
                 'expanded' => true,
                 'label' => 'Тип отображение категории'
         ])
+            ->add('initialCardText',TextType::class,[
+                'label' => 'Надпись на начальной карточке',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false
+            ])
         ->add('seoTitle',TextType::class,[
             'label' => 'Сео тайтл',
             'attr' => [

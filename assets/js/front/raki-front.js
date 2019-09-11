@@ -61,8 +61,8 @@ $(document).ready(function () {
             return;
         }
 
-        let quantity = $('.item-res > input').val();
-
+        let quantity = roundHalf($('.item-res > input').val());
+        $('.item-res > input').val(quantity);
         $.ajax({
             type: 'POST',
             url: '/addToCart',
@@ -123,9 +123,8 @@ $(document).ready(function () {
 
     $(document).on('blur', '.item-res > input', function (e) {
         let input = $(this);
-        let val = Number(input.val());
-        if (val == '')
-            input.val(1);
+        let val = input.val();
+        val === '' ? input.val(1) : input.val(roundHalf(val));
     });
 
     let related = $('.receipt-name').data('related');

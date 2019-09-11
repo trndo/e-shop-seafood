@@ -76,6 +76,11 @@ class Category
      */
     private $titlePhoto;
 
+    /**
+     * @ORM\Column(type="string", length=300, nullable=true)
+     */
+    private $initialCardText;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -245,6 +250,18 @@ class Category
     public function setTitlePhoto(?string $titlePhoto): self
     {
         $this->titlePhoto = $titlePhoto;
+
+        return $this;
+    }
+
+    public function getInitialCardText(): ?string
+    {
+        return $this->initialCardText;
+    }
+
+    public function setInitialCardText(?string $initialCardText): self
+    {
+        $this->initialCardText = $initialCardText;
 
         return $this;
     }

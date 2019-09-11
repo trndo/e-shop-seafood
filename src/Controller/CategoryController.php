@@ -30,7 +30,8 @@ class CategoryController extends AbstractController
         return $category->getDisplayType() == 'simple'
             ? $this->render('products.html.twig',[
                 'items' => $items,
-                'active' => $category->getSlug()
+                'active' => $category->getSlug(),
+                'categoryInfo' => $category->getInitialCardText()
             ])
             : $this->render('productsWithSize.html.twig',[
                 'items' => $items,

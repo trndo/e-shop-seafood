@@ -118,7 +118,7 @@
     .card-content{
         height: 130px;
         width: 100%;
-        padding: 7px 13px 17px 21px;
+        padding: 0 13px 17px 21px;
     }
 
     .card-content p{
@@ -332,14 +332,14 @@
     }
 
     .card-content h4{
-        font-size: 24px;
-        width: 220px;
+        font-size: 21px;
+        width: 100%;
     }
 
     .card-content{
         height: 138px;
         width: 100%;
-        padding: 7px 14px 15px 23px;
+        padding: 0 14px 15px 23px;
     }
 
     .card-content p{
@@ -578,14 +578,14 @@
     }
 
     .card-content h4{
-        font-size: 24px;
-        width: 220px;
+        font-size: 21px;
+        width: 100%;
     }
 
     .card-content{
         height: 138px;
         width: 100%;
-        padding: 7px 14px 15px 23px;
+        padding: 0 14px 15px 23px;
     }
 
     .card-content p{

@@ -375,19 +375,23 @@ main{
 
 .card-content{
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column nowrap;
     height: 113px;
-    width: 210px;
-    padding: 10px 11px 0 16px;
+    width: 100%;
+    padding: 0 11px 14px 16px;
 }
 
 .product-card h4{
-    width: 200px;
+    width: 100%;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 100%;
     text-align: left;
     color: #FFFFFF;
+    margin-top: 1rem;
 }
 
 .product-card p{
@@ -441,7 +445,7 @@ main{
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding-top: 1rem;
+    align-items: center;
 }
 
 .inbasket-continer{

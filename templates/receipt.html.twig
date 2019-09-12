@@ -149,7 +149,7 @@
                                 {% endif %}
                                 <div class="card-content">
                                     <h4>{{ additionalItem.name }}</h4>
-                                    <p>{{ additionalItem.description }}</p>
+                                    {#<p>{{ additionalItem.description }}</p>#}
                                     <div class="main-info">
                                         <span class="price">{{ additionalItem.price }} ₴/{{ additionalItem.unit }}</span>
                                         <div class="in_basket" data-product-location="{{ path('showItem',{'category_slug': additionalItem.category.slug,'slug': additionalItem.slug}) }}">Подробнее</div>

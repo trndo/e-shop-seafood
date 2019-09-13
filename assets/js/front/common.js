@@ -165,3 +165,11 @@ function swipeOutOfScreen() {
 function displayNone() {
     $('#exampleModalCenter').css('display','none').css('top','-100px');
 }
+
+/*$('.additional-nav-container').on('click','.additional-nav-item',function () {
+    window.location.href = $(this).data('url');
+});*/
+
+$('.additional-nav-item').click(function () {
+    window.location.href = $(this).data('url');
+});

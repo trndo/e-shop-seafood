@@ -12,19 +12,7 @@
                         Раки по рецепту
                     </div>
                 </div>
-                <div class="additional-nav">
-                    <div class="additional-nav-container">
-                        <div class="additional-nav-item">
-                            Живые раки
-                        </div>
-                        <div class="additional-nav-item">
-                            Вареные раки
-                        </div>
-                        <div class="additional-nav-item">
-                            Жареные раки
-                        </div>
-                    </div>
-                </div>
+                {% include 'elements/additionalNav.html.twig' %}
                 <div class="additional-special">
                     <div class="additional-cart">{% if app.session.get('totalSum') == null %}0 ₴{% else %}{{ app.session.get('totalSum') }} ₴{% endif %}</div>
                     <!--<div class="additional-fo">

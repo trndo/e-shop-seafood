@@ -8,19 +8,7 @@
         {% set sum = app.session.get('totalSum') %}
         {% include 'elements/small_header.html.twig' %}
         <main>
-            <div class="additional-nav">
-                <div class="additional-nav-container">
-                    <div class="additional-nav-item nav-item-grey">
-                        Личные данные
-                    </div>
-                    <div class="additional-nav-item nav-item-grey red">
-                        История заказов
-                    </div>
-                    <div class="additional-nav-item nav-item-grey">
-                        Поменять пароль
-                    </div>
-                </div>
-            </div>
+            {% include 'elements/additionalNavUser.html.twig' with { 'active': 'user-orders'} %}
             <div class="user-tabs">
                 <div class="user-tab" data-path="{{ path('user',{'id': app.user.id}) }}">Личные данные</div>
                 <div class="user-tab user-tab-active" data-path="{{ path('user_orders',{'id': app.user.id}) }}">История заказов</div>

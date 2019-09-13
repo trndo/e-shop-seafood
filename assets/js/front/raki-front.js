@@ -549,7 +549,6 @@ $(document).ready(function () {
        $(this).addClass('ellipse-active');
        let id = $(this).attr('id');
        id = Number(id.split('-')[1]);
-       console.log(id);
        $('#mess-'+messageIndex).fadeOut(400,function () {
            messageIndex = id;
            $('#mess-'+id).fadeIn();

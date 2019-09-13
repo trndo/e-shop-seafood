@@ -1,0 +1,13 @@
+<div class="additional-nav">
+    <div class="additional-nav-container">
+        <div class="additional-nav-item nav-item-grey {% if active == 'user' %}red{% endif %}" data-url="{{ path('user',{'id': app.user.id}) }}">
+            Личные данные
+        </div>
+        <div class="additional-nav-item nav-item-grey {% if active == 'user-orders' %}red{% endif %}" data-url="{{ path('user_orders', {'id': app.user.id}) }}">
+            История заказов
+        </div>
+        <div class="additional-nav-item nav-item-grey {% if active == 'user-reset' %}red{% endif %}" data-url="{{ path('resetPass', {'id': app.user.id}) }}">
+            Поменять пароль
+        </div>
+    </div>
+</div>

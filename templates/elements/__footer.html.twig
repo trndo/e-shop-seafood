@@ -27,13 +27,7 @@
                         <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
                         <li {% if active == 'zharenye-raki' %} {% set active = false %}class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
                         <li {% if active == 'not exist yet' %} {% set active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
-                        <li class="toogle-dropdown-footer {% if active %}active-nav{% endif %}">Ассортимент</li>
                     </ul>
-                    {#<div class="dropdown dropdown-footer">
-                        <ul>
-                            {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
-                        </ul>
-                    </div>#}
                 </div>
             </div>
         </div>

@@ -298,9 +298,9 @@
     }
 
     .rating h2{
-        width: 315px;
+        width: max-content;;
         height: 24px;
-        font-size: 23px;
+        font-size: 20px;
         padding-bottom: 30px;
     }
 
@@ -544,8 +544,8 @@
     }
 
     .rating h2{
-        width: 314px;
-        height: 24px;
+        width: max-content;;
+        height: 20px;
         font-size: 23px;
         padding-bottom: 30px;
     }

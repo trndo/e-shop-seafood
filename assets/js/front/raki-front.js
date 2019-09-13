@@ -538,6 +538,41 @@ $(document).ready(function () {
         modal.toggle();
     }
 
+    let messageIndex = 1;
+    let interval;
+    $(document).ready(function () {
+       startMessageSlider();
+    });
+    $('.ellipse').click(function () {
+       clearInterval(interval);
+       $('.ellipse-active').removeClass('ellipse-active');
+       $(this).addClass('ellipse-active');
+       let id = $(this).attr('id');
+       id = Number(id.split('-')[1]);
+       console.log(id);
+       $('#mess-'+messageIndex).fadeOut(400,function () {
+           messageIndex = id;
+           $('#mess-'+id).fadeIn();
+           startMessageSlider();
+       })
+
+    });
+
+    function startMessageSlider(){
+       interval = setInterval(changeMessage,5000);
+    }
+
+    function changeMessage() {
+        $('#mess-'+messageIndex).fadeOut(400,function () {
+            $('#ell-'+messageIndex).removeClass('ellipse-active');
+            if(messageIndex === 5)
+                messageIndex = 0;
+            $('#mess-'+(++messageIndex)).fadeIn();
+            $('#ell-'+messageIndex).addClass('ellipse-active');
+        });
+
+    }
+
 });
 
 

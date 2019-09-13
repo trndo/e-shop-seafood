@@ -319,7 +319,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    right: 38px;
+    right: 32px;
     top: 40px;
 }
 
@@ -328,6 +328,7 @@ main{
     height: 7px;
     background-color: #981A1A;
     border-radius: 40px;
+    cursor: pointer;
 }
 
 .ellipse-active{
@@ -1002,4 +1003,7 @@ footer{
 
 .h-off{
   height: unset;
+}
+.promotion-text span:not(:first-child){
+    display: none;
 }

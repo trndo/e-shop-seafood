@@ -14,16 +14,21 @@
                 <div id="promotion">
                     <div class="promotion-text">
                         {% if messages is not empty %}
-                            {% set message = random(messages) %}
-                            {{ message.message }}
+                            {% for message in messages %}
+                                <span id="mess-{{ loop.index }}">
+                                    {{ message.message }}
+                                </span>
+                            {% endfor %}
+                        {% else %}
+                            Липинские раки самые вкусные в киеве!
                         {% endif %}
                     </div>
                     <div id="slider-points">
-                        <div class="ellipse ellipse-active"></div>
-                        <div class="ellipse"></div>
-                        <div class="ellipse"></div>
-                        <div class="ellipse"></div>
-                        <div class="ellipse"></div>
+                        <div class="ellipse ellipse-active" id="ell-1"></div>
+                        <div class="ellipse" id="ell-2"></div>
+                        <div class="ellipse" id="ell-3"></div>
+                        <div class="ellipse" id="ell-4"></div>
+                        <div class="ellipse" id="ell-5"></div>
                     </div>
                 </div>
                 <div class="additional-special">

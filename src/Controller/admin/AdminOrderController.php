@@ -88,14 +88,14 @@ class AdminOrderController extends AbstractController
     }
 
     /**
-     * @Route("/lipadmin/showOrder/{id}/cancelOrder" ,name="cancelOrder")
-     * @param int|null $id
+     * @Route("/lipadmin/showOrder/{orderUniqueId}/cancelOrder" ,name="cancelOrder")
+     * @param int|null $orderUniqueId
      * @param OrderInfoInterface $orderInfo
      * @return Response
      */
-    public function cancelOrder(?int $id, OrderInfoInterface $orderInfo): Response
+    public function cancelOrder(?int $orderUniqueId, OrderInfoInterface $orderInfo): Response
     {
-        $orderInfo->cancelOrder($id);
+        $orderInfo->cancelOrder($orderUniqueId);
 
         return $this->redirectToRoute('admin');
     }

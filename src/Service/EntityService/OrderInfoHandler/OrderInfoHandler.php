@@ -141,6 +141,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $orderInfo = $this->getOrderByUniqueId($id);
 
         if ($orderInfo) {
+
             $orderInfo->setStatus('canceled');
             $this->returnProductsFromOrder($orderInfo);
 

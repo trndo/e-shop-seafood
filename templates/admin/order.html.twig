@@ -116,7 +116,7 @@
                                     <div class="col-6 text-center">
                                         {% if order.status == 'new' or order.status == 'confirmed' %}
                                             <button class="btn btn-danger mr-2 list-inline-item"
-                                                    onclick="window.location.href='{{ path('cancelOrder',{'id': order.id}) }}'">
+                                                    onclick="window.location.href='{{ path('cancelOrder',{'orderUniqueId': order.orderUniqueId}) }}'">
                                                 Отменть заказ
                                             </button>
                                         {% endif %}

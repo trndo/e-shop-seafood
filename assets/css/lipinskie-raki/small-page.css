@@ -652,6 +652,10 @@ input[type=number] {
     line-height: 100%;
     color: #FFFFFF;
     margin-top: 15px;
+    cursor: pointer;
+}
+.forgot-pass:hover{
+    text-decoration: underline;
 }
 
 .forgot-pass a{

@@ -2,6 +2,13 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('footer') }}
+    <style>
+        @media  (max-height: 823px) and (min-height: 731px){
+            footer{
+                position: absolute;
+            }
+        }
+    </style>
 {% endblock %}
 {% block body %}
     <section class="wrapper">
@@ -22,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="small-red-content text-center  attention-height">
+                    <div class="small-red-content text-center mb-5 attention-height">
                         <embed id="lobster-2" type="image/svg+xml" src="/assets/img/lobster.svg"/>
                         <div class="user-title mt-4">
                             <span class="attention-subtitle">Что бы поменять пароль</span><br>

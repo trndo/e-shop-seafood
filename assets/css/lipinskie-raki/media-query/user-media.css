@@ -18,6 +18,20 @@
         height: 234px;
     }
 
+    .resetpass-container{
+        margin: 0 auto 30px;
+    }
+
+    .reset-pass-title{
+        font-size: 18px;
+        font-weight: unset;
+    }
+    .reset-forgot-pass{
+        font-size: 14px;
+        font-weight: 900;
+        margin-top: 10px;
+    }
+
     .user-red-content{
         width: 100%;
         height: 700px;
@@ -28,10 +42,10 @@
     }
 
     .user-title{
-        width: 220px;
+        width: 230px;
         padding-top: 20px;
         text-align: center;
-        height: 120px;
+        height: max-content;
     }
 
     .input-user-container{
@@ -159,15 +173,25 @@
         height: 700px;
     }
 
+    .reset-pass-title{
+        font-size: 18px;
+        font-weight: unset;
+    }
+    .reset-forgot-pass{
+        font-size: 14px;
+        font-weight: 900;
+        margin-top: 10px;
+    }
+
     .user-tabs{
         display: none;
     }
 
     .user-title{
-        width: 220px;
+        width: 230px;
         padding-top: 20px;
         text-align: center;
-        height: 120px;
+        height: max-content;
     }
 
     .input-user-container{
@@ -272,5 +296,9 @@
     }
     .small-height{
         height: max-content;
+    }
+
+    .resetpass-container{
+        margin: 0 auto 30px;
     }
 }

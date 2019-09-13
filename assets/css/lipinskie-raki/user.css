@@ -26,7 +26,7 @@
 }
 .user-tab-last{
     position: relative;
-    left: 250px;
+    left: 252px;
 }
 #lobster{
     position: absolute;
@@ -295,7 +295,7 @@
 }
 
 .resetpass-container{
-    margin: 0 auto;
+    margin: 30px auto 0;
     position: relative;
     z-index: 50;
     width: 289px;
@@ -312,7 +312,6 @@
     font-weight: normal;
     font-size: 18px;
     text-align: center;
-
     color: #FFFFFF;
     width: 100%;
     margin-top: 18px;

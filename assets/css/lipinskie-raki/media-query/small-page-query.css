@@ -64,6 +64,11 @@
 }
 
 @media (min-width: 375px) and (max-width: 767px){
+
+    .attention-pt{
+        padding-top: 1rem;
+    }
+
     .additional-nav{
         display: block;
         height: 69px;
@@ -420,6 +425,10 @@
 }
 
 @media (min-width: 320px) and (max-width: 374px) {
+    .attention-pt{
+        padding-top: 1rem;
+    }
+
     .additional-nav{
         display: block;
         height: 69px;

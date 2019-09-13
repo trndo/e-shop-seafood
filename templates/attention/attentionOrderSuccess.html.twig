@@ -1,16 +1,11 @@
-{#
-{% extends 'base.html.twig' %}
-{% block body %}
-    <div style="color: white">
-        <h3> Congrats! You have already confirm your order! We call you in 5-10 min to confirm your order!</h3>
-        <p>There are your login - <b>{{ email }}</b> and temporary password - <b>{{ password }}</b> from yuor acc.<br> We duolicate it to your email and phone number</p><br>
-        <p>Here you can check status of your order and then pay for it</p>
-    </div>
-{% endblock %}#}
 {% extends 'base.html.twig' %}
 
 {% block title %}
 
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('footer') }}
 {% endblock %}
 {% block body %}
     <section class="wrapper">
@@ -31,11 +26,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="small-red-content text-center attention-pt attention-height">
+                    <div class="small-red-content text-center pt-10 attention-height">
                         <embed id="pizza" type="image/svg+xml" src="/assets/img/pizza.svg"/>
-                        <span class="attention-title">Поздравляем! Вы успешно оформили заказ! Мы неберем вам через 15-10 мин для подтверждения.</span><br>
-                        <span class="attention-subtitle">Ваш логин - <b> {{ email }} </b> и временный пароль - <b> {{ password }} </b> от вашего аккаунта. <br> Мы отправляем его на ваш электронный адрес и номер телефона<br>
-                                        В личном кабинете вы можете проверить статус вашего заказа, а затем оплатить его</span>
+                        <span class="attention-subtitle">Оплата прошла успешно!</span><br>
+                        <span class="attention-title">Ожидайте свой заказ в скором времени</span>
                     </div>
                     <div class="attention-promotion">
                         <div class="bonuses-in-attention">
@@ -63,4 +57,3 @@
         {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
     </section>
 {% endblock %}
-

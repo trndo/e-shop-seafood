@@ -874,3 +874,7 @@ input[type=number] {
     color: white;
     font-size: 20px;
 }
+
+.attention-pt{
+    padding-top: 4rem;
+}

@@ -37,7 +37,6 @@
                                     {% for category in categories %}
                                         <a class="dropdown-item" href="{{ path('products',{'category': category.id}) }}">{{ category.name }}</a>
                                     {% endfor %}
-                                    <a class="dropdown-item" href="#">Action</a>
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -118,8 +117,8 @@
                                             {{ product.updatedAt|date('d/m/y H:i:s') }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Точно удалить продукт?Он удалиться из всех поставок и заказов пользователей.'))window.location.href ='{{ path('deleteProduct', {'slug': product.slug}) }}'">
-                                                <i class="fas fa-times"></i>
+                                            <button class="btn btn-danger btn-circle btn-sm" onclick="if(confirm('Вы точно хотите заархивировать продукт ?'))window.location.href ='{{ path('deleteProduct', {'slug': product.slug}) }}'">
+                                                <i class="fas fa-archive"></i>
                                             </button>
                                             <button class="btn btn-primary btn-circle btn-sm" onclick="window.location.href = '{{ path('updateProduct', {'slug': product.slug}) }}'">
                                                 <i class="fas fa-pen-alt"></i>

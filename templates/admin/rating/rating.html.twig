@@ -35,9 +35,8 @@
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Мы рекомендуем</h1>
-                <p class="mb-4">Тут можно составить рэйтинг товаров , которые будут отображаться в секции "Мы
-                    Рекомендуем"</p>
+                <h1 class="h3 mb-2 text-gray-800">На этой неделе покупают</h1>
+                <p class="mb-4">Тут можно составить рэйтинг товаров , которые будут отображаться в секции "На этой неделе покупают"</p>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -90,9 +89,9 @@
                                                                name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-primary search-name" type="button">
+                                                        <div class="btn btn-light search-name">
                                                             <i class="fas fa-search fa-sm"></i>
-                                                        </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -115,6 +114,9 @@
                                         <tbody>
                                         </tbody>
                                     </table>
+                                    <div>
+                                        <h1>Введите название продукта</h1>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -131,9 +133,9 @@
                                                                name="name" aria-describedby="basic-addon2">
                                                     </div>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-primary search-name" type="button">
+                                                        <div class="btn btn-light search-name">
                                                             <i class="fas fa-search fa-sm"></i>
-                                                        </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -156,6 +158,9 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div>
+                                    <h1>Введите название рецепта</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -168,32 +173,6 @@
         <!-- End of Footer -->
     </div>
     <!-- End of Content Wrapper -->
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
 {% block javascripts %}

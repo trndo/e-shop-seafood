@@ -126,6 +126,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-bottom-failed shadow h-100 py-2">
+                                <div class="card-body status-order"
+                                     onclick="window.location.href='{{ path('admin',{'status':'failed'}) }}'">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text font-weight-bold text-failed text-uppercase mb-1">
+                                                Неудачная оплата
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h3 mb-0 mr-3 font-weight-bold text-gray-800">{{ statusCount.failed is defined ? statusCount.failed.1 : 0 }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation-triangle fa-2x text-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Pending Requests Card Example -->
                     </div>
                     <div class="reset text-center" onclick="window.location.href=''">

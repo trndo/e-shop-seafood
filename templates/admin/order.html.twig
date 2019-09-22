@@ -13,7 +13,6 @@
             <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Заказ #123123</h1>
                 <hr class="sidebar-divider">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -50,6 +49,10 @@
                                 {% elseif order.status == 'canceled' %}
                                     <div class="order-status status-canceled">
                                         Отменено
+                                    </div>
+                                {% elseif order.status == 'failed' %}
+                                    <div class="order-status status-failed">
+                                        Неудачная оплата
                                     </div>
                                 {% endif %}
                                 <div class="row justify-content-center">
@@ -114,10 +117,10 @@
                                 </div>
                                 <div class="row mt-3 justify-content-center">
                                     <div class="col-6 text-center">
-                                        {% if order.status == 'new' or order.status == 'confirmed' %}
+                                        {% if order.status == 'new' or order.status == 'confirmed' or order.status == 'failed' %}
                                             <button class="btn btn-danger mr-2 list-inline-item"
-                                                    onclick="window.location.href='{{ path('cancelOrder',{'orderUniqueId': order.orderUniqueId}) }}'">
-                                                Отменть заказ
+                                                    onclick="window.location.href='{{ path('cancelOrder', {'orderUniqueId': order.orderUniqueId}) }}'">
+                                                Отменить заказ
                                             </button>
                                         {% endif %}
                                         {% if order.status == 'new' or order.status == 'canceled'%}

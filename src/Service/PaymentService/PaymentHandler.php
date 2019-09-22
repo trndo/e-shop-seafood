@@ -96,7 +96,7 @@ class PaymentHandler implements PaymentInterface
                 case 'sandbox':
                     return $this->handleConfirmation($orderInfo, $data) == true ?: null;
                 case 'failure':
-                    $orderInfo->setStatus('failure');
+                    $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
                     return $this->generator->generate('user_orders',[
                         'id' => $orderInfo->getUser()->getId(),

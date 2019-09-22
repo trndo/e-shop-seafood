@@ -131,7 +131,9 @@ class ProductService implements ProductServiceInterface
     public function deleteProduct(Product $product): void
     {
         $product->setIsDeletable(true)
-                ->setStatus(false);
+                ->setStatus(false)
+                ->getSupply()->setQuantity(0)
+                             ->setReservationQuantity(0);
 
         $this->entityManager->flush();
     }

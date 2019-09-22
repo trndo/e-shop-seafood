@@ -11185,6 +11185,10 @@ a.text-warning:hover, a.text-warning:focus {
     color: #690707 !important;
 }
 
+.text-failed {
+    color: #bc330e !important;
+}
+
 .text-danger {
     color: #e74a3b !important;
 }
@@ -11657,6 +11661,10 @@ a:focus {
 
 .border-bottom-canceled {
     border-bottom: 0.25rem solid #690707 !important;
+}
+
+.border-bottom-failed {
+    border-bottom: 0.25rem solid #bc330e !important;
 }
 
 .border-bottom-done {
@@ -12993,6 +13001,11 @@ body.sidebar-toggled footer.sticky-footer {
 
 .status-canceled {
     background-color: #690707;
+    color: white;
+}
+
+.status-failed {
+    background-color: #bc330e;
     color: white;
 }
 

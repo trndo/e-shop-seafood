@@ -88,7 +88,7 @@ class ReceiptService implements ReceiptServiceInterface
     public function deleteReceipt(Receipt $receipt): void
     {
         $receipt->setIsDeletable(true)
-        ->setStatus(false);
+                        ->setStatus(false);
 
         $this->entityManager->flush();
     }

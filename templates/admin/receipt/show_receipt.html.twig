@@ -33,21 +33,21 @@
                                         </figure>
                                     </div>
                                 </div>
-                                <h3>Оснвные значения</h3>
+                                <h3>Основные значения</h3>
                                 <p class="card-text">Цена: {{ receipt.price }}/{{ receipt.unit }}</p>
                                 <hr>
                                 <h3>Описание</h3>
                                 <p class="card-text">{{ receipt.description }}</p>
                                 <hr>
-                                <h3>Seo</h3>
-                                <h5>Title</h5>
+                                <h3>SEO</h3>
+                                <h5>Сео тайтл</h5>
                                 <p class="card-text">{{ receipt.seoTitle }}</p>
-                                <h5>Description</h5>
+                                <h5>Сео дескрипшин</h5>
                                 <p class="card-text">{{ receipt.seoDescription }}</p>
                                 <hr>
                                 <h3>Действия</h3>
                                 <button class="btn btn-primary" onclick="window.location.href ='{{ path('showReceiptPhotos',{'slug': receipt.slug}) }}'">Обновить фото на слайдере</button>
-                                <button class="btn btn-danger" onclick="window.location.href ='{{ path('addProducts',{'slug': receipt.slug}) }}'">Добавить продуктов к рецепту</button>
+                                <button class="btn btn-danger" onclick="window.location.href ='{{ path('addProducts',{'slug': receipt.slug}) }}'">Добавить продукты к рецепту</button>
                                 <button class="btn btn-warning" onclick="window.location.href ='{{ path('addReceiptSales', {'slug': receipt.slug}) }}'">Добавить доп. продажи</button>
                                 <hr>
                                 <div class="row justify-content-center">

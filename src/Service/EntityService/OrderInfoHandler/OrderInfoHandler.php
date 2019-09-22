@@ -68,6 +68,9 @@ class OrderInfoHandler implements OrderInfoInterface
         $orderInfo = OrderMapper::orderModelToEntity($orderModel);
         $session = $request->getSession();
         $totalSum = $session->get('totalSum');
+        $chooseOrder = $session->get('chooseOrder');
+//        if ($chooseOrder)
+//            $orderInfo->setOrderDate((new \DateTime()));
         $items = $this->cartHandler->getItems();
 
         foreach ($items as $item) {

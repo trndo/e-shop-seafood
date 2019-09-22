@@ -1,5 +1,5 @@
 <div class="menu-nav">
-    <i id="user-mobile" class="far fa-user" data-url="{% if app.user %}{{ path('user',{'id': app.user.id}) }}{% else %}{{ path('login') }}{% endif %}"></i>
+    <i id="user-mobile" class="far fa-user" data-url="{% if app.user %}{{ path('user',{'uniqueId': app.user.uniqueId}) }}{% else %}{{ path('login') }}{% endif %}"></i>
     <ul>
         <li {% if mob_active == 'home' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главная</li>
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>

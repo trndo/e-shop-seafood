@@ -40,7 +40,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/makeOrderAttend" , name="attention_order")
+     * @Route("/makeOrderAttention" , name="attention_order")
      * @return Response
      */
     public function attendAfterMakeOrder(): Response

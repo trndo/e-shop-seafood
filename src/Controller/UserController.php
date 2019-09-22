@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -57,7 +58,7 @@ class UserController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
-     * @Route("/user-{id}/resetPassword", name="resetPass")
+     * @Route("/user-{uniqueId}/resetPassword", name="resetPass")
      * @param Request $request
      * @param UserServiceInterface $userService
      * @param User $user
@@ -65,6 +66,7 @@ class UserController extends AbstractController
      */
     public function resetPassword(Request $request, UserServiceInterface $userService, User $user)
     {
+        $this->checkIsValidUser($user);
         $resetPasswordModel = new ResetPasswordModel();
         $options['forgotPassword'] = true;
         $options['oldPassword'] = true;
@@ -88,7 +90,7 @@ class UserController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
-     * @Route("/user-{id}" , name="user")
+     * @Route("/user-{uniqueId}" , name="user")
      * @param User $user
      * @param Request $request
      * @param UserServiceInterface $service
@@ -96,6 +98,7 @@ class UserController extends AbstractController
      */
     public function updateUser(User $user, Request $request, UserServiceInterface $service): Response
     {
+        $this->checkIsValidUser($user);
         $userInfoModel = UserMapper::entityToUserModel($user);
         $form = $this->createForm(UserInfoUpdateType::class, $userInfoModel);
         $form->handleRequest($request);
@@ -113,7 +116,7 @@ class UserController extends AbstractController
 
     /**
      * @IsGranted("ROLE_USER")
-     * @Route("/user-{id}/orders", name="user_orders")
+     * @Route("/user-{uniqueId}/orders", name="user_orders")
      *
      * @param User $user
      * @param OrderInfoInterface $orderInfo
@@ -121,9 +124,18 @@ class UserController extends AbstractController
      */
     public function history(User $user, OrderInfoInterface $orderInfo): Response
     {
+        $this->checkIsValidUser($user);
+
         return $this->render('history.html.twig', [
             'orders' => $orderInfo->getUserOrders($user->getId())
         ]);
+    }
+
+    private function checkIsValidUser(?User $user): void
+    {
+        if ($this->getUser() !== $user) {
+            throw new HttpException('403');
+        }
     }
 
 }

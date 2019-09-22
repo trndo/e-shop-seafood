@@ -7,6 +7,8 @@
 {% block body %}
         <div class="container">
             {% set sum = app.session.get('totalSum') %}
+            {% set order = app.session.get('chooseOrder') %}
+            {% dump(order) %}
             {% include 'elements/small_header.html.twig' %}
             <main>
             <div class="red-content make-order-height">
@@ -34,12 +36,12 @@
                     </div>
                         <div class="form-row input-margin-16">
                             <div>
-                            {{ form_widget(form.orderDate,{'attr': {'class': 'date-input',
+                            {{ form_widget(form.orderDate,{'attr': {'class':  order ? 'date-input-without':'date-input',
                                 'placeholder':'Дата*'}}) }}
                             </div>
                             <div>
                             {{ form_widget(form.orderTime,{'attr': {'class': 'time-input',
-                                'placeholder':'14:00*'}}) }}
+                                'placeholder':'00:00*'}}) }}
                             </div>
                         </div>
                         <div class="delivery-type">

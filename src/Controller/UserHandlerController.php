@@ -17,14 +17,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserHandlerController extends AbstractController
 {
     /**
      * @IsGranted("ROLE_USER")
-     * @Route("/user-{user_id}/orders/payment/{orderUniqueId}", name="pay")
-     * @ParamConverter("user", options={"id" = "user_id"})
+     * @Route("/user-{user_unique_id}/orders/payment/{orderUniqueId}", name="pay")
+     * @ParamConverter("user", options={"mapping" = {"user_unique_id" = "uniqueId" }})
      * @param OrderInfo $order
      * @param PaymentInterface $handler
      * @param User $user
@@ -32,6 +34,7 @@ class UserHandlerController extends AbstractController
      */
     public function pay(OrderInfo $order, PaymentInterface $handler, User $user): Response
     {
+        $this->checkIsValidUser($user);
         $payment = $handler->doPayment($order);
         return $this->render('pay.html.twig', [
             'payment' => $payment
@@ -60,12 +63,14 @@ class UserHandlerController extends AbstractController
                 $userService->resetPassword($user);
             }
             if (!$user->getRegistrationStatus()) {
-                throw $this->createNotFoundException('Пожалуйста, закончите регистрацию регистрацию');
+                throw $this->createNotFoundException('Пожалуйста, закончите регистрацию!');
             }
             if (!$user) {
                 throw $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
             }
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user',[
+                'uniqueId' => $user->getUniqueId()
+            ]);
         }
         return $this->render('enter_email.html.twig', [
             'form' => $form->createView()
@@ -74,19 +79,20 @@ class UserHandlerController extends AbstractController
     }
 
     /**
-     * @Route("/user-{user_id}/orders/cancel/{orderUniqueId}", name="cancelUserOrder")
-     * @ParamConverter("user", options={"id" = "user_id"})
+     * @Route("/user-{user_unique_id}/orders/cancel/{orderUniqueId}", name="cancelUserOrder")
+     * @ParamConverter("user", options={"mapping" = {"user_unique_id" = "uniqueId" }})
      * @param User $user
      * @param int|null $orderUniqueId
      * @param OrderInfoInterface $orderInfo
      * @return Response
      */
-    public function cancelUserOrder(User $user,?int $orderUniqueId, OrderInfoInterface $orderInfo): Response
+    public function cancelUserOrder(User $user, ?int $orderUniqueId, OrderInfoInterface $orderInfo): Response
     {
+        $this->checkIsValidUser($user);
         $orderInfo->cancelOrder($orderUniqueId);
 
         return $this->redirectToRoute('user_orders',[
-            'id' => $user->getId()
+            'uniqueId' => $user->getUniqueId()
         ]);
     }
 
@@ -111,6 +117,23 @@ class UserHandlerController extends AbstractController
             return new JsonResponse([
                 'status' => $status
             ], 200);
+        }
+    }
+
+    private function checkIsValidUser(?User $user): void
+    {
+        if ($this->getUser() !== $user) {
+            throw new HttpException('403');
+        }
+    }
+
+    private function checkIsValidOrder(?OrderInfo $orderInfo, ?User $user): void
+    {
+        if ($orderInfo && $user) {
+            if (!$user->getOrderInfos()->contains($orderInfo->getId()))
+            {
+                throw new NotFoundHttpException();
+            }
         }
     }
 }

@@ -390,6 +390,25 @@
     text-align: center;
 }
 
+.date-input-without{
+    width: 200px;
+    height: 33px;
+    box-sizing: border-box;
+    padding: 1px 1px 1px 1px;
+    position: relative;
+    display: block;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    border: none;
+    margin-right: 8px;
+    background-image: url('../../img/calendar.svg');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    text-align: center;
+}
+
 .form-row{
     margin-left: 0;
 }

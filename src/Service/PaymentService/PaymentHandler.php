@@ -7,12 +7,7 @@ namespace App\Service\PaymentService;
 use App\Entity\OrderInfo;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use mysql_xdevapi\Exception;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerTrait;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PaymentHandler implements PaymentInterface
@@ -61,7 +56,7 @@ class PaymentHandler implements PaymentInterface
      */
     public function doPayment(OrderInfo $orderInfo): ?string
     {
-        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failure')) {
+        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed')) {
 
             $liqpay = new \LiqPay($this->publicKey, $this->privateKey);
             $form = $liqpay->cnb_form([
@@ -99,7 +94,7 @@ class PaymentHandler implements PaymentInterface
                     $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
                     return $this->generator->generate('user_orders',[
-                        'id' => $orderInfo->getUser()->getId(),
+                        'uniqueId' => $orderInfo->getUser()->getUniqueId(),
                     ], UrlGeneratorInterface::ABSOLUTE_URL);
                 case 'error':
                 case '3ds_verify':

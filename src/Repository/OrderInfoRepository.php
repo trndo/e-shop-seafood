@@ -60,6 +60,7 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->addSelect('od', 'u')
             ->andWhere('u.id = :userId')
             ->setParameter('userId', $userId)
+            ->orderBy('o.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

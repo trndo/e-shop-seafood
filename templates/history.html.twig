@@ -10,14 +10,15 @@
         <main>
             {% include 'elements/additionalNavUser.html.twig' with { 'active': 'user-orders'} %}
             <div class="user-tabs">
-                <div class="user-tab" data-path="{{ path('user',{'id': app.user.id}) }}">Личные данные</div>
-                <div class="user-tab user-tab-active" data-path="{{ path('user_orders',{'id': app.user.id}) }}">История заказов</div>
-                <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'id': app.user.id}) }}">Поменять пароль</div>
+                <div class="user-tab" data-path="{{ path('user',{'uniqueId': app.user.uniqueId}) }}">Личные данные</div>
+                <div class="user-tab user-tab-active" data-path="{{ path('user_orders',{'uniqueId': app.user.uniqueId}) }}">История заказов</div>
+                <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'uniqueId': app.user.uniqueId}) }}">Поменять пароль</div>
             </div>
             <div class="user-red-content">
                 <embed id="steamed-fish" type="image/svg+xml" src="/assets/img/steamed-fish.svg"/>
                 <div class="user-title">
-                    <span class="attention-subtitle">Не помнишь что заказал и когда? </span><br>
+                    <span class="attention-subtitle">Не помнишь что заказал и когда ? </span>
+                    <br>
                     <span class="attention-title">Или хочешь повторить заказ</span>
                 </div>
                 <div class="history-container">
@@ -56,12 +57,12 @@
                                     {% set user = app.user %}
                                     {% if order.status == 'confirmed' %}
                                     <div class="history-btn"
-                                         onclick="window.location.href='{{ path('pay', { 'orderUniqueId': order.orderUniqueId, 'user_id' : user.id }) }}'">Оплатить
+                                         onclick="window.location.href='{{ path('pay', { 'orderUniqueId': order.orderUniqueId, 'user_unique_id' : user.uniqueId }) }}'">Оплатить
                                     </div>
                                     {% endif %}
                                     {% if order.status == 'confirmed' %}
                                         <div class="history-btn"
-                                            onclick="window.location.href='{{ path('cancelUserOrder',{ 'user_id': user.id, 'orderUniqueId': order.orderUniqueId }) }}'">Отменить</div>
+                                            onclick="window.location.href='{{ path('cancelUserOrder',{ 'user_unique_id': user.uniqueId, 'orderUniqueId': order.orderUniqueId }) }}'">Отменить</div>
                                     {% endif %}
                                 </div>
                             </div>

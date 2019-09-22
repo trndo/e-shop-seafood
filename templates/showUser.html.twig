@@ -10,9 +10,9 @@
         <main>
             {% include 'elements/additionalNavUser.html.twig' with { 'active': 'user'} %}
             <div class="user-tabs">
-                <div class="user-tab user-tab-active" data-path="{{ path('user',{'id': app.user.id}) }}">Личные данные</div>
-                <div class="user-tab" data-path="{{ path('user_orders',{'id': app.user.id}) }}">История заказов</div>
-                <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'id': app.user.id}) }}">Поменять пароль</div>
+                <div class="user-tab user-tab-active" data-path="{{ path('user',{'uniqueId': app.user.uniqueId}) }}">Личные данные</div>
+                <div class="user-tab" data-path="{{ path('user_orders',{'uniqueId': app.user.uniqueId}) }}">История заказов</div>
+                <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'uniqueId': app.user.uniqueId}) }}">Поменять пароль</div>
             </div>
             <div class="user-red-content">
                 <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>

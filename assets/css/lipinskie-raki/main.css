@@ -1007,3 +1007,6 @@ footer{
 .promotion-text span:not(:first-child){
     display: none;
 }
+.none-text-decoration{
+    text-decoration: none!important;
+}

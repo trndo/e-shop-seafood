@@ -72,7 +72,8 @@ class PaymentHandler implements PaymentInterface
                 'server_url' => $this->generator->generate(
                     'confirmPay', [
                     'orderUniqueId' => $orderInfo->getOrderUniqueId()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
+                ], UrlGeneratorInterface::ABSOLUTE_URL),
+                'sandbox' => true
             ]);
 
             return $form;
@@ -91,12 +92,13 @@ class PaymentHandler implements PaymentInterface
                 case 'sandbox':
                     return $this->handleConfirmation($orderInfo, $data) == true ?: null;
                 case 'failure':
+                case 'error':
+                case 'reversed':
                     $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
-                    return $this->generator->generate('user_orders',[
+                    return $this->generator->generate('user_orders', [
                         'uniqueId' => $orderInfo->getUser()->getUniqueId(),
                     ], UrlGeneratorInterface::ABSOLUTE_URL);
-                case 'error':
                 case '3ds_verify':
                 case 'wait_secure':
                 case 'wait_accept':

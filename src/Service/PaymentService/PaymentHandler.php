@@ -73,7 +73,6 @@ class PaymentHandler implements PaymentInterface
                     'confirmPay', [
                     'orderUniqueId' => $orderInfo->getOrderUniqueId()
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
-                'sandbox' => true
             ]);
 
             return $form;

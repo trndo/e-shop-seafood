@@ -64,7 +64,7 @@ class AdminSupplyController extends AbstractController
     public function searchByName(Request $request, SearcherInterface $searcher, SupplyRepository $repository): Response
     {
         $name = $request->query->get('q');
-
+        dd($name);
         $supplies = $searcher->searchByNameForRender($name, $repository);
 
         return $this->render('elements/supply_card.html.twig', [

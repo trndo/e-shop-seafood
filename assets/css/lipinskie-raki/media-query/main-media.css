@@ -387,6 +387,10 @@
     .additional-cart{
         display: block;
     }
+    .modal-title{
+        width: 250px;
+        font-size: 21px;
+    }
 
 }
 
@@ -639,6 +643,11 @@
 
     .fast-order-big{
         margin-top: 20px;
+    }
+
+    .modal-title{
+        width: 250px;
+        font-size: 21px;
     }
 }
 @media (max-width: 736px) and (min-width: 568px) {

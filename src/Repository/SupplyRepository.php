@@ -28,7 +28,7 @@ class SupplyRepository extends ServiceEntityRepository implements FinderInterfac
     public function findForRender(string $productName): ?array
     {
         return $this->createQueryBuilderForSuppliesProducts('s')
-            ->andWhere('p.name LIKE :productName p.isDeletable IS NULL')
+            ->andWhere('p.name LIKE :productName AND p.isDeletable IS NULL')
             ->setParameter('productName', '%'.$productName.'%')
             ->setMaxResults(10)
             ->getQuery()

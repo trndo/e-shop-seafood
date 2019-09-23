@@ -241,8 +241,8 @@ $(document).ready(function () {
     });
 
     $('#close-modal').click(function () {
-        $('.modal-window').toggle();
-        $('#overlay').toggle();
+        $('.modal-window').fadeToggle();
+        $('#overlay').fadeToggle();
     });
 
     $(".user_info_update").validate({
@@ -533,9 +533,9 @@ $(document).ready(function () {
 
     function showModal(text){
         let modal = $('.modal-window');
-        modal.children('.attention-title').text(text);
-        $('#overlay').toggle();
-        modal.toggle();
+        modal.children('.modal-title').text(text);
+        $('#overlay').fadeToggle();
+        modal.css('display','flex');
     }
 
     let messageIndex = 1;

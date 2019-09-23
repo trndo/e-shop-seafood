@@ -887,12 +887,30 @@ footer{
 
 .modal-window{
     display: none;
-    position: relative;
-    width: 770px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 680px;
     height: 299px;
-    margin: 20% auto;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     background: #F13A3A;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.modal-title{
+    height: max-content;
+    width: 580px;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    color: white;
+    z-index: 10000;
+    position: relative;
+    text-align: center;
 }
 
 #close-modal{

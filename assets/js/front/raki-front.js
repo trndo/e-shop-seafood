@@ -321,6 +321,7 @@ $(document).ready(function () {
         }
     });
 
+    let wasInModal = false;
     $(".user-registration").validate({
         rules: {
             "user_registration[name]": {
@@ -365,6 +366,11 @@ $(document).ready(function () {
         },
         unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass('invalid-input');
+        },
+        submitHandler: function (form) {
+           if(wasInModal)
+               form.submit();
+           showModal(null);
         }
     });
 
@@ -533,9 +539,11 @@ $(document).ready(function () {
 
     function showModal(text){
         let modal = $('.modal-window');
-        modal.children('.modal-title').text(text);
+        if(text !== null)
+            modal.children('.modal-title').text(text);
         $('#overlay').fadeToggle();
         modal.css('display','flex');
+        console.log('show modal!');
     }
 
     let messageIndex = 1;
@@ -572,6 +580,30 @@ $(document).ready(function () {
 
     }
 
+    $('.code').click(function () {
+        let code =$('.referral-input').val();
+        $('#user_registration_friendUniqueId').val(code);
+        wasInModal = true;
+        $('.user-registration').submit();
+    });
+    $('.no-code').click(function () {
+        wasInModal = true;
+        $('.user-registration').submit();
+    });
+    /*$('#user_registration_save').click(function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        showModal(null);
+        console.log('submit!');
+    });*/
+
+    $('#close-more').click(function () {
+        $('#overlay').fadeToggle();
+    });
+    $('div[data-show="show"]').click(function () {
+        $('#overlay').fadeToggle();
+        //here will be ajax
+    })
 });
 
 

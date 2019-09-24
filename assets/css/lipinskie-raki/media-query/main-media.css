@@ -392,6 +392,22 @@
         font-size: 21px;
     }
 
+    .referral-input-container{
+        width: 250px;
+
+    }
+    .referral-input{
+        width: 220px;
+        margin: 0 auto;
+    }
+    .referral-change{
+        width: 250px;
+        flex-direction: column;
+        margin: 5px auto 0;
+        height: 90px;
+        align-items: center;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 374px){
@@ -644,11 +660,26 @@
     .fast-order-big{
         margin-top: 20px;
     }
-
     .modal-title{
         width: 250px;
         font-size: 21px;
     }
+    .referral-input-container{
+        width: 250px;
+
+    }
+    .referral-input{
+        width: 220px;
+        margin: 0 auto;
+    }
+    .referral-change{
+        width: 250px;
+        flex-direction: column;
+        margin: 5px auto 0;
+        height: 90px;
+        align-items: center;
+    }
+
 }
 @media (max-width: 736px) and (min-width: 568px) {
     .additional-nav{

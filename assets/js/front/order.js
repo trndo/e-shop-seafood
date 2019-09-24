@@ -16,12 +16,16 @@ new Picker(document.querySelector('.time-input'), {
         title: 'Выбирете время',
     },
 });
-else
+else {
     $('.time-input').timepicker({
         'scrollDefault': 'now',
         'timeFormat': 'H:i',
         'step': 10
     });
+    $('.time-input').keypress(function(e) {
+        e.preventDefault();
+    })
+}
 
 $('.delivery').click(function () {
     $('.self-delivery').removeClass('delivery-active');

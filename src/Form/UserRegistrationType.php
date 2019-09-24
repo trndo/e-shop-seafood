@@ -6,7 +6,9 @@ namespace App\Form;
 
 use App\Model\UserRegistrationModel;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,7 +26,7 @@ class UserRegistrationType extends AbstractType
             ->add('name',TextType::class,[
                 'label' => false
             ])
-            ->add('friendUniqueId',TextType::class,[
+            ->add('friendUniqueId',HiddenType::class,[
                 'label' => false
             ])
             ->add('password',RepeatedType::class,[
@@ -41,7 +43,7 @@ class UserRegistrationType extends AbstractType
                     ]
                 ],
             ])
-            ->add('save',SubmitType::class,[
+            ->add('save',ButtonType::class,[
                 'label' => 'Зарегистрироватся'
             ])
         ;

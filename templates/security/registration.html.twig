@@ -45,7 +45,7 @@
                                 <div>
                                     {{ form_widget(form.password.second,{'attr':{'class': 'user-input login-input'}}) }}
                                 </div>
-                                <div style="display: none">
+                                <div>
                                     {{ form_widget(form.friendUniqueId,{'attr':{'class': 'user-input login-input'}}) }}
                                 </div>
 
@@ -81,6 +81,9 @@
         </div>
         {% include 'elements/__footer.html.twig' with {'active': false} %}
         {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}
+        <div id="overlay">
+            {% include 'elements/registrationModal.html.twig' %}
+        </div>
     </section>
 {% endblock %}
 

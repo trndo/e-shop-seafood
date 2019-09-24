@@ -17,8 +17,7 @@
             <div class="user-red-content">
                 <embed id="steamed-fish" type="image/svg+xml" src="/assets/img/steamed-fish.svg"/>
                 <div class="user-title">
-                    <span class="attention-subtitle">Не помнишь что заказал и когда ? </span>
-                    <br>
+                    <span class="attention-subtitle">Не помнишь что заказал и когда ?</span><br>
                     <span class="attention-title">Или хочешь повторить заказ</span>
                 </div>
                 <div class="history-container">
@@ -51,9 +50,9 @@
                                     {{ order.totalPrice }} <span class="hryvna">₴</span>
                                 </div>
                                 <div class="history-actions">
-                                   {# <div class="history-btn history-more">
+                                    <div class="history-btn history-more" data-show="show">
                                         Подробнее
-                                    </div>#}
+                                    </div>
                                     {% set user = app.user %}
                                     {% if order.status == 'confirmed' %}
                                     <div class="history-btn"
@@ -108,10 +107,9 @@
                     <li>Заказ</li>
                 </ul>
                 <div class="history-actions">
-                    <div class="history-btn history-more">
+                    <div id="close-more" class="history-btn history-more">
                         Закрыть
                     </div>
-                    <div class="history-btn">Заказать</div>
                 </div>
             </div>
         </div>

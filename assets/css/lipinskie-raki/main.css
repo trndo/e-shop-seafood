@@ -913,6 +913,24 @@ footer{
     text-align: center;
 }
 
+.referral-input-container{
+    width: 580px;
+    display: block;
+    position: relative;
+    z-index: 100000;
+}
+.referral-input{
+    width: 220px;
+    margin: 0 auto;
+}
+.referral-change{
+    width: 400px;
+    display: flex;
+    justify-content: space-evenly;
+    height: max-content;
+    margin: 10px auto 0;
+}
+
 #close-modal{
     position: absolute;
     width: 25px;

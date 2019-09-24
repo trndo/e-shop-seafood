@@ -6,6 +6,7 @@ namespace App\Model;
 
 use App\Entity\OrderDetail;
 use App\Entity\User;
+use App\Validator\UniqueUser;
 use Doctrine\Common\Collections\Collection;
 
 class OrderModel
@@ -21,6 +22,7 @@ class OrderModel
     private $surname;
 
     /**
+     * @UniqueUser()
      * @var string|null
      */
     private $email;

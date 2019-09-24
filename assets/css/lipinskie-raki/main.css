@@ -126,6 +126,7 @@ header{
     border-radius: 50px;
     top: 0;
     right: 45px;
+    background-image: url("../../img/online-shopping-cart.svg");
     background-position: 6px 5px;
     background-repeat: no-repeat;
     padding: 3px 5px 5px 30px;
@@ -428,7 +429,6 @@ main{
 }
 .in_basket:hover {
     background: #cc1c1c;
-    box-shadow: 2px 2px 5px 0 black;
 }
 .price{
     position: relative;

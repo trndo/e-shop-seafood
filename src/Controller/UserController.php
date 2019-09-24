@@ -131,6 +131,23 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/api/orders/{id}")
+     * @param Request $request
+     * @param OrderInfo $orderInfo
+     * @param OrderInfoInterface $infoService
+     * @return JsonResponse
+     */
+    public function showOrderDetails(Request $request, OrderInfo $orderInfo, OrderInfoInterface $infoService): Response
+    {
+        $orderDetails = $orderInfo->getOrderDetails();
+
+        return $this->render('showOrderDetails.html.twig', [
+           'orderDetails' => $orderDetails,
+           'orderInfo' => $orderInfo
+        ]);
+    }
+
     private function checkIsValidUser(?User $user): void
     {
         if ($this->getUser() !== $user) {

@@ -33,7 +33,11 @@
                         </div>
                         <form method="post" class="login-form">
                             {% if error %}
-                                <small class="validation-mess">{{ error.message }}</small>
+                                {% if 'checkCredentials' in error.message %}
+                                    <small class="validation-mess">Неверный пароль!</small>
+                                {% else %}
+                                    <small class="validation-mess">{{ error.message }}</small>
+                                {% endif %}
                             {% endif %}
                             <div class="login-input-container">
                                 <div>

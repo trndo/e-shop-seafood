@@ -22,6 +22,7 @@ class ItemSizeExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getSize', [$this, 'getSize']),
+            new TwigFunction('getSizeForProd',[$this,'getSizeForProd'])
         ];
     }
 
@@ -55,5 +56,22 @@ class ItemSizeExtension extends AbstractExtension
             return $a-$b;
         });
         return $items;
+    }
+
+    public function getSizeForProd(?string $size, ?string $name): string
+    {
+        switch ($size)
+        {
+            case "XL":
+                return "<span class=\"size-x l-0\">x</span><span class=\"size-l l-20\">L</span>";
+            case "XXL":
+                return "<span class=\"size-xx l-0\">xx</span><span class=\"size-l l-20\">L</span>";
+            case "S":
+            case "M":
+            case "L":
+                return "<span class=\"size\">$size</span>";
+            default:
+                return "<span class=\"product-name\">$name</span>";
+        }
     }
 }

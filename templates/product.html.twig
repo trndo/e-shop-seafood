@@ -26,11 +26,18 @@
                         </div>
                         <div class="product-info">
                             <div class="product-size">
+                                {% if item.productSize %}
                                 <div class="size-simple-product"> {# size-xl-product #}
 {#                                    <span class="size-xx l-0">xx</span><span class="size-l l-20">L</span>#}
 {#                                    <span class="size-x l-0">x</span><span class="size-l l-20">L</span>#}
-                                      <span class="size">S</span>
+                                      {#<span class="size">S</span>#}
+                                    {{ getSizeForProd(item.productSize,item.name)|raw}}
                                 </div>
+                                {% else %}
+                                    <div class="product-name">
+                                        {{ item.name }}
+                                    </div>
+                                {% endif %}
                                 {% if  item.amountPerUnit is defined and item.weightPerUnit %}
                                 <div class="product-size-info in-product">
                                         <span class="grams">

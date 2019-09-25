@@ -31,14 +31,16 @@
 {#                                    <span class="size-x l-0">x</span><span class="size-l l-20">L</span>#}
                                       <span class="size">S</span>
                                 </div>
+                                {% if  item.amountPerUnit is defined and item.weightPerUnit %}
                                 <div class="product-size-info in-product">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/ruler.svg"/> <span>- до 5 см.</span>
+                                            <i class="fas fa-utensils"></i> <span>- {{ item.amountPerUnit }} шт / {{ item.unit }}</span>
                                         </span>
                                         <span class="grams weight">
-                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/weight.svg"/> <span>- до 250 gr.</span>
+                                            <embed id="ruler" type="image/svg+xml" src="/assets/img/weight.svg"/> <span>- {{ item.weightPerUnit }} гр / шт</span>
                                         </span>
                                 </div>
+                                {% endif %}
 {#                                <div class="percent-promotion">#}
 {#                                    <span id="percent">#}
 {#                                        -5 %#}
@@ -68,7 +70,7 @@
                             </div>
                             {% endif %}
                             <div class="product-price">
-                                {{ item.price }} грн / кг.{#<span class="special-price">550 грн</span>#}
+                                {{ item.price }} грн / {{ item.unit }}.{#<span class="special-price">550 грн</span>#}
                             </div>
                             {% if session is not null %}
                             <div class="product-to-basket">

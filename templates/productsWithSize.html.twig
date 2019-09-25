@@ -29,8 +29,7 @@
                                     {{ getSize(items[0].ProductSize)|raw }}
                                     <div class="product-size-info">
                                         <span class="grams">
-                                            <embed id="ruler" type="image/svg+xml"
-                                                   src="/assets/img/ruler.svg"/> <span>- {{ items[0].weightPerUnit }}.</span>
+                                            <i class="fas fa-utensils"></i> <span>- {{ items[0].amountPerUnit }} шт / {{ items[0].unit }}</span>
                                         </span>
                                         <span class="size-price">
                                            ₴ {{ items[0].price }}

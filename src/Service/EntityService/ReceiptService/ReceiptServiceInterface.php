@@ -34,8 +34,9 @@ interface ReceiptServiceInterface
 
     /**
      * @param int|null $id
+     * @return array
      */
-    public function activateReceipt(?int $id): void;
+    public function activateReceipt(?int $id): array;
 
     /**
      * @return array|null

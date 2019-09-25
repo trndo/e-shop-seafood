@@ -51,8 +51,9 @@ class AdminReceiptController extends AbstractController
      */
     public function activateReceipt(Request $request,ReceiptService $service): JsonResponse
     {
-        $service->activateReceipt($request->request->get('id'));
-        return new JsonResponse(['status' => true],200);
+       $result = $service->activateReceipt($request->request->get('id'));
+
+        return new JsonResponse($result,200);
     }
 
     /**

@@ -93,18 +93,34 @@ class ReceiptService implements ReceiptServiceInterface
         $this->entityManager->flush();
     }
 
-    public function activateReceipt(?int $id): void
+    public function activateReceipt(?int $id): array
     {
         $receipt = $this->receiptRepository->find($id);
 
-        if($receipt){
+        if($receipt ){
+            if ($receipt->getProducts()->isEmpty()) {
+                return [
+                    'status' => false,
+                    'message' => 'Вы не можете активировать рецепт! Добавте продукты к вашему рецепту'
+                ];
+            }
+
             if($receipt->getStatus())
                 $receipt->setStatus(false);
             else
                 $receipt->setStatus(true);
 
             $this->entityManager->flush();
+
+            return [
+                'status' => true,
+            ];
         }
+
+        return [
+            'status' => false,
+            'message' => 'Нет такого рецепта!'
+        ];
     }
 
     /**

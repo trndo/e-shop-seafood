@@ -178,7 +178,13 @@
         $.ajax({
             type: 'POST',
             url: '{{ path('activteReceipt') }}',
-            data: { id: id}
+            data: { id: id},
+            success: function (res) {
+                console.log(res.message);
+                if (!res.status) {
+                    alert(res.message)
+                }
+            }
         })
     }
 </script>

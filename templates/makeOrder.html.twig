@@ -2,7 +2,7 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('order') }}
-    {{ encore_entry_link_tags('footer') }}
+    {#{{ encore_entry_link_tags('footer') }}#}
 {% endblock %}
 {% block body %}
         <div class="container">
@@ -62,7 +62,7 @@
                         </div>
                         {{ form_widget(form.coordinates) }}
                         <div id="map-block-inform"></div>
-                        <button type="submit" class="checkout-order">Оформить</button>
+                        <button type="submit" class="checkout-order mb-4">Оформить</button>
                     {{ form_end(form) }}
 {#                    <form action="" class="order-form">#}
 {#                        <input type="text" class="order-input" placeholder="Имя*">#}
@@ -104,7 +104,7 @@
     {{ encore_entry_script_tags('order') }}
     <script>
         function recognizeMap() {
-            return window.getComputedStyle(document.getElementById('map-block')).display === 'inline-block'
+            return window.getComputedStyle(document.getElementById('map-block')).display === 'block'
                 ? document.getElementById('map-block')
                 : document.getElementById('map-block-inform');
         }
@@ -147,8 +147,8 @@
                     geocodePosition(marker);
                     map.panTo(position);
                 } else {
-                    geocodePosition(marker);
                     marker.setPosition(position);
+                    geocodePosition(marker);
                     map.panTo(position);
                 }
             }
@@ -221,7 +221,6 @@
                     });
                      document.getElementById('order_coordinates').value = place.geometry.location.lat()+' '+place.geometry.location.lng();
 
-                    console.log(place.geometry.location);
                     if (place.geometry.viewport) {
                         // Only geocodes have viewport.
                         bounds.union(place.geometry.viewport);

@@ -53,7 +53,8 @@ class OrderType extends AbstractType
             ])
             ->add('coordinates', HiddenType::class)
             ->add('comment',TextareaType::class,[
-                'label' => false
+                'label' => false,
+                'required' => false
             ]);
     }
 

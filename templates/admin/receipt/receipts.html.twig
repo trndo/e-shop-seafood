@@ -104,7 +104,7 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" onchange="activate({{ receipt.id }})" class="custom-control-input" id="customSwitch{{ receipt.id }}" {% if receipt.status %}checked{% endif %}>
+                                                <input type="checkbox" onchange="activate({{ receipt.id }})" class="custom-control-input" {% if receipt.products.isEmpty %}disabled {% endif %} id="customSwitch{{ receipt.id }}" {% if receipt.status %}checked{% endif %}>
                                                 <label class="custom-control-label" for="customSwitch{{ receipt.id }}">Активировать\Деактивировать</label>
                                             </div>
                                         </td>
@@ -173,20 +173,25 @@
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-<script>
+    <script>
     function activate(id) {
         $.ajax({
             type: 'POST',
             url: '{{ path('activteReceipt') }}',
             data: { id: id},
             success: function (res) {
-                console.log(res.message);
                 if (!res.status) {
                     alert(res.message)
                 }
             }
         })
     }
+    $(document).ready(function () {
+        $('.custom-switch > label').click(function () {
+            if($(this).parent().find('input:disabled').length)
+                alert('Сначала добавьте продукт в рецепт что бы активировать его');
+        })
+    })
 </script>
     {{ encore_entry_script_tags('autocomplete') }}
 {% endblock %}

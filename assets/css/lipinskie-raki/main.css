@@ -23,7 +23,7 @@ input:invalid {
 }
 
 body{
-    background-image: url("../../img/try.svg");
+    background-image: url("../../img/try.png");
     background-repeat: repeat-y;
     background-size: cover;
 }

@@ -3,6 +3,7 @@
 
 namespace App\Service\MailService;
 
+use App\Entity\OrderInfo;
 use App\Entity\User;
 
 interface MailSenderInterface
@@ -35,4 +36,16 @@ interface MailSenderInterface
      * @param string $temporaryPass
      */
     public function sendAboutUnknownRegistration(User $user, string $temporaryPass): void ;
+
+    /**
+     * @param User $user
+     * @param OrderInfo $info
+     */
+    public function sendAboutMakingOrder(User $user, OrderInfo $info): void;
+
+    /**
+     * @param User $user
+     * @param OrderInfo $info
+     */
+    public function sendAboutChangingStatus(User $user, OrderInfo $info): void;
 }

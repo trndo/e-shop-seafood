@@ -16,6 +16,7 @@ use App\Repository\OrderDetailRepository;
 use App\Repository\ReservationRepository;
 use App\Service\CartHandler\CartHandler;
 use App\Service\EntityService\ReservationHandler\ReservationInterface;
+use App\Traits\OrderMailTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,6 +26,7 @@ class OrderInfoHandler implements OrderInfoInterface
     private const STATUS_CONFIRMED = 'confirmed';
     private const STATUS_PAYED = 'payed';
     private const STATUS_DONE = 'done';
+
     /**
      * @var EntityManagerInterface
      */
@@ -43,7 +45,7 @@ class OrderInfoHandler implements OrderInfoInterface
      */
     private $reservation;
 
-
+    use OrderMailTrait;
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
@@ -92,11 +94,14 @@ class OrderInfoHandler implements OrderInfoInterface
         $orderInfo->setTotalPrice($totalSum)
             ->setOrderUniqueId(
                 $this->generateHash($orderInfo, 7)
-            )->setComment($orderModel->getComment());
+            )
+            ->setComment($orderModel->getComment());
 
         $this->entityManager->persist($orderInfo);
 
         $this->entityManager->flush();
+
+        $this->sendEmailAboutOrder($orderInfo->getUser(), $orderInfo);
 
         $session->remove('reservationId');
         $session->remove('cart');
@@ -209,6 +214,8 @@ class OrderInfoHandler implements OrderInfoInterface
             }
 
             $this->entityManager->flush();
+
+            $this->sendEmailAboutOrderStatus($order->getUser(), $order);
         }
 
     }

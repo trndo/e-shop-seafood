@@ -4,6 +4,7 @@
 namespace App\Service\MailService;
 
 
+use App\Entity\OrderInfo;
 use App\Entity\User;
 use Twig\Environment;
 
@@ -80,7 +81,9 @@ class MailSender implements MailSenderInterface
 
     public function sendAboutResettingPassword(User $user): void
     {
-        $this->sendMessageTo($user,'mail/resetting_message.html.twig',['user' => $user]);
+        $this->sendMessageTo($user,'mail/resetting_message.html.twig', [
+            'user' => $user
+        ]);
     }
 
     public function sendAboutUnknownRegistration(User $user, string $temporaryPass): void
@@ -90,6 +93,23 @@ class MailSender implements MailSenderInterface
             'temporaryPass' => $temporaryPass
         ]);
     }
+
+    public function sendAboutMakingOrder(User $user, OrderInfo $info): void
+    {
+        $this->sendMessageTo($user,'mail/order.html.twig', [
+            'user' => $user,
+            'orderInfo' => $info
+        ]);
+    }
+
+    public function sendAboutChangingStatus(User $user, OrderInfo $info): void
+    {
+        $this->sendMessageTo($user,'mail/order_status.html.twig', [
+            'user' => $user,
+            'orderInfo' => $info
+        ]);
+    }
+
     private function sendMessageTo(User $user,string $template,array $options = null)
     {
         $message = (new \Swift_Message(self::TRANSPORT))
@@ -97,7 +117,7 @@ class MailSender implements MailSenderInterface
             ->setTo($user->getEmail())
             ->setBody(
                 $this->environment->render(
-                    $template,$options
+                    $template, $options
                 ),
                 self::CONTENT_TYPE
             );

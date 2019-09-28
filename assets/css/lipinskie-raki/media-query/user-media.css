@@ -79,7 +79,7 @@
 
     .history-item{
         margin-top: 29px;
-        width: 285px;
+        width: 293px;
         height: 185px;
         margin-left: 15px;
     }
@@ -88,13 +88,13 @@
         margin-top: 0;
     }
     .history-item-img{
-        width: 285px;
+        width: 293px;
         height: 70px;
         float: unset;
         object-fit: cover;
     }
     .history-item-info{
-        width: 285px;
+        width: 293px;
         height: 95px;
         padding: 15px 16px;
         float: unset;
@@ -222,7 +222,7 @@
 
     .history-item{
         margin-top: 29px;
-        width: 285px;
+        width: 293px;
         height: 185px;
         margin-left: 15px;
     }
@@ -231,13 +231,13 @@
         margin-top: 0;
     }
     .history-item-img{
-        width: 285px;
+        width: 293px;
         height: 70px;
         float: unset;
         object-fit: cover;
     }
     .history-item-info{
-        width: 285px;
+        width: 293px;
         height: 95px;
         padding: 15px 16px;
         float: unset;

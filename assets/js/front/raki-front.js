@@ -590,19 +590,19 @@ $(document).ready(function () {
         wasInModal = true;
         $('.user-registration').submit();
     });
-    /*$('#user_registration_save').click(function(e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        showModal(null);
-        console.log('submit!');
-    });*/
 
-    $('#close-more').click(function () {
+    $(document).on('click','#close-more',function () {
         $('#overlay').fadeToggle();
     });
+
     $('div[data-show="show"]').click(function () {
-        $('#overlay').fadeToggle();
-        //here will be ajax
+        $.ajax('/api/orders/'+$(this).data('order'),{
+            type: 'GET',
+            success: function (res) {
+                $('.order-more-info').replaceWith(res);
+                $('#overlay').fadeToggle();
+            }
+        });
     })
 });
 

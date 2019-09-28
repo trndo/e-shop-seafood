@@ -6,7 +6,9 @@ import Picker from 'pickerjs/dist/picker';
 import $ from 'jquery';
 import 'timepicker/jquery.timepicker';
 
-$('.date-input').datepicker();
+$('.date-input').datepicker({
+    minDate: new Date()
+});
 
 if(screen.width < 992)
 new Picker(document.querySelector('.time-input'), {

@@ -76,9 +76,9 @@
         padding-top: 7px;
         padding-bottom: 25px;
     }
-    .make-order-height{
+    /*.make-order-height{
         height: 1110px !important;
-    }
+    }*/
 
     .additional-nav-container{
         width: 100%;
@@ -210,14 +210,6 @@
 
     }
 
-    .validation-mess{
-        width: 200px;
-    }
-
-    .invalid-input{
-        background-position: 175px 9px;
-    }
-
     .reg{
         height: 70px;
     }
@@ -228,7 +220,7 @@
 
     .order-block{
         width: 100%;
-        height: 1005px;
+        height: max-content;
         float: none;
         display: block;
     }
@@ -248,7 +240,7 @@
 
     .order-form{
         width: 100%;
-        padding: 0 0 0 0;
+        padding: 0 0 10px 0;
     }
     .order-input{
         margin-right: auto;
@@ -564,14 +556,6 @@
 
     }
 
-    .validation-mess{
-        width: 200px;
-    }
-
-    .invalid-input{
-        background-position: 175px 9px;
-    }
-
     .reg{
         height: 70px;
     }
@@ -582,7 +566,7 @@
 
     .order-block{
         width: 100%;
-        height: 1005px;
+        height: max-content;
         float: none;
         display: block;
     }
@@ -602,7 +586,7 @@
 
     .order-form{
         width: 100%;
-        padding: 0 0 0 0;
+        padding: 0 0 10px 0;
     }
     .order-input{
         margin-right: auto;
@@ -777,7 +761,7 @@
     .checkout{
         width: 171px;
     }
-    .make-order-height{
+    /*.make-order-height{
         height: 1110px !important;
-    }
+    }*/
 }

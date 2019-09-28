@@ -16,22 +16,23 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="row justify-content-center">
-                        <div class="col-8">
-                            <h2>Создайте категорию</h2>
+                        <div class="col-sm-12 col-md-12 col-lg-8">
+                            <h2>Редактируйте категорию</h2>
                             {{ form_start(form) }}
                                 {{ form_row(form.name) }}
                                 {{ form_row(form.type) }}
                                 {{ form_row(form.displayType) }}
                                 <div class="row">
                                     <div class="col-12">
-                                        <img src="{{ asset('/images/simple.png') }}" width="450px">
-                                        <img src="{{ asset('/images/size.png') }}" width="450px">
+                                        <img src="{{ asset('/images/simple.png') }}" width="100%">
+                                        <hr>
+                                        <img src="{{ asset('/images/size.png') }}" width="100%">
                                     </div>
                                 </div>
                             {{ form_row(form.initialCardText) }}
                             <div class="row">
                                 <div class="col-12">
-                                    <img src="{{ asset('/images/photo_2019-09-11_12-09-20.jpg') }}" width="450px">
+                                    <img src="{{ asset('/images/photo_2019-09-11_12-09-20.jpg') }}" width="100%">
                                 </div>
                             </div>
                                 {{ form_row(form.seoDescription) }}

@@ -2,13 +2,12 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('order') }}
-    {{ encore_entry_link_tags('footer') }}
+    {#{{ encore_entry_link_tags('footer') }}#}
 {% endblock %}
 {% block body %}
         <div class="container">
             {% set sum = app.session.get('totalSum') %}
             {% set order = app.session.get('chooseOrder') %}
-            {% dump(order) %}
             {% include 'elements/small_header.html.twig' %}
             <main>
             <div class="red-content make-order-height">
@@ -52,18 +51,18 @@
                                 Самовывоз
                             </div>
                         </div>
+                        <div class="lipinka-street">
+                            Улица Сергея Данченка 12, Киев
+                        </div>
                         <div>
                             {{ form_widget(form.deliveryType,{'id':'adress-order','attr': {'class': 'order-input input-margin-16 order-address'}}) }}
                         </div>
                         <div>
                             {{ form_widget(form.comment,{'attr':{ 'class': 'order-input text-area','rows': 4,'placeholder':'Комментарий'}}) }}
                         </div>
-                        <div class="lipinka-street">
-                            Улица Сергея Данченка 12, Киев
-                        </div>
                         {{ form_widget(form.coordinates) }}
                         <div id="map-block-inform"></div>
-                        <button type="submit" class="checkout-order">Оформить</button>
+                        <button type="submit" class="checkout-order mb-4">Оформить</button>
                     {{ form_end(form) }}
 {#                    <form action="" class="order-form">#}
 {#                        <input type="text" class="order-input" placeholder="Имя*">#}
@@ -105,7 +104,7 @@
     {{ encore_entry_script_tags('order') }}
     <script>
         function recognizeMap() {
-            return window.getComputedStyle(document.getElementById('map-block')).display === 'inline-block'
+            return window.getComputedStyle(document.getElementById('map-block')).display === 'block'
                 ? document.getElementById('map-block')
                 : document.getElementById('map-block-inform');
         }
@@ -148,8 +147,8 @@
                     geocodePosition(marker);
                     map.panTo(position);
                 } else {
-                    geocodePosition(marker);
                     marker.setPosition(position);
+                    geocodePosition(marker);
                     map.panTo(position);
                 }
             }
@@ -222,7 +221,6 @@
                     });
                      document.getElementById('order_coordinates').value = place.geometry.location.lat()+' '+place.geometry.location.lng();
 
-                    console.log(place.geometry.location);
                     if (place.geometry.viewport) {
                         // Only geocodes have viewport.
                         bounds.union(place.geometry.viewport);
@@ -233,6 +231,6 @@
             });
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5CSb-iMy9DtAHF2u-LGV_j2dZ0UQFTCE&libraries=places&callback=initAutocomplete"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}&libraries=places&callback=initAutocomplete"
             async defer></script>
 {% endblock %}

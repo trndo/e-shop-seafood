@@ -50,7 +50,7 @@
                                     {{ order.totalPrice }} <span class="hryvna">₴</span>
                                 </div>
                                 <div class="history-actions">
-                                    <div class="history-btn history-more" data-show="show">
+                                    <div class="history-btn history-more" data-show="show" data-order="{{ order.id }}">
                                         Подробнее
                                     </div>
                                     {% set user = app.user %}

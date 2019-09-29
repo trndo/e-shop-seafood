@@ -72,7 +72,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5CSb-iMy9DtAHF2u-LGV_j2dZ0UQFTCE&libraries=places&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}&libraries=places&callback=initMap"
             async defer></script>
     {% set coordinates = '50.1231233 12.394583' %}
     <script>

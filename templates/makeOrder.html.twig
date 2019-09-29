@@ -147,8 +147,8 @@
                     geocodePosition(marker);
                     map.panTo(position);
                 } else {
-                    marker.setPosition(position);
                     geocodePosition(marker);
+                    marker.setPosition(position);
                     map.panTo(position);
                 }
             }

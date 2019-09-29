@@ -26,7 +26,7 @@
                 <div class="row relative justify-content-center mt-3">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body" style="padding-top: 60px">
+                            <div class="card-body pt-order">
                                 <div class="order-number text-center">
                                     Заказ №{{ order.id }} &nbsp;Сделано: <u>{{ order.createdAt|date('Y-m-d H:i') }}</u>
                                 </div>
@@ -56,7 +56,7 @@
                                     </div>
                                 {% endif %}
                                 <div class="row justify-content-center">
-                                    <div class="col-6 col-md-6 col-sm-12">
+                                    <div class="col-sm-12 col-md-10 col-lg-8">
                                         <ul class="list-group">
                                             {% for item in order.orderDetails %}
                                                 <li class="list-group-item d-flex justify-content-between">
@@ -90,25 +90,25 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-4 text-center text-primary h4">
+                                    <div class="col-sm-12 col-md-4 col-lg-4 text-center text-primary h4">
                                         На какую дату: {{ order.orderDate|date('d.m.Y') }}
                                     </div>
-                                    <div class="col-4 text-center text-primary h4">
+                                    <div class="col-sm-12 col-md-4 col-lg-4 text-center text-primary h4">
                                         На какое время: {{ order.orderTime|date('H:i') }}
                                     </div>
-                                    <div class="col-4 text-center text-primary h4">
+                                    <div class="col-sm-12 col-md-4 col-lg-4 text-center text-primary h4">
                                         Тип
                                         Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}
                                     </div>
                                 </div>
                                 <div class="row mt-5">
-                                    <div class="col-6">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
                                         <div id="map">
 
                                         </div>
                                     </div>
                                     {% set user = order.user %}
-                                    <div class="col-6 text-center pt-5">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 text-center pt-5">
                                         <p class="h3">{{ user.name ~' '~ user.surname }}</p>
                                         <p class="h5">{{ order.orderPhone }}</p>
                                         <p class="h5">{{ order.orderEmail }}</p>
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                                 <div class="row mt-3 justify-content-center">
-                                    <div class="col-6 text-center">
+                                    <div class="col-sm-12 col-md-12 col-lg-6 text-center">
                                         {% if order.status == 'new' or order.status == 'confirmed' or order.status == 'failed' %}
                                             <button class="btn btn-danger mr-2 list-inline-item"
                                                     onclick="window.location.href='{{ path('cancelOrder', {'orderUniqueId': order.orderUniqueId}) }}'">

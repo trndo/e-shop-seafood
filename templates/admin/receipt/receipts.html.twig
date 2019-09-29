@@ -41,7 +41,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="receipts">
+                                <form class="d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search autocomplete-form" data-url="receipts">
                                     <div class="input-group">
                                         <input id="search" type="text" class="form-control bg-light border-0 small" name="name" placeholder="Имя рецепта..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
@@ -84,7 +84,7 @@
 {#                                            {% else %}#}
 {#                                                <img src="/uploads/receipts/{{ receipt.titlePhoto }}" style="width: 200px; height: 150px">#}
 {#                                            {% endif %}#}
-                                            <img src="/uploads/receipts/{{ receipt.titlePhoto }}" style="width: 200px; height: 150px; object-fit: contain" alt="img">
+                                            <img src="/uploads/receipts/{{ receipt.titlePhoto }}" style="width: 200px; height: 150px; object-fit: cover" alt="img">
                                         </td>
                                         <td class="text-center">
                                             {{ receipt.name }}

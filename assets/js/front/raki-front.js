@@ -75,6 +75,7 @@ $(document).ready(function () {
                     $('.sum').text(res.totalSum + ' ₴');
                     $('.additional-cart').text(res.totalSum + ' ₴');
                     $('.mob-basket').text(res.totalSum + ' ₴');
+                    showSuccessAdd();
                 } else {
                     showModal(res.message);
                     $('.item-res > input').val(1);
@@ -544,6 +545,10 @@ $(document).ready(function () {
         $('#overlay').fadeToggle();
         modal.css('display','flex');
         console.log('show modal!');
+    }
+    function showSuccessAdd(){
+        $('#overlay').fadeToggle().delay(400).fadeToggle();
+        $('.success-add').fadeToggle().delay(400).fadeToggle();
     }
 
     let messageIndex = 1;

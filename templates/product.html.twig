@@ -91,16 +91,6 @@
                                     <div class="custom-button add-basket" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                         Добавить в корзину
                                     </div>
-                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                Добавлено в корзину!
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
 {#                                    <div class="custom-button order-type show-modal" data-name="{{ item.id }}" data-type="{{ item.getType }}">#}
 {#                                        Добавить в козину#}
 {#                                    </div>#}
@@ -157,6 +147,7 @@
         {% include 'elements/__footer.html.twig' with {'active': active } %}
         <div id="overlay">
             {% include 'elements/modal.html.twig' with {'special_class' : 'product-modal'} %}
+            <div class="success-add">Добавлено в корзину</div>
         </div>
  {% endblock %}
 {% block javascripts %}

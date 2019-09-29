@@ -169,7 +169,8 @@
     {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
     {% include 'elements/__footer.html.twig' with {'active': active } %}
     <div id="overlay">
-            {% include 'elements/modal.html.twig' with {'special_class' : 'product-modal'} %}
+        {% include 'elements/modal.html.twig' with {'special_class' : 'product-modal'} %}
+        <div class="success-add">Добавлено в корзину</div>
     </div>
 {% endblock %}
 {% block javascripts %}

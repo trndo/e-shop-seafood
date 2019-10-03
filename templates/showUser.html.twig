@@ -74,9 +74,8 @@
     {{ parent() }}
     <script src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}&libraries=places&callback=initMap"
             async defer></script>
-    {% set coordinates = '50.1231233 12.394583' %}
     <script>
-        let coordinates = '{{ coordinates }}'{# '{{ user.coordinates }}' #};
+        let coordinates = '{{ app.user.coordinates }}';
         console.log(coordinates);
         let position = { lat: Number(coordinates.substr(0,coordinates.indexOf(' '))), lng: Number(coordinates.substr(coordinates.indexOf(' ')+1))};
 

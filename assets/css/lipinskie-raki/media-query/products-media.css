@@ -95,14 +95,18 @@
     }
     .size-x{
         font-size: 36px;
-        left: 1px;
+        left: 23px;
         top: 25px;
     }
     .size-xx{
         font-size: 36px;
-        left: 22px;
         top: 18px;
+        left: 21px;
         -moz-padding-start: 4.5px;
+    }
+
+    .l-0{
+        left: 1px !important;
     }
 
     .size-button{
@@ -197,14 +201,17 @@
     }
     .size-x{
         font-size: 36px;
-        left: 1px;
+        left: 23px;
         top: 25px;
     }
     .size-xx{
         font-size: 36px;
-        left: 22px;
         top: 18px;
+        left: 21px;
         -moz-padding-start: 4.5px;
+    }
+    .l-0{
+        left: 1px !important;
     }
 
     .size-button{

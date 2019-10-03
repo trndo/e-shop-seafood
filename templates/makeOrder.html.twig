@@ -183,7 +183,6 @@
                 searchBox.setBounds(map.getBounds());
             });
 
-            var markers = [];
             // Listen for the event fired when the user selects a prediction and retrieve
             // more details for that place.
             searchBox.addListener('place_changed', function() {
@@ -191,30 +190,15 @@
                 if (place.length == 0) {
                     return;
                 }
-
-                // Clear out the old markers.
-                markers.forEach(function(marker) {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-                // For each place, get the icon, name and location.
+                /*marker.setMap(null);*/
                 var bounds = new google.maps.LatLngBounds();
-
                     if (!place.geometry) {
                         console.log("Returned place contains no geometry");
                         return;
                     }
-                    var icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    // Create a marker for each place.
-                     marker = new google.maps.Marker({
+                    if(marker)
+                        marker.setMap(null);
+                    marker = new google.maps.Marker({
                         map: map,
                         title: place.name,
                         position: place.geometry.location

@@ -475,8 +475,7 @@ $(document).ready(function () {
     $(".order-form").validate({
         rules: {
             'order[name]': {
-                required: true,
-                minlength: 5
+                required: true
             },
             'order[surname]': {
                 required: false

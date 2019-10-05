@@ -49,5 +49,14 @@ class HomeController extends AbstractController
     }
 
 
+    /**
+     * For dev purpose only
+     * @Route("/404")
+     * @return Response
+     */
+    public function error(): Response
+    {
+        return $this->render('error/404.html.twig');
+    }
 
 }

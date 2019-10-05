@@ -1067,3 +1067,37 @@ footer{
 .none-text-decoration{
     text-decoration: none!important;
 }
+.error-container{
+    width: 635px;
+    margin: 108px auto 146px auto;
+    display: flex;
+    color: #FFFFFF;
+}
+.error-code{
+    width: 290px;
+    height: 143px;
+    background: #F13A3A;
+    font-size: 144px;
+    line-height: 100%;
+    text-align: center;
+}
+
+.error-text{
+    width: 345px;
+    height: 143px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+}
+
+.error-text-subtitle{
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.error-text-title{
+    font-weight: 900;
+    font-size: 24px;
+}

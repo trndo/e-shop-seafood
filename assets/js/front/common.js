@@ -39,7 +39,7 @@ $('li').click(function () {
         window.location.href = $(this).data('location');
 });
 
-$('.in_basket').click(function () {
+$(document).on('click','.in_basket',function () {
     if ($(this).data('product-location'))
         window.location.href = $(this).data('product-location')
 });

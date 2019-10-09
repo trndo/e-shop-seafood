@@ -5,9 +5,12 @@
             <div class="card-content">
                 <h4>{{ item.name }}</h4>
                 <p>{{ item.description }}</p>
-                <span class="price">₴ {{ item.price }}</span>
-                <div class="in_basket" data-product-location="{{ path('category_show',{'slug': item.slug}) }}">
-                    Подробнее
+                <div class="main-info">
+                    <span class="price">₴ {{ item.price }}</span>
+                    <div class="in_basket"
+                         data-product-location="{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}">
+                        Подробнее
+                    </div>
                 </div>
             </div>
         </div>

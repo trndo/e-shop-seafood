@@ -1,10 +1,5 @@
 import $ from "jquery";
 
-$('#close-modal').click(function () {
-    console.log('here');
-    $('.modal-window').toggle();
-    $('#overlay').toggle();
-});
 $(document).on('click','.cart-plus',function () {
     let input = $(this).siblings('.cart-res').children();
     let name = $(this).parent().siblings('.item-name').data('name');
@@ -57,12 +52,14 @@ $(document).on('click','.cart-minus',function () {
         }
     });
 });
-$(document).on('keyup','.cart-res > input',function (e) {
+$(document).on('blur','.cart-res > input',function (e) {
     let input = $(this);
     let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
-
-    if( input.val() === '')
+    
+    if( input.val() === '') {
+        input.val(1);
         return;
+    }
 
     let val = roundHalf(Number(input.val()));
 
@@ -72,8 +69,7 @@ $(document).on('keyup','.cart-res > input',function (e) {
     //     val = 10;
     // }
 
-    if(val < 0) {
-        alert('Min 1');
+    if(val <= 0) {
         input.val(1);
         val = 1;
     }
@@ -88,8 +84,7 @@ $(document).on('keyup','.cart-res > input',function (e) {
         success: function (res) {
             if (res.status === false) {
                 showModal(res.message);
-                if(res.rest != 0)
-                    input.val(res.rest);
+                input.val(1);
             }
             else {
                 input.val(val);
@@ -103,38 +98,38 @@ $('.cart-res > input').bind('cut copy paste',function (e) {
     e.preventDefault();
 });
 
-$(document).on('blur','.cart-res > input',function (e) {
-    let input = $(this);
-    let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
-    let val = Number(input.val());
-    if(val == ''){
-        $.ajax({
-            type: "POST",
-            url: "/changeQuantity",
-            data: {
-                quantity: 1,
-                id: name
-            },
-            success: function (res) {
-                if (res.status === false) {
-                    showModal(res.message);
-                    if(res.rest != 0)
-                        input.val(res.rest);
-                }
-                else {
-                    input.val(1);
-                    $('.sum').text(res.totalSum+' ₴');
-                    $('.mob-basket').text(res.totalSum + ' ₴');
-                }
-            }
-        });
-    }
-});
+// $(document).on('blur','.cart-res > input',function (e) {
+//     let input = $(this);
+//     let name = $(this).parents('.quantity').siblings('.order-product-name').data('name');
+//     let val = Number(input.val());
+//     if(val == ''){
+//         $.ajax({
+//             type: "POST",
+//             url: "/changeQuantity",
+//             data: {
+//                 quantity: 1,
+//                 id: name
+//             },
+//             success: function (res) {
+//                 if (res.status === false) {
+//                     showModal(res.message);
+//                     if(res.rest != 0)
+//                         input.val(res.rest);
+//                 }
+//                 else {
+//                     input.val(1);
+//                     $('.sum').text(res.totalSum+' ₴');
+//                     $('.mob-basket').text(res.totalSum + ' ₴');
+//                 }
+//             }
+//         });
+//     }
+// });
 function showModal(text){
     let modal = $('.modal-window');
-    modal.children('.attention-title').text(text);
+    modal.children('.modal-title').text(text);
     $('#overlay').toggle();
-    modal.toggle();
+    modal.css('display', 'flex');
 }
 
 $(document).on('click','.delete-from-cart',function () {

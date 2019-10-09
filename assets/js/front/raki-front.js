@@ -241,7 +241,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#close-modal').click(function () {
+    $('img[data-close-modal]').click(function () {
         $('.modal-window').fadeToggle();
         $('#overlay').fadeToggle();
     });

@@ -381,10 +381,13 @@
         white-space: nowrap; /* Запрещаем перенос строк */
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 18px;
+        line-height: unset;
     }
     .quantity{
-        margin-left: 17px;
+        margin-right: 9px;
         width: 152px;
+        margin-left: 5px;
     }
     .plus ,.minus{
         font-size: 52px;
@@ -729,10 +732,13 @@
         white-space: nowrap; /* Запрещаем перенос строк */
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 18px;
+        line-height: unset;
     }
     .quantity{
-        margin-left: 17px;
+        margin-right: 9px;
         width: 152px;
+        margin-left: 5px;
     }
     .plus ,.minus{
         font-size: 52px;

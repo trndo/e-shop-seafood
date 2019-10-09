@@ -137,16 +137,19 @@
 .order-product-name {
     width: 155px;
     height: 70px;
-    padding-left: 12px;
+    padding-left: 6px;
     position: relative;
     font-style: normal;
     font-weight: 300;
-    font-size: 18px;
-    line-height: 100%;
+    font-size: 14px;
+    line-height: 70px;
     color: #FFFFFF;
     display: inline-block;
-    padding-top: 14px;
     float: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 12px;
 }
 .quantity{
     width: 142px;

@@ -124,7 +124,7 @@ $('.warn-button').click(function () {
    window.location.href = '/category-varenye-raki';
 });
 
-$('.back-to-main').click(function () {
+$('img[data-back]').click(function () {
     window.location.href = '/';
 });
 

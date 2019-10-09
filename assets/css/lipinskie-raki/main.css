@@ -700,7 +700,6 @@ footer{
     bottom: 0;
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 100;
-    cursor: pointer;
     display: none;
 }
 .dropdown{
@@ -931,7 +930,7 @@ footer{
     margin: 10px auto 0;
 }
 
-#close-modal{
+.close-modal{
     position: absolute;
     width: 25px;
     height: 25px;

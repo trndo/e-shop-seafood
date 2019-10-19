@@ -137,6 +137,21 @@ class Receipt
      */
     private $productSalesFromReceipt;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isAdditionalCredentials;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $additionalCredential;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $additionalCredentialIcon;
+
 
     public function __construct()
     {
@@ -570,6 +585,42 @@ class Receipt
             $this->productSalesFromReceipt->removeElement($product);
             $product->removeProductSalesToReceipt($this);
         }
+
+        return $this;
+    }
+
+    public function getIsAdditionalCredentials(): ?bool
+    {
+        return $this->isAdditionalCredentials;
+    }
+
+    public function setIsAdditionalCredentials(?bool $isAdditionalCredentials): self
+    {
+        $this->isAdditionalCredentials = $isAdditionalCredentials;
+
+        return $this;
+    }
+
+    public function getAdditionalCredential(): ?string
+    {
+        return $this->additionalCredential;
+    }
+
+    public function setAdditionalCredential(?string $additionalCredential): self
+    {
+        $this->additionalCredential = $additionalCredential;
+
+        return $this;
+    }
+
+    public function getAdditionalCredentialIcon(): ?string
+    {
+        return $this->additionalCredentialIcon;
+    }
+
+    public function setAdditionalCredentialIcon(?string $additionalCredentialIcon): self
+    {
+        $this->additionalCredentialIcon = $additionalCredentialIcon;
 
         return $this;
     }

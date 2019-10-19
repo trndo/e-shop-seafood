@@ -91,6 +91,70 @@ class ReceiptModel
     private $additionalPrice;
 
     /**
+     * @var bool
+     */
+    private $isAdditionalCredentials;
+
+    /**
+     * @var string|null
+     */
+    private $additionalCredential;
+
+    /**
+     * @var string|null
+     */
+    private $additionalCredentialIcon;
+
+    /**
+     * @return bool
+     */
+    public function isAdditionalCredentials(): bool
+    {
+        return $this->isAdditionalCredentials;
+    }
+
+    /**
+     * @param bool $isAdditionalCredentials
+     */
+    public function setIsAdditionalCredentials(bool $isAdditionalCredentials): void
+    {
+        $this->isAdditionalCredentials = $isAdditionalCredentials;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdditionalCredential(): ?string
+    {
+        return $this->additionalCredential;
+    }
+
+    /**
+     * @param string|null $additionalCredential
+     */
+    public function setAdditionalCredential(?string $additionalCredential): void
+    {
+        $this->additionalCredential = $additionalCredential;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdditionalCredentialIcon(): ?string
+    {
+        return $this->additionalCredentialIcon;
+    }
+
+    /**
+     * @param string|null $additionalCredentialIcon
+     */
+    public function setAdditionalCredentialIcon(?string $additionalCredentialIcon): void
+    {
+        $this->additionalCredentialIcon = $additionalCredentialIcon;
+    }
+
+
+    /**
      * @return float|null
      */
     public function getPercent(): ?float

@@ -8,6 +8,7 @@ use App\Model\ReceiptModel;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -68,12 +69,29 @@ class ReceiptType extends AbstractType
                 'label' => 'Доп. фотографии',
                 'required' => false,
             ]);
-            $builder->add('seoTitle', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            $builder->add('isAdditionalCredentials', CheckboxType::class, [
+                'label'    => 'Добавить вариацию рецепта (острый/алкогольный/винный и тд.)',
+                'required' => false,
+            ])
+                ->add('additionalCredential', FileType::class, [
+                    'attr' => ['class' => 'form-control-file'],
+                    'label' => 'Фото Вариации'
+                ])
+                ->add('additionalCredential', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'required' => false,
+                    'label' => 'Вариация',
+                ])
+                ->add('seoTitle', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
                 'required' => false,
                 'label' => 'Сео Тайтл ',
             ])
-            ->add('percent',NumberType::class,[
+            ->add('percent',NumberType::class, [
                 'label' => 'Процент платёжной системы (Процент/100)',
                 'attr' => [
                     'min' => 0.001,

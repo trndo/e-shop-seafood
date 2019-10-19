@@ -19,8 +19,7 @@ final class ReceiptMapper
             ->setSeoTitle($receipt->getSeoTitle())
             ->setSeoDescription($receipt->getSeoDescription())
             ->setAdditionalPrice($receipt->getAdditionalPrice())
-            ->setPercent($receipt->getPercent()
-            );
+            ->setPercent($receipt->getPercent());
 
         return $receiptDto;
     }

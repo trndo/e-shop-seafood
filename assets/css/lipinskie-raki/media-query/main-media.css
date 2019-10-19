@@ -420,6 +420,18 @@
         margin-top: 10px;
     }
 
+    .item-special-container{
+        padding: 9px 10px 0 0;
+        width: 38px;
+    }
+
+    .special-sign{
+        width: 30px;
+        height: 30px;
+        border-radius: 16px;
+        line-height: 30px;
+    }
+
 }
 
 @media (min-width: 320px) and (max-width: 374px){
@@ -702,6 +714,19 @@
         padding-left: 0;
         width: 290px;
         margin-top: 10px;
+    }
+
+
+    .item-special-container{
+        padding: 9px 10px 0 0;
+        width: 38px;
+    }
+
+    .special-sign{
+        width: 30px;
+        height: 30px;
+        border-radius: 16px;
+        line-height: 30px;
     }
 
 }

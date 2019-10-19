@@ -360,6 +360,7 @@ main{
     margin-right: 30px;
     margin-top: 29px;
     transition: all 0.2s linear;
+    position: relative;
 }
 .product-card:hover {
     transform: scale(1.05);

@@ -77,6 +77,7 @@ class ReceiptService implements ReceiptServiceInterface
 
     public function updateReceipt(Receipt $receipt, ReceiptModel $model): void
     {
+
         $receipt = $this->setReceiptFromModel($receipt, $model);
         if ($model->getTitlePhoto() instanceof UploadedFile) {
             $newTitlePhoto = $this->upload($model->getTitlePhoto(),self::RECEIPT_IMAGE_FOLDER, $receipt->getTitlePhoto());
@@ -270,6 +271,7 @@ class ReceiptService implements ReceiptServiceInterface
     private function setReceiptFromModel(Receipt $receipt, ReceiptModel $model): Receipt
     {
         $price = 0;
+
         $receipt->setName($model->getName())
             ->setCategory($model->getCategory())
             ->setDescription($model->getDescription())
@@ -278,7 +280,9 @@ class ReceiptService implements ReceiptServiceInterface
             ->setSeoTitle($model->getSeoTitle())
             ->setUnit($model->getUnit())
             ->setPercent($model->getPercent())
-            ->setAdditionalPrice($model->getAdditionalPrice());
+            ->setAdditionalPrice($model->getAdditionalPrice())
+            ->setExtraAlcohol($model->getExtraAlcohol())
+            ->setExtraHot($model->getExtraHot());
 
         $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() + $model->getPrice() : $price += $model->getPrice();
         $model->getPercent() ? $price += $price * $model->getPercent() : $price += $price;
@@ -286,6 +290,7 @@ class ReceiptService implements ReceiptServiceInterface
         $receipt->setPrice(ceil($price));
         return $receipt;
     }
+
 
 
 }

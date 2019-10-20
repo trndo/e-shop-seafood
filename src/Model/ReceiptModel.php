@@ -91,68 +91,50 @@ class ReceiptModel
     private $additionalPrice;
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    private $isAdditionalCredentials;
+    private $extraHot;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
-    private $additionalCredential;
+    private $extraAlcohol;
 
     /**
-     * @var string|null
+     * @return bool|null
      */
-    private $additionalCredentialIcon;
-
-    /**
-     * @return bool
-     */
-    public function isAdditionalCredentials(): bool
+    public function getExtraHot(): ?bool
     {
-        return $this->isAdditionalCredentials;
+        return $this->extraHot;
     }
 
     /**
-     * @param bool $isAdditionalCredentials
+     * @param bool|null $extraHot
+     * @return ReceiptModel
      */
-    public function setIsAdditionalCredentials(bool $isAdditionalCredentials): void
+    public function setExtraHot(?bool $extraHot): ReceiptModel
     {
-        $this->isAdditionalCredentials = $isAdditionalCredentials;
+        $this->extraHot = $extraHot;
+        return $this;
     }
 
     /**
-     * @return string|null
+     * @return bool|null
      */
-    public function getAdditionalCredential(): ?string
+    public function getExtraAlcohol(): ?bool
     {
-        return $this->additionalCredential;
+        return $this->extraAlcohol;
     }
 
     /**
-     * @param string|null $additionalCredential
+     * @param bool|null $extraAlcohol
+     * @return ReceiptModel
      */
-    public function setAdditionalCredential(?string $additionalCredential): void
+    public function setExtraAlcohol(?bool $extraAlcohol): ReceiptModel
     {
-        $this->additionalCredential = $additionalCredential;
+        $this->extraAlcohol = $extraAlcohol;
+        return $this;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getAdditionalCredentialIcon(): ?string
-    {
-        return $this->additionalCredentialIcon;
-    }
-
-    /**
-     * @param string|null $additionalCredentialIcon
-     */
-    public function setAdditionalCredentialIcon(?string $additionalCredentialIcon): void
-    {
-        $this->additionalCredentialIcon = $additionalCredentialIcon;
-    }
-
 
     /**
      * @return float|null
@@ -372,4 +354,5 @@ class ReceiptModel
         }
         return $this;
     }
+
 }

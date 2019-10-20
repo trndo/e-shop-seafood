@@ -140,18 +140,12 @@ class Receipt
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isAdditionalCredentials;
+    private $extraHot;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $additionalCredential;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $additionalCredentialIcon;
-
+    private $extraAlcohol;
 
     public function __construct()
     {
@@ -589,38 +583,26 @@ class Receipt
         return $this;
     }
 
-    public function getIsAdditionalCredentials(): ?bool
+    public function getExtraHot(): ?bool
     {
-        return $this->isAdditionalCredentials;
+        return $this->extraHot;
     }
 
-    public function setIsAdditionalCredentials(?bool $isAdditionalCredentials): self
+    public function setExtraHot(?bool $extraHot): self
     {
-        $this->isAdditionalCredentials = $isAdditionalCredentials;
+        $this->extraHot = $extraHot;
 
         return $this;
     }
 
-    public function getAdditionalCredential(): ?string
+    public function getExtraAlcohol(): ?bool
     {
-        return $this->additionalCredential;
+        return $this->extraAlcohol;
     }
 
-    public function setAdditionalCredential(?string $additionalCredential): self
+    public function setExtraAlcohol(?bool $extraAlcohol): self
     {
-        $this->additionalCredential = $additionalCredential;
-
-        return $this;
-    }
-
-    public function getAdditionalCredentialIcon(): ?string
-    {
-        return $this->additionalCredentialIcon;
-    }
-
-    public function setAdditionalCredentialIcon(?string $additionalCredentialIcon): self
-    {
-        $this->additionalCredentialIcon = $additionalCredentialIcon;
+        $this->extraAlcohol = $extraAlcohol;
 
         return $this;
     }

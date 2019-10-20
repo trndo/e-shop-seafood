@@ -12350,6 +12350,16 @@ a:focus {
     padding: 0.375rem 0.75rem;
 }
 
+.visible-inputs {
+    display: block;
+}
+.not-visible-inputs {
+    display: none;
+}
+
+.notChecked {
+    display: none;
+}
 .btn-icon-split.btn-sm .icon, .btn-group-sm > .btn-icon-split.btn .icon {
     padding: 0.25rem 0.5rem;
 }

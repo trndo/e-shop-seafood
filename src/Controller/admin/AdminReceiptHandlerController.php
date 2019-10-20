@@ -53,10 +53,9 @@ class AdminReceiptHandlerController extends AbstractController
     public function updateReceipt(Receipt $receipt,Request $request, ReceiptService $service): Response
     {
         $options['update'] = true;
-        $form = $this->createForm(ReceiptType::class, ReceiptMapper::entityToModel($receipt),$options);
+        $form = $this->createForm(ReceiptType::class, ReceiptMapper::entityToModel($receipt), $options);
 
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()) {
             $service->updateReceipt($receipt,$form->getData());
             return $this->redirectToRoute('receipts');

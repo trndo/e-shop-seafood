@@ -31,7 +31,8 @@ class CategoryController extends AbstractController
             ? $this->render('products.html.twig',[
                 'items' => $items,
                 'active' => $category->getSlug(),
-                'categoryInfo' => $category->getInitialCardText()
+                'categoryInfo' => $category->getInitialCardText(),
+                'category' => $category
             ])
             : $this->render('productsWithSize.html.twig',[
                 'items' => $items,

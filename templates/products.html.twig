@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ category.seoTitle }}{% endblock %}
+{% block description %}{{ category.seoDescription }}{% endblock %}
 {% block body %}
     <div id="category" class="container" >
         <div class="container-inside">
@@ -35,9 +37,16 @@
                                             <img src="{{ asset('assets/img/test.jpg') }}" alt="photo">
                                         {% endif %}
                                     {% endif %}
-                                    <div class="item-special-container pulse">
-                                        <div class="special-sign hot"><i class="fab fa-hotjar"></i></div>
-                                    </div>
+                                    {% if item.type == 'receipt' %}
+                                            <div class="item-special-container pulse">
+                                        {% if item.extraHot %}
+                                                <div class="special-sign hot"><i class="fab fa-hotjar"></i></div>
+                                        {% endif %}
+                                        {% if item.extraAlcohol %}
+                                                <div class="special-sign hot"><i class="fab fa-hotjar"></i></div>
+                                        {% endif %}
+                                            </div>
+                                    {% endif %}
                                     <div class="card-content">
                                         <h4>{{ item.name }}</h4>
                                        {# <p>{{ item.description }}</p>#}

@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -69,27 +70,24 @@ class ReceiptType extends AbstractType
                 'label' => 'Доп. фотографии',
                 'required' => false,
             ]);
-            $builder->add('isAdditionalCredentials', CheckboxType::class, [
-                'label'    => 'Добавить вариацию рецепта (острый/алкогольный/винный и тд.)',
-                'required' => false,
-            ])
-                ->add('additionalCredential', FileType::class, [
-                    'attr' => ['class' => 'form-control-file'],
-                    'label' => 'Фото Вариации'
-                ])
-                ->add('additionalCredential', TextType::class, [
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
-                    'required' => false,
-                    'label' => 'Вариация',
-                ])
-                ->add('seoTitle', TextType::class, [
+            $builder->add('seoTitle', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'required' => false,
                 'label' => 'Сео Тайтл ',
+            ])
+            ->add('extraHot',CheckboxType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Острый',
+            ])
+            ->add('extraAlcohol',CheckboxType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Алкогольный',
             ])
             ->add('percent',NumberType::class, [
                 'label' => 'Процент платёжной системы (Процент/100)',

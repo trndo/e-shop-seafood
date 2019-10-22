@@ -79,15 +79,21 @@ class ReceiptType extends AbstractType
             ])
             ->add('extraHot',CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-check-input'
                 ],
                 'label' => 'Острый',
+                'label_attr' => [
+                    'class' => 'form-check-label'
+                ],
             ])
             ->add('extraAlcohol',CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-check-input'
                 ],
                 'label' => 'Алкогольный',
+                'label_attr' => [
+                    'class' => 'form-check-label'
+                ],
             ])
             ->add('percent',NumberType::class, [
                 'label' => 'Процент платёжной системы (Процент/100)',

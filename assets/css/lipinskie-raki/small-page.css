@@ -132,6 +132,7 @@
     height: 70px;
     display: inline-block;
     position: relative;
+    object-fit: cover;
     float: left;
 }
 .order-product-name {

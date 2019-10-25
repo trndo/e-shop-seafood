@@ -22,6 +22,7 @@
                     <span class="attention-subtitle">Не помнишь что заказал и когда ?</span><br>
                     <span class="attention-title">Или хочешь повторить заказ</span>
                 </div>
+                {% if orders is not empty %}
                 <div class="history-container">
                     {% for order in orders %}
                         <div class="history-item {{ order.status != 'done' ? 'item-in-process' : '' }}">
@@ -70,6 +71,11 @@
                         </div>
                     {% endfor %}
                 </div>
+                {% else %}
+                    <div class="no-history">
+                        <span class="attention-title">Пока что нету заказов :(</span>
+                    </div>
+                {% endif %}
             </div>
             <div class="attention-promotion">
                 <div class="bonuses-in-attention">

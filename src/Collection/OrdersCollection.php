@@ -7,7 +7,7 @@ namespace App\Collection;
 use App\Entity\OrderInfo;
 use Traversable;
 
-class OrdersCollection implements \IteratorAggregate
+class OrdersCollection implements \IteratorAggregate, \Countable
 {
     /**
      * @var OrderInfo[]
@@ -29,5 +29,14 @@ class OrdersCollection implements \IteratorAggregate
     public function getIterator(): iterable
     {
         return new \ArrayIterator($this->orders);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function count()
+    {
+        return \count($this->orders);
     }
 }

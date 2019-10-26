@@ -855,6 +855,14 @@ input[type=number] {
     padding-top: 15px;
     display: block;
 }
+
+.promotion-title-placeholder{
+    width: 530px;
+    height: 100%;
+    margin-left: 50px;
+    padding-top: 4%;
+}
+
 .bonuses-in-attention{
     width: 103px;
     height: 24px;
@@ -874,6 +882,10 @@ input[type=number] {
     position: absolute;
     right: -27px;
     top: -2px;
+}
+.without-bonus-count{
+    top: 15px;
+    right: 42px;
 }
 
 .bonus-bold{

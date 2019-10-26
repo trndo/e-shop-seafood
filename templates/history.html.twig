@@ -77,25 +77,7 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="attention-promotion">
-                <div class="bonuses-in-attention">
-                    100/<span class="bonus-bold">2000</span>
-                </div>
-                <div class="promotion-title">
-                    <span class="attention-subtitle">Купи товаров на 2000 грн за всё время</span>
-                    <span class="attention-title">Получи Рыбу в подарок</span>
-                </div>
-                <div class="scale">
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                    <div class="scale-section"></div>
-                </div>
-            </div>
+            {% include 'elements/attention-promotion.html.twig' %}
         </main>
     </div>
     {% include 'elements/__footer.html.twig' with { 'active': false } %}

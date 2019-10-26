@@ -9,5 +9,8 @@
         <div class="additional-nav-item nav-item-grey {% if active == 'user-reset' %}red{% endif %}" data-url="{{ path('resetPass', {'uniqueId': app.user.uniqueId}) }}">
             Поменять пароль
         </div>
+       {# <div class="additional-nav-item nav-item-grey show-mobile-only" data-url="{{ path('logout') }}">
+            Выйти
+        </div>#}
     </div>
 </div>

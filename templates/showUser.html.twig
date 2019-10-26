@@ -13,10 +13,11 @@
             {% include 'elements/additionalNavUser.html.twig' with { 'active': 'user'} %}
             <div class="user-tabs">
                 <div class="user-tab user-tab-active" data-path="{{ path('user',{'uniqueId': app.user.uniqueId}) }}">Личные данные</div>
-                <div class="user-tab" data-path="{{ path('user_orders',{'uniqueId': app.user.uniqueId}) }}">История заказов</div>
+                <div class="user-tab" data-path="{{ path('user_orders',{'uniqueId': app.user.uniqueId}) }}">Мои заказы</div>
                 <div class="user-tab user-tab-last" data-path="{{ path('resetPass',{'uniqueId': app.user.uniqueId}) }}">Поменять пароль</div>
             </div>
             <div class="user-red-content">
+                <a href="{{ path('logout') }}" class="logout" title="Выйти"><i class="fas fa-sign-out-alt"></i></a>
                 <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>
                 <div class="user-title mt-3">
                     <span class="attention-title">Один раз заполнил - заказывай всё время!</span><br>

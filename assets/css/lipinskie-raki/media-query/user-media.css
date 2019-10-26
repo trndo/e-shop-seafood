@@ -157,6 +157,17 @@
     .small-height{
         height: max-content;
     }
+
+    .show-mobile-only{
+        display: block;
+    }
+
+    .logout{
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        border-radius: 20px
+    }
 }
 
 @media (min-width: 320px) and (max-width: 374px){
@@ -301,4 +312,15 @@
     .resetpass-container{
         margin: 0 auto 30px;
     }
+
+    .show-mobile-only{
+        display: block;
+    }
+    .logout{
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        border-radius: 20px
+    }
+
 }

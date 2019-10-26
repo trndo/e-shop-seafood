@@ -29,24 +29,24 @@
                 <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %}
                         data-location="{{ path('home') }}">Главная
                 </li>
-                <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %}
-                        data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки
+                <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки
                 </li>
                 <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
                         data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки
                 </li>
-                <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
-                        data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки
+                <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %}
+                        data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки
                 </li>
-                <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>
+                {#<li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>#}
             </ul>
         </nav>
     </div>
-    <div class="dropdown">
+    {#<div class="dropdown">
         <ul>
            {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
         </ul>
-    </div>
+    </div>#}
 </header>
 <header id="mobile">
     <img id="mobile-logo" src="/assets/img/header-logo.svg"/>

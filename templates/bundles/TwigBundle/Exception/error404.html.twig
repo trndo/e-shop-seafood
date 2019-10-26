@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        footer{
+            position: absolute;
+        }
+        @media  (max-height: 757px) {
+            footer{
+                position: relative;
+            }
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <section class="wrapper">
+        <div class="container">
+            <div class="container-inside">
+                {% include 'elements/__header.html.twig' with {'active': false} %}
+                <main>
+                    <div class="error-container">
+                        <div class="error-code">404</div>
+                        <div class="error-text">
+                            <span class="error-text-subtitle">Упсс, страница не найдена</span>
+                            <span class="error-text-title">Ты просто не купил раков)</span>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        {% include 'elements/__footer.html.twig' with {'active': false} %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+    </section>
+{% endblock %}

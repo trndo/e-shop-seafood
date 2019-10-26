@@ -36,7 +36,8 @@ class CategoryController extends AbstractController
             ])
             : $this->render('productsWithSize.html.twig',[
                 'items' => $items,
-                'active' => $category->getSlug()
+                'active' => $category->getSlug(),
+                'category' => $category
             ]);
     }
 

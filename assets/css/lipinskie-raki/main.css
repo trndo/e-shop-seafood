@@ -364,7 +364,7 @@ main{
 }
 .product-card:hover {
     transform: scale(1.05);
-    box-shadow: 6px 6px 6px 0 #cc1c1c;
+    box-shadow: 1px 0 17px 5px #cc1c1c;
 }
 .product-card:nth-child(3n+3){
     margin-right: 0;

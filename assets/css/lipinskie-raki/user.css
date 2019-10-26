@@ -322,3 +322,9 @@
     width: 100%;
     margin-top: 18px;
 }
+
+.no-history{
+    margin: 20% auto 0 auto;
+    width: 300px;
+    text-align: center;
+}

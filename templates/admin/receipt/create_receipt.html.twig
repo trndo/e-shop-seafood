@@ -59,12 +59,13 @@
                             {{ form_row(form.seoDescription) }}
                         </div>
                         <div class="form-group">
-                            {{ form_row(form.extraHot) }}
+                            {{ form_widget(form.extraHot) }}
+                            {{ form_label(form.extraHot) }}
                         </div>
                         <div class="form-group">
-                            {{ form_row(form.extraAlcohol) }}
+                            {{ form_widget(form.extraAlcohol) }}
+                            {{ form_label(form.extraAlcohol) }}
                         </div>
-
                         {{ form_end(form) }}
                     </div>
                 </div>

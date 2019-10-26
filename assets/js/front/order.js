@@ -5,6 +5,7 @@ import 'timepicker/jquery.timepicker.css';
 import Picker from 'pickerjs/dist/picker';
 import $ from 'jquery';
 import 'timepicker/jquery.timepicker';
+import 'jquery-mask-plugin';
 
 $('.date-input').datepicker({
     minDate: new Date()
@@ -44,3 +45,4 @@ $('.self-delivery').click(function () {
 
 });
 
+$('.phone-mask').mask('+38(000)000-00-00');

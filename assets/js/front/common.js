@@ -147,7 +147,7 @@ $('#user-mobile').click(function () {
     window.location.href = $(this).data('url');
 });
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     if($('.products-row').length) {
         let children = $('.products-row').children();
         if (children.length < 4 && window.screen.height > 1024) {
@@ -155,7 +155,7 @@ $(document).ready(function () {
             $('footer').css('position', 'absolute');
         }
     }
-});
+});*/
 function swipeOutOfScreen() {
     $('#exampleModalCenter').animate({
         opacity: 0,
@@ -172,4 +172,9 @@ function displayNone() {
 
 $('.additional-nav-item').click(function () {
     window.location.href = $(this).data('url');
+});
+
+$('.readmore').click(function () {
+    $('#main-text-container').find('p').css({overflow: 'visible', height: 'max-content'});
+    $(this).remove();
 });

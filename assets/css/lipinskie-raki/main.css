@@ -465,21 +465,29 @@ main{
 #main-photo{
     background-image: url("../../img/main-page-img.jpg");
     background-size: cover;
-    width: 495px;
+    /*width: 495px;*/
+    width: 361px;
     height: 506px;
     display: block;
 }
 
 #main-text{
-    width: 497px;
+    /*width: 497px;
     height: 506px;
     background: #F13A3A;
     display: block;
-    padding: 109px 35px 114px 35px;
+    padding: 109px 35px 114px 35px;*/
+    width: 631px;
+    height: 506px;
+    background: #F13A3A;
+    display: block;
+    padding: 24px 39px;
 }
 #main-text-container{
-    width: 428px;
-    height: 246px;
+    /*width: 428px;
+    height: 246px;*/
+    width: 100%;
+    height: max-content;
 }
 
 #main-text-container h1{
@@ -501,6 +509,11 @@ main{
     line-height: 100%;
     text-align: justify;
     color: #FFFFFF;
+}
+
+.readmore{
+    display: none;
+    margin-top: 4px;
 }
 
 .custom-button{

@@ -67,6 +67,21 @@
                 </div>
             </main>
         </div>
+        <div class="page-text">
+            <div id="main-photo">
+            </div>
+            <div id="main-text">
+                <div id="main-text-container">
+                    <h1>Раковарня «Липинские Раки»</h1>
+                    <p>
+                        {{ category.seoText }}
+                    </p>
+                </div>
+                <div class="fast-order-big custom-button readmore">
+                    Большое текста
+                </div>
+            </div>
+        </div>
     </div>
     {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
     {% include 'elements/__footer.html.twig' with {'active': active } %}

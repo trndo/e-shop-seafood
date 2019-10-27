@@ -1,7 +1,8 @@
 #products-with-size-photo{
     background-image: url("../../img/image-products-size.jpg");
     background-size: cover;
-    width: 495px;
+    /*width: 495px;*/
+    width: 361px;
     height: 506px;
     display: inline-block;
     float: left;

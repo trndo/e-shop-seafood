@@ -82,6 +82,7 @@ class ReceiptType extends AbstractType
                     'class' => 'form-check-input'
                 ],
                 'label' => 'Острый',
+                'required' => false,
                 'label_attr' => [
                     'class' => 'form-check-label'
                 ],
@@ -91,6 +92,7 @@ class ReceiptType extends AbstractType
                     'class' => 'form-check-input'
                 ],
                 'label' => 'Алкогольный',
+                'required' => false,
                 'label_attr' => [
                     'class' => 'form-check-label'
                 ],

@@ -17,6 +17,7 @@ use App\Repository\ReservationRepository;
 use App\Service\CartHandler\CartHandler;
 use App\Service\EntityService\ReservationHandler\ReservationInterface;
 use App\Service\MailService\MailSenderInterface;
+use App\Service\SmsSenderService\SmsSenderInterface;
 use App\Traits\OrderMailTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +51,10 @@ class OrderInfoHandler implements OrderInfoInterface
      * @var MailSenderInterface
      */
     private $mailSenderService;
-
+    /**
+     * @var SmsSenderInterface
+     */
+    private $smsSender;
 
 
     /**
@@ -60,12 +64,14 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param OrderDetailRepository $orderDetailRepository
      * @param ReservationInterface $reservation
      * @param MailSenderInterface $mailSenderService
+     * @param SmsSenderInterface $smsSender
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 CartHandler $cartHandler,
                                 OrderDetailRepository $orderDetailRepository,
                                 ReservationInterface $reservation,
-                                MailSenderInterface $mailSenderService
+                                MailSenderInterface $mailSenderService,
+                                SmsSenderInterface $smsSender
     )
     {
         $this->entityManager = $entityManager;
@@ -73,6 +79,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $this->orderDetailRepository = $orderDetailRepository;
         $this->reservation = $reservation;
         $this->mailSenderService = $mailSenderService;
+        $this->smsSender = $smsSender;
     }
 
     public function addOrder(OrderModel $orderModel, Request $request): void
@@ -100,7 +107,6 @@ class OrderInfoHandler implements OrderInfoInterface
             $this->entityManager->persist($orderDetail);
         }
 
-
         $orderInfo->setTotalPrice($totalSum)
             ->setOrderUniqueId(
                 $this->generateHash($orderInfo, 7)
@@ -111,6 +117,11 @@ class OrderInfoHandler implements OrderInfoInterface
 
         $this->entityManager->flush();
         $this->mailSenderService->sendAboutMakingOrder($orderInfo->getUser(), $orderInfo);
+        $this->smsSender->sendSms(
+            'Заказ № '.$orderInfo->getOrderUniqueId().' принят в обработку!',
+            $orderInfo->getOrderPhone()
+        );
+
 
         $session->remove('reservationId');
         $session->remove('cart');

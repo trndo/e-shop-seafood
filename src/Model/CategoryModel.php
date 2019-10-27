@@ -44,6 +44,11 @@ class CategoryModel
     private $initialCardText;
 
     /**
+     * @var string|null
+     */
+    private $seoText;
+
+    /**
      * @return UploadedFile|null
      */
     public function getTitlePhoto(): ?UploadedFile
@@ -174,6 +179,22 @@ class CategoryModel
     {
         $this->initialCardText = $initialCardText;
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeoText(): ?string
+    {
+        return $this->seoText;
+    }
+
+    /**
+     * @param string|null $seoText
+     */
+    public function setSeoText(?string $seoText): void
+    {
+        $this->seoText = $seoText;
     }
 
 }

@@ -81,6 +81,11 @@ class Category
      */
     private $initialCardText;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $seoText;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -262,6 +267,18 @@ class Category
     public function setInitialCardText(?string $initialCardText): self
     {
         $this->initialCardText = $initialCardText;
+
+        return $this;
+    }
+
+    public function getSeoText(): ?string
+    {
+        return $this->seoText;
+    }
+
+    public function setSeoText(?string $seoText): self
+    {
+        $this->seoText = $seoText;
 
         return $this;
     }

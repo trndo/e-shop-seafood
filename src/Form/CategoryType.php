@@ -61,6 +61,13 @@ class CategoryType extends AbstractType
             ],
             'required' => false
         ])
+        ->add('seoText',TextareaType::class,[
+            'label' => 'Сео текст',
+            'attr' => [
+                'class' => 'form-control'
+            ],
+            'required' => false
+        ])
         ->add('titlePhoto',FileType::class,[
             'label' => 'Фото категории',
             'attr' => [
@@ -69,7 +76,7 @@ class CategoryType extends AbstractType
             'required' => false
         ])
         ->add('save',SubmitType::class,[
-            'label' => 'Добавить категорию!',
+            'label' => 'Сохранить!',
             'attr' => [
                 'class' => 'btn btn-primary btn-in-form'
             ]

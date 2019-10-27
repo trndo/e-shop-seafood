@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;">
 <head>
     <meta charset="UTF-8">
@@ -242,12 +242,12 @@
                                                         <tr style="border-collapse:collapse;">
                                                             <td class="es-m-txt-c" align="center"
                                                                 style="padding:15px;Margin:0;"><a
-                                                                        href="https://lipinskieraki.com" target="_blank"
-                                                                        style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#1376C8;"><img
-                                                                            src="https://frkxk.stripocdn.email/content/guids/CABINET_88398fae02dc7e25f02c73a4ebc9ec8b/images/92601571855677564.png"
-                                                                            alt
-                                                                            style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"
-                                                                            width="174" height="102.79"></a></td>
+                                                                    href="https://lipinskieraki.com" target="_blank"
+                                                                    style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:underline;color:#1376C8;"><img
+                                                                    src="https://frkxk.stripocdn.email/content/guids/CABINET_88398fae02dc7e25f02c73a4ebc9ec8b/images/92601571855677564.png"
+                                                                    alt
+                                                                    style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;"
+                                                                    width="174" height="102.79"></a></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -281,12 +281,13 @@
                                                                 style="padding:0;Margin:0;padding-bottom:15px;">
                                                                 <h2
                                                                         style="Margin:0;line-height:29px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:24px;font-style:normal;font-weight:normal;color:#FFFFFF;">
-                                                                    Ваш пароль был измёнен!<br>
+                                                                    Запрос на изминение пароль!<br>
                                                                 </h2></td>
                                                         </tr>
                                                         <tr style="border-collapse:collapse;">
                                                             <td align="center" style="padding:0;Margin:0;">
-                                                                <p>Вы успешно изменили ваш пароль!</p>
+                                                                <p>Перейдите по ссылке, что бы сбросить пароль:</p>
+                                                                <p>{{ url('newPassword',{'passToken': user.passToken}) }}</p>
                                                             </td>
                                                         </tr>
                                                     </table>

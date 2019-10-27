@@ -16,6 +16,7 @@ use App\Repository\OrderDetailRepository;
 use App\Repository\ReservationRepository;
 use App\Service\CartHandler\CartHandler;
 use App\Service\EntityService\ReservationHandler\ReservationInterface;
+use App\Service\MailService\MailSenderInterface;
 use App\Traits\OrderMailTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,24 +46,33 @@ class OrderInfoHandler implements OrderInfoInterface
      */
     private $reservation;
 
-    use OrderMailTrait;
+    /**
+     * @var MailSenderInterface
+     */
+    private $mailSenderService;
+
+
+
     /**
      * OrderInfoHandler constructor.
      * @param EntityManagerInterface $entityManager
      * @param CartHandler $cartHandler
      * @param OrderDetailRepository $orderDetailRepository
      * @param ReservationInterface $reservation
+     * @param MailSenderInterface $mailSenderService
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 CartHandler $cartHandler,
                                 OrderDetailRepository $orderDetailRepository,
-                                ReservationInterface $reservation
+                                ReservationInterface $reservation,
+                                MailSenderInterface $mailSenderService
     )
     {
         $this->entityManager = $entityManager;
         $this->cartHandler = $cartHandler;
         $this->orderDetailRepository = $orderDetailRepository;
         $this->reservation = $reservation;
+        $this->mailSenderService = $mailSenderService;
     }
 
     public function addOrder(OrderModel $orderModel, Request $request): void
@@ -100,8 +110,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $this->entityManager->persist($orderInfo);
 
         $this->entityManager->flush();
-
-        $this->sendEmailAboutOrder($orderInfo->getUser(), $orderInfo);
+        $this->mailSenderService->sendAboutMakingOrder($orderInfo->getUser(), $orderInfo);
 
         $session->remove('reservationId');
         $session->remove('cart');

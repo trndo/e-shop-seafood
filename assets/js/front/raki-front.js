@@ -144,7 +144,6 @@ $(document).ready(function () {
     });
 
     $('.show-modal').on('click', function () {
-        console.log('i am in show modal');
         let name = $(this).data('name');
         let type = $(this).data('type');
         $('#overlay').toggle();
@@ -175,15 +174,12 @@ $(document).ready(function () {
             },
             success:function (res) {
                 if(res) {
-                    console.log(res);
-                    console.log(info.parent());
                     info.parent().replaceWith(res);
                     if($('.receipt-sizes-container').length)
                         $('.product-price').after(block);
                 }
                 else {
                     info.parent().remove();
-                    console.log('too bad')
                 }
             }
         })
@@ -210,11 +206,28 @@ $(document).ready(function () {
                     info.parent().remove();
                     $('.product-price').after(block);
                 }
+                $('.additional-nav').before(getWarnBlock(orderType === "today"));
             },
             error: function (res) {
                 console.log(res);
             }
         });
+    });
+
+    function getWarnBlock(condition) {
+        return `<div class="warn">
+                            <h2>
+                                ${ condition ? 'Ты делаешь заказ только на сегодня': 'Ты делаешь заказ на другой день'}
+                            </h2>
+                            <div id="another-type" class="custom-button warn-button">
+                                ${ condition ? 'Заказ на другой день' : 'Заказ на сегодня'}
+                            </div>
+                        </div>`;
+    }
+    $(document).on('click', '#another-type', function () {
+        let modal = $('.modal-window-with-btn');
+        $('#overlay').fadeToggle();
+        modal.css('display','flex');
     });
 
     let counter = 8;
@@ -243,6 +256,16 @@ $(document).ready(function () {
 
     $('img[data-close-modal]').click(function () {
         $('.modal-window').fadeToggle();
+        $('#overlay').fadeToggle();
+    });
+
+    $('img[data-close-modal-btn]').click(function () {
+       $('.modal-window-with-btn').fadeToggle();
+       $('#overlay').fadeToggle();
+    });
+
+    $('.transparent').click(function () {
+        $('.modal-window-with-btn').fadeToggle();
         $('#overlay').fadeToggle();
     });
 
@@ -543,7 +566,6 @@ $(document).ready(function () {
             modal.children('.modal-title').text(text);
         $('#overlay').fadeToggle();
         modal.css('display','flex');
-        console.log('show modal!');
     }
     function showSuccessAdd(){
         $('#overlay').fadeToggle().delay(400).fadeToggle();
@@ -607,7 +629,7 @@ $(document).ready(function () {
                 $('#overlay').fadeToggle();
             }
         });
-    })
+    });
 });
 
 

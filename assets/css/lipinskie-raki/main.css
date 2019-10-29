@@ -898,7 +898,7 @@ footer{
     left: unset;
 }
 
-.modal-window{
+.modal-window, .modal-window-with-btn{
     display: none;
     justify-content: center;
     flex-direction: column;

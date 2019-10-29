@@ -14,14 +14,28 @@
                             <div></div>
                         </div> -->
                     </div>
-                    <div class="warn">
-                        <h2>
-                            Ты делаешь заказ только на сегодня
-                        </h2>
-                        <div class="custom-button warn-button">
-                            Заказ на другой день
+                    {% set session = app.session.get('chooseOrder') %}
+                    {% if session is not null %}
+                        {% if session %}
+                        <div class="warn">
+                            <h2>
+                                Ты делаешь заказ только на сегодня
+                            </h2>
+                            <div id="another-type" class="custom-button warn-button">
+                                Заказ на другой день
+                            </div>
                         </div>
-                    </div>
+                       {% else %}
+                        <div class="warn">
+                            <h2>
+                                Ты делаешь заказ на другой день
+                            </h2>
+                            <div id="another-type" class="custom-button warn-button">
+                                Заказ на сегодня
+                            </div>
+                        </div>
+                       {% endif %}
+                    {% endif %}
                     {% include 'elements/additionalNav.html.twig' %}
                     <div class="product-container">
                         <div class="product-photo">
@@ -70,7 +84,6 @@
                             <div class="description">
                                {{ item.description }}
                             </div>
-                            {% set session = app.session.get('chooseOrder') %}
                             {% if session is null %}
                             <div class="today-or-tomorrow">
                                 <div class="tor-title">

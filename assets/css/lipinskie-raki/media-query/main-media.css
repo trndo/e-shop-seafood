@@ -271,7 +271,7 @@
         margin-top: 58px;
     }
 
-    .modal-window{
+    .modal-window, .modal-window-with-btn{
         width: 286px;
         height: 320px;
     }
@@ -574,7 +574,7 @@
     #contact-email{
         font-size: 13px;
     }
-    .modal-window{
+    .modal-window,.modal-window-with-btn{
         width: 286px;
         height: 320px;
     }

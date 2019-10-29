@@ -131,3 +131,4 @@ class ReceiptType extends AbstractType
         ]);
     }
 }
+

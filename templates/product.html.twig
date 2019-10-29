@@ -14,6 +14,14 @@
                             <div></div>
                         </div> -->
                     </div>
+                    <div class="warn">
+                        <h2>
+                            Ты делаешь заказ только на сегодня
+                        </h2>
+                        <div class="custom-button warn-button">
+                            Заказ на другой день
+                        </div>
+                    </div>
                     {% include 'elements/additionalNav.html.twig' %}
                     <div class="product-container">
                         <div class="product-photo">
@@ -150,6 +158,7 @@
         <div id="overlay">
             {% include 'elements/modal.html.twig' with {'special_class' : 'product-modal'} %}
             <div class="success-add">Добавлено в корзину</div>
+            {% include 'elements/changeOrderType.html.twig' %}
         </div>
  {% endblock %}
 {% block javascripts %}

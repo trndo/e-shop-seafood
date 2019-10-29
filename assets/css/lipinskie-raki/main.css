@@ -944,6 +944,19 @@ footer{
     margin: 10px auto 0;
 }
 
+.transparent{
+    box-shadow: none;
+    background-color: transparent;
+    color: #FFFFFF;
+    transition: background-color .5s;
+}
+
+.transparent:hover{
+    box-shadow: 4px 4px 6px 1px rgba(50, 9, 9, 0.25);
+    background: #FFFFFF;
+    color: #F13A3A;
+}
+
 .close-modal{
     position: absolute;
     width: 25px;

@@ -120,7 +120,7 @@ $('#user').click(function () {
    window.location.href = $(this).data('user');
 });
 
-$('.warn-button').click(function () {
+$('#another-category').click(function () {
    window.location.href = '/category-varenye-raki';
 });
 

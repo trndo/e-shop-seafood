@@ -93,7 +93,7 @@ class ProductRepository extends ServiceEntityRepository implements FinderInterfa
         $query = $this->createQueryBuilderForProduct('p')
             ->andWhere('p.status = 1 AND c.id = :categoryId')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('p.category', 'ASC')
+            ->orderBy('p.name', 'ASC')
             ->andWhere('p.isDeletable IS NULL');
 
             if ($setMaxResults) {

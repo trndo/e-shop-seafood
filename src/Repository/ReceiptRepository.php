@@ -79,7 +79,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.orderDetail', 'od')
             ->andWhere('r.status = true AND c.id = :categoryId AND r.isDeletable IS NULL')
             ->setParameter('categoryId', $categoryId)
-            ->orderBy('r.category', 'ASC');
+            ->orderBy('r.name', 'ASC');
 
             if ($setMaxResults) {
                 $query->setMaxResults(8);

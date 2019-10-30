@@ -67,7 +67,9 @@ class ItemController extends AbstractController
         $orderType = $request->request->get('orderType');
         $sizes = $productService->getSizes($id, $orderType);
 
-        return $this->render('elements/sizes.html.twig', ['products' => $sizes, 'id' => $id]);
+        return $this->render('elements/sizes.html.twig', [
+            'products' => $sizes, 'id' => $id
+        ]);
     }
 
     private function checkIsValidProduct(Category $category, $item): void

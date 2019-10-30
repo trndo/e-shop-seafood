@@ -229,6 +229,14 @@ $(document).ready(function () {
         $('#overlay').fadeToggle();
         modal.css('display','flex');
     });
+    $('#clear-cart').click(function () {
+       $.ajax('/changeOrderType', {
+           type: 'GET',
+           success: function (res) {
+               window.location.reload()
+           }
+       })
+    });
 
     let counter = 8;
 
@@ -603,7 +611,6 @@ $(document).ready(function () {
             $('#mess-'+(++messageIndex)).fadeIn();
             $('#ell-'+messageIndex).addClass('ellipse-active');
         });
-
     }
 
     $('.code').click(function () {

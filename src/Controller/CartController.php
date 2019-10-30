@@ -89,4 +89,19 @@ class CartController extends AbstractController
         $response = $handler->changeItemQuantity($request->request);
         return new JsonResponse($response);
     }
+
+    /**
+     * @Route("/changeOrderType", name="changeOrderType", methods={"GET"})
+     *
+     * @param SessionInterface $session
+     * @return JsonResponse
+     */
+    public function changeOrderType(SessionInterface $session): JsonResponse
+    {
+        $session->set('chooseOrder',!$session->get('chooseOrder'));
+        $session->set('cart', []);
+        $session->set('totalSum', 0);
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
 }

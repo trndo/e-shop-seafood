@@ -6,15 +6,17 @@ require('bootstrap');
 import bsCustomFileInput from 'bs-custom-file-input';
 import './plugins/jquery.abacus.min';
 import 'jquery-mask-plugin';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 let totalSum = $('#order_info_totalPrice').val();
 $('#order_info_totalPrice').abacus(totalSum);
+
+ClassicEditor.create(document.querySelector('.editor'));
 
 (function ($) {
     "use strict"; // Start of use strict
     $(document).ready(function () {
         bsCustomFileInput.init()
-
     });
 
     $('.abacus-style').change(function () {

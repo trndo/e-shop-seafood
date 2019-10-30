@@ -56,7 +56,7 @@ class ReceiptType extends AbstractType
                 'placeholder' => 'Выберите категорию'
             ])
             ->add('description', TextareaType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => ['class' => 'form-control editor'],
                 'label' => 'Описание рецепта'
             ])
             ->add('titlePhoto', FileType::class, [

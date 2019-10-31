@@ -23,8 +23,6 @@ final class Version20191031122004 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE category ADD title_seo_header VARCHAR(191) DEFAULT NULL');
-        $this->addSql('ALTER TABLE order_detail DROP INDEX FK_ED896F464584665A, ADD UNIQUE INDEX UNIQ_ED896F464584665A (product_id)');
-        $this->addSql('ALTER TABLE order_detail DROP INDEX FK_ED896F462B5CA896, ADD UNIQUE INDEX UNIQ_ED896F462B5CA896 (receipt_id)');
     }
 
     public function down(Schema $schema) : void
@@ -33,7 +31,5 @@ final class Version20191031122004 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE category DROP title_seo_header');
-        $this->addSql('ALTER TABLE order_detail DROP INDEX UNIQ_ED896F464584665A, ADD INDEX FK_ED896F464584665A (product_id)');
-        $this->addSql('ALTER TABLE order_detail DROP INDEX UNIQ_ED896F462B5CA896, ADD INDEX FK_ED896F462B5CA896 (receipt_id)');
     }
 }

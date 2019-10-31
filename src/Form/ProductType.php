@@ -75,7 +75,8 @@ class ProductType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control editor'],
-                'label' => 'Описание продукта'
+                'label' => 'Описание продукта',
+                'required' => false
             ])
             ->add('titlePhoto', FileType::class, [
                 'attr' => ['class' => 'form-control-file'],

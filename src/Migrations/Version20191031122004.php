@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20191031122004 extends AbstractMigration
+{
+    public function getDescription() : string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema) : void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
+        $this->addSql('ALTER TABLE category ADD title_seo_header VARCHAR(191) DEFAULT NULL');
+        $this->addSql('ALTER TABLE order_detail DROP INDEX FK_ED896F464584665A, ADD UNIQUE INDEX UNIQ_ED896F464584665A (product_id)');
+        $this->addSql('ALTER TABLE order_detail DROP INDEX FK_ED896F462B5CA896, ADD UNIQUE INDEX UNIQ_ED896F462B5CA896 (receipt_id)');
+    }
+
+    public function down(Schema $schema) : void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
+        $this->addSql('ALTER TABLE category DROP title_seo_header');
+        $this->addSql('ALTER TABLE order_detail DROP INDEX UNIQ_ED896F464584665A, ADD INDEX FK_ED896F464584665A (product_id)');
+        $this->addSql('ALTER TABLE order_detail DROP INDEX UNIQ_ED896F462B5CA896, ADD INDEX FK_ED896F462B5CA896 (receipt_id)');
+    }
+}

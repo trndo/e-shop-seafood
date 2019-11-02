@@ -31,7 +31,7 @@
                                  alt="photo">
                             <div class="history-item-info">
                                 <div class="order-id-date-status">
-                                    <span class="order-id">№{{ order.id }}</span>
+                                    <span class="order-id">№{{ order.orderUniqueId }}</span>
                                     <!-- order-cook order-delivery order-proc -->
                                     {% if order.status == 'new' %}
                                         <span class="date-status">В осмотре <span class="order-stat order-proc"></span></span>
@@ -85,7 +85,6 @@
     {% include 'elements/mobile-nav.html.twig' with {'mob_active': false} %}
     <div id="overlay">
         <div class="order-more">
-            <img src="{{ asset('assets/img/test.jpg') }}" class="order-more-img">
             <div class="order-more-info">
                 <div class="order-id-date-status">
                     <span class="order-id">№0166610</span>

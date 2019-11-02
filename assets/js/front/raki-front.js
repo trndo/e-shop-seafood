@@ -632,7 +632,8 @@ $(document).ready(function () {
         $.ajax('/api/orders/'+$(this).data('order'),{
             type: 'GET',
             success: function (res) {
-                $('.order-more-info').replaceWith(res);
+                console.log(res);
+                $('.order-more').replaceWith(res);
                 $('#overlay').fadeToggle();
             }
         });

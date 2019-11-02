@@ -133,12 +133,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/orders/{id}")
-     * @param Request $request
      * @param OrderInfo $orderInfo
-     * @param OrderInfoInterface $infoService
      * @return JsonResponse
      */
-    public function showOrderDetails(Request $request, OrderInfo $orderInfo, OrderInfoInterface $infoService): Response
+    public function showOrderDetails(OrderInfo $orderInfo): Response
     {
         $orderDetails = $orderInfo->getOrderDetails();
 

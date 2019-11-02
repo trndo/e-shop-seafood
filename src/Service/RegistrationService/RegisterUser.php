@@ -9,6 +9,7 @@ use App\Model\ConfirmationModelAdmin;
 use App\Model\OrderModel;
 use App\Model\UserRegistrationModel;
 use App\Service\MailService\MailSenderInterface;
+use App\Service\SmsSenderService\SmsSenderInterface;
 use App\Service\TokenService\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,10 @@ class RegisterUser implements RegisterUserInterface
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var SmsSenderInterface
+     */
+    private $smsSender;
 
     /**
      * RegisterUser constructor.
@@ -38,13 +43,15 @@ class RegisterUser implements RegisterUserInterface
      * @param EntityManagerInterface $entityManager
      * @param MailSenderInterface $mailSender
      * @param SessionInterface $session
+     * @param SmsSenderInterface $smsSender
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session, SmsSenderInterface $smsSender)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
         $this->mailSender = $mailSender;
         $this->session = $session;
+        $this->smsSender = $smsSender;
     }
 
     /**

@@ -21,6 +21,7 @@ use App\Service\SmsSenderService\SmsSenderInterface;
 use App\Traits\OrderMailTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 
 class OrderInfoHandler implements OrderInfoInterface
 {
@@ -55,6 +56,10 @@ class OrderInfoHandler implements OrderInfoInterface
      * @var SmsSenderInterface
      */
     private $smsSender;
+    /**
+     * @var RouterInterface
+     */
+    private $router;
 
 
     /**
@@ -65,13 +70,15 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param ReservationInterface $reservation
      * @param MailSenderInterface $mailSenderService
      * @param SmsSenderInterface $smsSender
+     * @param RouterInterface $router
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 CartHandler $cartHandler,
                                 OrderDetailRepository $orderDetailRepository,
                                 ReservationInterface $reservation,
                                 MailSenderInterface $mailSenderService,
-                                SmsSenderInterface $smsSender
+                                SmsSenderInterface $smsSender,
+                                RouterInterface $router
     )
     {
         $this->entityManager = $entityManager;
@@ -80,6 +87,7 @@ class OrderInfoHandler implements OrderInfoInterface
         $this->reservation = $reservation;
         $this->mailSenderService = $mailSenderService;
         $this->smsSender = $smsSender;
+        $this->router = $router;
     }
 
     public function addOrder(OrderModel $orderModel, Request $request): void
@@ -88,8 +96,6 @@ class OrderInfoHandler implements OrderInfoInterface
         $session = $request->getSession();
         $totalSum = $session->get('totalSum');
         $chooseOrder = $session->get('chooseOrder');
-//        if ($chooseOrder)
-//            $orderInfo->setOrderDate((new \DateTime()));
         $items = $this->cartHandler->getItems();
 
         foreach ($items as $item) {
@@ -117,11 +123,6 @@ class OrderInfoHandler implements OrderInfoInterface
 
         $this->entityManager->flush();
         $this->mailSenderService->sendAboutMakingOrder($orderInfo->getUser(), $orderInfo);
-        $this->smsSender->sendSms(
-            'Заказ № '.$orderInfo->getOrderUniqueId().' принят в обработку!',
-            $orderInfo->getOrderPhone()
-        );
-
 
         $session->remove('reservationId');
         $session->remove('cart');
@@ -225,9 +226,11 @@ class OrderInfoHandler implements OrderInfoInterface
                 case self::STATUS_NEW :
                     $this->deleteFromSupplyReservation($order);
                     $order->setStatus(self::STATUS_CONFIRMED);
+                    $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',$order->getUser()->getUniqueId()), $order->getOrderPhone());
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);
+                    $this->smsSender->sendSms('Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!', $order->getOrderPhone());
                     break;
                 default:
                     $order->setStatus(self::STATUS_NEW);

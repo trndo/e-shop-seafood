@@ -77,6 +77,11 @@ class OrderModel
      */
     private $comment;
 
+    /**
+     * @var string|null
+     */
+    private $adminMessage;
+
 
     /**
      * @return Collection|null
@@ -323,6 +328,25 @@ class OrderModel
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdminMessage(): ?string
+    {
+        return $this->adminMessage;
+    }
+
+    /**
+     * @param string|null $adminMessage
+     * @return $this
+     */
+    public function setAdminMessage(?string $adminMessage): self
+    {
+        $this->adminMessage = $adminMessage;
+
+        return $this;
     }
 
 

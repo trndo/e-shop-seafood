@@ -84,6 +84,11 @@ class OrderInfo
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adminMessage;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -265,6 +270,18 @@ class OrderInfo
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getAdminMessage(): ?string
+    {
+        return $this->adminMessage;
+    }
+
+    public function setAdminMessage(?string $adminMessage): self
+    {
+        $this->adminMessage = $adminMessage;
 
         return $this;
     }

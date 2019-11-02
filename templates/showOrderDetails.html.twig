@@ -1,19 +1,25 @@
-<div class="order-more-info">
-    <div class="order-id-date-status">
-        <span class="order-id">{{ orderInfo.orderUniqueId }}</span>
-        <span class="date-status">{{ orderInfo.createdAt|date('d/m/Y') }}</span>
-    </div>
-    <div class="order-total">
-        {{ orderInfo.totalPrice }} <span class="hryvna">₴</span>
-    </div>
-    <ul class="order-more-list">
-        {% for item in orderDetails %}
-            <li>{{ item.receipt is not null ? item.receipt.name ~' '~ item.product.productSize ~' - '~ item.quantity ~' '~ item.product.unit : item.product.name~' - '~ item.quantity ~' '~ item.product.unit }}</li>
-        {% endfor %}
-    </ul>
-    <div class="history-actions">
-        <div id="close-more" class="history-btn history-more">
-            Закрыть
+<div class="order-more">
+    <img src="{{ orderInfo.orderDetails.0.product.TitlePhotoPath }}" class="order-more-img">
+    <div class="order-more-info">
+        <div class="order-id-date-status">
+            <span class="order-id">№{{ orderInfo.orderUniqueId }}</span>
+            <span class="date-status">{{ orderInfo.createdAt|date('d/m/Y') }}</span>
+        </div>
+        <div class="order-total">
+            {{ orderInfo.totalPrice }} <span class="hryvna">₴</span>
+        </div>
+        <ul class="order-more-list" style="color: white">
+            {% for item in orderDetails %}
+                <li>{{ item.receipt is not null ? item.receipt.name ~' '~ item.product.productSize ~' - '~ item.quantity ~' '~ item.product.unit : item.product.name~' - '~ item.quantity ~' '~ item.product.unit }}</li>
+            {% endfor %}
+        </ul>
+        {% if orderInfo.adminMessage %}
+            {{ orderInfo.adminMessage }}
+        {% endif %}
+        <div class="history-actions">
+            <div id="close-more" class="history-btn history-more">
+                Закрыть
+            </div>
         </div>
     </div>
 </div>

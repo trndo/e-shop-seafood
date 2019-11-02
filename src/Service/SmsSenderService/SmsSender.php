@@ -22,7 +22,8 @@ class SmsSender implements SmsSenderInterface
     public function sendSms(string $message, string $number): void
     {
         $this->client->request('GET',
-            'https://smsc.ua/sys/send.php?login='.$this->login.'&psw='.$this->password.'&phones='.$number.'&mes='.$message,
-            ['verify' => false]);
+            'https://smsc.ua/sys/send.php?login='.$this->login.'&psw='.$this->password.'&phones='.$number.'&mes='.$message, [
+                'verify' => false
+            ]);
     }
 }

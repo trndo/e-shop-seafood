@@ -54,6 +54,13 @@ class CategoryType extends AbstractType
             ],
             'required' => false
         ])
+        ->add('seoTitleHeader', TextType::class, [
+            'label' => 'Seo h1',
+            'attr' => [
+                'class' => 'form-control'
+            ],
+            'required' => false
+        ])
         ->add('seoDescription',TextareaType::class,[
             'label' => 'Сео дескрипшн',
             'attr' => [

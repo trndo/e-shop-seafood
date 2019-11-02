@@ -86,6 +86,11 @@ class Category
      */
     private $seoText;
 
+    /**
+     * @ORM\Column(type="string", length=191, nullable=true)
+     */
+    private $titleSeoHeader;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -279,6 +284,18 @@ class Category
     public function setSeoText(?string $seoText): self
     {
         $this->seoText = $seoText;
+
+        return $this;
+    }
+
+    public function getTitleSeoHeader(): ?string
+    {
+        return $this->titleSeoHeader;
+    }
+
+    public function setTitleSeoHeader(?string $titleSeoHeader): self
+    {
+        $this->titleSeoHeader = $titleSeoHeader;
 
         return $this;
     }

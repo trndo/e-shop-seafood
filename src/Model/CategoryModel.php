@@ -49,6 +49,29 @@ class CategoryModel
     private $seoText;
 
     /**
+     * @var string|null
+     */
+    private $seoTitleHeader;
+
+    /**
+     * @return string|null
+     */
+    public function getSeoTitleHeader(): ?string
+    {
+        return $this->seoTitleHeader;
+    }
+
+    /**
+     * @param string|null $seoTitleHeader
+     * @return CategoryModel
+     */
+    public function setSeoTitleHeader(?string $seoTitleHeader): CategoryModel
+    {
+        $this->seoTitleHeader = $seoTitleHeader;
+        return $this;
+    }
+
+    /**
      * @return UploadedFile|null
      */
     public function getTitlePhoto(): ?UploadedFile
@@ -191,10 +214,14 @@ class CategoryModel
 
     /**
      * @param string|null $seoText
+     *
+     * @return CategoryModel
      */
-    public function setSeoText(?string $seoText): void
+    public function setSeoText(?string $seoText): self
     {
         $this->seoText = $seoText;
+
+        return $this;
     }
 
 }

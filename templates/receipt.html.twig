@@ -63,7 +63,7 @@
                             {{ item.name }}
                         </div>
                         <div class="description">
-                            {{ item.description }}
+                            {{ item.description|raw }}
                         </div>
                         {% if session is not null %}
                             {% if item.products.first.productSize is not null %}

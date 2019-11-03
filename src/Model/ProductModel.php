@@ -30,7 +30,6 @@ class ProductModel
 
     /**
      * @Assert\NotBlank(message="Это поле не должно быть пустым")
-     * @Assert\Length(max="400", maxMessage="Длина описания не должна быть ольше 400 символов")
      * @var string|null $description
      */
     private $description;

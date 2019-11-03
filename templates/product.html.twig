@@ -82,7 +82,7 @@
 {#                                </div>#}
                             </div>
                             <div class="description">
-                               {{ item.description }}
+                               {{ item.description|raw }}
                             </div>
                             {% if session is null %}
                             <div class="today-or-tomorrow">

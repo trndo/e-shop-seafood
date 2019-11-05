@@ -235,7 +235,7 @@
 
 .order-more{
     width: 496px;
-    height: 219px;
+    height: 315px;
     background: #F85B5B;
     border-radius: 2px;
     margin: 0;
@@ -248,7 +248,8 @@
 
 .order-more-img{
     width: 220px;
-    height: 219px;
+    height: 100%;
+    object-fit: cover;
     border-radius: 0 0 0 2px;
     display: block;
     float: left;
@@ -256,7 +257,7 @@
 
 .order-more-info{
     width: 276px;
-    height: 116px;
+    /*height: 116px;*/
     padding-right: 11px;
     padding-left: 18px;
     display: block;
@@ -274,6 +275,14 @@
     padding-left: 0;
     overflow-y: scroll;
     height: 95px;
+}
+
+.order-comment{
+    height: 98px;
+    font-size: 12px;
+    text-align: justify;
+    width: 100%;
+    color: white;
 }
 
 .payment{

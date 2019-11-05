@@ -8,14 +8,16 @@
         <div class="order-total">
             {{ orderInfo.totalPrice }} <span class="hryvna">₴</span>
         </div>
+        {% if orderInfo.adminMessage %}
+        <div class="order-comment">
+            {{ orderInfo.adminMessage }}
+        </div>
+        {% endif %}
         <ul class="order-more-list" style="color: white">
             {% for item in orderDetails %}
                 <li>{{ item.receipt is not null ? item.receipt.name ~' '~ item.product.productSize ~' - '~ item.quantity ~' '~ item.product.unit : item.product.name~' - '~ item.quantity ~' '~ item.product.unit }}</li>
             {% endfor %}
         </ul>
-        {% if orderInfo.adminMessage %}
-            {{ orderInfo.adminMessage }}
-        {% endif %}
         <div class="history-actions">
             <div id="close-more" class="history-btn history-more">
                 Закрыть

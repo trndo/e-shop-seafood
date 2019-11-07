@@ -15,7 +15,12 @@ import 'slick-carousel';
 import 'jquery-mask-plugin';
 import 'jquery-validation'
 
+$(window).on('load', function () {
+    $('.preloader-background').fadeOut()
+});
+
 $(document).ready(function () {
+
     if ($('.cart-container').length)
         new SimpleBar($('.cart-container')[0], {
             autoHide: false

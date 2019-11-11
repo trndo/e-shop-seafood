@@ -26,7 +26,6 @@ body{
     background-image: url("../../img/try.png");
     background-repeat: repeat-y;
     background-size: cover;
-    background-attachment: fixed;
 }
 .container{
     width: 992px;

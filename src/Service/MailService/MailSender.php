@@ -104,7 +104,6 @@ class MailSender implements MailSenderInterface
 
     public function sendAboutChangingStatus(User $user, OrderInfo $info): void
     {
-        dd($user, $info);
         $this->sendMessageTo($user,'mail/order_status.html.twig', [
             'user' => $user,
             'orderInfo' => $info

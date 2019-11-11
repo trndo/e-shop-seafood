@@ -11,6 +11,7 @@ use App\Model\ResetPasswordModel;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use App\Service\EntityService\UserService\UserServiceInterface;
 use App\Service\PaymentService\PaymentInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,9 +37,17 @@ class UserHandlerController extends AbstractController
     {
         $this->checkIsValidUser($user);
         $payment = $handler->doPayment($order);
-        return $this->render('pay.html.twig', [
+        $response = $this->render('pay.html.twig', [
             'payment' => $payment
         ]);
+
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $response->setSharedMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     /**
@@ -101,11 +110,14 @@ class UserHandlerController extends AbstractController
      * @param Request $request
      * @param OrderInfo $orderInfo
      * @param PaymentInterface $paymentHandler
+     * @param LoggerInterface $logger
      * @return JsonResponse
      */
-    public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler): JsonResponse
+    public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler, LoggerInterface $logger): JsonResponse
     {
         $res = $request->request->get('data');
+
+        $logger->debug($request->getContent());
 
         $status = $paymentHandler->confirmPayment($orderInfo, $res);
 

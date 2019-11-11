@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PaymentHandler implements PaymentInterface
+class PaymentHandler
 {
     /**
      * @var OrderInfoInterface

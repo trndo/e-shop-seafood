@@ -40,7 +40,7 @@ class ItemController extends AbstractController
         $this->checkIsValidProduct($category, $item);
 
         $orderType = $session->get('chooseOrder');
-        return $item->getType() == 'product'
+        $response =  $item->getType() == 'product'
             ? $this->render('product.html.twig', [
                 'item' => $item,
                 'active' => $item->getCategory()->getSlug()
@@ -52,6 +52,14 @@ class ItemController extends AbstractController
                 }) : $item->getProducts(),
                 'active' => $item->getCategory()->getSlug()
             ]);
+
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $response->setSharedMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     /**

@@ -21,6 +21,7 @@ use App\Service\SmsSenderService\SmsSenderInterface;
 use App\Traits\OrderMailTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class OrderInfoHandler implements OrderInfoInterface
@@ -78,7 +79,7 @@ class OrderInfoHandler implements OrderInfoInterface
                                 ReservationInterface $reservation,
                                 MailSenderInterface $mailSenderService,
                                 SmsSenderInterface $smsSender,
-                                RouterInterface $router
+                                UrlGeneratorInterface $router
     )
     {
         $this->entityManager = $entityManager;
@@ -226,7 +227,9 @@ class OrderInfoHandler implements OrderInfoInterface
                 case self::STATUS_NEW :
                     $this->deleteFromSupplyReservation($order);
                     $order->setStatus(self::STATUS_CONFIRMED);
-                    $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',$order->getUser()->getUniqueId()), $order->getOrderPhone());
+                    $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',[
+                            'uniqueId' => $order->getUser()->getUniqueId()
+                        ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone());
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);
@@ -238,7 +241,7 @@ class OrderInfoHandler implements OrderInfoInterface
 
             $this->entityManager->flush();
 
-            $this->sendEmailAboutOrderStatus($order->getUser(), $order);
+            $this->mailSenderService->sendAboutChangingStatus($order->getUser(), $order);
         }
 
     }

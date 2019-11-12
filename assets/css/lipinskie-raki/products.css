@@ -29,7 +29,7 @@
 }
 .size-card:hover{
     transform: scale(1.05);
-    box-shadow: 6px 6px 6px 0 darkred;
+    box-shadow: 1px 0 17px 5px #cc1c1c;
 }
 .size-card:nth-child(1),.size-card:nth-child(2), .size-card:nth-child(3){
     margin-top: 0;

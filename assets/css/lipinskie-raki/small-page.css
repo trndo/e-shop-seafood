@@ -16,6 +16,7 @@
 .header-raki-logo img{
     width: 150px;
     height: 70px;
+    cursor: pointer;
 }
 .user_basket-mini{
     top: 40px;

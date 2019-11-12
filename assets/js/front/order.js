@@ -7,8 +7,12 @@ import $ from 'jquery';
 import 'timepicker/jquery.timepicker';
 import 'jquery-mask-plugin';
 
+let today = new Date();
+let tomorrow = new Date();
+tomorrow.setDate(today.getDate()+1);
+
 $('.date-input').datepicker({
-    minDate: new Date()
+    minDate: tomorrow
 });
 
 if(screen.width < 992)

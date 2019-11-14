@@ -5,12 +5,14 @@ namespace App\Service\PaymentService;
 
 
 use App\Entity\OrderInfo;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use WayForPay\SDK\Collection\ProductCollection;
 use WayForPay\SDK\Credential\AccountSecretTestCredential;
 use WayForPay\SDK\Domain\Client;
 use WayForPay\SDK\Domain\Product;
+use WayForPay\SDK\Domain\TransactionBase;
 use WayForPay\SDK\Exception\WayForPaySDKException;
 use WayForPay\SDK\Handler\ServiceUrlHandler;
 use WayForPay\SDK\Wizard\PurchaseWizard;
@@ -22,10 +24,20 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $generator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, LoggerInterface $logger)
+    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->entityManager = $entityManager;
+        $this->generator = $generator;
     }
     /**
      * @inheritDoc
@@ -82,14 +94,47 @@ class WayForPayPaymentHandler implements PaymentInterface
             try {
                 $handler = new ServiceUrlHandler($credential);
                 $response = $handler->parseRequestFromPostRaw();
-                $handler->getSuccessResponse($response->getTransaction());
+                $status = $response->getTransaction()->getStatus();
+
+                if ($status == TransactionBase::STATUS_APPROVED) {
+                    $this->handleConfirmation($orderInfo);
+                } else {
+                    $orderInfo->setStatus('failed');
+                    $this->entityManager->flush();
+
+                    return $this->generator->generate('user_orders', [
+                        'uniqueId' => $orderInfo->getUser()->getUniqueId()
+                    ]);
+                }
             } catch (WayForPaySDKException $e) {
                 echo "WayForPay SDK exception: " . $e->getMessage();
             }
+
             return true;
         }
 
         return false;
+    }
+
+    private function handleConfirmation(OrderInfo $orderInfo): bool
+    {
+
+            $orderDetails = $orderInfo->getOrderDetails();
+            $user = $orderInfo->getUser();
+
+            foreach ($orderDetails as $orderDetail) {
+                $quantity = $orderDetail->getQuantity();
+                $productSupply = $orderDetail->getProduct()->getSupply();
+
+                $productSupply->setQuantity($productSupply->getQuantity() - $quantity);
+            }
+
+            $orderInfo->setStatus('payed');
+//            $user->setBonuses($userBonuses);
+
+            $this->entityManager->flush();
+
+            return true;
     }
 
     private function getArrayOfOrderItems(OrderInfo $orderInfo): array

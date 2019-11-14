@@ -32,12 +32,17 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var UrlGeneratorInterface
      */
     private $generator;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator, LoggerInterface $logger)
     {
         $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
         $this->generator = $generator;
+        $this->logger = $logger;
     }
     /**
      * @inheritDoc
@@ -85,7 +90,7 @@ class WayForPayPaymentHandler implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function confirmPayment(OrderInfo $orderInfo, string $res): bool
+    public function confirmPayment(OrderInfo $orderInfo): bool
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $credential = new AccountSecretTestCredential();
@@ -95,19 +100,25 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $handler = new ServiceUrlHandler($credential);
                 $response = $handler->parseRequestFromPostRaw();
                 $status = $response->getTransaction()->getStatus();
-
+                $this->logger->debug('Status = '.$status);
                 if ($status == TransactionBase::STATUS_APPROVED) {
+                    $this->logger->debug('If Status = '.$status);
                     $this->handleConfirmation($orderInfo);
                 } else {
+                    $this->logger->debug('If Status = '.$status);
                     $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
 
-                    return $this->generator->generate('user_orders', [
-                        'uniqueId' => $orderInfo->getUser()->getUniqueId()
-                    ]);
+                    return false;
                 }
-            } catch (WayForPaySDKException $e) {
-                echo "WayForPay SDK exception: " . $e->getMessage();
+            } catch (\Throwable $e) {
+                $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
+
+                $this->logger->debug('If Status = '.$status);
+                $orderInfo->setStatus('failed');
+                $this->entityManager->flush();
+
+                return false;
             }
 
             return true;

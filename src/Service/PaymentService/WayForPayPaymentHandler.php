@@ -101,6 +101,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $response = $handler->parseRequestFromPostRaw();
                 $status = $response->getTransaction()->getStatus();
                 $this->logger->debug('Status = '.$status);
+
                 if ($status == TransactionBase::STATUS_APPROVED) {
                     $this->logger->debug('If Status = '.$status);
                     $this->handleConfirmation($orderInfo);
@@ -112,14 +113,10 @@ class WayForPayPaymentHandler implements PaymentInterface
                     return false;
                 }
             } catch (\Throwable $e) {
-                $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
-                $handler = new ServiceUrlHandler($credential);
-                $response = $handler->parseRequestFromPostRaw();
-                $status = $response->getTransaction()->getStatus();
-                
-                $this->logger->debug('If Status = '.$status);
                 $orderInfo->setStatus('failed');
                 $this->entityManager->flush();
+
+                $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
 
                 return false;
             }

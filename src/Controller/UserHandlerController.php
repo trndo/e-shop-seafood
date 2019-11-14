@@ -119,7 +119,7 @@ class UserHandlerController extends AbstractController
 
         $logger->debug($request->getContent());
 
-        $status = $paymentHandler->confirmPayment($orderInfo, $res);
+        $status = $paymentHandler->confirmPayment($orderInfo);
 
         if (!$status) {
             return new JsonResponse([

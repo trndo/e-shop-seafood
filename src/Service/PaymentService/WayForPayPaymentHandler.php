@@ -85,7 +85,7 @@ class WayForPayPaymentHandler implements PaymentInterface
     /**
      * @inheritDoc
      */
-    public function confirmPayment(OrderInfo $orderInfo, string $res): bool
+    public function confirmPayment(OrderInfo $orderInfo): bool
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $credential = new AccountSecretTestCredential();

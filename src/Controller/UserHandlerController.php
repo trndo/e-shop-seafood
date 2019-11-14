@@ -115,10 +115,6 @@ class UserHandlerController extends AbstractController
      */
     public function confirmPay(Request $request, OrderInfo $orderInfo, PaymentInterface $paymentHandler, LoggerInterface $logger): JsonResponse
     {
-        $res = $request->request->get('data');
-
-        $logger->debug($request->getContent());
-
         $status = $paymentHandler->confirmPayment($orderInfo);
 
         if (!$status) {

@@ -111,8 +111,8 @@ class WayForPayPaymentHandler implements PaymentInterface
 
                     return false;
                 }
-            } catch (WayForPaySDKException $e) {
-                echo "WayForPay SDK exception: " . $e->getMessage();
+            } catch (\Throwable $e) {
+                $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
             }
 
             return true;

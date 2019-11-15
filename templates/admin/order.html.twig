@@ -128,6 +128,8 @@
                                                     onclick="window.location.href='{{ path('editOrder',{'id': order.id}) }}'">
                                                 Изменить заказ
                                             </button>
+                                        {% endif %}
+                                        {% if order.status == 'new' or order.status == 'canceled' or order.status == 'failed' %}
                                             <button class="btn btn-success mr-2  list-inline-item"
                                                     onclick="window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">
                                                 Подтвердить заказ

@@ -157,7 +157,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $receipt = $orderDetail->getReceipt();
                 $receiptProduct = $orderDetail->getProduct();
                     $items[] = new Product(
-                        $receipt->getName().$receiptProduct->getProductSize() ? ' - '.$receiptProduct->getProductSize() : '',
+                        $receipt->getName().$receiptProduct->getProductSize() ? ' '.$receiptProduct->getProductSize() : '',
                         $orderDetail->getQuantity() * $receiptProduct->getPrice() + $receipt->getPrice() * ceil($orderDetail->getQuantity()),
                         $orderDetail->getQuantity()
                     );

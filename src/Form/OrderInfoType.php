@@ -30,7 +30,8 @@ class OrderInfoType extends AbstractType
                     'label' => 'Cумма'
                 ])
                 ->add('adminMessage', TextareaType::class,[
-                    'label' => 'Ваш коментарий к заказу'
+                    'label' => 'Ваш коментарий к заказу',
+                    'required' => false
                 ])
                  ->add('submit', SubmitType::class,[
                      'label' => 'Подтвердить'

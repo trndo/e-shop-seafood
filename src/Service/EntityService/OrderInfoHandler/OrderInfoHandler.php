@@ -30,6 +30,8 @@ class OrderInfoHandler implements OrderInfoInterface
     private const STATUS_CONFIRMED = 'confirmed';
     private const STATUS_PAYED = 'payed';
     private const STATUS_DONE = 'done';
+    private const STATUS_FAILED = 'failed';
+    private const STATUS_CANCELED = 'canceled';
 
     /**
      * @var EntityManagerInterface
@@ -235,6 +237,12 @@ class OrderInfoHandler implements OrderInfoInterface
                     $order->setStatus(self::STATUS_DONE);
                     $this->smsSender->sendSms('Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!', $order->getOrderPhone());
                     break;
+                case self::STATUS_FAILED:
+                    $this->applyOrder($order);
+                    break;
+                case self::STATUS_CANCELED:
+                    $this->applyOrder($order);
+                    break;
                 default:
                     $order->setStatus(self::STATUS_NEW);
             }
@@ -291,6 +299,16 @@ class OrderInfoHandler implements OrderInfoInterface
     private function getOrderByUniqueId(?int $uniqueId): ?OrderInfo
     {
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderByUniqueId($uniqueId);
+    }
+
+    private function applyOrder(OrderInfo $order): void
+    {
+        $this->deleteFromSupplyReservation($order);
+        $order->setStatus(self::STATUS_CONFIRMED);
+        $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: ' . $this->router->generate('user_orders', [
+                'uniqueId' => $order->getUser()->getUniqueId()
+            ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone()
+        );
     }
 
 

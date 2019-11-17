@@ -72,8 +72,8 @@ class WayForPayPaymentHandler implements PaymentInterface
                     $this->getArrayOfOrderItems($orderInfo)
                 ))
                 ->setReturnUrl($this->urlGenerator->generate(
-                    'user_orders', [
-                    'uniqueId' =>  $orderInfo->getUser()->getUniqueId()
+                    'paymentStatus', [
+                    'orderInfo' =>  $orderInfo
                 ], UrlGeneratorInterface::ABSOLUTE_URL)
                 )
                 ->setServiceUrl($this->urlGenerator->generate(

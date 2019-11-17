@@ -120,13 +120,33 @@ class UserHandlerController extends AbstractController
         if (!$status) {
             return new JsonResponse([
                 'status' => $status
-            ], 400);
+            ], 200);
         } else {
             return new JsonResponse([
                 'status' => $status
             ], 200);
         }
     }
+
+    /**
+     * @Route("/payment-status", name="paymentStatus")
+     * @param Request $request
+     * @param OrderInfo $orderInfo
+     * @param PaymentInterface $paymentHandler
+     * @param LoggerInterface $logger
+     * @return Response
+     */
+    public function paymentStatus(OrderInfo $orderInfo): Response
+    {
+        $orderStatus = $orderInfo->getStatus();
+
+        if ($orderStatus == 'failed') {
+            return $this->render('failedPayment.html.twig');
+        }
+
+        return $this->render('successPayment.html.twig');
+    }
+
 
     private function checkIsValidUser(?User $user): void
     {

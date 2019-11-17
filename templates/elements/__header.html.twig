@@ -9,7 +9,12 @@
             <div class="basket-container">
                 <span class="sum">{% if sum == null %}0 ₴{% else %}{{ sum }} ₴{% endif %}</span>
             </div>
-            <i id="user" class="far fa-user" data-user="{% if app.user is not null %}{{ path('user', {'uniqueId': app.user.uniqueId}) }}{% else %}{{ path('login') }}{% endif %}"></i>
+            <i id="user" class="far fa-user" data-user="
+            {% if app.user is not null %}
+                {{ path('user', {'uniqueId': app.user.uniqueId}) }}
+            {% else %}{{ path('login') }}
+                {% endif %}">
+            </i>
         </div>
     </div>
     <div class="row">

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}Неуспешная оплата{% endblock %}
+{% block description %}Неуспешная оплата на сайте Lipinskie Raki{% endblock %}
+{% block title %}
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+{% block body %}
+    <section class="wrapper">
+        <div class="container">
+            <div class="container-inside">
+                {% include 'elements/__header.html.twig' with {'active': false} %}
+                <main>
+                    {% include 'elements/additionalNav.html.twig' %}
+                    <div class="small-red-content text-center pt-10 attention-height">
+                        <embed id="pizza" type="image/svg+xml" src="/assets/img/pizza.svg"/>
+                        <span class="attention-subtitle">Оплата не удалась(</span><br>
+                        <span class="attention-title">Зайди в личный кабинет и попробуй оплатить снова &nbsp;<a
+                                    href="{% if app.user is not null %}{{ path('user', {'uniqueId': app.user.uniqueId}) }}{% else %}{{ path('login') }}{% endif %}" class="attention-user-cab">Личный кабинет</a></span>
+                    </div>
+                    {% include 'elements/attention-promotion.html.twig' %}
+                </main>
+            </div>
+        </div>
+        {% include 'elements/__footer.html.twig' with {'active': false} %}
+        {% include 'elements/mobile-nav.html.twig' with {'mob_active': false}  %}
+    </section>
+{% endblock %}

@@ -136,7 +136,7 @@ class UserHandlerController extends AbstractController
      * @param LoggerInterface $logger
      * @return Response
      */
-    public function paymentStatus(OrderInfo $orderInfo): Response
+    public function paymentStatus($orderInfo): Response
     {
         $orderStatus = $orderInfo->getStatus();
 

@@ -6,7 +6,10 @@ namespace App\Service\PaymentService;
 
 use App\Entity\OrderInfo;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use WayForPay\SDK\Collection\ProductCollection;
 use WayForPay\SDK\Credential\AccountSecretTestCredential;
@@ -36,14 +39,20 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var SessionInterface
+     */
+    private $session;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator, LoggerInterface $logger)
+    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator, LoggerInterface $logger, SessionInterface $session)
     {
         $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
         $this->generator = $generator;
         $this->logger = $logger;
+        $this->session = $session;
     }
+
     /**
      * @inheritDoc
      */
@@ -67,14 +76,12 @@ class WayForPayPaymentHandler implements PaymentInterface
                     $orderInfo->getOrderPhone(),
                     'Ukraine'
                 ))
-
                 ->setProducts(new ProductCollection(
                     $this->getArrayOfOrderItems($orderInfo)
                 ))
                 ->setReturnUrl($this->urlGenerator->generate(
                     'paymentStatus', [
-                    'orderInfo' =>  $orderInfo
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
+                    ], UrlGeneratorInterface::ABSOLUTE_URL)
                 )
                 ->setServiceUrl($this->urlGenerator->generate(
                     'confirmPay', [
@@ -95,7 +102,7 @@ class WayForPayPaymentHandler implements PaymentInterface
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $credential = new AccountSecretTestCredential();
             //$credential = new AccountSecretCredential('account', 'secret');
-
+            $this->session->set('orderInfoObject', $orderInfo);
             try {
                 $handler = new ServiceUrlHandler($credential);
                 $response = $handler->parseRequestFromPostRaw();

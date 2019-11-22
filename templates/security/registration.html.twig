@@ -39,9 +39,15 @@
                                 </div>
                                 <div>
                                     {{ form_widget(form.email,{'attr':{'class': 'user-input login-input','placeholder': 'E-mail'}}) }}
+                                    {% if form.email.vars.errors %}
+                                        {% if form.email.vars.errors[0] is defined %}<small style="width: 165px; word-break: break-word" class="validation-mess">{{ form.email.vars.errors[0].message }}</small>{% endif %}
+                                    {% endif %}
                                 </div>
                                 <div>
                                     {{ form_widget(form.password.first,{'attr':{'class': 'user-input login-input'}}) }}
+                                    {% if form.password.first.vars.errors %}
+                                        {% if form.password.first.vars.errors[0] is defined %}<small style="width: 165px; word-break: break-word" class="validation-mess">{{ form.password.first.vars.errors[0].message }}</small>{% endif %}
+                                    {% endif %}
                                 </div>
                                 <div>
                                     {{ form_widget(form.password.second,{'attr':{'class': 'user-input login-input'}}) }}

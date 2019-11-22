@@ -40,6 +40,9 @@ class OrderController extends AbstractController
                 if ($user) {
                     $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
                     $orderModel = $orderModel->setUser($user);
+                } elseif (null !== ($user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $orderModel->getEmail()]))) {
+                    $orderModel->setUser($user);
+                    $request->getSession()->set('unique_id', $user->getUniqueId());
                 } else {
                     $user = $registerUser->registerUnknownUser($orderModel);
                     $orderModel = $orderModel->setUser($user);

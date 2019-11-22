@@ -22,7 +22,6 @@ class OrderModel
     private $surname;
 
     /**
-     * @UniqueUser()
      * @var string|null
      */
     private $email;

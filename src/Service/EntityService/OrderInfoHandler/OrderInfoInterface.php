@@ -74,4 +74,10 @@ interface OrderInfoInterface
      * @param int|null $id
      */
     public function cancelOrder(?int $id): void;
+
+    /**
+     * @param int|null $uniqueId
+     * @return OrderInfo
+     */
+    public function getOrderByUniqueId(?int $uniqueId): ?OrderInfo ;
 }

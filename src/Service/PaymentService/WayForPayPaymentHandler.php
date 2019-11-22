@@ -68,7 +68,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 ->setCurrency('UAH')
                 ->setOrderDate(new \DateTime())
                 ->setLanguage('ru')
-                ->setMerchantDomainName('https://google.com') //Change to lipinskieraki.com
+                ->setMerchantDomainName('https://lipinskieraki.com') //Change to lipinskieraki.com
                 ->setClient(new Client(
                     $orderInfo->getUser()->getName() ,
                     $orderInfo->getUser()->getSurname(),
@@ -81,6 +81,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 ))
                 ->setReturnUrl($this->urlGenerator->generate(
                     'paymentStatus', [
+                        'order' => $orderInfo->getOrderUniqueId()
                     ], UrlGeneratorInterface::ABSOLUTE_URL)
                 )
                 ->setServiceUrl($this->urlGenerator->generate(

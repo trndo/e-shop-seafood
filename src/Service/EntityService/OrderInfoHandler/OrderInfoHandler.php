@@ -296,7 +296,7 @@ class OrderInfoHandler implements OrderInfoInterface
         return $hash;
     }
 
-    private function getOrderByUniqueId(?int $uniqueId): ?OrderInfo
+    public function getOrderByUniqueId(?int $uniqueId): ?OrderInfo
     {
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderByUniqueId($uniqueId);
     }

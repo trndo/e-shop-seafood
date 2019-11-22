@@ -86,10 +86,10 @@
                                     {% set showInBasket = false %}
                                     <div class="no-allowed-sizes" data-name="{{ item.id }}" data-type="{{ item.getType }}">
                                         <div class="nas-title">
-                                            Извините, доступных размеров на сегодня нет. Заказать на другой день?
+                                            Извини, доступных размеров на сегодня нет. Заказать на другой день?
                                         </div>
-                                        <div class="custom-button choose-type mr-3 transparent-choose-type" data-order="tomorrow">
-                                            Другой день
+                                        <div id="another-type" class="custom-button warn-button" style="margin: 0">
+                                            Заказать на другой день
                                         </div>
                                     </div>
                                 {% endif %}

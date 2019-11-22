@@ -15,8 +15,8 @@
                     <div class="small-red-content text-center pt-10 attention-height">
                         <embed id="pizza" type="image/svg+xml" src="/assets/img/pizza.svg"/>
                         <span class="attention-subtitle">Оплата прошла успешно!</span><br>
-                        <span class="attention-title">Ожидай свой заказ в скором времени! &nbsp;<br><a
-                                    href="{{ path('user', {'uniqueId':user.uniqueId}) }}" class="attention-user-cab">Личный кабинет</a></span>
+                        <span class="attention-title">Ожидай свой заказ в скором времени! &nbsp;<br>
+                            <a href="{{ path('user_orders', {'uniqueId': user.uniqueId}) }}" class="none-text-decoration"><button type="submit" class="login-button btn mt-4 mb-3">Мои заказы</button></a></span>
                     </div>
                     {% include 'elements/attention-promotion.html.twig' %}
                 </main>

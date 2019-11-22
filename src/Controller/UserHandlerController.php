@@ -135,7 +135,6 @@ class UserHandlerController extends AbstractController
      */
     public function paymentStatus(Request $request): Response
     {
-        dd($request->getSession()->all());
         /** @var OrderInfo $orderInfo */
         $orderInfo = $request->getSession()->get('orderInfoObject');
 

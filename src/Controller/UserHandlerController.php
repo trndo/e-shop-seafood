@@ -130,7 +130,7 @@ class UserHandlerController extends AbstractController
 
     /**
      * @Route("/payment-status", name="paymentStatus")
-     * @param Request $request 
+     * @param Request $request
      * @param OrderInfoInterface $orderService
      * @return Response
      */
@@ -143,9 +143,9 @@ class UserHandlerController extends AbstractController
         $orderInfo = $orderService->getOrderByUniqueId($orderUniqueId);
 
         if ($orderInfo->getStatus() == 'failed') {
-            return $this->render('failedPayment.html.twig');
+            return $this->render('attention/failedPayment.html.twig');
         } elseif ($orderInfo->getStatus() == 'payed')
-            return $this->render('successPayment.html.twig');
+            return $this->render('attention/successPayment.html.twig');
         else {
             return $this->redirect($previousUrl);
         }

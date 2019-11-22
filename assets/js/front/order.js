@@ -14,6 +14,10 @@ tomorrow.setDate(today.getDate()+1);
 $('.date-input').datepicker({
     minDate: tomorrow
 });
+$('.date-input').keypress(function (e) {
+    e.preventDefault();
+});
+$('.date-input').attr('readonly','readonly');
 
 if(screen.width < 992)
 new Picker(document.querySelector('.time-input'), {

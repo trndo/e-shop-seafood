@@ -173,9 +173,10 @@ class OrderInfoHandler implements OrderInfoInterface
         $orderInfo = $this->getOrderByUniqueId($id);
 
         if ($orderInfo) {
+            $orderDate = $orderInfo->getOrderDate();
 
             $orderInfo->setStatus('canceled');
-            $this->returnProductsFromOrder($orderInfo);
+            $this->checkIsCurrentDate($orderDate) ? $this->returnProductsFromOrder($orderInfo) : '';
 
             $this->entityManager->flush();
         }
@@ -201,6 +202,7 @@ class OrderInfoHandler implements OrderInfoInterface
             $product = $orderDetail->getProduct();
             $quantity = $orderDetail->getQuantity();
             $productSupply = $product->getSupply();
+            $orderDate = $orderInfo->getOrderDate();
             $orderDetailPrice = 0;
             
             $receipt !== null
@@ -209,7 +211,9 @@ class OrderInfoHandler implements OrderInfoInterface
 
             $orderInfo->setTotalPrice($totalPrice - $orderDetailPrice);
 
-            $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $quantity);
+            $this->checkIsCurrentDate($orderDate)
+                ? $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $quantity)
+                : '';
 
             $this->entityManager->remove($orderDetail);
             $this->entityManager->flush();
@@ -222,12 +226,14 @@ class OrderInfoHandler implements OrderInfoInterface
     public function updateOrderInfoStatus(int $id): void
     {
         $order = $this->getOrder($id);
+
         if ($order) {
             $orderStatus = $order->getStatus();
+            $orderDate = $order->getOrderDate();
 
             switch ($orderStatus) {
                 case self::STATUS_NEW :
-                    $this->deleteFromSupplyReservation($order);
+                    $this->checkIsCurrentDate($orderDate) ? $this->deleteFromSupplyReservation($order) : '';
                     $order->setStatus(self::STATUS_CONFIRMED);
                     $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',[
                             'uniqueId' => $order->getUser()->getUniqueId()
@@ -303,13 +309,26 @@ class OrderInfoHandler implements OrderInfoInterface
 
     private function applyOrder(OrderInfo $order): void
     {
-        $this->deleteFromSupplyReservation($order);
+        $orderDate = $order->getOrderDate();
+
+        $this->checkIsCurrentDate($orderDate) ? $this->deleteFromSupplyReservation($order) : '';
         $order->setStatus(self::STATUS_CONFIRMED);
+
         $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: ' . $this->router->generate('user_orders', [
                 'uniqueId' => $order->getUser()->getUniqueId()
             ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone()
         );
     }
 
+    private function checkIsCurrentDate(\DateTimeInterface $orderDate): bool
+    {
+        $currentDate = new \DateTime('today');
+
+        if ($currentDate->format('Y-m-d') !== $orderDate->format('Y-m-d')) {
+            return false;
+        }
+
+        return true;
+    }
 
 }

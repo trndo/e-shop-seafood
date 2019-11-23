@@ -58,6 +58,7 @@ class SupplyService implements SupplyServiceInterface
             $supply->setQuantity($quantity + $diff);
             $supply->setReservationQuantity($reservationQuantity + $diff);
         }
+
         if ($quantity >= $newQuantity) {
             $diff = $quantity - $newQuantity;
             $supply->setQuantity($quantity - $diff);

@@ -225,7 +225,8 @@ class ProductService implements ProductServiceInterface
                 return [
                     'status' => true,
                     'order' => $this->urlGenerator->generate(
-                        'editOrder',['id' => $order->getId()],UrlGeneratorInterface::ABSOLUTE_URL
+                        'editOrder', [
+                            'id' => $order->getId()],UrlGeneratorInterface::ABSOLUTE_URL
                     )];
             }
         }

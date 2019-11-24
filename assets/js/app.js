@@ -50,15 +50,18 @@ ClassicEditor.create(document.querySelector('.editor'));
         let trash = $(this);
         let tr = $('tr[data-detail="' + id + '"]');
 
-        $.ajax({
-            type: "DELETE",
-            url: "/lipadmin/deleteOrderDetail/" + id,
-            success: function (res) {
-                $('.orderTotalPrice').text('Cумма: ' + res.totalPrice);
-                console.log(res.totalPrice);
-                tr.remove();
-            }
-        })
+        if(confirm('Вы хотите удалить продукт с заказа?')) {
+            $.ajax({
+                type: "DELETE",
+                url: "/lipadmin/deleteOrderDetail/" + id,
+                success: function (res) {
+                    $('.orderTotalPrice').text('Cумма: ' + res.totalPrice);
+                    $('#order_info_totalPrice').val(res.totalPrice);
+                    console.log(res.totalPrice);
+                    tr.remove();
+                }
+            })
+        }
     });
 
     $('.search-name').click(function () {

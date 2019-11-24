@@ -204,16 +204,17 @@ class OrderInfoHandler implements OrderInfoInterface
             $productSupply = $product->getSupply();
             $orderDate = $orderInfo->getOrderDate();
             $orderDetailPrice = 0;
-            
+
+
             $receipt !== null
                 ? $orderDetailPrice = $receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity
                 : $orderDetailPrice = $product->getPrice() * $quantity;
 
             $orderInfo->setTotalPrice($totalPrice - $orderDetailPrice);
 
-            $this->checkIsCurrentDate($orderDate)
-                ? $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $quantity)
-                : '';
+            if ($this->checkIsCurrentDate($orderDate)) {
+                $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $quantity);
+            }
 
             $this->entityManager->remove($orderDetail);
             $this->entityManager->flush();

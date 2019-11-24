@@ -261,7 +261,7 @@ class ProductService implements ProductServiceInterface
                 $oldQuantity = $orderDetail->getQuantity();
                    $value > $oldQuantity ? $recountQuantity = $value - $oldQuantity : $recountQuantity = $oldQuantity - $value;
 
-                    if ($recountQuantity <= $reservations) {
+                    if ($recountQuantity <= $reservations || $this->checkIsCurrentDate($order->getOrderDate())) {
 
                     $oldPrice = $this->getOrderDetailPrice($orderDetail, $oldQuantity);
                     $newPrice = $this->getOrderDetailPrice($orderDetail, $value);
@@ -270,7 +270,11 @@ class ProductService implements ProductServiceInterface
                     $reservationDiff = $this->recognizeDiff($value, $oldQuantity);
 
                     $order->setTotalPrice($order->getTotalPrice() - $priceDiff);
-                    $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $reservationDiff);
+
+                    if ($this->checkIsCurrentDate($order->getOrderDate())) {
+                        $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $reservationDiff);
+                    }
+
                     $orderDetail->setQuantity($value);
 
                     $this->entityManager->flush();
@@ -296,17 +300,17 @@ class ProductService implements ProductServiceInterface
         return null;
     }
 
-    public function addSalesInProduct(array $products,?Product $product): void
+    public function addSalesInProduct(array $products, ?Product $product): void
     {
         $productRepo = $this->entityManager->getRepository(Product::class);
         $receiptRepo = $this->entityManager->getRepository(Receipt::class);
 
         foreach ($product->getReceiptSales() as $existingReceiptSale){
-            if(!$this->inArrayByCallback($existingReceiptSale->getId(),$existingReceiptSale->getType(),$products))
+            if(!$this->inArrayByCallback($existingReceiptSale->getId(), $existingReceiptSale->getType(), $products))
                 $product->removeReceiptSales($existingReceiptSale);
         }
         foreach ($product->getProducts() as $existingProduct) {
-            if(!$this->inArrayByCallback($existingProduct->getId(),$existingProduct->getType(),$products))
+            if(!$this->inArrayByCallback($existingProduct->getId(), $existingProduct->getType(), $products))
                 $product->removeProduct($existingProduct);
         }
 
@@ -368,9 +372,12 @@ class ProductService implements ProductServiceInterface
             : $amount += $value * $product->getPrice();
 
         $order->setTotalPrice($order->getTotalPrice() + $amount);
-        $productSupply->setReservationQuantity($diff);
 
-        return  $orderDetail;
+        if ($this->checkIsCurrentDate($order->getOrderDate())) {
+            $productSupply->setReservationQuantity($diff);
+        }
+
+        return $orderDetail;
     }
 
     private function recognizeDiff(float $newQuantity, float $oldQuantity): float
@@ -461,5 +468,16 @@ class ProductService implements ProductServiceInterface
         }
 
         return $product;
+    }
+
+    private function checkIsCurrentDate(\DateTimeInterface $orderDate): bool
+    {
+        $currentDate = new \DateTime('today');
+
+        if ($currentDate->format('Y-m-d') !== $orderDate->format('Y-m-d')) {
+            return false;
+        }
+
+        return true;
     }
 }

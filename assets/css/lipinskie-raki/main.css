@@ -199,6 +199,7 @@ header{
     font-variant: small-caps;
     letter-spacing: 0.02em;
     color: white;
+    font-size-adjust: 0.48;
 }
 
 #raki{
@@ -337,7 +338,7 @@ main{
 }
 
 .rating h2{
-
+    font-size: 31px;
     font-style: normal;
     font-weight: 600;
     margin: 0 auto;
@@ -1149,4 +1150,9 @@ footer{
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+@supports (-ms-ime-align:auto) {
+    #footer-ul li {
+        width: 150px;
+    }
 }

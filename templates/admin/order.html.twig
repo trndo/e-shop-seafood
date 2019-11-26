@@ -97,8 +97,12 @@
                                         На какое время: {{ order.orderTime|date('H:i') }}
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4 text-center text-primary h4">
-                                        Тип
-                                        Доставки: {{ order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000'? 'Самовывоз' : 'Такси/Новая почта' }}
+                                        Тип Доставки:
+                                        {% if order.address == 'Serhiia Danchenka St, 12, Kyiv, Ukraine, 02000' or order.address == 'вулиця Сергія Данченка, 12, Київ, Украина, 02000' %}
+                                            Самовывоз
+                                        {% else %}
+                                            Такси/Новая почта
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="row mt-5">

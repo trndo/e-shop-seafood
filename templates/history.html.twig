@@ -26,7 +26,11 @@
                 {% if orders is not empty %}
                 <div class="history-container">
                     {% for order in orders %}
-                        <div class="history-item {{ order.status != 'done' ? 'item-in-process' : '' }}">
+                    {% if order.status == 'done' or order.status == 'canceled' %}
+                        <div class="history-item">
+                            {% else %}
+                        <div class="history-item item-in-process">
+                            {% endif %}
                             <img src="{{ order.orderDetails.0.product.TitlePhotoPath }}" class="history-item-img"
                                  alt="photo">
                             <div class="history-item-info">

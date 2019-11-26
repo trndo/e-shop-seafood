@@ -91,10 +91,10 @@
                                     {{ form_start(form,{'attr': {'class':'text-center'}}) }}
                                     <div class="row justify-content-between flex-sm-column flex-md-row flex-lg-row text-center">
                                         <div class="col-sm-12 col-md-4 col-lg-4 d-flex flex-column align-items-center text-center text-primary h4">
-                                            <label for="">На какую дату:</label> {{ form_widget(form.orderDate) }}
+                                            <label for="">Дата:</label> {{ form_widget(form.orderDate) }}
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-4 d-flex flex-column align-items-center text-center text-primary h4">
-                                            <label for="">На какое время:</label> {{ form_widget(form.orderTime) }}
+                                            <label for="">Время:</label> {{ form_widget(form.orderTime) }}
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-4 d-flex flex-column align-items-center text-center text-primary h4 ">
                                             <label>Cумма:</label> {{ form_widget(form.totalPrice,{'attr': {'class': 'abacus w-auto'}}) }}
@@ -102,7 +102,15 @@
                                     </div>
                                     {{ form_row(form.adminMessage) }}
                                     <br>
+{#                                    <button class="btn btn-primary mr-2  list-inline-item"#}
+{#                                            onclick="window.location.href='{{ app.request.headers.get('referer') }}'">#}
+{#                                        Назад#}
+{#                                    </button>#}
                                     <div class="col-12 text-center">
+                                        <button class="btn btn-danger mr-2  list-inline-item"
+                                                onclick="window.location.href='{{ app.request.headers.get('referer') }}'">
+                                            Назад
+                                        </button>
                                         {{ form_widget(form.submit) }}
                                     </div>
                                     {{ form_end(form) }}

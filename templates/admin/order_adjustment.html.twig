@@ -17,7 +17,16 @@
                     <h1 class="h3 mb-2 text-gray-800">Коректировка заказа</h1>
                     <hr class="sidebar-divider">
                     <!-- DataTales Example -->
+                    <div class="text-center">
+                        <button class="btn btn-danger mr-2  list-inline-item text-center"
+                                onclick="window.location.href='{{ app.request.headers.get('referer') }}'">
+                            Вернутся назад
+                        </button>
+
+                    </div>
+                    <br>
                     <div class="card">
+
                         <div class="card-body">
                             <div class="row justify-content-center">
                                 <h3>Выберите категорию товаров</h3>

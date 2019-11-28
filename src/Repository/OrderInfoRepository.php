@@ -65,10 +65,10 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     public function getOrders(string $date, string $status = 'new'): ?array
     {
         $query = $this->createQueryBuilderForOrderInfo('o');
+
         if ($date == (new \DateTime())->format('Y-m-d')) {
             $query->andWhere('o.status = :status AND o.orderDate = :date')
                 ->setParameters([
@@ -83,6 +83,19 @@ class OrderInfoRepository extends ServiceEntityRepository
                 ]);
         }
         return $query->orderBy('o.orderDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getOrdersForAnotherDay(string $date, string $status = 'payed'): ?array
+    {
+        $query = $this->createQueryBuilderForOrderInfo('o');
+
+        return $query->andWhere('o.status = :status AND o.orderDate = :date')
+            ->setParameters([
+                'status' => $status,
+                'date' => $date
+            ])
             ->getQuery()
             ->getResult();
     }

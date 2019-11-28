@@ -16,6 +16,12 @@
             <div class="container-fluid">
                 <h1 class="h3 mb-2 text-gray-800">Поставки</h1>
                 <p class="mb-4">Здесь можно изменить поставку</p>
+                <div class="text-center">
+                    На сегодня нужно:
+                    {% for order in todayOrders %}
+                       {{ order.name }} - {{ order.quantity }}/{{ order.unit }}
+                    {% endfor %}
+                </div>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">

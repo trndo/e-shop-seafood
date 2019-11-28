@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Repository\CategoryRepository;
 use App\Repository\SupplyRepository;
+use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use App\Service\EntityService\ProductService\ProductServiceInterface;
 use App\Service\EntityService\SupplyService\SupplyServiceInterface;
 use App\Service\SearchService\SearcherInterface;
@@ -40,15 +41,17 @@ class AdminSupplyController extends AbstractController
      * @param ProductServiceInterface $productService
      * @return Response
      */
-    public function showSupplies(Request $request, SupplyServiceInterface $supplyService, ProductServiceInterface $productService): Response
+    public function showSupplies(Request $request, SupplyServiceInterface $supplyService, ProductServiceInterface $productService, OrderInfoInterface $orderInfo): Response
     {
         $category = $request->query->getInt('category', null);
         $supplies = $supplyService->findByCriteria($category);
         $categories = $productService->getProductsCategories();
+        $todayOrders = $orderInfo->getOrdersForToday();
 
         return $this->render('admin/supply/show.html.twig', [
             'supplies' => $supplies,
-            'categories' => $categories
+            'categories' => $categories,
+            'todayOrders' => $todayOrders
         ]);
     }
 

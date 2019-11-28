@@ -32,6 +32,7 @@ class OrderInfoHandler implements OrderInfoInterface
     private const STATUS_DONE = 'done';
     private const STATUS_FAILED = 'failed';
     private const STATUS_CANCELED = 'canceled';
+    private const STATUS_CONFIRMED_PAYED = 'confirmed_payed';
 
     /**
      * @var EntityManagerInterface
@@ -175,8 +176,8 @@ class OrderInfoHandler implements OrderInfoInterface
         if ($orderInfo) {
             $orderDate = $orderInfo->getOrderDate();
 
-            $orderInfo->setStatus('canceled');
             $this->checkIsCurrentDate($orderDate) ? $this->returnProductsFromOrder($orderInfo) : '';
+            $orderInfo->setStatus('canceled');
 
             $this->entityManager->flush();
         }
@@ -287,6 +288,7 @@ class OrderInfoHandler implements OrderInfoInterface
                     $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
                 );
             }
+            $this->entityManager->flush();
         }
     }
 
@@ -307,6 +309,58 @@ class OrderInfoHandler implements OrderInfoInterface
     {
         return $this->entityManager->getRepository(OrderInfo::class)->getOrderByUniqueId($uniqueId);
     }
+
+    public function getOrdersForToday(): array
+    {
+        $date = (new \DateTime())->format('Y-m-d');
+
+        $todayOrders = $this->entityManager->getRepository(OrderInfo::class)->getOrdersForAnotherDay($date, 'payed');
+        //dd($todayOrders);
+        return $this->countTodayOrders($todayOrders);
+
+    }
+
+    public function confirmOrderPayment(OrderInfo $orderInfo)
+    {
+        $orderDetails = $orderInfo->getOrderDetails();
+        $user = $orderInfo->getUser();
+
+        foreach ($orderDetails as $orderDetail) {
+            $quantity = $orderDetail->getQuantity();
+            $productSupply = $orderDetail->getProduct()->getSupply();
+
+            $productSupply->setQuantity($productSupply->getQuantity() - $quantity);
+        }
+
+        $orderInfo->setStatus('confirmed_payed');
+//            $user->setBonuses($userBonuses);
+
+        $this->entityManager->flush();
+    }
+
+    private function countTodayOrders(?array $collection): array
+    {
+        $result = [];
+
+        /** @var OrderInfo $order */
+        foreach ($collection as $order) {
+            foreach ($order->getOrderDetails() as $orderDetail) {
+                if (!array_key_exists($orderDetail->getProduct()->getId(), $result)) {
+                    $result[$orderDetail->getProduct()->getId()] = [
+                        'quantity' => $orderDetail->getQuantity(),
+                        'name' => $orderDetail->getProduct()->getName(),
+                        'unit' => $orderDetail->getProduct()->getUnit()
+                    ];
+                } else {
+                    $result[$orderDetail->getProduct()->getId()]['quantity'] += $orderDetail->getQuantity();
+                }
+
+            }
+        }
+
+        return $result;
+    }
+
 
     private function applyOrder(OrderInfo $order): void
     {

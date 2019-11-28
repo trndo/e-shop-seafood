@@ -80,4 +80,6 @@ interface OrderInfoInterface
      * @return OrderInfo
      */
     public function getOrderByUniqueId(?int $uniqueId): ?OrderInfo ;
+
+    public function getOrdersForToday(): array ;
 }

@@ -42,11 +42,11 @@
                                     {% elseif order.status == 'payed' %}
                                         <span class="date-status">Готовится <span class="order-stat order-cook"></span></span>
                                     {% elseif order.status == 'done' %}
-                                        <span class="date-status">В пути к вам<span
+                                        <span class="date-status">Готово<span
                                                     class="order-stat order-delivery"></span></span>
-                                    {% elseif order.status == 'failure' %}
-                                        <span class="date-status">Неудачная оплата, повторите<span
-                                                    class="order-stat order-delivery"></span></span>
+                                    {% elseif order.status == 'failed' %}
+                                        <span class="date-status">Неудачная оплата<span
+                                                    class="order-stat"></span></span>
                                     {% elseif order.status == 'canceled' %}
                                         <span class="date-status">Отменено<span
                                                     class="order-stat"></span></span>
@@ -62,12 +62,12 @@
                                         Подробнее
                                     </div>
                                     {% set user = app.user %}
-                                    {% if order.status == 'confirmed' %}
+                                    {% if order.status == 'confirmed' or order.status == 'failed' %}
                                     <div class="history-btn"
                                          onclick="window.location.href='{{ path('pay', { 'orderUniqueId': order.orderUniqueId, 'user_unique_id' : user.uniqueId }) }}'">Оплатить
                                     </div>
                                     {% endif %}
-                                    {% if order.status == 'confirmed' %}
+                                    {% if order.status == 'confirmed' or order.status == 'failed' %}
                                         <div class="history-btn"
                                             onclick="window.location.href='{{ path('cancelUserOrder',{ 'user_unique_id': user.uniqueId, 'orderUniqueId': order.orderUniqueId }) }}'">Отменить</div>
                                     {% endif %}

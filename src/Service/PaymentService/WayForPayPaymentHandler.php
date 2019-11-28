@@ -89,7 +89,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     'orderUniqueId' => $orderInfo->getOrderUniqueId()
                 ], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->getForm()
-                ->getAsString('Оплатить','btn btn-danger');
+                ->getAsString('Оплатить','btn btn-danger w-100');
         }
 
         return null;
@@ -112,7 +112,9 @@ class WayForPayPaymentHandler implements PaymentInterface
 
                 if ($status == TransactionBase::STATUS_APPROVED) {
                     $this->logger->debug('If Status = '.$status);
-                    $this->handleConfirmation($orderInfo);
+                    //$this->handleConfirmation($orderInfo);
+                    $orderInfo->setStatus('payed');
+                    $this->entityManager->flush();
                 } else {
                     $this->logger->debug('If Status = '.$status);
                     $orderInfo->setStatus('failed');
@@ -137,7 +139,6 @@ class WayForPayPaymentHandler implements PaymentInterface
 
     private function handleConfirmation(OrderInfo $orderInfo): bool
     {
-
             $orderDetails = $orderInfo->getOrderDetails();
             $user = $orderInfo->getUser();
 

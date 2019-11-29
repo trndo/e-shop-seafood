@@ -143,7 +143,7 @@ class OrderInfoHandler implements OrderInfoInterface
 
     public function getCountOfOrders($date): array
     {
-        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount($date);
+        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount();
     }
 
     public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void
@@ -177,6 +177,8 @@ class OrderInfoHandler implements OrderInfoInterface
             $orderDate = $orderInfo->getOrderDate();
 
             $this->checkIsCurrentDate($orderDate) ? $this->returnProductsFromOrder($orderInfo) : '';
+            $this->returnProductsToSupply($orderInfo);
+
             $orderInfo->setStatus('canceled');
 
             $this->entityManager->flush();
@@ -289,16 +291,39 @@ class OrderInfoHandler implements OrderInfoInterface
                     $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
                 );
             }
-            if ($order->getConfirmedPayment()) {
-                foreach ($orderDetails as $orderDetail) {
-                    $quantity = $orderDetail->getQuantity();
-                    $productSupply = $orderDetail->getProduct()->getSupply();
+        }
+    }
 
-                    $productSupply->setQuantity($productSupply->getQuantity() + $quantity);
-                }
+    private function returnProductsToSupply(OrderInfo $order): void
+    {
+        $orderDetails = $order->getOrderDetails();
+
+        $orderDate = $order->getOrderDate();
+
+        if ($this->checkIsCurrentDate($orderDate) && $order->getStatus() == self::STATUS_PAYED) {
+            foreach ($orderDetails as $orderDetail) {
+                $product = $orderDetail->getProduct();
+                $productSupply = $product->getSupply();
+                $productSupply->setReservationQuantity(
+                    $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
+                );
             }
+        }
+
+        if ($order->getConfirmedPayment() && $order->getStatus() == self::STATUS_PAYED) {
+
+            foreach ($orderDetails as $orderDetail) {
+                $quantity = $orderDetail->getQuantity();
+                $productSupply = $orderDetail->getProduct()->getSupply();
+
+                $productSupply->setQuantity($productSupply->getQuantity() + $quantity);
+            }
+
+            $order->setConfirmedPayment(false);
+
             $this->entityManager->flush();
         }
+
     }
 
     private function generateHash(OrderInfo $orderInfo, $length = null)

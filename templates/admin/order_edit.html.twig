@@ -77,7 +77,7 @@
                                                                        data-id="{{ orderDetail.id }}"></i> - Удалить
                                                                 {% elseif order.status == 'new' %}
                                                                     <i class="fas fa-trash-alt"
-                                                                       onclick="if(confirm('Вы один продукт в заказе. Вы хотите отменить?'))window.location.href ='{{ path('cancelOrder', {'orderUniqueId': order.orderUniqueId}) }}'"></i>
+                                                                       onclick="if(confirm('Остался один продукт в заказе. Вы хотите отменить?'))window.location.href ='{{ path('cancelOrder', {'orderUniqueId': order.orderUniqueId}) }}'"></i>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>

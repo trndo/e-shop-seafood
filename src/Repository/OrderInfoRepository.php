@@ -70,25 +70,29 @@ class OrderInfoRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilderForOrderInfo('o');
 
         if ($date == (new \DateTime())->format('Y-m-d')) {
+
             $query->andWhere('o.status = :status AND o.orderDate = :date')
                 ->setParameters([
                     'status' => $status,
                     'date' => $date
                 ]);
         } else {
+
             $query->andWhere('o.status = :status AND o.orderDate != :date')
                 ->setParameters([
                     'status' => $status,
                     'date' => (new \DateTime())->format('Y-m-d')
                 ]);
+
         }
         return $query->orderBy('o.orderDate', 'ASC')
-            ->getQuery()
-            ->getResult();
+                    ->getQuery()
+                    ->getResult();
     }
 
     public function getOrdersForAnotherDay(string $date, string $status = 'payed'): ?array
     {
+
         $query = $this->createQueryBuilderForOrderInfo('o');
 
         return $query->andWhere('o.status = :status AND o.orderDate = :date')
@@ -104,14 +108,14 @@ class OrderInfoRepository extends ServiceEntityRepository
      * @param string $date
      * @return array|null
      */
-    public function getOrderStatusCount(string $date): ?array
+    public function getOrderStatusCount(string $date = null): ?array
     {
         return $this->createQueryBuilder('o', 'o.status')
             ->addSelect('count(o.status)')
             ->groupBy('o.status')
-            ->andWhere('o.orderDate = :date')
+            //->andWhere('o.orderDate != :date')
             ->orderBy('o.id', 'ASC')
-            ->setParameter('date', $date)
+            //->setParameter('date', $date)
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
 

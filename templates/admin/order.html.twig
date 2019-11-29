@@ -49,6 +49,7 @@
                                 {% elseif order.status == 'canceled' %}
                                     <div class="order-status status-canceled">
                                         Отменено
+                                        Отменено
                                     </div>
                                 {% elseif order.status == 'failed' %}
                                     <div class="order-status status-failed">
@@ -140,7 +141,7 @@
                                                 Подтвердить заказ
                                             </button>
                                         {% elseif order.status == 'payed' %}
-                                            {% if order.confirmedPayment is true%}
+                                            {% if order.confirmedPayment %}
                                                 <button class="btn btn-light mr-2  list-inline-item"
                                                         onclick="if(confirm('Вы хотите подтвердить готовность ?'))window.location.href='{{ path('changeStatus',{'id': order.id}) }}'">
                                                     Подтвердить готовность

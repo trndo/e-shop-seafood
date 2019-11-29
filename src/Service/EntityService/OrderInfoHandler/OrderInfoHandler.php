@@ -141,9 +141,9 @@ class OrderInfoHandler implements OrderInfoInterface
         return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrders($date, $status));
     }
 
-    public function getCountOfOrders(): array
+    public function getCountOfOrders($date): array
     {
-        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount();
+        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount($date);
     }
 
     public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void
@@ -288,6 +288,14 @@ class OrderInfoHandler implements OrderInfoInterface
                     $productSupply->getReservationQuantity() + $orderDetail->getQuantity()
                 );
             }
+            if ($order->getConfirmedPayment()) {
+                foreach ($orderDetails as $orderDetail) {
+                    $quantity = $orderDetail->getQuantity();
+                    $productSupply = $orderDetail->getProduct()->getSupply();
+
+                    $productSupply->setQuantity($productSupply->getQuantity() + $quantity);
+                }
+            }
             $this->entityManager->flush();
         }
     }
@@ -320,22 +328,29 @@ class OrderInfoHandler implements OrderInfoInterface
 
     }
 
-    public function confirmOrderPayment(OrderInfo $orderInfo)
+    public function confirmOrderPayment(?int $id): bool
     {
-        $orderDetails = $orderInfo->getOrderDetails();
-        $user = $orderInfo->getUser();
+        $orderInfo = $this->getOrder($id);
 
-        foreach ($orderDetails as $orderDetail) {
-            $quantity = $orderDetail->getQuantity();
-            $productSupply = $orderDetail->getProduct()->getSupply();
+        if ($orderInfo) {
+            $orderDetails = $orderInfo->getOrderDetails();
+            $user = $orderInfo->getUser();
 
-            $productSupply->setQuantity($productSupply->getQuantity() - $quantity);
+            foreach ($orderDetails as $orderDetail) {
+                $quantity = $orderDetail->getQuantity();
+                $productSupply = $orderDetail->getProduct()->getSupply();
+
+                $productSupply->setQuantity($productSupply->getQuantity() - $quantity);
+            }
+
+            $orderInfo->setConfirmedPayment(true);
+            $this->entityManager->flush();
+
+            return true;
         }
 
-        $orderInfo->setStatus('confirmed_payed');
-//            $user->setBonuses($userBonuses);
+        return false;
 
-        $this->entityManager->flush();
     }
 
     private function countTodayOrders(?array $collection): array

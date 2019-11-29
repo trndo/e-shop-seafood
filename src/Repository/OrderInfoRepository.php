@@ -101,14 +101,17 @@ class OrderInfoRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $date
      * @return array|null
      */
-    public function getOrderStatusCount(): ?array
+    public function getOrderStatusCount(string $date): ?array
     {
         return $this->createQueryBuilder('o', 'o.status')
             ->addSelect('count(o.status)')
             ->groupBy('o.status')
+            ->andWhere('o.orderDate = :date')
             ->orderBy('o.id', 'ASC')
+            ->setParameter('date', $date)
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
 

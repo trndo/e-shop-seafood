@@ -66,9 +66,10 @@ interface OrderInfoInterface
     public function getUserOrders(int $userId): OrdersCollection;
 
     /**
+     * @param string $date
      * @return array
      */
-    public function getCountOfOrders(): array;
+    public function getCountOfOrders(string $date): array;
 
     /**
      * @param int|null $id
@@ -81,5 +82,15 @@ interface OrderInfoInterface
      */
     public function getOrderByUniqueId(?int $uniqueId): ?OrderInfo ;
 
+    /**
+     * @return array
+     */
     public function getOrdersForToday(): array ;
+
+
+    /**
+     * @param int|null $id
+     * @return bool
+     */
+    public function confirmOrderPayment(?int $id): bool ;
 }

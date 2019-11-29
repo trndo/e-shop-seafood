@@ -27,12 +27,16 @@ class AdminController extends AbstractController
     {
         $status = $request->query->get('status', 'new');
         $date = $request->query->get('date', (new \DateTime())->format('Y-m-d'));
+
         $orders = $orderInfo->getOrders($date, $status);
-        $statusCount = $orderInfo->getCountOfOrders();
+        $statusCount = $orderInfo->getCountOfOrders($date);
+        $todayOrders = $orderInfo->getOrdersForToday();
+
         return $this->render('admin/admin.html.twig', [
             'orders' => $orders,
             'statusCount' => $statusCount,
-            'date' => $date
+            'date' => $date,
+            'todayOrders' => $todayOrders
         ]);
     }
 

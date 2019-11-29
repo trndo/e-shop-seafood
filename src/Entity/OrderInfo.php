@@ -89,6 +89,11 @@ class OrderInfo
      */
     private $adminMessage;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $confirmedPayment;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -282,6 +287,18 @@ class OrderInfo
     public function setAdminMessage(?string $adminMessage): self
     {
         $this->adminMessage = $adminMessage;
+
+        return $this;
+    }
+
+    public function getConfirmedPayment(): ?bool
+    {
+        return $this->confirmedPayment;
+    }
+
+    public function setConfirmedPayment(?bool $confirmedPayment): self
+    {
+        $this->confirmedPayment = $confirmedPayment;
 
         return $this;
     }

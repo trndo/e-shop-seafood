@@ -88,6 +88,21 @@ class AdminOrderController extends AbstractController
     }
 
     /**
+     * @Route("/lipadmin/showOrder/{id}/applyPayment" ,name="applyPaymentOrder")
+     * @param int|null $id
+     * @param OrderInfoInterface $orderInfo
+     * @return RedirectResponse
+     */
+    public function applyPayment(?int $id, OrderInfoInterface $orderInfo): RedirectResponse
+    {
+        $orderInfo->confirmOrderPayment($id);
+
+        return $this->redirectToRoute('admin_show_order',[
+            'id' => $id
+        ]);
+    }
+
+    /**
      * @Route("/lipadmin/showOrder/{orderUniqueId}/cancelOrder" ,name="cancelOrder")
      * @param int|null $orderUniqueId
      * @param OrderInfoInterface $orderInfo

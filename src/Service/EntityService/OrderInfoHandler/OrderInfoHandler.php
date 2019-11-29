@@ -265,6 +265,7 @@ class OrderInfoHandler implements OrderInfoInterface
     private function deleteFromSupplyReservation(OrderInfo $orderInfo): void
     {
         $orderDetails = $orderInfo->getOrderDetails();
+
         foreach ($orderDetails as $orderDetail) {
             $orderQuantity = $orderDetail->getQuantity();
             $supply = $orderDetail->getProduct()->getSupply();

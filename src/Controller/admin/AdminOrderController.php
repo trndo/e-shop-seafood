@@ -80,9 +80,19 @@ class AdminOrderController extends AbstractController
      * @param OrderInfoInterface $orderInfo
      * @return RedirectResponse
      */
-    public function changeStatus(?int $id, OrderInfoInterface $orderInfo): RedirectResponse
+    public function changeStatus(?int $id, OrderInfoInterface $orderInfo): Response
     {
-        $orderInfo->updateOrderInfoStatus($id);
+        try {
+            $orderInfo->updateOrderInfoStatus($id);
+        } catch (\Throwable $exception) {
+
+            $order = $orderInfo->getOrder($id);
+
+            return $this->render('admin/order.html.twig', [
+                'order' => $order,
+                'message' => $exception->getMessage()
+            ]);
+        }
 
         return $this->redirectToRoute('admin');
     }

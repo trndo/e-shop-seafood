@@ -107,7 +107,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     'orderUniqueId' => $orderInfo->getOrderUniqueId()
                 ], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->getForm()
-                ->getAsString('Оплатить','btn btn-danger w-100');
+                ->getAsString('Оплатить заказ','example_a');
         }
 
         return null;

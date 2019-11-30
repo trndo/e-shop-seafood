@@ -20,6 +20,11 @@
                         <li class="breadcrumb-item active" aria-current="page">Заказ №{{ order.id }}</li>
                     </ol>
                 </nav>
+                {% if message is defined %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endif %}
                 <h1 class="orderTotalPrice">
                     Сумма: {{ order.totalPrice }}
                 </h1>

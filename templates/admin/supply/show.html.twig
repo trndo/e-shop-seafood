@@ -17,10 +17,26 @@
                 <h1 class="h3 mb-2 text-gray-800">Поставки</h1>
                 <p class="mb-4">Здесь можно изменить поставку</p>
                 <div class="text-center">
-                    На сегодня нужно:
-                    {% for order in todayOrders %}
-                       {{ order.name }} - {{ order.quantity }}/{{ order.unit }}
-                    {% endfor %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">На сегодня нужно:</h5>
+                            <div class="row justify-content-center">
+                                <div class="col-3">
+                                        {% if todayOrders is empty %}
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Сегодня пока что нет оплаченых заказов</div>
+                                            </div>
+                                        {% else %}
+                                            <ul class="list-group">
+                                                {% for order in todayOrders %}
+                                                    <li class="list-group-item">{{ order.name }} - {{ order.quantity }}/{{ order.unit }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr class="sidebar-divider">
                 <!-- DataTales Example -->

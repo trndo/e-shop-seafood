@@ -48,4 +48,9 @@ interface MailSenderInterface
      * @param OrderInfo $info
      */
     public function sendAboutChangingStatus(User $user, OrderInfo $info): void;
+
+    /**
+     * @param string $message
+     */
+    public function mailToAdmin(string $message): void ;
 }

@@ -110,6 +110,14 @@ class MailSender implements MailSenderInterface
         ]);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function mailToAdmin(string $message): void
+    {
+        $this->sendMessageToAdmin($message);
+    }
+
     private function sendMessageTo(User $user,string $template,array $options = null)
     {
         $message = (new \Swift_Message(self::TRANSPORT))
@@ -123,6 +131,19 @@ class MailSender implements MailSenderInterface
             );
         $this->mailer->send($message);
     }
+
+    private function sendMessageToAdmin(string $mess,array $options = null)
+    {
+        $message = (new \Swift_Message(self::TRANSPORT))
+            ->setFrom(self::SELF_EMAIL)
+            ->setTo(self::SELF_EMAIL)
+            ->setBody(
+                $mess,
+                self::CONTENT_TYPE
+            );
+        $this->mailer->send($message);
+    }
+
 
 
 }

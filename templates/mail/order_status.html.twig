@@ -1,5 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    Перейдите по ссылке для подтверждение
+    {% if orderInfo.status == 'confirmed' %}
+        <p>Гурман, твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его!</p>
+        <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
+    {% elseif orderInfo.status == 'payed' %}
+        <p>Гурман, твой заказ был оплачен! Ожидай готовности!</p>
+        <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
+    {% elseif orderInfo.status == 'failed' %}
+        <p>Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова!</p>
+        <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
+    {% elseif orderInfo.status == 'done' %}
+        <p>Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!</p>
+        <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
+    {% endif %}
+
 {% endblock %}

@@ -74,7 +74,7 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param ReservationInterface $reservation
      * @param MailSenderInterface $mailSenderService
      * @param SmsSenderInterface $smsSender
-     * @param RouterInterface $router
+     * @param UrlGeneratorInterface $router
      */
     public function __construct(EntityManagerInterface $entityManager,
                                 CartHandler $cartHandler,
@@ -127,6 +127,9 @@ class OrderInfoHandler implements OrderInfoInterface
 
         $this->entityManager->flush();
         $this->mailSenderService->sendAboutMakingOrder($orderInfo->getUser(), $orderInfo);
+        $this->mailSenderService->mailToAdmin('Саша, у тебя новый заказ! Зайди и посмотри!!! Ссылка: '.$this->router->generate('admin_show_order', [
+                'id' => $orderInfo->getId()
+            ], UrlGeneratorInterface::ABSOLUTE_URL));
 
         $session->remove('reservationId');
         $session->remove('cart');
@@ -179,6 +182,11 @@ class OrderInfoHandler implements OrderInfoInterface
             $this->checkIsCurrentDate($orderDate) ? $this->returnProductsFromOrder($orderInfo) : '';
             $this->returnProductsToSupply($orderInfo);
 
+            $this->mailSenderService->mailToAdmin('Саша, заказ был отменён! Зайди и посмотри!!! Ссылка: '.$this->router->generate('admin_show_order', [
+                    'id' => $orderInfo->getId()
+                ], UrlGeneratorInterface::ABSOLUTE_URL)
+            );
+
             $orderInfo->setStatus('canceled');
 
             $this->entityManager->flush();
@@ -207,7 +215,6 @@ class OrderInfoHandler implements OrderInfoInterface
             $productSupply = $product->getSupply();
             $orderDate = $orderInfo->getOrderDate();
             $orderDetailPrice = 0;
-
 
             $receipt !== null
                 ? $orderDetailPrice = $receipt->getPrice() * ceil($quantity) + $product->getPrice() * $quantity
@@ -239,9 +246,10 @@ class OrderInfoHandler implements OrderInfoInterface
                 case self::STATUS_NEW :
                     $this->checkIsCurrentDate($orderDate) ? $this->deleteFromSupplyReservation($order) : '';
                     $order->setStatus(self::STATUS_CONFIRMED);
-                    $this->smsSender->sendSms('Привет гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',[
+                    $this->smsSender->sendSms('Гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',[
                             'uniqueId' => $order->getUser()->getUniqueId()
-                        ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone());
+                        ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone()
+                    );
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);

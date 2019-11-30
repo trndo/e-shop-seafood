@@ -78,7 +78,14 @@ class UserController extends AbstractController
             $data = $form->getData();
             $oldPassword = $data->getOldPassword();
             $newPassword = $data->getPassword();
-            $userService->resetOldPassword($user, $newPassword, $oldPassword);
+            try {
+                $userService->resetOldPassword($user, $newPassword, $oldPassword);
+            } catch (\Throwable $exception) {
+                return $this->render('new_password.html.twig', [
+                    'form' => $form->createView(),
+                    'message' => $exception->getMessage()
+                ]);
+            }
 
             return $this->redirectToRoute('home');
         }

@@ -72,7 +72,7 @@ interface UserServiceInterface
      * @param string $email
      * @return User
      */
-    public function findUserByEmail(?string $email): User ;
+    public function findUserByEmail(?string $email): ?User ;
 
     /**
      * @param $user

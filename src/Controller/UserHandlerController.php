@@ -68,15 +68,33 @@ class UserHandlerController extends AbstractController
             $data = $form->getData();
             $email = $data->getEmail();
             $user = $userService->findUserByEmail($email);
+
+            try {
+                if (!$user) {
+                    throw $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
+                }
+            } catch (\Throwable $exception) {
+                return $this->render('enter_email.html.twig', [
+                    'form' => $form->createView(),
+                    'message' => $exception->getMessage()
+                ]);
+            }
+
+            try {
+                if (!$user->getRegistrationStatus()) {
+                    throw $this->createNotFoundException('Пожалуйста, закончите регистрацию!');
+                }
+            } catch (\Throwable $exception) {
+                return $this->render('enter_email.html.twig', [
+                    'form' => $form->createView(),
+                    'message' => $exception->getMessage()
+                ]);
+            }
+
             if ($user->getRegistrationStatus()) {
                 $userService->resetPassword($user);
             }
-            if (!$user->getRegistrationStatus()) {
-                throw $this->createNotFoundException('Пожалуйста, закончите регистрацию!');
-            }
-            if (!$user) {
-                throw $this->createNotFoundException('Такая почта ' . $email . ' не найдена!');
-            }
+
             return $this->redirectToRoute('user',[
                 'uniqueId' => $user->getUniqueId()
             ]);

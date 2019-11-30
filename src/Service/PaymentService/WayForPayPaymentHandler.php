@@ -5,6 +5,8 @@ namespace App\Service\PaymentService;
 
 
 use App\Entity\OrderInfo;
+use App\Service\MailService\MailSenderInterface;
+use App\Service\SmsSenderService\SmsSenderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
@@ -43,14 +45,30 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var MailSenderInterface
+     */
+    private $mailSender;
+    /**
+     * @var SmsSenderInterface
+     */
+    private $smsSender;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager, UrlGeneratorInterface $generator, LoggerInterface $logger, SessionInterface $session)
+    public function __construct(UrlGeneratorInterface $urlGenerator,
+                                EntityManagerInterface $entityManager,
+                                UrlGeneratorInterface $generator,
+                                LoggerInterface $logger,
+                                SessionInterface $session,
+                                MailSenderInterface $mailSender,
+                                SmsSenderInterface $smsSender)
     {
         $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
         $this->generator = $generator;
         $this->logger = $logger;
         $this->session = $session;
+        $this->mailSender = $mailSender;
+        $this->smsSender = $smsSender;
     }
 
     /**
@@ -115,16 +133,41 @@ class WayForPayPaymentHandler implements PaymentInterface
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
+                    $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                            'id' => $orderInfo->getId()
+                        ], UrlGeneratorInterface::ABSOLUTE_URL)
+                    );
+                    $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
+                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!', $orderInfo->getOrderPhone());
+
                 } else {
                     $this->logger->debug('If Status = '.$status);
                     $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
-
+                    $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                            'id' => $orderInfo->getId()
+                        ], UrlGeneratorInterface::ABSOLUTE_URL)
+                    );
+                    $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
+                    $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '.$this->urlGenerator->generate('user_orders',[
+                            'uniqueId' => $orderInfo->getUser()->getUniqueId()
+                        ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
+                    );
                     return false;
                 }
             } catch (\Throwable $e) {
                 $orderInfo->setStatus('failed');
                 $this->entityManager->flush();
+
+                $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                        'id' => $orderInfo->getId()
+                    ], UrlGeneratorInterface::ABSOLUTE_URL)
+                );
+                $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
+                $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '.$this->urlGenerator->generate('user_orders',[
+                        'uniqueId' => $orderInfo->getUser()->getUniqueId()
+                    ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
+                );
 
                 $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
 

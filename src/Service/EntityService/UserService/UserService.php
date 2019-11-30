@@ -118,7 +118,7 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
-    public function findUserByEmail(?string $email): User
+    public function findUserByEmail(?string $email): ?User
     {
         if ($email != null) {
            return $user = $this->repository->findOneBy(['email' => $email]);

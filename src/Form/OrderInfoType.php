@@ -21,7 +21,9 @@ class OrderInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('orderDate',DateType::class,[
-                    'label' => false
+                    'label' => false,
+                    'format' => 'dd.MM.yyyy',
+                    'html5' => false,
                 ])
                 ->add('orderTime',TimeType::class,[
                     'label' => false

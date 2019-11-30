@@ -26,6 +26,9 @@
                             <span class="attention-title">Ведите свою почту</span>
                         </div>
                         <div class="resetpass-container mt-5">
+                            {% if message is defined %}
+                                <small style="width: 170px; word-break: break-word; font-size: 13px" class="validation-mess">{{ message }}</small>
+                            {% endif %}
                             {{ form_start(form, {'attr': {'class':'enter-email'}}) }}
                                 <div>
                                     {{ form_widget(form.email, {'attr': {'class':'user-input forgot-pass-input'}}) }}

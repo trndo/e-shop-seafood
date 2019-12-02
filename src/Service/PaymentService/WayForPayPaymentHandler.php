@@ -127,7 +127,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $response = $handler->parseRequestFromPostRaw();
                 $status = $response->getTransaction()->getStatus();
                 $this->logger->debug('Status = '.$status);
-
+                dd($status);
                 if ($status == TransactionBase::STATUS_APPROVED) {
                     $this->logger->debug('If Status = '.$status);
                     //$this->handleConfirmation($orderInfo);

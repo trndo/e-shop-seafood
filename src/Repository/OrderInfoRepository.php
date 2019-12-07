@@ -65,6 +65,20 @@ class OrderInfoRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getOrdersForAdmin(string $date, string $status = 'new'): ?array
+    {
+        $query = $this->createQueryBuilderForOrderInfo('o');
+        $query->andWhere('o.status = :status AND o.orderDate = :date')
+            ->setParameters([
+                'status' => $status,
+                'date' => $date
+            ]);
+
+        return $query->orderBy('o.orderDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getOrders(string $date, string $status = 'new'): ?array
     {
         $query = $this->createQueryBuilderForOrderInfo('o');
@@ -113,9 +127,9 @@ class OrderInfoRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o', 'o.status')
             ->addSelect('count(o.status)')
             ->groupBy('o.status')
-            //->andWhere('o.orderDate != :date')
+            ->andWhere('o.orderDate = :date')
             ->orderBy('o.id', 'ASC')
-            //->setParameter('date', $date)
+            ->setParameter('date', $date)
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
 

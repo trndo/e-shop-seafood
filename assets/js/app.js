@@ -7,6 +7,17 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import './plugins/jquery.abacus.min';
 import 'jquery-mask-plugin';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import 'air-datepicker/dist/css/datepicker.min.css';
+import 'pickerjs/dist/picker.min.css';
+import 'air-datepicker/dist/js/datepicker';
+
+let today = new Date();
+let tomorrow = new Date();
+tomorrow.setDate(today.getDate()+1);
+
+$('.date-input').datepicker({
+    dateFormat: "yyyy-mm-dd"
+});
 
 let totalSum = $('#order_info_totalPrice').val();
 $('#order_info_totalPrice').abacus(totalSum);
@@ -296,6 +307,7 @@ ClassicEditor.create(document.querySelector('.editor'));
             return index;
         }
     });
+
 
 
 })(jQuery); // End of use strict

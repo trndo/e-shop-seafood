@@ -87,10 +87,16 @@ interface OrderInfoInterface
      */
     public function getOrdersForToday(): array ;
 
-
     /**
      * @param int|null $id
      * @return bool
      */
     public function confirmOrderPayment(?int $id): bool ;
+
+    /**
+     * @param string $date
+     * @param string $status
+     * @return OrdersCollection
+     */
+    public function getAdminOrders(string $date, string $status): OrdersCollection;
 }

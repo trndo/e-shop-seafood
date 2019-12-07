@@ -139,6 +139,11 @@ class OrderInfoHandler implements OrderInfoInterface
 
     }
 
+    public function getAdminOrders(string $date, string $status): OrdersCollection
+    {
+        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrdersForAdmin($date, $status));
+    }
+
     public function getOrders(string $date, string $status): OrdersCollection
     {
         return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrders($date, $status));

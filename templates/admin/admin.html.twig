@@ -178,6 +178,11 @@
                         </div>
                     </div>
                     <ul class="list-inline text-center mt-5 h4">
+                        <form action="{{ path('admin') }}" method="get">
+                            <label for="date">Data</label>
+                            <input id="date" type="text" class="date-input" name="date">
+                            <input type="submit" value="Отфильтровать">
+                        </form>
                         {% set active = date %}
                         <li class="list-inline-item underline  {{ active == "now"|date('Y-m-d') ? 'underline-selected': '' }}"
                             onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': "now"|date('Y-m-d')})) }}'">

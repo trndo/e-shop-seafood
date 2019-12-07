@@ -14,6 +14,7 @@ tomorrow.setDate(today.getDate()+1);
 $('.date-input').datepicker({
     minDate: tomorrow
 });
+
 $('.date-input').keypress(function (e) {
     e.preventDefault();
 });

@@ -99,19 +99,22 @@
         width: 547px;
         margin-bottom: 42px;
     }
+
     .product-card{
         width: 242px;
         height: 344.56px;
         margin-top: 42px;
-        margin-right: 63px;
+        margin-right: 62px !important;
     }
+
     .product-card:nth-child(even){
-        margin-right: 0;
+        margin-right: 0 !important;
     }
 
     .product-card:nth-child(3n+3){
-        margin-right: 63px;
+        margin-right:  unset;
     }
+
     .product-card img{
         height: 214.34px;
     }

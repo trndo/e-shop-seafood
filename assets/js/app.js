@@ -16,7 +16,8 @@ let tomorrow = new Date();
 tomorrow.setDate(today.getDate()+1);
 
 $('.date-input').datepicker({
-    dateFormat: "yyyy-mm-dd"
+    dateFormat: "yyyy-mm-dd",
+    position: "left bottom",
 });
 
 let totalSum = $('#order_info_totalPrice').val();

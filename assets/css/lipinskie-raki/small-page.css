@@ -550,7 +550,7 @@ input[type=number] {
     text-align: left;
     padding-left: 28px;
     background-image: url('../../img/marker-form-white.svg');
-    margin-top: 16px;
+    margin: 10px auto 0 auto;
     background-repeat: no-repeat;
     font-style: normal;
     font-weight: 900;

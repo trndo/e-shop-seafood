@@ -26,8 +26,10 @@ class AdminController extends AbstractController
     public function homeAdmin(Request $request, OrderInfoInterface $orderInfo): Response
     {
         $status = $request->query->get('status', 'new');
-        $date = $request->query->get('date', (new \DateTime())->format('Y-m-d')).' 00:00:00';
+        $date = $request->query->get('date', (new \DateTime())->format('Y-m-d'));
+
         $orders = $orderInfo->getAdminOrders($date, $status);
+        //dd($orders);
         $statusCount = $orderInfo->getCountOfOrders($date);
         $todayOrders = $orderInfo->getOrdersForToday();
 

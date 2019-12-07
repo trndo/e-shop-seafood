@@ -22,17 +22,17 @@
                             <h5 class="card-title">На сегодня нужно:</h5>
                             <div class="row justify-content-center">
                                 <div class="col-3">
-                                        {% if todayOrders is empty %}
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">Сегодня пока что нет оплаченых заказов</div>
-                                            </div>
-                                        {% else %}
-                                            <ul class="list-group">
-                                                {% for order in todayOrders %}
-                                                    <li class="list-group-item">{{ order.name }} - {{ order.quantity }}/{{ order.unit }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
+                                    {% if todayOrders is empty %}
+                                        <div class="text-center">
+                                            Сегодня пока что нет оплаченых заказов
+                                        </div>
+                                    {% else %}
+                                        <ul class="list-group">
+                                            {% for order in todayOrders %}
+                                                <li class="list-group-item">{{ order.name }} - {{ order.quantity }}/{{ order.unit }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

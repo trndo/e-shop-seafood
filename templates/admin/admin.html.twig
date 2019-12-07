@@ -47,7 +47,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin',{'status':'new'}) }}'">
+                                     onclick="window.location.href='{{ path('admin',  app.request.query.all|merge({'status':'new'})) }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text font-weight-bold text-success text-uppercase mb-2">Новые
@@ -66,7 +66,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin',{'status':'confirmed'}) }}'">
+                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'confirmed'}))  }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text font-weight-bold text-warning text-uppercase mb-1">
@@ -87,7 +87,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin',{'status':'payed'}) }}'">
+                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'payed'})) }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text- font-weight-bold text-primary text-uppercase mb-1">
@@ -109,7 +109,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-bottom-done shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin',{'status':'done'}) }}'">
+                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'done'})) }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text font-weight-bold text-done text-uppercase mb-1">Готово
@@ -130,7 +130,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-bottom-canceled shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin',{'status':'canceled'}) }}'">
+                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'canceled'})) }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text font-weight-bold text-canceled text-uppercase mb-1">
@@ -152,7 +152,7 @@
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-bottom-failed shadow h-100 py-2">
                                 <div class="card-body status-order"
-                                     onclick="window.location.href='{{ path('admin', {'status':'failed'}) }}'">
+                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'failed'})) }}'">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text font-weight-bold text-failed text-uppercase mb-1">
@@ -173,26 +173,41 @@
                         </div>
                         <!-- Pending Requests Card Example -->
                     </div>
-                    <div class="reset text-center" onclick="window.location.href=''">
-                        <div class="reset-link" rel="nofollow noopener"><i class="fas fa-redo"></i> Обновить заказы
+                    <div class="reset text-center" >
+                        <div class="reset-link" rel="nofollow noopener" onclick="window.location.href=''"><i class="fas fa-redo"></i> Обновить заказы
                         </div>
                     </div>
-                    <ul class="list-inline text-center mt-5 h4">
-                        <form action="{{ path('admin') }}" method="get">
-                            <label for="date">Data</label>
-                            <input id="date" type="text" class="date-input" name="date">
-                            <input type="submit" value="Отфильтровать">
-                        </form>
-                        {% set active = date %}
-                        <li class="list-inline-item underline  {{ active == "now"|date('Y-m-d') ? 'underline-selected': '' }}"
-                            onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': "now"|date('Y-m-d')})) }}'">
-                            Сегодня
-                        </li>
-                        <li class="list-inline-item underline {{ active == "other_days" ? 'underline-selected': '' }} "
-                            onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': 'other_days'})) }}'">
-                            Другой день
-                        </li>
-                    </ul>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-5">
+                            <form action="{{ path('admin') }}" method="get">
+                                <div class="form-row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input id="date" type="text" class="date-input form-control" name="date" autocomplete="off" placeholder="Выберите дату">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-outline-primary" value="Отфильтровать">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+{#                    <ul class="list-inline text-center mt-5 h4">#}
+{#                        {% set active = date %}#}
+{#                        <li class="list-inline-item underline  {{ active == "now"|date('Y-m-d') ? 'underline-selected': '' }}"#}
+{#                            onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': "now"|date('Y-m-d')})) }}'">#}
+{#                            Сегодня#}
+{#                        </li>#}
+{#                        <li class="list-inline-item underline {{ active == "other_days" ? 'underline-selected': '' }} "#}
+{#                            onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'date': 'other_days'})) }}'">#}
+{#                            Другой день#}
+{#                        </li>#}
+{#                    </ul>#}
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -236,6 +251,14 @@
                                         {% elseif order.status == 'payed' %}
                                             <div class="order-status-lipadmin status-payed">
                                                 Оплачено
+                                            </div>
+                                        {% elseif order.status == 'failed' %}
+                                            <div class="order-status-lipadmin status-failed">
+                                                Нудачная оплата
+                                            </div>
+                                        {% elseif order.status == 'canceled' %}
+                                            <div class="order-status-lipadmin status-canceled">
+                                                Отменён
                                             </div>
                                         {% elseif order.status == 'done' %}
                                             <div class="order-status-lipadmin status-done">

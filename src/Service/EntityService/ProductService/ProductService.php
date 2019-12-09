@@ -430,8 +430,11 @@ class ProductService implements ProductServiceInterface
             ->setPercent($model->getPercent())
             ->setAdditionPrice($model->getAdditionalPrice());
 
-        $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() + $model->getPrice() : $price += $model->getPrice();
-        $model->getPercent() ? $price += $price * $model->getPercent() : $price += $price;
+        $price = $model->getPrice();
+        if ($model->getIsAbleToChangePrice()) {
+            $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() : '';
+            $model->getPercent() ? $price += $price * $model->getPercent() : '';
+        }
 
         $product->setPrice(ceil($price));
         return $product;

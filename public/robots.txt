@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: 
+Disallow: https://lipinskieraki.com/lipadmin
+Disallow: https://lipinskieraki.com/cart
+Disallow: https://lipinskieraki.com/user-*

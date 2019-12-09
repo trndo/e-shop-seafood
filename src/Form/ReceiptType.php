@@ -98,6 +98,10 @@ class ReceiptType extends AbstractType
                     'class' => 'form-check-label'
                 ],
             ])
+            ->add('isAbleToChangePrice', CheckboxType::class, [
+                'label' => 'Пересчитать сумму',
+                'required' => false
+            ])
             ->add('percent',NumberType::class, [
                 'label' => 'Процент платёжной системы (Процент/100)',
                 'attr' => [

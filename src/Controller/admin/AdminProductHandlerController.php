@@ -27,14 +27,13 @@ class AdminProductHandlerController extends AbstractController
      * @param ProductServiceInterface $productService
      * @return Response
      */
-    public function createProduct(Request $request ,ProductServiceInterface $productService): Response
+    public function createProduct(Request $request , ProductServiceInterface $productService): Response
     {
         $productModel = new ProductModel();
-        $form = $this->createForm(ProductType::class,$productModel);
+        $form = $this->createForm(ProductType::class, $productModel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $productService->saveProduct($productModel);
 
             return $this->redirectToRoute('products');
@@ -58,7 +57,7 @@ class AdminProductHandlerController extends AbstractController
     public function updateProduct(Product $product,Request $request, ProductServiceInterface $productService): Response
     {
         $options['update'] = true;
-        $form = $this->createForm(ProductType::class,ProductMapper::entityToModel($product) ,$options);
+        $form = $this->createForm(ProductType::class, ProductMapper::entityToModel($product) ,$options);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){

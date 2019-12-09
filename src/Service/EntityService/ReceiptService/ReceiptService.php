@@ -284,8 +284,11 @@ class ReceiptService implements ReceiptServiceInterface
             ->setExtraAlcohol($model->getExtraAlcohol())
             ->setExtraHot($model->getExtraHot());
 
-        $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() + $model->getPrice() : $price += $model->getPrice();
-        $model->getPercent() ? $price += $price * $model->getPercent() : $price += $price;
+        $price = $model->getPrice();
+        if ($model->getIsAbleToChangePrice()) {
+            $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() : '';
+            $model->getPercent() ? $price += $price * $model->getPercent() : '';
+        }
 
         $receipt->setPrice(ceil($price));
         return $receipt;

@@ -105,6 +105,11 @@ class ProductModel
     private $additionalPrice;
 
     /**
+     * @var boolean|null
+     */
+    private $isAbleToChangePrice;
+
+    /**
      * @return float|null
      */
     public function getPercent(): ?float
@@ -371,6 +376,24 @@ class ProductModel
             $this->photo = $photo;
         }
         return $this;
+    }
+
+    /**
+     * @param bool|null $isAbleToChangePrice
+     * @return ProductModel
+     */
+    public function setIsAbleToChangePrice(?bool $isAbleToChangePrice): ProductModel
+    {
+        $this->isAbleToChangePrice = $isAbleToChangePrice;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsAbleToChangePrice(): ?bool
+    {
+        return $this->isAbleToChangePrice;
     }
 
 }

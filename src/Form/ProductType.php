@@ -10,6 +10,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -102,7 +103,11 @@ class ProductType extends AbstractType
             'required' => false,
             'placeholder' => 'Выбирете размер(без размера)'
         ])
-            ->add('percent',NumberType::class,[
+            ->add('isAbleToChangePrice', CheckboxType::class, [
+                'label' => 'Пересчитать сумму',
+                'required' => false
+            ])
+            ->add('percent',NumberType::class, [
                 'label' => 'Процент платёжной системы (Процент/100)',
                 'attr' => [
                     'min' => 0.001,

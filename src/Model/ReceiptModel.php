@@ -100,6 +100,11 @@ class ReceiptModel
     private $extraAlcohol;
 
     /**
+     * @var boolean|null
+     */
+    private $isAbleToChangePrice;
+
+    /**
      * @return bool|null
      */
     public function getExtraHot(): ?bool
@@ -352,6 +357,24 @@ class ReceiptModel
             $this->photo = $photo;
         }
         return $this;
+    }
+
+    /**
+     * @param bool|null $isAbleToChangePrice
+     * @return ReceiptModel
+     */
+    public function setIsAbleToChangePrice(?bool $isAbleToChangePrice): ReceiptModel
+    {
+        $this->isAbleToChangePrice = $isAbleToChangePrice;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsAbleToChangePrice(): ?bool
+    {
+        return $this->isAbleToChangePrice;
     }
 
 }

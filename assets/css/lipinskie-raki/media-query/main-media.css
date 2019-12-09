@@ -90,7 +90,6 @@
     }
 
     .rating h2{
-        width: 325px;
         height: 24px;
         font-size: 23px;
         padding-bottom: 30px;
@@ -613,7 +612,7 @@
     .rating h2{
         width: max-content;;
         height: 20px;
-        font-size: 23px;
+        font-size: 18px;
         padding-bottom: 30px;
     }
 

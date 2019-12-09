@@ -26,7 +26,7 @@
                         <li {% if active == 'home' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('home') }}">Главная</li>
                         <li {% if active == 'zhivye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
                         <li {% if active == 'zharenye-raki' %} {% set active = false %}class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
-                        <li {% if active == 'not exist yet' %} {% set active = false %} class="active-nav"{% endif %} data-location="">Вареные раки</li>
+                        <li {% if active == 'varenye-raki' %} {% set active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки</li>
                     </ul>
                 </div>
             </div>

@@ -605,7 +605,7 @@ $(document).ready(function () {
     });
 
     function startMessageSlider(){
-       interval = setInterval(changeMessage,5000);
+       interval = setInterval(changeMessage,8500);
     }
 
     function changeMessage() {

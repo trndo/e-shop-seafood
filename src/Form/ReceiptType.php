@@ -108,14 +108,16 @@ class ReceiptType extends AbstractType
                     'min' => 0.001,
                     'max' => 1,
                     'step' => 0.001
-                ]
+                ],
+                'required' => false
             ])
             ->add('additionalPrice',NumberType::class,[
                 'label' => 'Цена тары на единицу товара',
                 'attr' => [
                     'min' => 1,
                     'step' => 0.01
-                ]
+                ],
+                'required' => false
             ])
             ->add('seoDescription', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],

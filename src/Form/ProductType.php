@@ -114,6 +114,7 @@ class ProductType extends AbstractType
                     'max' => 1,
                     'step' => 0.001
                 ],
+                'required' => false
 
             ])
             ->add('additionalPrice',NumberType::class,[

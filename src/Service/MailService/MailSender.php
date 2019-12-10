@@ -12,7 +12,7 @@ class MailSender implements MailSenderInterface
 {
     public const TRANSPORT = 'Lipinskie Raki';
 
-    public const SELF_EMAIL = 'trndogv@gmail.com';
+    public const SELF_EMAIL = 'lipinskieraki@gmail.com';
 
     public const CONTENT_TYPE = 'text/html';
     /**

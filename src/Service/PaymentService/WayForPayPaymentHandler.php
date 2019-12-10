@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use WayForPay\SDK\Collection\ProductCollection;
+use WayForPay\SDK\Credential\AccountSecretCredential;
 use WayForPay\SDK\Credential\AccountSecretTestCredential;
 use WayForPay\SDK\Domain\Client;
 use WayForPay\SDK\Domain\Product;
@@ -54,13 +55,37 @@ class WayForPayPaymentHandler implements PaymentInterface
      */
     private $smsSender;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator,
-                                EntityManagerInterface $entityManager,
-                                UrlGeneratorInterface $generator,
-                                LoggerInterface $logger,
-                                SessionInterface $session,
-                                MailSenderInterface $mailSender,
-                                SmsSenderInterface $smsSender)
+    /**
+     * @var string
+     */
+    private $account;
+
+    /**
+     * @var string
+     */
+    private $secret;
+
+    /**
+     * WayForPayPaymentHandler constructor.
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param EntityManagerInterface $entityManager
+     * @param UrlGeneratorInterface $generator
+     * @param LoggerInterface $logger
+     * @param SessionInterface $session
+     * @param MailSenderInterface $mailSender
+     * @param SmsSenderInterface $smsSender
+     * @param string $account
+     * @param string $secret
+     */
+    public function __construct(
+         UrlGeneratorInterface $urlGenerator,
+         EntityManagerInterface $entityManager,
+         UrlGeneratorInterface $generator,
+         LoggerInterface $logger,
+         SessionInterface $session,
+         MailSenderInterface $mailSender,
+         SmsSenderInterface $smsSender
+    )
     {
         $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
@@ -69,6 +94,8 @@ class WayForPayPaymentHandler implements PaymentInterface
         $this->session = $session;
         $this->mailSender = $mailSender;
         $this->smsSender = $smsSender;
+        $this->account = getenv('WAY_FOR_PAY_ACC');
+        $this->secret = getenv('WAY_FOR_PAY_SECRET');
     }
 
     /**
@@ -77,8 +104,8 @@ class WayForPayPaymentHandler implements PaymentInterface
     public function doPayment(OrderInfo $orderInfo): ?string
     {
         if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed')) {
-            $credential = new AccountSecretTestCredential();
-            //$credential = new AccountSecretCredential('account', 'secret');
+            //$credential = new AccountSecretTestCredential();
+            $credential = new AccountSecretCredential($this->account, $this->secret);
 
             return  $form = PurchaseWizard::get($credential)
                 ->setOrderReference($this->generateOrderWayForPayId(7))
@@ -119,8 +146,8 @@ class WayForPayPaymentHandler implements PaymentInterface
     public function confirmPayment(OrderInfo $orderInfo): bool
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
-            $credential = new AccountSecretTestCredential();
-            //$credential = new AccountSecretCredential('account', 'secret');
+            //$credential = new AccountSecretTestCredential();
+            $credential = new AccountSecretCredential($this->account, $this->secret);
             $this->session->set('orderInfoObject', $orderInfo);
             try {
                 $handler = new ServiceUrlHandler($credential);

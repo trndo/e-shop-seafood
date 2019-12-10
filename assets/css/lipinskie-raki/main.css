@@ -643,6 +643,7 @@ footer{
 }
 
 .contact-social{
+    z-index: 1001;
     position: relative;
     margin-top: 45px;
     display: flex;

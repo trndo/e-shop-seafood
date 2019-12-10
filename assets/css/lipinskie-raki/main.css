@@ -342,7 +342,7 @@ main{
     font-style: normal;
     font-weight: 600;
     margin: 0 auto;
-    width: 435px;
+    width: max-content;
     position: relative;
     color: white;
     border-bottom: 3px solid #F13A3A;
@@ -619,6 +619,11 @@ footer{
     text-transform: uppercase;
     color: #FFFFFF;
 }
+
+.contact-info{
+    text-align: center;
+}
+
 .contact-info a {
     transition: 0.2s;
 }

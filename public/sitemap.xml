@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-	<loc>https://lipinskieraki.com/</loc>
-	<lastmod>2019-12-10T01:41:05+03:00</lastmod>
-	<priority>1.0</priority>
-	<changefreq>daily</changefreq>
+    <loc>https://lipinskieraki.com/</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/euphoria</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/orgasmicheskii</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/tomato-boom-1</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/dorblu</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/po-uzbekski</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki/po-ukrainski-pod-vodochku</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-zhivye-raki</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-varenye-raki</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
+</url>
+<url>
+    <loc>https://lipinskieraki.com/category-zharenye-raki</loc>
+    <lastmod>2019-12-10T01:41:05+03:00</lastmod>
+    <priority>1.0</priority>
+    <changefreq>daily</changefreq>
 </url>
 </urlset>

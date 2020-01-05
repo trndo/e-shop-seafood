@@ -690,6 +690,11 @@ footer{
     transition: .2s;
 }
 
+#footer-ul li a{
+    text-decoration: none !important;
+    color: white !important;
+}
+
 #footer-ul li:hover{
     font-weight: normal;
     border-bottom: 3px solid #F13A3A;
@@ -828,6 +833,11 @@ footer{
     user-select: none;
     -moz-user-select: none;
 }
+.menu-nav ul li a{
+    text-decoration: none !important;
+    color: white !important;
+}
+
 .menu-nav ul li:hover{
     font-weight: normal !important;
     border-bottom: 3px solid #F13A3A;

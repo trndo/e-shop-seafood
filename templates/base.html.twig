@@ -19,8 +19,17 @@
             <!-- Add the slick-theme.css if you want default styling -->
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
             <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/claw.ico') }}"/>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155812908-1"></script>
             {{ encore_entry_link_tags('main') }}
             {{ encore_entry_link_tags('video') }}
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'UA-155812908-1');
+            </script>
         {% endblock %}
     </head>
     <body>

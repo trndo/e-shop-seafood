@@ -149,13 +149,16 @@ class WayForPayPaymentHandler implements PaymentInterface
             //$credential = new AccountSecretTestCredential();
             $credential = new AccountSecretCredential($this->account, $this->secret);
             $this->session->set('orderInfoObject', $orderInfo);
+
             try {
                 $handler = new ServiceUrlHandler($credential);
                 $response = $handler->parseRequestFromPostRaw();
                 $status = $response->getTransaction()->getStatus();
-                $this->logger->debug('Status = '.$status);
+                $this->logger->error('Status = '.$status);
+                file_put_contents('status.txt', $status);
+                
                 if ($status == TransactionBase::STATUS_APPROVED) {
-                    $this->logger->debug('If Status = '.$status);
+                    $this->logger->error('If Status = '.$status);
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
@@ -167,7 +170,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!', $orderInfo->getOrderPhone());
 
                 } else {
-                    $this->logger->debug('If Status = '.$status);
+                    $this->logger->error('If Status = '.$status);
                     $orderInfo->setStatus('failed');
                     $this->entityManager->flush();
                     $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
@@ -179,8 +182,10 @@ class WayForPayPaymentHandler implements PaymentInterface
                             'uniqueId' => $orderInfo->getUser()->getUniqueId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
                     );
+
                     return false;
                 }
+
             } catch (\Throwable $e) {
                 $orderInfo->setStatus('failed');
                 $this->entityManager->flush();
@@ -195,7 +200,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
                 );
 
-                $this->logger->debug("WayForPay SDK exception: " . $e->getMessage());
+                $this->logger->error("WayForPay SDK exception: " . $e->getMessage());
 
                 return false;
             }

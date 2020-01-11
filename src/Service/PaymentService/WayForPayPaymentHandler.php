@@ -172,6 +172,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 } else {
                     $this->logger->error('If Status = '.$status);
                     $orderInfo->setStatus('failed');
+                    $orderInfo->setComment($status);
                     $this->entityManager->flush();
                     $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()

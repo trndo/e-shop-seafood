@@ -281,8 +281,21 @@
     text-align: center;
     line-height: 25px;
 }
+
+.special-sign-oval{
+    width: 34px !important;
+    align-self: center;
+}
+
 .special-sign:not(:first-child){
     margin-top: 5px;
+}
+
+.new{
+    color: #FFFFFF;
+    background: #F13A3A;
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .hot{

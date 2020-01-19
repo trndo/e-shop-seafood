@@ -38,12 +38,15 @@
                                         {% endif %}
                                     {% endif %}
                                     {% if item.type == 'receipt' %}
-                                            <div class="item-special-container pulse">
+                                            <div class="item-special-container">
                                         {% if item.extraHot %}
                                                 <div class="special-sign hot"><i class="fab fa-hotjar"></i></div>
                                         {% endif %}
                                         {% if item.extraAlcohol %}
                                                 <img class="special-sign alco" src="{{ asset('assets/img/beer.svg') }}">
+                                        {% endif %}
+                                        {% if item.isNew %}
+                                                <div class="special-sign special-sign-oval new">new</div>
                                         {% endif %}
                                             </div>
                                     {% endif %}

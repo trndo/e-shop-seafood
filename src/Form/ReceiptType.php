@@ -98,6 +98,16 @@ class ReceiptType extends AbstractType
                     'class' => 'form-check-label'
                 ],
             ])
+            ->add('isNew', CheckboxType::class, [
+                'attr' => [
+                    'class' => 'form-check-input'
+                ],
+                'label' => 'Отметить как новый',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'form-check-label'
+                ],
+            ])
             ->add('isAbleToChangePrice', CheckboxType::class, [
                 'label' => 'Пересчитать сумму',
                 'required' => false

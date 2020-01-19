@@ -282,7 +282,8 @@ class ReceiptService implements ReceiptServiceInterface
             ->setPercent($model->getPercent())
             ->setAdditionalPrice($model->getAdditionalPrice())
             ->setExtraAlcohol($model->getExtraAlcohol())
-            ->setExtraHot($model->getExtraHot());
+            ->setExtraHot($model->getExtraHot())
+            ->setIsNew($model->isNew());
 
         $price = $model->getPrice();
         if ($model->getIsAbleToChangePrice()) {

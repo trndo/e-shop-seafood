@@ -157,7 +157,7 @@
     }
 
     .login-button{
-        width: 195px;
+        width: 210px;
         margin-top: 25px;
         font-size: 18px;
     }
@@ -271,6 +271,10 @@
 
     .attention-title{
         font-size: 16px;
+    }
+
+    .user-code{
+       font-size: 16px !important;
     }
 
     .attention-subtitle{
@@ -511,7 +515,7 @@
     }
 
     .login-button{
-        width: 195px;
+        width: 210px;
         margin-top: 25px;
         font-size: 18px;
     }
@@ -620,6 +624,10 @@
 
     .attention-title{
         font-size: 16px;
+    }
+
+    .user-code{
+        font-size: 16px !important;
     }
 
     .attention-subtitle{

@@ -6,6 +6,8 @@ namespace App\Controller\admin;
 use App\Form\OrderInfoType;
 use App\Mapper\OrderMapper;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -118,11 +120,39 @@ class AdminOrderController extends AbstractController
      * @param OrderInfoInterface $orderInfo
      * @return Response
      */
-    public function cancelOrder(?int $orderUniqueId, OrderInfoInterface $orderInfo): Response
+    public function cancelOrder(
+        ?int $orderUniqueId,
+        OrderInfoInterface $orderInfo
+    ): Response
     {
         $orderInfo->cancelOrder($orderUniqueId);
 
         return $this->redirectToRoute('admin');
+    }
+
+    /**
+     * @Route("/lipadmin/showAllOrders", name="allOrders")
+     *
+     * @param Request $request
+     * @param OrderInfoInterface $orderInfo
+     * @param PaginationInterface $paginator
+     * @return Response
+     */
+    public function showAllOrders(
+        Request $request,
+        OrderInfoInterface $orderInfo,
+        PaginatorInterface $paginator
+    ): Response
+    {
+        $orders = $paginator->paginate(
+            $orderInfo->getAllOrders(),
+            $request->query->getInt('page', 1),
+            20
+        );
+
+        return $this->render('admin/all_orders.html.twig', [
+            'orders' => $orders
+        ]);
     }
 
 

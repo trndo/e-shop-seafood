@@ -10,6 +10,9 @@
     {% elseif orderInfo.status == 'failed' %}
         <p>Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова!</p>
         <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
+    {% elseif orderInfo.status == 'pending' %}
+        <p>Гурман, твой платёж на рассмотрении! Следи за статусом в личном кабинете!</p>
+        <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>
     {% elseif orderInfo.status == 'done' %}
         <p>Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!</p>
         <p>Ссылка: {{ url('user_orders', { uniqueId : orderInfo.user.uniqueId }) }}</p>

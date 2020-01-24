@@ -30,9 +30,9 @@ class AdminReceiptHandlerController extends AbstractController
     {
         $receiptModel = new ReceiptModel();
         $form = $this->createForm(ReceiptType::class,$receiptModel);
-
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $service->saveReceipt($form->getData());
             return $this->redirectToRoute('receipts');
         }
@@ -54,9 +54,9 @@ class AdminReceiptHandlerController extends AbstractController
     {
         $options['update'] = true;
         $form = $this->createForm(ReceiptType::class, ReceiptMapper::entityToModel($receipt), $options);
-
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $service->updateReceipt($receipt,$form->getData());
             return $this->redirectToRoute('receipts');
         }
@@ -77,6 +77,7 @@ class AdminReceiptHandlerController extends AbstractController
     public function deleteReceipt(Receipt $receipt, ReceiptServiceInterface $service): RedirectResponse
     {
         $service->deleteReceipt($receipt);
+
         return $this->redirectToRoute('receipts');
     }
 
@@ -90,7 +91,11 @@ class AdminReceiptHandlerController extends AbstractController
      */
     public function saveSalesForReceipt(Receipt $receipt,Request $request, ReceiptService $receiptService): JsonResponse
     {
-        $receiptService->addSalesInReceipt((array)$request->request->get('products'), $receipt);
+        $receiptService->addSalesInReceipt(
+            (array) $request->request->get('products'),
+            $receipt
+        );
+
         return new JsonResponse([],200);
     }
 
@@ -101,8 +106,10 @@ class AdminReceiptHandlerController extends AbstractController
      * @param CategoryService $categoryService
      * @return Response
      */
-    public function addProductsForReceipt(Receipt $receipt,
-                                          CategoryService $categoryService): Response
+    public function addProductsForReceipt(
+        Receipt $receipt,
+        CategoryService $categoryService
+    ): Response
     {
         $relatedProducts = $receipt->getProducts();
         $categories = $categoryService->getCategoryByCriteria(['type' => 'products']);

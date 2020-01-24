@@ -31,8 +31,8 @@ class AdminProductController extends AbstractController
      */
     public function products(ProductServiceInterface $productService, Request $request): Response
     {
-        $name = $request->query->get('name',null);
-        $category = $request->query->getInt('category',null);
+        $name = $request->query->get('name', null);
+        $category = $request->query->getInt('category', null);
         $categories = $productService->getProductsCategories();
         $products = $productService->getProductsByCriteria($name, $category);
 

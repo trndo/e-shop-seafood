@@ -99,4 +99,9 @@ interface OrderInfoInterface
      * @return OrdersCollection
      */
     public function getAdminOrders(string $date, string $status): OrdersCollection;
+
+    /**
+     * @return OrdersCollection
+     */
+    public function getAllOrders(): array ;
 }

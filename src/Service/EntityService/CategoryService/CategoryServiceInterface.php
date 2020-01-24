@@ -62,6 +62,12 @@ interface CategoryServiceInterface
      */
     public function getCategoryById(?int $id): ?Category;
 
+    /**
+     * @param Category $category
+     * @return bool
+     */
+    public function changeStatus(Category $category): bool ;
+
 
 
 }

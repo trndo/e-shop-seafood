@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Collection\OrdersCollection;
 use App\Entity\OrderInfo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
@@ -104,9 +105,16 @@ class OrderInfoRepository extends ServiceEntityRepository
                     ->getResult();
     }
 
+    public function getAllOrders(): ?array
+    {
+        return $this->createQueryBuilderForOrderInfo('o')
+            ->orderBy('o.orderDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getOrdersForAnotherDay(string $date, string $status = 'payed'): ?array
     {
-
         $query = $this->createQueryBuilderForOrderInfo('o');
 
         return $query->andWhere('o.status = :status AND o.orderDate = :date')

@@ -11,7 +11,9 @@ use App\Model\CategoryModel;
 use App\Repository\CategoryRepository;
 use App\Service\EntityService\CategoryService\CategoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Psy\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -101,6 +103,22 @@ class AdminCategoryController extends AbstractController
         $categoryService->deleteCategory($category);
 
         return $this->redirectToRoute('category');
+    }
+
+    /**
+     * @Route("/lipadmin/category/activate/{category}", name="activateCategory")
+     *
+     * @param CategoryServiceInterface $categoryService
+     * @param Category $category
+     * @return JsonResponse
+     */
+    public function activate(CategoryServiceInterface $categoryService, Category $category): JsonResponse
+    {
+        $status = $categoryService->changeStatus($category);
+
+        return new JsonResponse([
+            'status' => $status
+        ]);
     }
 
 }

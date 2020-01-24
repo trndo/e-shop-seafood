@@ -393,7 +393,7 @@ main{
     font-weight: normal;
     font-size: 18px;
     line-height: 100%;
-    text-align: left;
+    text-align: center;
     color: #FFFFFF;
     margin-top: 1rem;
 }
@@ -425,6 +425,7 @@ main{
     line-height: 22px;
     color: #FFFFFF;
     cursor: pointer;
+    margin: 0 auto;
     text-align: center;
     text-transform: capitalize;
     transition: all 0.2s linear;

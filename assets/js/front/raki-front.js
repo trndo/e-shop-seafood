@@ -145,6 +145,7 @@ $(document).ready(function () {
         let receiptPrice = Number($('.receipt-price').data('price'));
         let newPrice = price + receiptPrice;
         $('#price').text(newPrice);
+        $('.receipt-price-explanation').remove();
 
     });
 
@@ -156,7 +157,7 @@ $(document).ready(function () {
     });
     let replaceButton = '';
 
-    function getBlock(type, id){
+    function getBlock(type, id) {
         return '<div class="product-to-basket">\n' +
         '<div class="quantity">\n' +
         '<span data- class="plus item-plus">+</span>\n' +

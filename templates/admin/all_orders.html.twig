@@ -1,0 +1,143 @@
+{% extends 'admin_base.html.twig' %}
+{% block body %}<!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {{ include('elements/admin_nav.html.twig', {'active': 'main'}) }}
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                {{ include('elements/admin_header.html.twig') }}
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Все заказы</h1>
+                        {# <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
+                    </div>
+                    <hr class="sidebar-divider">
+                    <div class="row justify-content-center">
+                        <div class="col-5">
+                            <form action="{{ path('admin') }}" method="get">
+                                <div class="form-row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input id="date" type="text" class="date-input form-control" name="date" autocomplete="off" placeholder="Выберите дату">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-outline-primary" value="Отфильтровать">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>На какую дату</th>
+                                <th>На какое время</th>
+                                <th>Содержимое</th>
+                                <th>Статус заказа</th>
+                                <th>Дата и время оформления</th>
+                                <th>Действие</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <th>{{ order.id }}</th>
+                                    <th>{{ order.orderDate|date('d.m.Y') }}</th>
+                                    <th>{{ order.orderTime|date('H:i') }}</th>
+                                    <th>
+                                        <ul class="list-group">
+                                            {% for item in order.orderDetails %}
+                                                <li class="list-group-item"><span
+                                                            class="badge badge-dark">{{ loop.index }}</span>
+                                                    {{ item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }}
+                                                    - {{ item.quantity }} {{ item.product.unit }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </th>
+                                    <th class="text-center">
+                                        {% if order.status == 'new' %}
+                                            <div class="order-status-lipadmin status-new"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Новый Заказ
+                                            </div>
+                                        {% elseif order.status == 'confirmed' %}
+                                            <div class="order-status-lipadmin status-confirmed"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Ожидается оплата
+                                            </div>
+                                        {% elseif order.status == 'payed' %}
+                                            <div class="order-status-lipadmin status-payed"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Оплачено
+                                            </div>
+                                        {% elseif order.status == 'failed' %}
+                                            <div class="order-status-lipadmin status-failed"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Нудачная оплата
+                                            </div>
+                                        {% elseif order.status == 'pending' %}
+                                            <div class="order-status-lipadmin status-pending"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Нудачная оплата
+                                            </div>
+                                        {% elseif order.status == 'canceled' %}
+                                            <div class="order-status-lipadmin status-canceled"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Отменён
+                                            </div>
+                                        {% elseif order.status == 'done' %}
+                                            <div class="order-status-lipadmin status-done"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Готово
+                                            </div>
+                                        {% endif %}
+                                    </th>
+                                    <th>{{ order.createdAt|date('Y.m.d H:i') }}</th>
+                                    <th>
+                                        <button class="btn btn-primary  btn-lg"
+                                                onclick="window.location.href = '{{ path('admin_show_order', {'id': order.id}) }}'">
+                                            Осмотреть
+                                        </button>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-3" style="margin: 0 auto">
+                                    <div class="navigation">
+                                        {{ knp_pagination_render(orders) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
+{% endblock %}

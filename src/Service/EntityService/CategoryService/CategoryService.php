@@ -56,9 +56,9 @@ class CategoryService implements CategoryServiceInterface
     public function addCategory(CategoryModel $categoryModel): void
     {
         $category = new Category();
-
         CategoryMapper::modelToEntity($categoryModel, $category);
         $modelTitlePhoto = $categoryModel->getTitlePhoto();
+
         if ($modelTitlePhoto instanceof UploadedFile) {
             $titlePhoto = $this->uploadFile->uploadFile($modelTitlePhoto, self::CATEGORY_IMAGE_FOLDER);
             $category->setTitlePhoto($titlePhoto);
@@ -88,6 +88,7 @@ class CategoryService implements CategoryServiceInterface
     {
         $category = CategoryMapper::modelToEntity($categoryModel,$category);
         $modelTitlePhoto = $categoryModel->getTitlePhoto();
+
         if ($modelTitlePhoto instanceof UploadedFile) {
             $titlePhoto = $this->uploadFile->uploadFile($modelTitlePhoto, self::CATEGORY_IMAGE_FOLDER,$category->getTitlePhoto());
             $category->setTitlePhoto($titlePhoto);
@@ -112,5 +113,12 @@ class CategoryService implements CategoryServiceInterface
         return null;
     }
 
+    public function changeStatus(Category $category): bool
+    {
+       $status = $category->getStatus() ? false : true ;
+       $category->setStatus($status);
+       $this->em->flush();
 
+       return $status;
+    }
 }

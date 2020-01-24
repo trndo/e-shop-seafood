@@ -162,13 +162,19 @@ class UserHandlerController extends AbstractController
 
 
         if ($orderInfo->getStatus() == 'failed') {
-            return $this->render('attention/failedPayment.html.twig',[
+            return $this->render('attention/failedPayment.html.twig', [
                 'user' => $orderInfo->getUser()
             ]);
-        } elseif ($orderInfo->getStatus() == 'payed')
-            return $this->render('attention/successPayment.html.twig',[
+        } elseif ($orderInfo->getStatus() == 'payed') {
+            return $this->render('attention/successPayment.html.twig', [
                 'user' => $orderInfo->getUser()
             ]);
+        } elseif ($orderInfo->getStatus() == 'pending') {
+            return $this->render('attention/pendingPayment.html.twig', [
+                'user' => $orderInfo->getUser()
+            ]);
+        }
+
         else {
             return $this->redirect($previousUrl);
         }

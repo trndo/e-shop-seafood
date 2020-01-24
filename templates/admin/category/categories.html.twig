@@ -39,6 +39,7 @@
                                         <th>Сео дескрипшн</th>
                                         <th>Дата создания</th>
                                         <th>Дата обновления</th>
+                                        <th>Статус</th>
                                         <th>Удалить/редактировать</th>
                                     </tr>
                                     </thead>
@@ -69,13 +70,19 @@
                                             <td>
                                                 {{ category.updatedAt|date('d/m/y H:i:s') }}
                                             </td>
+                                            <td class="text-center">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" onchange="activate({{ category.id }})" class="custom-control-input" id="customSwitch{{ category.id }}" {% if category.status %}checked{% endif %}>
+                                                    <label class="custom-control-label" for="customSwitch{{ category.id }}">Активировать\Деактивировать</label>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <button class="btn btn-danger btn-circle btn-sm"
                                                         onclick="if(confirm('Вы хотите удалить эту категорию ?')) window.location.href='{{ path('deleteCategory',{'slug': category.slug}) }}'">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                                 <button class="btn btn-primary btn-circle btn-sm"
-                                                        onclick=" window.location.href='{{ path('editCategory',{'slug': category.slug}) }}'">
+                                                        onclick=" window.location.href='{{ path('editCategory', {'slug': category.slug}) }}'">
                                                     <i class="fas fa-pen-alt"></i>
                                                 </button>
                                             </td>
@@ -121,4 +128,26 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        function activate(id) {
+
+            console.log(id);
+            $.ajax({
+                type: 'POST',
+                url: '/lipadmin/category/activate/' + id,
+                data: {id: id },
+                success: function (res) {
+                    console.log(res.status)
+                }
+            })
+        }
+    </script>
+    {{ encore_entry_script_tags('autocomplete') }}
 {% endblock %}

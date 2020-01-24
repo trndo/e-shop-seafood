@@ -71,7 +71,7 @@ class ItemController extends AbstractController
      */
     public function getSizes(Request $request, ProductServiceInterface $productService): Response
     {
-        $id = (int)$request->request->get('receipt');
+        $id = (int) $request->request->get('receipt');
         $orderType = $request->request->get('orderType');
         $sizes = $productService->getSizes($id, $orderType);
 

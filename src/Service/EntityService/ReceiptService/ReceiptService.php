@@ -98,7 +98,7 @@ class ReceiptService implements ReceiptServiceInterface
     {
         $receipt = $this->receiptRepository->find($id);
 
-        if($receipt ){
+        if($receipt){
             if($receipt->getStatus())
                 $receipt->setStatus(false);
             else

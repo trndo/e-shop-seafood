@@ -76,13 +76,14 @@ class OrderInfoHandler implements OrderInfoInterface
      * @param SmsSenderInterface $smsSender
      * @param UrlGeneratorInterface $router
      */
-    public function __construct(EntityManagerInterface $entityManager,
-                                CartHandler $cartHandler,
-                                OrderDetailRepository $orderDetailRepository,
-                                ReservationInterface $reservation,
-                                MailSenderInterface $mailSenderService,
-                                SmsSenderInterface $smsSender,
-                                UrlGeneratorInterface $router
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        CartHandler $cartHandler,
+        OrderDetailRepository $orderDetailRepository,
+        ReservationInterface $reservation,
+        MailSenderInterface $mailSenderService,
+        SmsSenderInterface $smsSender,
+        UrlGeneratorInterface $router
     )
     {
         $this->entityManager = $entityManager;
@@ -141,17 +142,24 @@ class OrderInfoHandler implements OrderInfoInterface
 
     public function getAdminOrders(string $date, string $status): OrdersCollection
     {
-        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrdersForAdmin($date, $status));
+        return new OrdersCollection(
+            $this->entityManager->getRepository(OrderInfo::class)
+                ->getOrdersForAdmin($date, $status)
+        );
     }
 
     public function getOrders(string $date, string $status): OrdersCollection
     {
-        return new OrdersCollection($this->entityManager->getRepository(OrderInfo::class)->getOrders($date, $status));
+        return new OrdersCollection(
+            $this->entityManager->getRepository(OrderInfo::class)
+                ->getOrders($date, $status)
+        );
     }
 
     public function getCountOfOrders(string $date): array
     {
-        return $this->entityManager->getRepository(OrderInfo::class)->getOrderStatusCount($date);
+        return $this->entityManager->getRepository(OrderInfo::class)
+            ->getOrderStatusCount($date);
     }
 
     public function updateOrder(OrderModel $model, OrderInfo $orderInfo): void
@@ -187,7 +195,9 @@ class OrderInfoHandler implements OrderInfoInterface
             $this->checkIsCurrentDate($orderDate) ? $this->returnProductsFromOrder($orderInfo) : '';
             $this->returnProductsToSupply($orderInfo);
 
-            $this->mailSenderService->mailToAdmin('Саша, заказ был отменён! Зайди и посмотри!!! Ссылка: '.$this->router->generate('admin_show_order', [
+            $this->mailSenderService
+                ->mailToAdmin('Саша, заказ был отменён! Зайди и посмотри!!! Ссылка: '
+                .$this->router->generate('admin_show_order', [
                     'id' => $orderInfo->getId()
                 ], UrlGeneratorInterface::ABSOLUTE_URL)
             );
@@ -205,6 +215,14 @@ class OrderInfoHandler implements OrderInfoInterface
                 OrderInfo::class
             )->getOrdersByUserId($userId)
         );
+    }
+
+    public function getAllOrders(): array
+    {
+        return
+            $this->entityManager->getRepository(OrderInfo::class)
+            ->getAllOrders();
+
     }
 
     public function deleteOrderDetail(?int $id): ?float
@@ -228,7 +246,9 @@ class OrderInfoHandler implements OrderInfoInterface
             $orderInfo->setTotalPrice($totalPrice - $orderDetailPrice);
 
             if ($this->checkIsCurrentDate($orderDate)) {
-                $productSupply->setReservationQuantity($productSupply->getReservationQuantity() + $quantity);
+                $productSupply->setReservationQuantity(
+                    $productSupply->getReservationQuantity() + $quantity
+                );
             }
 
             $this->entityManager->remove($orderDetail);
@@ -251,14 +271,18 @@ class OrderInfoHandler implements OrderInfoInterface
                 case self::STATUS_NEW :
                     $this->checkIsCurrentDate($orderDate) ? $this->deleteFromSupplyReservation($order) : '';
                     $order->setStatus(self::STATUS_CONFIRMED);
-                    $this->smsSender->sendSms('Гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '.$this->router->generate('user_orders',[
+                    $this->smsSender
+                        ->sendSms('Гурман! Твой заказ был подтверждён! Зайди в свой личный кабинет и оплати его! Ссылка: '
+                        .$this->router->generate('user_orders',[
                             'uniqueId' => $order->getUser()->getUniqueId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone()
                     );
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);
-                    $this->smsSender->sendSms('Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!', $order->getOrderPhone());
+                    $this->smsSender
+                        ->sendSms('Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!',
+                            $order->getOrderPhone());
                     break;
                 case self::STATUS_FAILED:
                     $this->applyOrder($order);
@@ -288,7 +312,11 @@ class OrderInfoHandler implements OrderInfoInterface
             if ($supplyReservationQuantity >= $orderQuantity)
                 $supply->setReservationQuantity($supplyReservationQuantity - $orderQuantity);
             else
-                throw new \Exception('Вы хотите подтвердить - ' . $orderQuantity . ' едениц '.$orderDetail->getProduct()->getName().'. В резерве доступно доступно - ' . $supplyReservationQuantity . ' !!!');
+                throw new \Exception(
+                    'Вы хотите подтвердить - ' . $orderQuantity . ' едениц '
+                    .$orderDetail->getProduct()->getName().'. В резерве доступно доступно - '
+                    . $supplyReservationQuantity . ' !!!'
+                );
         }
     }
 
@@ -439,5 +467,9 @@ class OrderInfoHandler implements OrderInfoInterface
 
         return true;
     }
+
+    /**
+     * @inheritDoc
+     */
 
 }

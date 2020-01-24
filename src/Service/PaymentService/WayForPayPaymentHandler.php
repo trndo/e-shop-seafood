@@ -74,8 +74,6 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @param SessionInterface $session
      * @param MailSenderInterface $mailSender
      * @param SmsSenderInterface $smsSender
-     * @param string $account
-     * @param string $secret
      */
     public function __construct(
          UrlGeneratorInterface $urlGenerator,
@@ -103,17 +101,19 @@ class WayForPayPaymentHandler implements PaymentInterface
      */
     public function doPayment(OrderInfo $orderInfo): ?string
     {
-        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed')) {
+        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed'
+                || $orderInfo->getStatus() == 'failed')
+        ) {
             //$credential = new AccountSecretTestCredential();
             $credential = new AccountSecretCredential($this->account, $this->secret);
 
-            return  $form = PurchaseWizard::get($credential)
+            $form = PurchaseWizard::get($credential)
                 ->setOrderReference($this->generateOrderWayForPayId(7))
                 ->setAmount($orderInfo->getTotalPrice())
                 ->setCurrency('UAH')
                 ->setOrderDate(new \DateTime())
                 ->setLanguage('ru')
-                ->setMerchantDomainName('https://lipinskieraki.com') //Change to lipinskieraki.com
+                ->setMerchantDomainName('https://lipinskieraki.com')
                 ->setClient(new Client(
                     $orderInfo->getUser()->getName() ,
                     $orderInfo->getUser()->getSurname(),
@@ -135,6 +135,8 @@ class WayForPayPaymentHandler implements PaymentInterface
                 ], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->getForm()
                 ->getAsString('Оплатить заказ','example_a');
+
+            return $form;
         }
 
         return null;
@@ -155,31 +157,51 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $response = $handler->parseRequestFromPostRaw();
                 $status = $response->getTransaction()->getStatus();
                 $this->logger->info('Status = '.$status);
-                file_put_contents('status.txt', $status);
-                
+
+//                if ($status == TransactionBase::STATUS_PENDING) {
+//                    $this->logger->error('If Status = '.$status);
+//                    //$this->handleConfirmation($orderInfo);
+//                    $orderInfo->setStatus('pending');
+//                    $this->entityManager->flush();
+//                    $this->mailSender->mailToAdmin(
+//                        'Платеж в осмотре платежной системы, следи за ним в личном каьинете WAYFORPAY! Ссылка на заказ: '
+//                        .$this->urlGenerator->generate('admin_show_order', [
+//                            'id' => $orderInfo->getId()
+//                        ], UrlGeneratorInterface::ABSOLUTE_URL)
+//                    );
+//                    $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
+//                    $this->smsSender->sendSms(
+//                        'Гурман, твой платёж на рассмотрении! Следи за статусом в личном кабинете!',
+//                        $orderInfo->getOrderPhone()
+//                    );
+//                }
                 if ($status == TransactionBase::STATUS_APPROVED) {
                     $this->logger->error('If Status = '.$status);
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
-                    $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                    $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
+                        .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
                     );
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!', $orderInfo->getOrderPhone());
-
+                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!'
+                        , $orderInfo->getOrderPhone()
+                    );
                 } else {
                     $this->logger->error('If Status = '.$status);
                     $orderInfo->setStatus('failed');
                     $orderInfo->setComment($status);
                     $this->entityManager->flush();
-                    $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                    $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
+                        .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
                     );
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '.$this->urlGenerator->generate('user_orders',[
+                    $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '
+                        .$this->urlGenerator->generate('user_orders',[
                             'uniqueId' => $orderInfo->getUser()->getUniqueId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
                     );
@@ -191,12 +213,14 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $orderInfo->setStatus('failed');
                 $this->entityManager->flush();
 
-                $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '.$this->urlGenerator->generate('admin_show_order', [
+                $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
+                    .$this->urlGenerator->generate('admin_show_order', [
                         'id' => $orderInfo->getId()
                     ], UrlGeneratorInterface::ABSOLUTE_URL)
                 );
                 $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '.$this->urlGenerator->generate('user_orders',[
+                $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '
+                    .$this->urlGenerator->generate('user_orders',[
                         'uniqueId' => $orderInfo->getUser()->getUniqueId()
                     ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
                 );

@@ -118,7 +118,7 @@
                             </div>
                         </div>#}
                         <div class="product-price receipt-price" data-price="{{ item.price }}">
-                            <span id="price">{% if item.products.count == 1 and item.products[0].ProductSize is null %}{{ item.price + item.products[0].price }}{% else %}{{ item.price }}{% endif %}</span> грн / {{ item.unit }}.{#<span class="special-price-receipt special-price">550 грн</span>#}
+                            <span id="price">{% if item.products.count == 1 and item.products[0].ProductSize is null %}{{ item.price + item.products[0].price }}{% else %}{{ item.price }}{% endif %}</span> грн / {{ item.unit }}<span class="receipt-price-explanation"> - цена рецепта</span>{#<span class="special-price-receipt special-price">550 грн</span>#}
                         </div>
                         {% if session is not null and showInBasket %}
                         <div class="product-to-basket">

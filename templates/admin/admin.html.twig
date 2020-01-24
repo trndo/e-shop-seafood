@@ -19,11 +19,15 @@
                         {# <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
                     </div>
                     <div class="text-center">
+                        <div>
+                            <button type="button" class="btn btn-success btn-lg mb-2" onclick="window.location.href='{{ path('allOrders') }}'" >Таблица всех заказов</button>
+                        </div>
                         <div class="card">
+
                             <div class="card-body">
                                 <h5 class="card-title">На сегодня нужно:</h5>
                                 <div class="row justify-content-center">
-                                    <div class="col-3">
+                                    <div class="col-8">
                                         {% if todayOrders is empty %}
                                             <div class="text-center">
                                                 Сегодня пока что нет оплаченых заказов
@@ -149,6 +153,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-bottom-failed shadow h-100 py-2">
                                 <div class="card-body status-order"
@@ -171,6 +176,30 @@
                                 </div>
                             </div>
                         </div>
+
+{#                        <div class="col-xl-3 col-md-6 mb-4">#}
+{#                            <div class="card border-bottom-pending shadow h-100 py-2">#}
+{#                                <div class="card-body status-order"#}
+{#                                     onclick="window.location.href='{{ path('admin', app.request.query.all|merge({'status':'pending'})) }}'">#}
+{#                                    <div class="row no-gutters align-items-center">#}
+{#                                        <div class="col mr-2">#}
+{#                                            <div class="text font-weight-bold text-pending text-uppercase mb-1">#}
+{#                                                Неудачная оплата#}
+{#                                            </div>#}
+{#                                            <div class="row no-gutters align-items-center">#}
+{#                                                <div class="col-auto">#}
+{#                                                    <div class="h3 mb-0 mr-3 font-weight-bold text-gray-800">{{ statusCount.pending is defined ? statusCount.pending.1 : 0 }}</div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-auto">#}
+{#                                            <i class="fas fa-exclamation-triangle fa-2x text-300"></i>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+
                         <!-- Pending Requests Card Example -->
                     </div>
                     <div class="reset text-center" >
@@ -245,23 +274,33 @@
                                                 Новый Заказ
                                             </div>
                                         {% elseif order.status == 'confirmed' %}
-                                            <div class="order-status-lipadmin status-confirmed">
+                                            <div class="order-status-lipadmin status-confirmed"
+                                                 style="margin: 0 auto; display: inline-block;">
                                                 Ожидается оплата
                                             </div>
                                         {% elseif order.status == 'payed' %}
-                                            <div class="order-status-lipadmin status-payed">
+                                            <div class="order-status-lipadmin status-payed"
+                                                 style="margin: 0 auto; display: inline-block;">
                                                 Оплачено
                                             </div>
                                         {% elseif order.status == 'failed' %}
-                                            <div class="order-status-lipadmin status-failed">
+                                            <div class="order-status-lipadmin status-failed"
+                                                 style="margin: 0 auto; display: inline-block;">
+                                                Нудачная оплата
+                                            </div>
+                                        {% elseif order.status == 'pending' %}
+                                            <div class="order-status-lipadmin status-pending"
+                                                 style="margin: 0 auto; display: inline-block;">
                                                 Нудачная оплата
                                             </div>
                                         {% elseif order.status == 'canceled' %}
-                                            <div class="order-status-lipadmin status-canceled">
+                                            <div class="order-status-lipadmin status-canceled"
+                                                 style="margin: 0 auto; display: inline-block;">
                                                 Отменён
                                             </div>
                                         {% elseif order.status == 'done' %}
-                                            <div class="order-status-lipadmin status-done">
+                                            <div class="order-status-lipadmin status-done"
+                                                 style="margin: 0 auto; display: inline-block;">
                                                 Готово
                                             </div>
                                         {% endif %}

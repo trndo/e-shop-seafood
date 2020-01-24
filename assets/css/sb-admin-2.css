@@ -11189,6 +11189,10 @@ a.text-warning:hover, a.text-warning:focus {
     color: #bc330e !important;
 }
 
+.text-pending {
+    color: #2a30bc !important;
+}
+
 .text-danger {
     color: #e74a3b !important;
 }
@@ -11665,6 +11669,10 @@ a:focus {
 
 .border-bottom-failed {
     border-bottom: 0.25rem solid #bc330e !important;
+}
+
+.border-bottom-pending {
+    border-bottom: 0.25rem solid #2a30bc !important;
 }
 
 .border-bottom-done {
@@ -13006,7 +13014,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .status-done {
-    background-color: #ff613e;
+    background-color: #3f7320;
     color: white;
 }
 
@@ -13019,6 +13027,12 @@ body.sidebar-toggled footer.sticky-footer {
     background-color: #bc330e;
     color: white;
 }
+
+.status-pending {
+    background-color: #2a30bc;
+    color: white;
+}
+
 
 @keyframes glow {
     from {

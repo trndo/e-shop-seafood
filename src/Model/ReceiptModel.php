@@ -105,6 +105,11 @@ class ReceiptModel
     private $isAbleToChangePrice;
 
     /**
+     * @var boolean|null
+     */
+    private $isNew;
+
+    /**
      * @return bool|null
      */
     public function getExtraHot(): ?bool
@@ -377,4 +382,23 @@ class ReceiptModel
         return $this->isAbleToChangePrice;
     }
 
+    /**
+     * @return bool
+     */
+    public function isNew(): ?bool
+    {
+        return $this->isNew;
+    }
+
+    /**
+     * @param bool $isNew
+     *
+     * @return ReceiptModel
+     */
+    public function setIsNew(?bool $isNew): ReceiptModel
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
 }

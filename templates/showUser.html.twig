@@ -21,7 +21,7 @@
                 <embed id="lobster" type="image/svg+xml" src="/assets/img/lobster.svg"/>
                 <div class="user-title mt-3">
                     <span class="attention-title">Один раз заполнил - заказывай всё время!</span><br>
-                    <span class="attention-subtitle">Ваш уникальный номер - {{ app.user.uniqueId }}</span><br>
+                    <span class="attention-subtitle user-code">Ваш уникальный номер - <u>{{ app.user.uniqueId }}</u></span><br>
                 </div>
                 {{ form_start(form,{'attr':{'class': 'user_info_update'}}) }}
                     <div class="input-user-container">

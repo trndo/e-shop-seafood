@@ -21,7 +21,8 @@ final class ReceiptMapper
             ->setAdditionalPrice($receipt->getAdditionalPrice())
             ->setPercent($receipt->getPercent())
             ->setExtraAlcohol($receipt->getExtraAlcohol())
-            ->setExtraHot($receipt->getExtraHot());
+            ->setExtraHot($receipt->getExtraHot())
+            ->setIsNew($receipt->getIsNew());
 
         return $receiptDto;
     }

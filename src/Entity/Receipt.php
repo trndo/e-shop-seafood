@@ -147,6 +147,11 @@ class Receipt
      */
     private $extraAlcohol;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isNew;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -603,6 +608,18 @@ class Receipt
     public function setExtraAlcohol(?bool $extraAlcohol): self
     {
         $this->extraAlcohol = $extraAlcohol;
+
+        return $this;
+    }
+
+    public function getIsNew(): ?bool
+    {
+        return $this->isNew;
+    }
+
+    public function setIsNew(?bool $isNew): self
+    {
+        $this->isNew = $isNew;
 
         return $this;
     }

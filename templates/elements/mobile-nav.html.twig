@@ -6,9 +6,9 @@
         <li {% if mob_active == 'zharenye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
         {% if app.user is null %}
-            <li>
+            <li class="background-fish">
                 <a href="{{ path('register') }}">
-                    <span>Регистрация</span><img src="/assets/img/fish-bone (1).svg"/>
+                    Регистрация
                 </a>
             </li>
         {% endif %}

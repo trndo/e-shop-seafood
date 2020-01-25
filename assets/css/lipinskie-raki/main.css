@@ -317,7 +317,7 @@ main{
 #slider-points{
     position: absolute;
     width: 7px;
-    height: 95px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -326,8 +326,8 @@ main{
 }
 
 .ellipse{
-    width: 7px;
-    height: 7px;
+    width: 10px;
+    height: 10px;
     background-color: #981A1A;
     border-radius: 40px;
     cursor: pointer;
@@ -833,10 +833,16 @@ footer{
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;
+    position: relative;
+}
+.background-fish a::after{
+    content: url("../../img/fish-bone.svg");
+    position: absolute;
+    top: -16px;
 }
 .menu-nav ul li a{
     text-decoration: none !important;
-    color: white !important;
+    color: #9e9999 !important;
 }
 
 .menu-nav ul li:hover{

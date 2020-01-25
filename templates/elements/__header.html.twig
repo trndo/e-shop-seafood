@@ -1,9 +1,13 @@
 <header id="desktop">
     <div class="button-row">
-        {#<div class="fast-order">
-            <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
-            <span>Быстрый заказ</span>
-        </div>#}
+        {% if app.user is null %}
+            <a href="{{ path('register') }}">
+                <div class="fast-order">
+                    <embed id="fish-bone" type="image/svg+xml" src="/assets/img/fish-bone (1).svg"/>
+                    <span>Регистрация</span>
+                </div>
+            </a>
+        {% endif %}
         <div class="user_basket">
             {% set sum = app.session.get('totalSum') %}
             <div class="basket-container">
@@ -12,8 +16,9 @@
             <i id="user" class="far fa-user" data-user="
             {% if app.user is not null %}
                 {{ path('user', {'uniqueId': app.user.uniqueId}) }}
-            {% else %}{{ path('login') }}
-                {% endif %}">
+            {% else %}
+                {{ path('login') }}
+            {% endif %}">
             </i>
         </div>
     </div>

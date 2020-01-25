@@ -5,6 +5,13 @@
         <li {% if mob_active == 'not exist yet' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'varenye-raki'}) }}">Вареные раки</li>
         <li {% if mob_active == 'zharenye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки</li>
         <li {% if mob_active == 'zhivye-raki' %} {% set mob_active = false %} class="active-nav"{% endif %} data-location="{{ path('category_show',{'slug': 'zhivye-raki'}) }}">Живые раки</li>
+        {% if app.user is null %}
+            <li>
+                <a href="{{ path('register') }}">
+                    <span>Регистрация</span><img src="/assets/img/fish-bone (1).svg"/>
+                </a>
+            </li>
+        {% endif %}
         <li><a href="/Privacy_policy.pdf" target="_blank">Privacy policy</a></li>
         <li><a href="/Terms_of_condition.pdf" target="_blank">Terms of condition</a></li>
       {#  <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент <span> &nbsp;></span></li>
@@ -20,6 +27,8 @@
         <a href="tel:+38(063)612-62-82" id="contact-num" target="_blank"><span id="phone">+38(063)612-62-82</span></a>
         <a href="mailto:lipinskieraki@gmail.com" id="contact-email" target="_blank"><span id="email">lipinskieraki@gmail.com</span></a>
         {#<span id="address">вулиця Сергія Данеченко 12, Киев</span>#}
+
     </div>
+
     <div class="curtain-line"></div>
 </div>

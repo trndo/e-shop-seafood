@@ -588,11 +588,16 @@ $(document).ready(function () {
 
     let messageIndex = 1;
     let interval;
+    let blocked = false;
     $(document).ready(function () {
        startMessageSlider();
     });
     $('.ellipse').click(function () {
+        if(blocked) {
+            return;
+        }
        clearInterval(interval);
+       blocked = true;
        $('.ellipse-active').removeClass('ellipse-active');
        $(this).addClass('ellipse-active');
        let id = $(this).attr('id');
@@ -601,6 +606,7 @@ $(document).ready(function () {
            messageIndex = id;
            $('#mess-'+id).fadeIn();
            startMessageSlider();
+           blocked = false;
        })
 
     });

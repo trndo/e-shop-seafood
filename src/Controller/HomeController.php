@@ -25,7 +25,7 @@ class HomeController extends AbstractController
      */
     public function home(RatingServiceInterface $ratingService, BlogHandlerInterface $blogHandler): Response
     {
-        return $this->render('home.html.twig',[
+        return $this->render('home.html.twig', [
             'items' => $ratingService->getItems(),
             'messages' => $blogHandler->getMessages()
         ]);

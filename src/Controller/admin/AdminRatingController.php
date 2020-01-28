@@ -26,7 +26,6 @@ class AdminRatingController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/lipadmin/rating/update", methods={"POST"})
      *
@@ -37,9 +36,9 @@ class AdminRatingController extends AbstractController
     public function saveRating(Request $request, RatingServiceInterface $service): JsonResponse
     {
         $rating = $request->getContent();
-        $service->updateRating((array)json_decode($rating,true));
+        $service->updateRating((array) json_decode($rating,true));
 
-        return new JsonResponse([],200);
+        return new JsonResponse([], 200);
     }
 
     /**

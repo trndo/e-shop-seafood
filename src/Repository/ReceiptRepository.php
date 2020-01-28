@@ -40,7 +40,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.category', 'category')
             ->leftJoin('r.orderDetail', 'orderDetail')
             ->addSelect('category, orderDetail')
-            ->andWhere('r.rating != 0 AND r.status = true AND r.isDeletable IS NULL')
+            ->andWhere('r.rating != 0 AND r.status = 1 AND r.isDeletable IS NULL')
             ->setMaxResults(9)
             ->getQuery()
             ->getResult();
@@ -55,6 +55,7 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
         return $this->createQueryBuilder('r')
             ->addSelect('r')
             ->andWhere('r.name LIKE :productName')
+            ->andWhere('r.status = 1')
             ->setParameter('productName', '%' . $productName . '%')
             ->setMaxResults(10)
             ->getQuery()

@@ -70,9 +70,9 @@ class RatingService implements RatingServiceInterface
 
     public function getItems(): ?array
     {
-        $items = array_merge($this->productService->getProductsForRating(),$this->receiptService->getReceiptsForRating());
+        $items = array_merge($this->productService->getProductsForRating(), $this->receiptService->getReceiptsForRating());
 
-        usort( $items, function ($product, $receipt){
+        usort( $items, function ($product, $receipt) {
             if($product->getRating() == $receipt->getRating())
                 return null;
             return ($product->getRating() < $receipt->getRating()) ? -1 : 1;

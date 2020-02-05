@@ -41,7 +41,6 @@ class ReceiptRepository extends ServiceEntityRepository implements FinderInterfa
             ->leftJoin('r.orderDetail', 'orderDetail')
             ->addSelect('category, orderDetail')
             ->andWhere('r.rating != 0 AND r.status = 1 AND r.isDeletable IS NULL')
-            ->setMaxResults(9)
             ->getQuery()
             ->getResult();
     }

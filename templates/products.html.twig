@@ -20,7 +20,8 @@
                             {{ categoryInfo ? categoryInfo : 'Выберайте продукт на ваш вкус' }}
                         </div>
                         {% for item in items %}
-                                <div class="product-card category" data-category="{{ item.category.slug }}">
+                                <div class="product-card category" data-category="{{ item.category.slug }}"
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug': item.category.slug,'slug': item.slug}) }}'" style="cursor: pointer">
                                     {% if item.type == 'product' %}
                                         {% if item.TitlePhotoPath is not null %}
                                             <img src="{{ item.TitlePhotoPath }}" alt="photo">

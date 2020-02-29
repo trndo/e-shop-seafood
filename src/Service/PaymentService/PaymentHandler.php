@@ -81,7 +81,7 @@ class PaymentHandler
         return null;
     }
 
-    public function confirmPayment(OrderInfo $orderInfo, string $res): bool
+    public function confirmPayment(OrderInfo $orderInfo, string $res): ?bool
     {
         if ($orderInfo && $orderInfo->getStatus() == 'confirmed') {
             $data = json_decode(base64_decode($res, true));

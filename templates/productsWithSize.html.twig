@@ -27,7 +27,7 @@
                         {% set items = items|sortSizes %}
                         {% if items[0] is defined and items[0].status %}
                             <div class="size-card"
-                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'">
+                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'" style="cursor: pointer">
                                 <div class="size-card-info">
                                     {{ getSize(items[0].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -40,14 +40,14 @@
                                     </div>
                                 </div>
                                 <div class="size-button"
-                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'">
+                                     onclick="window.location.href='{{ path('showItem',{'category_slug':items[0].category.slug,'slug':items[0].slug}) }}'" >
                                     Перейти
                                 </div>
                             </div>
                         {% endif %}
                         {% if items[1] is defined and items[1].status %}
                             <div class="size-card"
-                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[1].category.slug,'slug':items[1].slug}) }}'">
+                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[1].category.slug,'slug':items[1].slug}) }}'" style="cursor: pointer">
                                 <div class="size-card-info">
                                     {{ getSize(items[1].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -69,7 +69,7 @@
 {#                    <div class="size-row">#}
                         {% if items[2] is defined and items[2].status %}
                             <div class="size-card"
-                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[2].category.slug,'slug':items[2].slug}) }}'">
+                                 onclick="window.location.href='{{ path('showItem',{'category_slug':items[2].category.slug,'slug':items[2].slug}) }}'" style="cursor: pointer">
                                 <div class="size-card-info">
                                     {{ getSize(items[2].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -89,7 +89,7 @@
                         {% endif %}
                         {% if items[3] is defined and items[3].status%}
                         <div class="size-card"
-                             onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'">
+                             onclick="window.location.href='{{ path('showItem',{'category_slug':items[3].category.slug,'slug':items[3].slug}) }}'" style="cursor: pointer">
                                 <div class="size-card-info">
                                     {{ getSize(items[3].ProductSize)|raw }}
                                     <div class="product-size-info">
@@ -109,7 +109,7 @@
                         {% endif %}
                         {% if items[4] is defined and items[4].status%}
                         <div class="size-card"
-                             onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'">
+                             onclick="window.location.href='{{ path('showItem',{'category_slug':items[4].category.slug,'slug':items[4].slug}) }}'" style="cursor: pointer">
                                 <div class="size-card-info">
                                     {{ getSize(items[4].ProductSize)|raw }}
                                     <div class="product-size-info">

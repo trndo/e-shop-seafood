@@ -75,7 +75,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->andWhere('c.name != :name1')
             ->andWhere('c.name != :name2')
             ->andWhere('c.name != :name3')
-            ->andWhere('c.status = true')
+            ->andWhere('c.status = 1')
             ->setParameter('name1','Живые Раки')
             ->setParameter('name2','Жареные Раки')
             ->setParameter('name3','Вареные Раки')

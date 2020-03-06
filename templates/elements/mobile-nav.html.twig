@@ -14,10 +14,10 @@
         {% endif %}
         <li><a href="/Privacy_policy.pdf" target="_blank">Privacy policy</a></li>
         <li><a href="/Terms_of_condition.pdf" target="_blank">Terms of condition</a></li>
-      {#  <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент <span> &nbsp;></span></li>
+        <li class="toggle-mobile {% if mob_active %}active-nav{% endif %}">Ассортимент <span> &nbsp;></span></li>
         <div class="mobile-dropdown">
         {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
-        </div>#}
+        </div>
     </ul>
     <div class="curtain-info">
         <span id="mobile-basket">

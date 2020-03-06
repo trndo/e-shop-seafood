@@ -48,15 +48,15 @@
                 <li {% if active == 'zharenye-raki' %} {% set active = false %} class="active-nav"{% endif %}
                         data-location="{{ path('category_show',{'slug': 'zharenye-raki'}) }}">Жареные раки
                 </li>
-                {#<li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>#}
+                <li class="toogle-dropdown {% if active %}active-nav{% endif %}">Ассортимент</li>
             </ul>
         </nav>
     </div>
-    {#<div class="dropdown">
+    <div class="dropdown">
         <ul>
            {{ render(controller('App\\Controller\\CategoryController::renderCategories')) }}
         </ul>
-    </div>#}
+    </div>
 </header>
 <header id="mobile">
     <img id="mobile-logo" src="/assets/img/header-logo.svg"/>

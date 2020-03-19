@@ -180,7 +180,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
-                    $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
+                    $this->mailSender->mailToAdmin($status . ' Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
@@ -194,7 +194,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     $orderInfo->setStatus('failed');
                     $orderInfo->setComment($status);
                     $this->entityManager->flush();
-                    $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
+                    $this->mailSender->mailToAdmin($status . ' Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)

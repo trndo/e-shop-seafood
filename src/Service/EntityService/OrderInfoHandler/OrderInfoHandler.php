@@ -280,9 +280,6 @@ class OrderInfoHandler implements OrderInfoInterface
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);
-                    $this->smsSender
-                        ->sendSms('Гурман, твой заказ уже готов! Совсем скоро ты отведаешь липинских сладостей!',
-                            $order->getOrderPhone());
                     break;
                 case self::STATUS_FAILED:
                     $this->applyOrder($order);

@@ -108,7 +108,7 @@ class OrderInfoRepository extends ServiceEntityRepository
     public function getAllOrders(): ?array
     {
         return $this->createQueryBuilderForOrderInfo('o')
-            ->orderBy('o.orderDate', 'DESC')
+            ->orderBy('o.id', 'DESC')
             ->getQuery()
             ->getResult();
     }

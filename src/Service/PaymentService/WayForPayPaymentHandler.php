@@ -147,7 +147,9 @@ class WayForPayPaymentHandler implements PaymentInterface
      */
     public function confirmPayment(OrderInfo $orderInfo): bool
     {
-        if ($orderInfo && $orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed') {
+        if ($orderInfo && ($orderInfo->getStatus() == 'confirmed'
+                || $orderInfo->getStatus() == 'failed')
+        ) {
             //$credential = new AccountSecretTestCredential();
             $credential = new AccountSecretCredential($this->account, $this->secret);
             $this->session->set('orderInfoObject', $orderInfo);

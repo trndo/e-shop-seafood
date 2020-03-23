@@ -194,14 +194,14 @@ class WayForPayPaymentHandler implements PaymentInterface
                     $orderInfo->setStatus('failed');
                     $orderInfo->setComment($status);
                     $this->entityManager->flush();
-                    $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
+                    $this->mailSender->mailToAdmin('Саша, оплата на проверке у платёжной системы или при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
                     );
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '
-                        .$this->urlGenerator->generate('user_orders',[
+                    $this->smsSender->sendSms('Гурман, оплата на проверке у платёжной системы или при оптлате произошла ошибка! Подожди 5 минут и зайди в личный кабинет,'.
+                        'если статус не поменялся попробуй оплатить снова! Ссылка: ' .$this->urlGenerator->generate('user_orders',[
                             'uniqueId' => $orderInfo->getUser()->getUniqueId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
                     );
@@ -213,7 +213,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                 $orderInfo->setStatus('failed');
                 $this->entityManager->flush();
 
-                $this->mailSender->mailToAdmin('Саша, при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
+                $this->mailSender->mailToAdmin('Саша, оплата на проверке у платёжной системы или при оплате заказа произошла какая-то хрень ! Зайди и посмотри!!! Ссылка: '
                     .$this->urlGenerator->generate('admin_show_order', [
                         'id' => $orderInfo->getId()
                     ], UrlGeneratorInterface::ABSOLUTE_URL)

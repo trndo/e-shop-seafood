@@ -62,7 +62,7 @@
                                             {% for item in order.orderDetails %}
                                                 <li class="list-group-item"><span
                                                             class="badge badge-dark">{{ loop.index }}</span>
-                                                    {{ item.receipt is not null ? item.receipt.name ~' + '~ item.product.name : item.product.name }}
+                                                    {{ item.receipt is not null ? item.receipt.name ~'('~ item.product.name ~')' : item.product.name }}
                                                     - {{ item.quantity }} {{ item.product.unit }}
                                                 </li>
                                             {% endfor %}

@@ -253,7 +253,7 @@
                             <tbody>
                             {% for order in orders %}
                                 <tr>
-                                    <th>{{ order.id }}</th>
+                                    <th>{{ order.orderUniqueId }}</th>
                                     <th>{{ order.orderDate|date('d.m.Y') }}</th>
                                     <th>{{ order.orderTime|date('H:i') }}</th>
                                     <th>

@@ -17,7 +17,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ path('admin') }}">Главная</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Заказ №{{ order.id }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">Заказ №{{ order.orderUniqueId }}</li>
                     </ol>
                 </nav>
                 {% if message is defined %}
@@ -33,7 +33,7 @@
                         <div class="card">
                             <div class="card-body pt-order">
                                 <div class="order-number text-center">
-                                    Заказ №{{ order.id }} &nbsp;Сделано: <u>{{ order.createdAt|date('Y-m-d H:i') }}</u>
+                                    Заказ №{{ order.orderUniqueId }} &nbsp;Сделано: <u>{{ order.createdAt|date('Y-m-d H:i') }}</u>
                                 </div>
                                 {% if order.status == 'new' %}
                                     <div class="order-status status-new">

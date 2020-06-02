@@ -184,7 +184,6 @@ class WayForPayPaymentHandler implements PaymentInterface
                     );
 
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->trackOrder($orderInfo);
 
 //                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!'
 //                        , $orderInfo->getOrderPhone()

@@ -7,25 +7,22 @@ namespace App\Service\PaymentService;
 use App\Entity\OrderInfo;
 use App\Service\MailService\MailSenderInterface;
 use App\Service\SmsSenderService\SmsSenderInterface;
+use App\Traits\GoogleAnalyticsTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use WayForPay\SDK\Collection\ProductCollection;
 use WayForPay\SDK\Credential\AccountSecretCredential;
-use WayForPay\SDK\Credential\AccountSecretTestCredential;
 use WayForPay\SDK\Domain\Client;
 use WayForPay\SDK\Domain\Product;
 use WayForPay\SDK\Domain\TransactionBase;
-use WayForPay\SDK\Exception\WayForPaySDKException;
 use WayForPay\SDK\Handler\ServiceUrlHandler;
 use WayForPay\SDK\Wizard\PurchaseWizard;
 
 class WayForPayPaymentHandler implements PaymentInterface
 {
-
+    use GoogleAnalyticsTrait;
     /**
      * @var UrlGeneratorInterface
      */
@@ -185,10 +182,13 @@ class WayForPayPaymentHandler implements PaymentInterface
                             'id' => $orderInfo->getId()
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
                     );
+
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!'
-                        , $orderInfo->getOrderPhone()
-                    );
+                    $this->trackOrder($orderInfo);
+
+//                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!'
+//                        , $orderInfo->getOrderPhone()
+//                    );
                 } else {
                     $this->logger->error('If Status = '.$status);
                     $orderInfo->setStatus('failed');
@@ -200,11 +200,6 @@ class WayForPayPaymentHandler implements PaymentInterface
                         ], UrlGeneratorInterface::ABSOLUTE_URL)
                     );
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                    $this->smsSender->sendSms('Гурман, оплата на проверке у платёжной системы или при оптлате произошла ошибка! Подожди 5 минут и зайди в личный кабинет,'.
-                        'если статус не поменялся попробуй оплатить снова! Ссылка: ' .$this->urlGenerator->generate('user_orders',[
-                            'uniqueId' => $orderInfo->getUser()->getUniqueId()
-                        ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
-                    );
 
                     return false;
                 }

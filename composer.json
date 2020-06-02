@@ -35,6 +35,7 @@
         "symfony/web-link": "4.2.*",
         "symfony/webpack-encore-bundle": "^1.5",
         "symfony/yaml": "4.2.*",
+        "theiconic/php-ga-measurement-protocol": "^2.7",
         "twig/extensions": "^1.5",
         "wayforpay/php-sdk": "^1.0"
     },

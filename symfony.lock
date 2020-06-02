@@ -583,6 +583,9 @@
     "symfony/yaml": {
         "version": "v4.2.8"
     },
+    "theiconic/php-ga-measurement-protocol": {
+        "version": "v2.7.2"
+    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {

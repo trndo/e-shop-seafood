@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c14a407ee816a3c8d90a5438d489657",
+    "content-hash": "42b40da39a6a16dd813cd421e8b31b66",
     "packages": [
         {
             "name": "anlutro/curl",
@@ -1341,6 +1341,7 @@
                 "framework",
                 "generics"
             ],
+            "abandoned": true,
             "time": "2015-02-14T22:36:26+00:00"
         },
         {
@@ -1385,6 +1386,7 @@
                 "framework",
                 "generics"
             ],
+            "abandoned": true,
             "time": "2015-12-17T15:36:11+00:00"
         },
         {
@@ -6483,6 +6485,47 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2019-07-24T14:47:26+00:00"
+        },
+        {
+            "name": "theiconic/php-ga-measurement-protocol",
+            "version": "v2.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/theiconic/php-ga-measurement-protocol.git",
+                "reference": "391e3c5c82fbcdb41936caff9f848c193cd56790"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/theiconic/php-ga-measurement-protocol/zipball/391e3c5c82fbcdb41936caff9f848c193cd56790",
+                "reference": "391e3c5c82fbcdb41936caff9f848c193cd56790",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*",
+                "satooshi/php-coveralls": "1.0.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TheIconic\\Tracking\\GoogleAnalytics\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "THE ICONIC ENGINEERING TEAM",
+                    "email": "engineering@theiconic.com.au"
+                }
+            ],
+            "description": "Send data to Google Analytics from the server using PHP. This library fully implements GA measurement protocol.",
+            "time": "2020-05-31T04:46:26+00:00"
         },
         {
             "name": "twig/extensions",

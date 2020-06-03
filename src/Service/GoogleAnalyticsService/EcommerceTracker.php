@@ -52,7 +52,7 @@ class EcommerceTracker
                 ->sendItem();
         }
 
-        dd($response->getDebugResponse());
+        dd($response->getHttpStatusCode());
 
 
     }

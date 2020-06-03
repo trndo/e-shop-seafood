@@ -59,7 +59,9 @@ class EcommerceTracker
             $responses[] = $response;
         }
 
+        $result = $this->analytics->sendPageview();
 
+        $responses[] = $result;
         return $responses;
     }
 

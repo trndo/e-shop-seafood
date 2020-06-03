@@ -165,6 +165,7 @@ class WayForPayPaymentHandler implements PaymentInterface
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
+                    $this->ecommerceTracker->simpleTrack($orderInfo);
                     $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()

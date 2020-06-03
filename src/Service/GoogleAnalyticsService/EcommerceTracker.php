@@ -7,6 +7,7 @@ namespace App\Service\GoogleAnalyticsService;
 use App\Entity\OrderDetail;
 use App\Entity\OrderInfo;
 use TheIconic\Tracking\GoogleAnalytics\Analytics;
+use TheIconic\Tracking\GoogleAnalytics\AnalyticsResponse;
 
 class EcommerceTracker
 {
@@ -19,22 +20,17 @@ class EcommerceTracker
         $this->analytics = new Analytics(true);
     }
 
-    public function simpleTrack(OrderInfo $orderInfo): array
+    public function simpleTrack(OrderInfo $orderInfo): AnalyticsResponse
     {
-        $responses = [];
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId());
 
-        $transaction = $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
+        $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
             ->setRevenue($orderInfo->getTotalPrice())
             ->setShipping(0.00)
             ->setTax($orderInfo->getTotalPrice() * 0.25)
             ->sendTransaction();
-
-        $responses[] = $transaction->getHttpStatusCode();
-        $response[] = $transaction->getDebugResponse();
-        $response[] = $transaction->getRequestUrl();
 
         foreach ($orderInfo->getOrderDetails() as $orderDetail) {
             $response = $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
@@ -55,14 +51,9 @@ class EcommerceTracker
                     : $orderDetail->getProduct()->getName())
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
-
-            $responses[] = $response;
         }
 
-        $result = $this->analytics->sendPageview();
-
-        $responses[] = $result;
-        return $responses;
+        return $response;
     }
 
 

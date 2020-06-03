@@ -21,6 +21,7 @@ class EcommerceTracker
 
     public function simpleTrack(OrderInfo $orderInfo): void
     {
+        dd($this->getClientId());
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId());

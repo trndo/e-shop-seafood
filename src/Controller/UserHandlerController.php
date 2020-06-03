@@ -10,6 +10,7 @@ use App\Form\ResetPasswordType;
 use App\Model\ResetPasswordModel;
 use App\Service\EntityService\OrderInfoHandler\OrderInfoInterface;
 use App\Service\EntityService\UserService\UserServiceInterface;
+use App\Service\GoogleAnalyticsService\EcommerceTracker;
 use App\Service\PaymentService\PaymentInterface;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -33,8 +34,9 @@ class UserHandlerController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function pay(OrderInfo $order, PaymentInterface $handler, User $user): Response
+    public function pay(OrderInfo $order, PaymentInterface $handler, User $user, EcommerceTracker $ecommerceTracker): Response
     {
+        $ecommerceTracker->simpleTrack($order);
         $this->checkIsValidUser($user);
         $payment = $handler->doPayment($order);
         $response = $this->render('pay.html.twig', [

@@ -25,6 +25,7 @@ class EcommerceTracker
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId())
+            ->setDocumentPath('/')
             ->setDebug(true);
 
         $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())

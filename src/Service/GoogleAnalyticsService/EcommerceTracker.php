@@ -16,7 +16,7 @@ class EcommerceTracker
 
     public function __construct()
     {
-        $this->analytics = new Analytics();
+        $this->analytics = new Analytics(true);
     }
 
     public function simpleTrack(OrderInfo $orderInfo): array

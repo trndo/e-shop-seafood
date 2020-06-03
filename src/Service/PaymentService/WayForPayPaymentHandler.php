@@ -142,6 +142,8 @@ class WayForPayPaymentHandler implements PaymentInterface
      */
     public function confirmPayment(OrderInfo $orderInfo): bool
     {
+        $this->ecommerceTracker->simpleTrack($orderInfo);
+
         if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed')) {
             $credential = new AccountSecretCredential($this->account, $this->secret);
             $this->session->set('orderInfoObject', $orderInfo);
@@ -163,7 +165,6 @@ class WayForPayPaymentHandler implements PaymentInterface
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
-                    $this->ecommerceTracker->simpleTrack($orderInfo);
                     $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()

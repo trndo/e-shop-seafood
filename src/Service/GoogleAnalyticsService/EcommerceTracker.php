@@ -24,7 +24,8 @@ class EcommerceTracker
     {
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
-            ->setClientId($this->getClientId());
+            ->setClientId($this->getClientId())
+            ->setDebug(true);
 
         $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
             ->setRevenue($orderInfo->getTotalPrice())
@@ -52,6 +53,7 @@ class EcommerceTracker
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
         }
+       $response = $this->analytics->sendPageview();
 
         return $response;
     }

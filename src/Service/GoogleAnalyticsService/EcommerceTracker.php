@@ -56,9 +56,7 @@ class EcommerceTracker
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
 
-            $responses[] = $response->getHttpStatusCode();
-            $response[] = $response->getDebugResponse();
-            $response[] = $response->getRequestUrl();
+            $responses[] = $response;
         }
 
 

@@ -63,6 +63,50 @@ class EcommerceTracker
         return $response;
     }
 
+    public function enhancedTrack(OrderInfo $orderInfo): AnalyticsResponse
+    {
+        $this->analytics->setProtocolVersion('1')
+            ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
+            ->setClientId($this->getClientId())
+            ->setDocumentPath('/')
+            ->setUserId($orderInfo->getUser()->getId());
+
+        $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
+            ->setAffiliation('THE ICONIC')
+            ->setRevenue($orderInfo->getTotalPrice())
+            ->setShipping(0.00)
+            ->setTax($orderInfo->getTotalPrice() * 0.25)
+            ->sendTransaction();
+
+        foreach ($orderInfo->getOrderDetails() as $key => $orderDetail) {
+            $productData = [
+                'sku' => $this->isReceipt($orderDetail)
+                    ? $orderDetail->getReceipt()->getId()
+                    : $orderDetail->getProduct()->getId(),
+                'name' => $this->isReceipt($orderDetail) ? $orderDetail->getReceipt()->getName()
+                    : $orderDetail->getProduct()->getName(),
+                'brand' => 'Lipinskie raki',
+                'category' => $orderDetail->getProduct()
+                    ->getCategory()
+                    ->getName(),
+                'variant' => 'tasty',
+                'price' => $this->isReceipt($orderDetail)
+                    ? $orderDetail->getReceipt()->getPrice() + $orderDetail->getProduct()->getPrice()
+                    : $orderDetail->getProduct()->getName(),
+                'quantity' => $orderDetail->getQuantity(),
+                'coupon_code' => 'TEST',
+                'position' => $key + 1
+            ];
+
+            $this->analytics->addProduct($productData);
+        }
+
+        $this->analytics->setProductActionToPurchase();
+
+        return $this->analytics->setEventCategory('Checkout')
+             ->setEventAction('Purchase')
+             ->sendEvent();
+    }
 
     private function getClientId(): string
     {

@@ -19,17 +19,22 @@ class EcommerceTracker
         $this->analytics = new Analytics();
     }
 
-    public function simpleTrack(OrderInfo $orderInfo): void
+    public function simpleTrack(OrderInfo $orderInfo): array
     {
+        $responses = [];
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId());
 
-        $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
-        ->setRevenue($orderInfo->getTotalPrice())
+        $transaction = $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
+            ->setRevenue($orderInfo->getTotalPrice())
             ->setShipping(0.00)
             ->setTax($orderInfo->getTotalPrice() * 0.25)
             ->sendTransaction();
+
+        $responses[] = $transaction->getHttpStatusCode();
+        $response[] = $transaction->getDebugResponse();
+        $response[] = $transaction->getRequestUrl();
 
         foreach ($orderInfo->getOrderDetails() as $orderDetail) {
             $response = $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
@@ -50,11 +55,14 @@ class EcommerceTracker
                     : $orderDetail->getProduct()->getName())
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
+
+            $responses[] = $response->getHttpStatusCode();
+            $response[] = $response->getDebugResponse();
+            $response[] = $response->getRequestUrl();
         }
 
-        dd($response->getHttpStatusCode());
 
-
+        return $response;
     }
 
 

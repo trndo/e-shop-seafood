@@ -36,7 +36,7 @@ class UserHandlerController extends AbstractController
      */
     public function pay(OrderInfo $order, PaymentInterface $handler, User $user, EcommerceTracker $ecommerceTracker): Response
     {
-        $ecommerceTracker->simpleTrack($order);
+        dd($ecommerceTracker->simpleTrack($order);
         $this->checkIsValidUser($user);
         $payment = $handler->doPayment($order);
         $response = $this->render('pay.html.twig', [

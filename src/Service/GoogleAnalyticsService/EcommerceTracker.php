@@ -21,7 +21,6 @@ class EcommerceTracker
 
     public function simpleTrack(OrderInfo $orderInfo): void
     {
-        dd($this->getClientId());
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId());
@@ -33,7 +32,7 @@ class EcommerceTracker
             ->sendTransaction();
 
         foreach ($orderInfo->getOrderDetails() as $orderDetail) {
-            $this->analytics->setTransactionId(1667)
+            $response = $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
                 ->setItemName(
                     $this->isReceipt($orderDetail) ? $orderDetail->getReceipt()->getName()
                         : $orderDetail->getProduct()->getName()
@@ -52,6 +51,10 @@ class EcommerceTracker
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
         }
+
+        dd($response->getDebugResponse());
+
+
     }
 
 

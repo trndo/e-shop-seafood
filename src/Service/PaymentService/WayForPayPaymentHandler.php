@@ -5,8 +5,8 @@ namespace App\Service\PaymentService;
 
 
 use App\Entity\OrderInfo;
+use App\Service\GoogleAnalyticsService\EcommerceTracker;
 use App\Service\MailService\MailSenderInterface;
-use App\Service\SmsSenderService\SmsSenderInterface;
 use App\Traits\GoogleAnalyticsTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -22,7 +22,6 @@ use WayForPay\SDK\Wizard\PurchaseWizard;
 
 class WayForPayPaymentHandler implements PaymentInterface
 {
-    use GoogleAnalyticsTrait;
     /**
      * @var UrlGeneratorInterface
      */
@@ -47,10 +46,6 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var MailSenderInterface
      */
     private $mailSender;
-    /**
-     * @var SmsSenderInterface
-     */
-    private $smsSender;
 
     /**
      * @var string
@@ -61,6 +56,10 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @var string
      */
     private $secret;
+    /**
+     * @var EcommerceTracker
+     */
+    private $ecommerceTracker;
 
     /**
      * WayForPayPaymentHandler constructor.
@@ -70,7 +69,7 @@ class WayForPayPaymentHandler implements PaymentInterface
      * @param LoggerInterface $logger
      * @param SessionInterface $session
      * @param MailSenderInterface $mailSender
-     * @param SmsSenderInterface $smsSender
+     * @param EcommerceTracker $ecommerceTracker
      */
     public function __construct(
          UrlGeneratorInterface $urlGenerator,
@@ -79,16 +78,15 @@ class WayForPayPaymentHandler implements PaymentInterface
          LoggerInterface $logger,
          SessionInterface $session,
          MailSenderInterface $mailSender,
-         SmsSenderInterface $smsSender
-    )
-    {
+         EcommerceTracker $ecommerceTracker
+    ) {
         $this->urlGenerator = $urlGenerator;
         $this->entityManager = $entityManager;
         $this->generator = $generator;
         $this->logger = $logger;
         $this->session = $session;
         $this->mailSender = $mailSender;
-        $this->smsSender = $smsSender;
+        $this->ecommerceTracker = $ecommerceTracker;
         $this->account = getenv('WAY_FOR_PAY_ACC');
         $this->secret = getenv('WAY_FOR_PAY_SECRET');
     }
@@ -145,7 +143,6 @@ class WayForPayPaymentHandler implements PaymentInterface
     public function confirmPayment(OrderInfo $orderInfo): bool
     {
         if ($orderInfo && ($orderInfo->getStatus() == 'confirmed' || $orderInfo->getStatus() == 'failed')) {
-            //$credential = new AccountSecretTestCredential();
             $credential = new AccountSecretCredential($this->account, $this->secret);
             $this->session->set('orderInfoObject', $orderInfo);
 
@@ -160,23 +157,13 @@ class WayForPayPaymentHandler implements PaymentInterface
 //                    //$this->handleConfirmation($orderInfo);
 //                    $orderInfo->setStatus('pending');
 //                    $this->entityManager->flush();
-//                    $this->mailSender->mailToAdmin(
-//                        'Платеж в осмотре платежной системы, следи за ним в личном каьинете WAYFORPAY! Ссылка на заказ: '
-//                        .$this->urlGenerator->generate('admin_show_order', [
-//                            'id' => $orderInfo->getId()
-//                        ], UrlGeneratorInterface::ABSOLUTE_URL)
-//                    );
-//                    $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-//                    $this->smsSender->sendSms(
-//                        'Гурман, твой платёж на рассмотрении! Следи за статусом в личном кабинете!',
-//                        $orderInfo->getOrderPhone()
-//                    );
 //                }
                 if ($status == TransactionBase::STATUS_APPROVED) {
                     $this->logger->error('If Status = '.$status);
                     //$this->handleConfirmation($orderInfo);
                     $orderInfo->setStatus('payed');
                     $this->entityManager->flush();
+                    $this->ecommerceTracker->simpleTrack($orderInfo);
                     $this->mailSender->mailToAdmin('Саша, пользователь оплатил свой заказ! Зайди и посмотри!!! Ссылка: '
                         .$this->urlGenerator->generate('admin_show_order', [
                             'id' => $orderInfo->getId()
@@ -185,9 +172,6 @@ class WayForPayPaymentHandler implements PaymentInterface
 
                     $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
 
-//                    $this->smsSender->sendSms('Гурман, твой заказ был оплачен! Ожидай готовности!'
-//                        , $orderInfo->getOrderPhone()
-//                    );
                 } else {
                     $this->logger->error('If Status = '.$status);
                     $orderInfo->setStatus('failed');
@@ -213,11 +197,6 @@ class WayForPayPaymentHandler implements PaymentInterface
                     ], UrlGeneratorInterface::ABSOLUTE_URL)
                 );
                 $this->mailSender->sendAboutChangingStatus($orderInfo->getUser(), $orderInfo);
-                $this->smsSender->sendSms('Гурман, при оптлате произошла ошибка! Зайди в личный кабинет, и поробуй снова! Ссылка: '
-                    .$this->urlGenerator->generate('user_orders',[
-                        'uniqueId' => $orderInfo->getUser()->getUniqueId()
-                    ], UrlGeneratorInterface::ABSOLUTE_URL), $orderInfo->getOrderPhone()
-                );
 
                 $this->logger->error("WayForPay SDK exception: " . $e->getMessage());
 

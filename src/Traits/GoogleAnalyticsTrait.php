@@ -3,8 +3,6 @@
 
 namespace App\Traits;
 
-
-use App\Entity\OrderDetail;
 use App\Entity\OrderInfo;
 use App\Service\GoogleAnalyticsService\EcommerceTracker;
 

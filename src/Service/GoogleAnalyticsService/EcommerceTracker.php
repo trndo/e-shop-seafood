@@ -69,8 +69,7 @@ class EcommerceTracker
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId())
             ->setDocumentPath('/')
-            ->setUserId($orderInfo->getUser()->getId())
-            ->setDebug(true);
+            ->setUserId($orderInfo->getUser()->getId());
 
         $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
             ->setAffiliation('THE ICONIC')

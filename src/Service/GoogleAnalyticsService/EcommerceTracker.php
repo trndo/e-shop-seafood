@@ -25,7 +25,8 @@ class EcommerceTracker
         $this->analytics->setProtocolVersion('1')
             ->setTrackingId(getenv('GOOGLE_TRACKING_ID'))
             ->setClientId($this->getClientId())
-            ->setDocumentPath('/');
+            ->setDocumentPath('/')
+            ->setDebug(true);
 
         $this->analytics->setTransactionId($orderInfo->getOrderUniqueId())
             ->setRevenue($orderInfo->getTotalPrice())
@@ -53,7 +54,12 @@ class EcommerceTracker
                 ->setItemQuantity($orderDetail->getQuantity())
                 ->sendItem();
         }
-       $response = $this->analytics->sendPageview();
+
+        $this->analytics->setProductActionToPurchase();
+
+        $response = $this->analytics->setEventCategory('Checkout')
+            ->setEventAction('Purchase')
+            ->sendEvent();
 
         return $response;
     }

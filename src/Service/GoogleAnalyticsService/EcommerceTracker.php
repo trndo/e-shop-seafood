@@ -62,7 +62,7 @@ class EcommerceTracker
         }
 
 
-        return $response;
+        return $responses;
     }
 
 

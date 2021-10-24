@@ -95,7 +95,7 @@ $(document).ready(function () {
         let input = $(this).siblings('.item-res').children();
         let val = roundHalf(Number(input.val()));
 
-        input.val(val + 0.5);
+        input.val(val + 1);
     });
 
     function roundHalf(num) {
@@ -110,7 +110,7 @@ $(document).ready(function () {
             input.val(1);
             return;
         }
-        input.val(val - 0.5);
+        input.val(val - 1);
     });
     $(document).on('keyup', '.item-res > input', function (e) {
         let input = $(this);

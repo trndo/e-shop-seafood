@@ -45,8 +45,13 @@ class RegisterUser implements RegisterUserInterface
      * @param SessionInterface $session
      * @param SmsSenderInterface $smsSender
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailSenderInterface $mailSender, SessionInterface $session, SmsSenderInterface $smsSender)
-    {
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $entityManager,
+        MailSenderInterface $mailSender,
+        SessionInterface $session,
+        SmsSenderInterface $smsSender
+    ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->entityManager = $entityManager;
         $this->mailSender = $mailSender;

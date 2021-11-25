@@ -35,8 +35,9 @@ class OrderController extends AbstractController
             $orderModel = $this->getOrderModel($user);
             $form = $this->createForm(OrderType::class, $orderModel, $chooseOrder);
             $form->handleRequest($request);
-
+            
             if ($form->isSubmitted() && $form->isValid()) {
+                
                 if ($user) {
                     $user = $userService->setEmptyPropertiesOfUser($user, $orderModel);
                     $orderModel = $orderModel->setUser($user);

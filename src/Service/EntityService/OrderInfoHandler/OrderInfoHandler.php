@@ -271,12 +271,12 @@ class OrderInfoHandler implements OrderInfoInterface
                 case self::STATUS_NEW :
                     $this->checkIsCurrentDate($orderDate) ? $this->deleteFromSupplyReservation($order) : '';
                     $order->setStatus(self::STATUS_CONFIRMED);
-                    $this->smsSender->sendSms('Заказ подтверждён! Сделайте поплату в личном кабинете.', $order->getOrderPhone());
-//                    'Ссылка: '
-//                        .$this->router->generate('user_orders',[
-//                            'uniqueId' => $order->getUser()->getUniqueId()
-//                        ], UrlGeneratorInterface::ABSOLUTE_URL), $order->getOrderPhone()
-//                    );
+                    $message = 'Заказ подтверждён! Ссылка на оплату: '.$this->router->generate('pay', [
+                                'user_unique_id' => $order->getUser()->getUniqueId(),
+                                'orderUniqueId' => $order->getOrderUniqueId()
+                        ], UrlGeneratorInterface::ABSOLUTE_URL
+                    );
+                    $this->smsSender->sendSms($message, $order->getOrderPhone());
                     break;
                 case self::STATUS_PAYED:
                     $order->setStatus(self::STATUS_DONE);

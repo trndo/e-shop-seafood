@@ -34,8 +34,12 @@ class UserHandlerController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function pay(OrderInfo $order, PaymentInterface $handler, User $user, EcommerceTracker $ecommerceTracker): Response
-    {
+    public function pay(
+        OrderInfo $order,
+        PaymentInterface $handler,
+        User $user,
+        EcommerceTracker $ecommerceTracker
+    ): Response {
         $ecommerceTracker->enhancedTrack($order);
         $this->checkIsValidUser($user);
         $payment = $handler->doPayment($order);

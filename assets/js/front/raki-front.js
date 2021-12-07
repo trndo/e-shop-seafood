@@ -119,7 +119,7 @@ $(document).ready(function () {
         if (val == '')
             return;
 
-        if (val < 0) {
+        if (val <= 0) {
             input.val(1);
         }
     });
@@ -130,7 +130,7 @@ $(document).ready(function () {
     $(document).on('blur', '.item-res > input', function (e) {
         let input = $(this);
         let val = input.val();
-        val === '' ? input.val(1) : input.val(roundHalf(val));
+        val === '' ? input.val(1) : input.val(Math.round(val));
     });
 
     let related = $('.receipt-name').data('related');

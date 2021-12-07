@@ -52,7 +52,7 @@ class OrderModel
     private $user;
 
     /**
-     * @var int|null
+     * @var float|null
      */
     private $totalPrice;
 
@@ -257,18 +257,18 @@ class OrderModel
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getTotalPrice(): ?int
+    public function getTotalPrice(): ?float
     {
         return $this->totalPrice;
     }
 
     /**
-     * @param int|null $totalPrice
+     * @param float|null $totalPrice
      * @return OrderModel
      */
-    public function setTotalPrice(?int $totalPrice): self
+    public function setTotalPrice(?float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
 

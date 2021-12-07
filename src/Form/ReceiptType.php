@@ -29,7 +29,7 @@ class ReceiptType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Названия рецепта'
             ])
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                 'attr' => ['class' => 'form-control', 'min' => 0],
                 'label' => 'Цена',
             ])
@@ -38,7 +38,8 @@ class ReceiptType extends AbstractType
                     'кг' => 'кг',
                     'грамм' => 'грамм',
                     'литр' => 'литр',
-                    'шт' => 'шт'
+                    'шт' => 'шт',
+                    'порция' => 'порция',
                 ],
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Еденица измирения',

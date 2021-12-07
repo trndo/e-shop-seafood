@@ -44,7 +44,7 @@ class ProductType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Названия продукта'
             ])
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                 'attr' => ['class' => 'form-control', 'min' => 0],
                 'label' => 'Цена',
             ])
@@ -53,7 +53,8 @@ class ProductType extends AbstractType
                     'кг' => 'кг',
                     'грамм' => 'грамм',
                     'литр' => 'литр',
-                    'шт' => 'шт'
+                    'шт' => 'шт',
+                    'порция' => 'порция',
                 ],
                 'placeholder' => 'Единицы измерения',
                 'attr' => ['class' => 'form-control'],

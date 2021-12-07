@@ -431,12 +431,14 @@ class ProductService implements ProductServiceInterface
             ->setAdditionPrice($model->getAdditionalPrice());
 
         $price = $model->getPrice();
+
         if ($model->getIsAbleToChangePrice()) {
             $model->getAdditionalPrice() ? $price += $model->getAdditionalPrice() : '';
             $model->getPercent() ? $price += $price * $model->getPercent() : '';
         }
 
-        $product->setPrice(ceil($price));
+        $product->setPrice($price);
+
         return $product;
     }
 

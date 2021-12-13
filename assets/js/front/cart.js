@@ -9,7 +9,7 @@ $(document).on('click','.cart-plus',function () {
         type: "POST",
         url: "/changeQuantity",
         data: {
-            quantity: val + 0.5,
+            quantity: val + 1,
             id: name
         },
         success: function (res) {
@@ -17,7 +17,7 @@ $(document).on('click','.cart-plus',function () {
                 showModal(res.message);
             }
             else {
-                input.val(val + 0.5);
+                input.val(val + 1);
                 $('.sum').text(res.totalSum+' ₴');
             }
 
@@ -34,7 +34,7 @@ $(document).on('click','.cart-minus',function () {
     let input = $(this).siblings('.cart-res').children();
     let name = $(this).parent().siblings('.item-name').data('name');
 
-    if(input.val() == 1)
+    if(input.val() <= 1)
         return;
     let val = roundHalf(Number(input.val()));
 
@@ -42,11 +42,11 @@ $(document).on('click','.cart-minus',function () {
         type: "POST",
         url: "/changeQuantity",
         data: {
-            quantity: val - 0.5,
+            quantity: val - 1,
             id: name
         },
         success: function (res) {
-            input.val(val - 0.5);
+            input.val(val - 1);
             $('.sum').text(res.totalSum+' ₴');
             $('.mob-basket').text(res.totalSum + ' ₴');
         }
@@ -61,7 +61,7 @@ $(document).on('blur','.cart-res > input',function (e) {
         return;
     }
 
-    let val = roundHalf(Number(input.val()));
+    let val = Math.round(Number(input.val()));
 
     // if (val > 10) {
     //     alert('Max 10');

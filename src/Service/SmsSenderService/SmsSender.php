@@ -17,7 +17,7 @@ class SmsSender implements SmsSenderInterface
 
         $client->request(
             'GET',
-            'https://smsc.ua/sys/send.php?login='.$login.'&psw='.$password.'&phones='.$number.'&mes='.$message
+            'https://smsc.ua/sys/send.php?login='.$login.'&psw='.$password.'&phones='.$number.'&mes='.$message.'&tinyurl=1'
         );
     }
 }
